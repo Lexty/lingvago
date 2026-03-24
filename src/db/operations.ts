@@ -3,6 +3,22 @@ import { createNewCardState } from './fsrs-helpers'
 import type { Word } from './schema'
 
 /**
+ * Ensure a default Settings record exists. Idempotent.
+ */
+export async function ensureSettings(): Promise<void> {
+  const existing = await db.settings.get('global')
+  if (existing) return
+
+  await db.settings.put({
+    id: 'global',
+    sessionSize: 10,
+    theme: 'system',
+    uiLanguage: navigator.language.startsWith('ru') ? 'ru' : 'en',
+    studyLanguage: 'ru',
+  })
+}
+
+/**
  * Add a word and its two CardStates in a single transaction.
  * Returns the new word ID.
  */
