@@ -115,6 +115,8 @@ export default function Settings() {
           {t('settings.reset')}
         </button>
       </div>
+
+      <p className={styles.version}>{t('settings.version')} {__APP_VERSION__}</p>
     </div>
   )
 }

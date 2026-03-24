@@ -105,3 +105,10 @@
 .dangerButton:active {
   transform: scale(0.98);
 }
+
+.version {
+  margin-top: var(--space-2xl);
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}

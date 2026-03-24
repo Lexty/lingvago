@@ -52,7 +52,8 @@
     "sessionSize": "Session size",
     "cards": "cards",
     "reset": "Reset all data",
-    "resetConfirm": "Are you sure? All progress will be reset."
+    "resetConfirm": "Are you sure? All progress will be reset.",
+    "version": "Version"
   },
   "stats": {
     "title": "Stats",
