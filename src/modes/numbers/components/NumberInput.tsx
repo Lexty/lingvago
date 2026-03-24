@@ -29,7 +29,10 @@ export default function NumberInput({ item, onAnswer }: NumberInputProps) {
 
   useEffect(() => {
     startTime.current = Date.now()
-    inputRef.current?.focus()
+    // Delay focus to ensure mobile browsers open the keyboard
+    // after the previous component has fully unmounted
+    const timer = setTimeout(() => inputRef.current?.focus(), 50)
+    return () => clearTimeout(timer)
   }, [])
 
   const pendingAnswer = useRef<Answer | null>(null)
@@ -92,6 +95,7 @@ export default function NumberInput({ item, onAnswer }: NumberInputProps) {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           disabled={feedback !== null}
+          autoFocus
           autoComplete="off"
           autoCorrect="off"
           spellCheck={false}
