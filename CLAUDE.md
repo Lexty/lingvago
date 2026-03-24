@@ -10,16 +10,25 @@ Lingvago — offline-first PWA for learning European Portuguese (A2 level). Sing
 
 ```bash
 # Dev server
-npm run dev
+pnpm dev
 
 # Build
-npm run build
+pnpm build
 
 # Preview production build
-npm run preview
+pnpm preview
 
 # Type checking
 npx tsc --noEmit
+
+# Tests (watch mode)
+pnpm test
+
+# Tests (single run)
+pnpm test:run
+
+# Lint
+pnpm lint
 ```
 
 ## Stack

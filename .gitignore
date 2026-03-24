@@ -1,5 +1,6 @@
 node_modules/
 dist/
+dev-dist/
 .idea/
 .claude/
 *.local

@@ -10,6 +10,22 @@
 
 > Цель: можно открыть приложение, увидеть Dashboard, начать сессию, учить слова с FSRS, работать офлайн.
 
+Фаза 1 разделена на две подфазы для ясности приоритетов. На практике реализуются вместе, но core loop (1a) — это минимум, без которого приложение бесполезно, а foundation (1b) — обвязка.
+
+### Фаза 1a — Core learning loop
+
+> Минимум для работающего обучения: DB → VocabularyMode → Study экран.
+
+Задачи: 1.4, 1.5, 1.6, 1.7 (useSession), 1.9 (Study + SessionSummary).
+
+### Фаза 1b — Foundation
+
+> UI shell и инфраструктура: scaffolding, стили, i18n, Layout, Dashboard, PWA, роутинг с заглушками.
+
+Задачи: 1.1, 1.2, 1.3, 1.7 (useTheme), 1.8, 1.9 (Dashboard), 1.10.
+
+---
+
 ### 1.1 Scaffolding
 
 ```bash
@@ -68,7 +84,7 @@ npm i -D vite-plugin-pwa
 
 Файлы:
 - `src/components/Layout/Layout.tsx` + `.module.css` — Outlet + NavBar
-- `src/components/NavBar/NavBar.tsx` + `.module.css` — 4 вкладки, NavLink, скрытие на Study
+- `src/components/NavBar/NavBar.tsx` + `.module.css` — 4 вкладки, NavLink, скрытие на Study. Вкладки Decks/Stats/Settings ведут на placeholder-компоненты до фаз 2-3
 
 ### 1.9 Экраны
 
@@ -80,7 +96,7 @@ npm i -D vite-plugin-pwa
 ### 1.10 Роутинг и точка входа
 
 Файлы:
-- `src/App.tsx` — Routes: `/`, `/study/:modeId`, `/decks`, `/decks/:deckId`, `/stats`, `/settings` + fallback
+- `src/App.tsx` — Routes: `/`, `/study/:modeId`, `/decks`, `/decks/:deckId`, `/stats`, `/settings` + fallback. Роуты `/decks/*`, `/stats`, `/settings` рендерят placeholder-компоненты ("Coming soon") до фаз 2-3
 - `src/main.tsx` — i18next init → Dexie hooks → registerMode → seed → render
 
 ### Готовность фазы 1
@@ -111,10 +127,11 @@ npm i -D vite-plugin-pwa
 - `src/screens/DeckWords/DeckWords.tsx` + `.module.css` — список слов, поиск
 - `src/screens/DeckWords/WordForm.tsx` + `.module.css` — inline-форма добавления/редактирования
 
-### 2.3 Settings
+### 2.3 Settings + EN-локализация
 
 Файлы:
 - `src/screens/Settings/Settings.tsx` + `.module.css` — uiLanguage, тема, sessionSize, сброс
+- `src/locales/en.json` — все ключи на английском (необходим для работы dropdown uiLanguage)
 
 ### Готовность фазы 2
 
@@ -122,13 +139,14 @@ npm i -D vite-plugin-pwa
 - [ ] Деактивация колоды исключает её карточки из сессий
 - [ ] Удаление колоды каскадно удаляет слова и CardState
 - [ ] Переключение темы работает мгновенно
+- [ ] Переключение языка UI (RU/EN) работает мгновенно
 - [ ] Изменение sessionSize влияет на следующую сессию
 
 ---
 
 ## Фаза 3 — Polish
 
-> Цель: статистика, дополнительный режим, импорт, английский UI.
+> Цель: статистика, дополнительный режим, импорт.
 
 ### 3.1 Stats экран
 
@@ -148,17 +166,11 @@ npm i -D vite-plugin-pwa
 - `src/modes/numbers/data.ts` — таблица числительных PT
 - `src/modes/numbers/components/NumberInput.tsx` + `.module.css`
 
-### 3.4 EN-локализация UI (опционально)
-
-Файлы:
-- `src/locales/en.json` — все ключи на английском
-
 ### Готовность фазы 3
 
 - [ ] Stats показывает прогресс и историю сессий
 - [ ] CSV-импорт добавляет слова в колоду
 - [ ] (опционально) NumbersMode работает на Study экране
-- [ ] (опционально) Переключение UI на English в Settings
 
 ---
 
@@ -186,10 +198,9 @@ npm i -D vite-plugin-pwa
 
 2.1 Decks ──▶ зависит от 1.4 (db), 1.8 (Layout)
 2.2 DeckWords ──▶ зависит от 2.1
-2.3 Settings ──▶ зависит от 1.7 (useTheme), 1.3 (i18n)
+2.3 Settings + en.json ──▶ зависит от 1.7 (useTheme), 1.3 (i18n)
 
 3.1 Stats ──▶ зависит от 1.4 (db), 1.6 (VocabularyMode)
 3.2 CSV ──▶ зависит от 2.2 (DeckWords)
 3.3 Numbers ──▶ зависит от 1.5 (реестр), 1.9 (Study)
-3.4 EN locale ──▶ зависит от 1.3 (i18n)
 ```
