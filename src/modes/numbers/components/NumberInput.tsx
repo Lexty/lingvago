@@ -102,10 +102,11 @@ export default function NumberInput({ item, onAnswer }: NumberInputProps) {
 
       <div className={styles.inputArea}>
         <input
+          key={item.id}
           ref={inputRef}
           className={`${styles.input} ${feedback === 'correct' ? styles.inputCorrect : ''} ${feedback === 'wrong' ? styles.inputWrong : ''}`}
           type="text"
-          inputMode="text"
+          inputMode={isDigitToWord ? 'text' : 'numeric'}
           value={input}
           onChange={(e) => {
             if (!submitted.current) setInput(e.target.value)
