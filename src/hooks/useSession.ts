@@ -12,7 +12,7 @@ export function useSession(mode: LearningMode, sessionSize: number) {
   const [error, setError] = useState<string | null>(null)
   const [elapsedTime, setElapsedTime] = useState(0)
   const startedAt = useRef(0)
-  const timerRef = useRef<ReturnType<typeof setInterval>>()
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const modeRef = useRef(mode)
   const sessionSizeRef = useRef(sessionSize)
   modeRef.current = mode
@@ -21,7 +21,7 @@ export function useSession(mode: LearningMode, sessionSize: number) {
   const stopTimer = useCallback(() => {
     if (timerRef.current) {
       clearInterval(timerRef.current)
-      timerRef.current = undefined
+      timerRef.current = null
     }
   }, [])
 

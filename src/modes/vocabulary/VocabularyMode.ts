@@ -1,10 +1,10 @@
-import { FSRS, Rating } from 'ts-fsrs'
+import { FSRS, Rating, type Grade } from 'ts-fsrs'
 import { db } from '../../db/index'
 import { toFSRSCard, fromFSRSCard } from '../../db/fsrs-helpers'
 import type { LearningMode, SessionItem, Answer, ModeStats } from '../types'
 import type { CardState, Word } from '../../db/schema'
 
-const fsrs = new FSRS()
+const fsrs = new FSRS({})
 
 const STABILITY_THRESHOLD_DAYS = 10
 
@@ -119,7 +119,7 @@ export class VocabularyMode implements LearningMode {
     if (!cardState) return
 
     const card = toFSRSCard(cardState)
-    const rating = (answer.fsrsRating ?? this.mapAnswerToRating(answer)) as Rating
+    const rating = (answer.fsrsRating ?? this.mapAnswerToRating(answer)) as Grade
     const result = fsrs.next(card, new Date(), rating)
     const updated = fromFSRSCard(result.card)
 

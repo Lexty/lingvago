@@ -14,7 +14,7 @@ beforeEach(async () => {
 })
 
 describe('VocabularyMode.getSessionItems', () => {
-  it('does not place same-word cards back-to-back', async () => {
+  it('returns items from active decks', async () => {
     const deckId = (await db.decks.add({
       name: 'Test',
       description: '',
@@ -22,40 +22,44 @@ describe('VocabularyMode.getSessionItems', () => {
       createdAt: Date.now(),
     })) as number
 
-    // Add enough words to get a meaningful session
-    const words = [
-      { pt: 'olá', ru: 'привет' },
-      { pt: 'casa', ru: 'дом' },
-      { pt: 'água', ru: 'вода' },
-      { pt: 'café', ru: 'кофе' },
-      { pt: 'pão', ru: 'хлеб' },
-    ]
+    await addWordWithCards(
+      { pt: 'casa', translations: { ru: 'дом' }, deckId, createdAt: Date.now() },
+      'ru',
+    )
 
-    for (const w of words) {
+    const items = await mode.getSessionItems(10)
+    expect(items.length).toBe(2) // pt→ru and ru→pt
+    expect(items.some((i) => i.question === 'casa')).toBe(true)
+    expect(items.some((i) => i.correctAnswer === 'casa')).toBe(true)
+  })
+
+  it('shuffles items so order is not deterministic', async () => {
+    const deckId = (await db.decks.add({
+      name: 'Test',
+      description: '',
+      isActive: true,
+      createdAt: Date.now(),
+    })) as number
+
+    // Add enough words to make shuffling observable
+    const words = ['olá', 'casa', 'água', 'café', 'pão', 'leite', 'mãe', 'pai', 'filho', 'amigo']
+    for (const pt of words) {
       await addWordWithCards(
-        { pt: w.pt, translations: { ru: w.ru }, deckId, createdAt: Date.now() },
+        { pt, translations: { ru: pt + '_ru' }, deckId, createdAt: Date.now() },
         'ru',
       )
     }
 
-    // Run multiple times — shuffled order should prevent consistent back-to-back
-    let allBackToBack = true
-    for (let run = 0; run < 5; run++) {
-      const items = await mode.getSessionItems(10)
-      expect(items.length).toBe(10) // 5 words × 2 directions
-
-      let hasBackToBack = false
-      for (let i = 1; i < items.length; i++) {
-        if (items[i].payload.wordId === items[i - 1].payload.wordId) {
-          hasBackToBack = true
-          break
-        }
-      }
-      if (!hasBackToBack) allBackToBack = false
+    // Run multiple times and collect orderings
+    const orderings: string[] = []
+    for (let run = 0; run < 10; run++) {
+      const items = await mode.getSessionItems(20)
+      orderings.push(items.map((i) => i.id).join(','))
     }
 
-    // Over 5 runs, shuffle should prevent ALL runs from having back-to-back
-    expect(allBackToBack).toBe(false)
+    // At least 2 different orderings out of 10 runs
+    const uniqueOrderings = new Set(orderings)
+    expect(uniqueOrderings.size).toBeGreaterThan(1)
   })
 
   it('returns empty array when no active decks', async () => {

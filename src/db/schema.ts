@@ -23,6 +23,7 @@ export interface CardState {
   difficulty: number
   elapsed_days: number
   scheduled_days: number
+  learning_steps: number
   reps: number
   lapses: number
   state: number

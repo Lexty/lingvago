@@ -8,27 +8,17 @@ Lingvago — offline-first PWA for learning European Portuguese (A2 level). Sing
 
 ## Commands
 
+All commands are defined in `package.json` scripts. Always use `pnpm <script>` — never run raw `tsc`, `vitest`, `eslint`, etc. directly.
+
 ```bash
-# Dev server
-pnpm dev
-
-# Build
-pnpm build
-
-# Preview production build
-pnpm preview
-
-# Type checking
-npx tsc --noEmit
-
-# Tests (watch mode)
-pnpm test
-
-# Tests (single run)
-pnpm test:run
-
-# Lint
-pnpm lint
+pnpm dev          # Dev server
+pnpm build        # Type check (tsc -b) + production build
+pnpm preview      # Preview production build
+pnpm typecheck    # Type check only (tsc -b --noEmit)
+pnpm lint         # ESLint
+pnpm test         # Tests (watch mode)
+pnpm test:run     # Tests (single run)
+pnpm check        # Full CI check: typecheck + lint + test + build
 ```
 
 ## Stack
