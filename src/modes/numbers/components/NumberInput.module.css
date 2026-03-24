@@ -106,6 +106,26 @@
   font-weight: 700;
 }
 
+.nextButton {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  padding: var(--space-md);
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  display: block;
+}
+
+.nextButton:active {
+  opacity: 0.85;
+}
+
 /* Cheat sheet */
 .cheatToggle {
   padding: var(--space-xs);

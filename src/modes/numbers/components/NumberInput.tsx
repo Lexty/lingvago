@@ -32,6 +32,8 @@ export default function NumberInput({ item, onAnswer }: NumberInputProps) {
     inputRef.current?.focus()
   }, [])
 
+  const pendingAnswer = useRef<Answer | null>(null)
+
   const checkAnswer = useCallback(() => {
     if (submitted.current || input.trim() === '') return
     submitted.current = true
@@ -42,18 +44,26 @@ export default function NumberInput({ item, onAnswer }: NumberInputProps) {
     if (isDigitToWord) {
       correct = normalize(input) === normalize(item.correctAnswer)
     } else {
-      // Strip spaces/dots/commas before parsing
       const cleaned = input.replace(/[\s.,]/g, '')
       const parsed = parseInt(cleaned, 10)
       correct = !isNaN(parsed) && parsed === Number(item.correctAnswer)
     }
 
     setFeedback(correct ? 'correct' : 'wrong')
+    const answer: Answer = { value: input.trim(), correct, timeMs }
 
-    setTimeout(() => {
-      onAnswer({ value: input.trim(), correct, timeMs })
-    }, FEEDBACK_DELAY)
+    if (correct) {
+      // Auto-advance on correct
+      setTimeout(() => onAnswer(answer), FEEDBACK_DELAY)
+    } else {
+      // Wait for manual "Next" on wrong
+      pendingAnswer.current = answer
+    }
   }, [input, item.correctAnswer, isDigitToWord, onAnswer])
+
+  const handleNext = () => {
+    if (pendingAnswer.current) onAnswer(pendingAnswer.current)
+  }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -107,6 +117,12 @@ export default function NumberInput({ item, onAnswer }: NumberInputProps) {
               : `${t('numbers.wrong')}: ${isDigitToWord ? item.correctAnswer : formatNumber(item.correctAnswer)}`}
           </span>
         </div>
+      )}
+
+      {feedback === 'wrong' && (
+        <button className={styles.nextButton} onClick={handleNext}>
+          {t('numbers.next')}
+        </button>
       )}
 
       <button
