@@ -105,7 +105,7 @@ export default function NumberInput({ item, onAnswer }: NumberInputProps) {
           ref={inputRef}
           className={`${styles.input} ${feedback === 'correct' ? styles.inputCorrect : ''} ${feedback === 'wrong' ? styles.inputWrong : ''}`}
           type="text"
-          inputMode={isDigitToWord ? 'text' : 'numeric'}
+          inputMode="text"
           value={input}
           onChange={(e) => {
             if (!submitted.current) setInput(e.target.value)
