@@ -72,9 +72,10 @@ export default function DeckWords() {
     const translation = editTranslation.trim()
     if (!pt || !translation) return
 
+    const existing = await db.words.get(editingId)
     await db.words.update(editingId, {
       pt,
-      translations: { [studyLanguage]: translation },
+      translations: { ...existing?.translations, [studyLanguage]: translation },
     })
 
     setEditingId(null)

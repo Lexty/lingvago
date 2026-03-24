@@ -4,7 +4,7 @@ import type { LearningMode, SessionItem, Answer } from '../modes/types'
 
 type SessionStatus = 'loading' | 'in-progress' | 'finished' | 'error'
 
-export function useSession(mode: LearningMode, sessionSize: number) {
+export function useSession(mode: LearningMode | undefined, sessionSize: number) {
   const [status, setStatus] = useState<SessionStatus>('loading')
   const [items, setItems] = useState<SessionItem[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -29,6 +29,12 @@ export function useSession(mode: LearningMode, sessionSize: number) {
     () => {
       const currentMode = modeRef.current
       const currentSize = sessionSizeRef.current
+
+      if (!currentMode) {
+        setError('Invalid mode')
+        setStatus('error')
+        return Promise.resolve()
+      }
 
       return currentMode.getSessionItems(currentSize).then((sessionItems) => {
         if (sessionItems.length === 0) {
@@ -70,7 +76,7 @@ export function useSession(mode: LearningMode, sessionSize: number) {
   const submitAnswer = useCallback(
     async (answer: Answer) => {
       const item = items[currentIndex]
-      if (!item) return
+      if (!item || !modeRef.current) return
 
       try {
         await modeRef.current.submitAnswer(item, answer)
@@ -84,7 +90,7 @@ export function useSession(mode: LearningMode, sessionSize: number) {
           setStatus('finished')
 
           await db.sessions.add({
-            modeId: modeRef.current.id,
+            modeId: modeRef.current!.id,
             startedAt: startedAt.current,
             finishedAt: Date.now(),
             totalCards: items.length,

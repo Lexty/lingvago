@@ -9,13 +9,13 @@ interface SessionSummaryProps {
   onGoHome: () => void
 }
 
-function formatDuration(seconds: number): string {
+function formatDuration(seconds: number, t: (key: string) => string): string {
   const mins = Math.floor(seconds / 60)
   const secs = seconds % 60
   if (mins > 0) {
-    return `${mins} мин ${secs} сек`
+    return `${mins} ${t('study.min')} ${secs} ${t('study.sec')}`
   }
-  return `${secs} сек`
+  return `${secs} ${t('study.sec')}`
 }
 
 export default function SessionSummary({
@@ -84,7 +84,7 @@ export default function SessionSummary({
 
       <div className={styles.time}>
         <span className={styles.timeLabel}>{t('study.time')}</span>
-        <span className={styles.timeValue}>{formatDuration(elapsedTime)}</span>
+        <span className={styles.timeValue}>{formatDuration(elapsedTime, t)}</span>
       </div>
 
       <div className={styles.actions}>

@@ -24,9 +24,15 @@ export default function Study() {
   const sessionSize = settings?.sessionSize ?? 10
 
   const mode = getMode(modeId ?? '')
+  const session = useSession(mode, sessionSize)
 
-  // Hook must be called unconditionally, so pass a fallback
-  const session = useSession(mode!, sessionSize)
+  if (settings === undefined) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.loading}>{t('common.loading')}</div>
+      </div>
+    )
+  }
 
   if (!mode) {
     return (

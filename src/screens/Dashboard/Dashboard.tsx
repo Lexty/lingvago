@@ -4,13 +4,13 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { getAllModes } from '../../modes/registry'
 import { db } from '../../db/index'
 import styles from './Dashboard.module.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import type { ModeStats } from '../../modes/types'
 
 export default function Dashboard() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const modes = getAllModes()
+  const modes = useMemo(() => getAllModes(), [])
 
   const wordCount = useLiveQuery(() => db.words.count())
   const [vocabStats, setVocabStats] = useState<ModeStats | null>(null)

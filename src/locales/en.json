@@ -28,7 +28,9 @@
     "again": "Again",
     "hard": "Hard",
     "good": "Good",
-    "easy": "Easy"
+    "easy": "Easy",
+    "min": "min",
+    "sec": "sec"
   },
   "mode": {
     "vocabulary": {
