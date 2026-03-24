@@ -1,0 +1,184 @@
+.container {
+  padding: var(--space-lg) var(--space-md);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.createButton {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  background: var(--color-accent);
+  color: #ffffff;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s;
+}
+
+.createButton:hover {
+  background: var(--color-accent-hover);
+}
+
+.createButton:active {
+  transform: scale(0.98);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.deckCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.15s;
+}
+
+.deckCard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.toggle {
+  flex-shrink: 0;
+  width: 44px;
+  height: 26px;
+  border-radius: 13px;
+  background: var(--color-border);
+  position: relative;
+  transition: background 0.2s;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+.toggle[data-active="true"] {
+  background: var(--color-success);
+}
+
+.toggleKnob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  transition: transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.toggle[data-active="true"] .toggleKnob {
+  transform: translateX(18px);
+}
+
+.deckInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.deckName {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  display: block;
+}
+
+.deckMeta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  display: block;
+  margin-top: 2px;
+}
+
+.deleteButton {
+  flex-shrink: 0;
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+
+.deleteButton:hover {
+  border-color: var(--color-error);
+}
+
+.empty {
+  text-align: center;
+  color: var(--color-text-secondary);
+  padding: var(--space-2xl) 0;
+}
+
+/* Create form */
+.createForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  margin-bottom: var(--space-lg);
+}
+
+.input {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-base);
+  background: var(--color-bg-card);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.formActions {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: flex-end;
+}
+
+.formActions button {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+
+.cancelButton {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+.saveButton {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+.saveButton:hover {
+  background: var(--color-accent-hover);
+}

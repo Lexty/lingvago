@@ -1,0 +1,82 @@
+{
+  "nav": {
+    "home": "Home",
+    "decks": "Decks",
+    "stats": "Stats",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Lingvago",
+    "study": "Study",
+    "words": "Words",
+    "learned": "Learned",
+    "retention": "Retention",
+    "due": "due",
+    "alwaysAvailable": "Always available",
+    "activeDecks": "Active decks"
+  },
+  "study": {
+    "progress": "{{current}} / {{total}}",
+    "sessionComplete": "Session complete",
+    "time": "Time",
+    "studyMore": "Study more",
+    "toHome": "Home",
+    "noCards": "All cards reviewed! Come back later.",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "showAnswer": "Show answer",
+    "again": "Again",
+    "hard": "Hard",
+    "good": "Good",
+    "easy": "Easy"
+  },
+  "mode": {
+    "vocabulary": {
+      "title": "Vocabulary",
+      "desc": "Learn words with spaced repetition"
+    },
+    "numbers": {
+      "title": "Numbers",
+      "desc": "Practice numerals"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "uiLang": "Interface language",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "sessionSize": "Session size",
+    "cards": "cards",
+    "reset": "Reset all data",
+    "resetConfirm": "Are you sure? All progress will be reset."
+  },
+  "decks": {
+    "title": "Decks",
+    "name": "Name",
+    "desc": "Description",
+    "create": "Create deck",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this deck and all its words?",
+    "import": "Import CSV",
+    "empty": "No decks",
+    "words": "words"
+  },
+  "words": {
+    "search": "Search",
+    "portuguese": "Portuguese word",
+    "translation": "Translation",
+    "add": "Add word",
+    "edit": "Edit",
+    "delete": "Delete",
+    "import": "Import CSV",
+    "empty": "No words in this deck"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "loading": "Loading...",
+    "comingSoon": "Coming soon"
+  }
+}
