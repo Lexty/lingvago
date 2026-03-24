@@ -1,5 +1,6 @@
 import { db } from './index'
 import { addWordWithCards } from './operations'
+import { PASSAPORTE_U1_U4 } from './decks/passaporte-u1-u4'
 
 const STARTER_WORDS: Array<{ pt: string; ru: string }> = [
   { pt: 'olá', ru: 'привет' },
@@ -30,28 +31,41 @@ const STARTER_WORDS: Array<{ pt: string; ru: string }> = [
   { pt: 'cinco', ru: 'пять' },
 ]
 
+interface DeckDef {
+  name: string
+  description: string
+  words: Array<{ pt: string; ru: string }>
+}
+
+const SEED_DECKS: DeckDef[] = [
+  { name: 'Starter', description: 'Базовые слова', words: STARTER_WORDS },
+  { name: 'Passaporte U1–U4', description: 'Passaporte para Português, Unidades 1–4', words: PASSAPORTE_U1_U4 },
+]
+
 export async function seedDatabase() {
   const deckCount = await db.decks.count()
   if (deckCount > 0) return
 
   const studyLanguage = 'ru'
 
-  const deckId = (await db.decks.add({
-    name: 'Starter',
-    description: 'Базовые слова',
-    isActive: true,
-    createdAt: Date.now(),
-  })) as number
+  for (const deck of SEED_DECKS) {
+    const deckId = (await db.decks.add({
+      name: deck.name,
+      description: deck.description,
+      isActive: true,
+      createdAt: Date.now(),
+    })) as number
 
-  for (const word of STARTER_WORDS) {
-    await addWordWithCards(
-      {
-        pt: word.pt,
-        translations: { ru: word.ru },
-        deckId,
-        createdAt: Date.now(),
-      },
-      studyLanguage,
-    )
+    for (const word of deck.words) {
+      await addWordWithCards(
+        {
+          pt: word.pt,
+          translations: { ru: word.ru },
+          deckId,
+          createdAt: Date.now(),
+        },
+        studyLanguage,
+      )
+    }
   }
 }
