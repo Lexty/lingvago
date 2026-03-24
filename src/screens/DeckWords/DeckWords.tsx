@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../../db/index'
 import { addWordWithCards, deleteWord } from '../../db/operations'
+import CsvImport from './CsvImport'
 import styles from './DeckWords.module.css'
 
 export default function DeckWords() {
@@ -19,6 +20,7 @@ export default function DeckWords() {
   const [editingId, setEditingId] = useState<number | null>(null)
   const [editPt, setEditPt] = useState('')
   const [editTranslation, setEditTranslation] = useState('')
+  const [showImport, setShowImport] = useState(false)
 
   const deck = useLiveQuery(() => db.decks.get(deckId), [deckId])
   const words = useLiveQuery(() => db.words.where('deckId').equals(deckId).toArray(), [deckId])
@@ -99,10 +101,17 @@ export default function DeckWords() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        <button className={styles.addButton} onClick={() => setShowImport(true)}>
+          {t('words.import')}
+        </button>
         <button className={styles.addButton} onClick={() => setShowAdd(true)}>
           + {t('words.add')}
         </button>
       </div>
+
+      {showImport && (
+        <CsvImport deckId={deckId} onClose={() => setShowImport(false)} />
+      )}
 
       {showAdd && (
         <div className={styles.wordForm}>

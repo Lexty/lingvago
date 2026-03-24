@@ -105,6 +105,15 @@
     "next": "Далее",
     "compositionHint": "Составные числа через «e»:"
   },
+  "csvImport": {
+    "title": "Импорт CSV",
+    "selectFile": "Выберите CSV-файл (pt,перевод)",
+    "importButton": "Импортировать {{count}} слов",
+    "success": "Импортировано {{count}} слов",
+    "invalidRows": "{{count}} невалидных строк пропущено",
+    "empty": "Файл пуст или не содержит валидных строк",
+    "close": "Закрыть"
+  },
   "common": {
     "save": "Сохранить",
     "cancel": "Отмена",

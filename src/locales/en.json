@@ -105,6 +105,15 @@
     "next": "Next",
     "compositionHint": "Compound numbers use \"e\":"
   },
+  "csvImport": {
+    "title": "Import CSV",
+    "selectFile": "Select a CSV file (pt,translation)",
+    "importButton": "Import {{count}} words",
+    "success": "Imported {{count}} words",
+    "invalidRows": "{{count}} invalid rows skipped",
+    "empty": "File is empty or has no valid rows",
+    "close": "Close"
+  },
   "common": {
     "save": "Save",
     "cancel": "Cancel",
