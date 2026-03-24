@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { SessionItem, Answer } from '../../types'
 import { normalize, getLevel, getCheatSheet, numberToText } from '../data'
@@ -11,31 +11,44 @@ interface NumberInputProps {
 
 const FEEDBACK_DELAY = 1500
 
-/** Format number with space separators: 1234567 → "1 234 567" */
+/** Format number with space separators */
 function formatNumber(n: number | string): string {
   return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '\u2009')
 }
 
+/**
+ * NumberInput manages its own reset cycle via `itemId` state.
+ * When parent passes a new item, we detect the mismatch and
+ * reset synchronously during render (no effect needed for setState).
+ * This keeps the same DOM <input> alive so mobile keyboard stays open.
+ */
 export default function NumberInput({ item, onAnswer }: NumberInputProps) {
   const { t } = useTranslation()
   const [input, setInput] = useState('')
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null)
   const [showCheat, setShowCheat] = useState(false)
+  const [trackedId, setTrackedId] = useState(item.id)
   const startTime = useRef(0)
   const inputRef = useRef<HTMLInputElement>(null)
   const submitted = useRef(false)
+  const pendingAnswer = useRef<Answer | null>(null)
+
+  // Reset state during render when item changes (React-approved pattern)
+  if (item.id !== trackedId) {
+    setTrackedId(item.id)
+    setInput('')
+    setFeedback(null)
+  }
 
   const isDigitToWord = item.payload.direction === 'digit-to-word'
 
+  // Reset refs and re-focus when item changes
   useEffect(() => {
+    submitted.current = false
+    pendingAnswer.current = null
     startTime.current = Date.now()
-    // Delay focus to ensure mobile browsers open the keyboard
-    // after the previous component has fully unmounted
-    const timer = setTimeout(() => inputRef.current?.focus(), 50)
-    return () => clearTimeout(timer)
-  }, [])
-
-  const pendingAnswer = useRef<Answer | null>(null)
+    inputRef.current?.focus()
+  }, [trackedId])
 
   const checkAnswer = useCallback(() => {
     if (submitted.current || input.trim() === '') return
@@ -56,10 +69,8 @@ export default function NumberInput({ item, onAnswer }: NumberInputProps) {
     const answer: Answer = { value: input.trim(), correct, timeMs }
 
     if (correct) {
-      // Auto-advance on correct
       setTimeout(() => onAnswer(answer), FEEDBACK_DELAY)
     } else {
-      // Wait for manual "Next" on wrong
       pendingAnswer.current = answer
     }
   }, [input, item.correctAnswer, isDigitToWord, onAnswer])
@@ -70,11 +81,15 @@ export default function NumberInput({ item, onAnswer }: NumberInputProps) {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      checkAnswer()
+      if (feedback === 'wrong') {
+        handleNext()
+      } else if (feedback === null) {
+        checkAnswer()
+      }
     }
   }
 
-  const cheatGroups = getCheatSheet(getLevel())
+  const cheatGroups = useMemo(() => getCheatSheet(getLevel()), [])
 
   return (
     <div className={styles.container}>
@@ -92,9 +107,11 @@ export default function NumberInput({ item, onAnswer }: NumberInputProps) {
           type="text"
           inputMode={isDigitToWord ? 'text' : 'numeric'}
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => {
+            if (!submitted.current) setInput(e.target.value)
+          }}
           onKeyDown={handleKeyDown}
-          disabled={feedback !== null}
+          readOnly={feedback !== null}
           autoFocus
           autoComplete="off"
           autoCorrect="off"

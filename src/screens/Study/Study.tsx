@@ -128,7 +128,7 @@ function StudySession({ mode, sessionSize }: { mode: LearningMode; sessionSize: 
         <FlipCard key={currentItem.id} item={currentItem} onAnswer={session.submitAnswer} />
       )}
       {currentItem?.exerciseType === 'number-input' && (
-        <NumberInput key={currentItem.id} item={currentItem} onAnswer={session.submitAnswer} />
+        <NumberInput item={currentItem} onAnswer={session.submitAnswer} />
       )}
     </div>
   )
