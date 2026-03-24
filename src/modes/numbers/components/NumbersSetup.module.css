@@ -1,0 +1,123 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  text-align: center;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.levels {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.levelButton {
+  padding: var(--space-md) var(--space-lg);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-card);
+  color: var(--color-text-primary);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s;
+  text-align: center;
+}
+
+.levelActive {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 8%, var(--color-bg-card));
+}
+
+.startButton {
+  padding: var(--space-md);
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.startButton:active {
+  opacity: 0.85;
+}
+
+.backButton {
+  padding: var(--space-sm);
+  border: none;
+  background: none;
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.cheatToggle {
+  padding: var(--space-sm);
+  border: none;
+  background: none;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  text-align: center;
+}
+
+.cheatSheet {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.cheatGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cheatGroup + .cheatGroup {
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-border);
+}
+
+.cheatRow {
+  display: flex;
+  gap: var(--space-md);
+  padding: 2px 0;
+  font-size: var(--font-size-sm);
+}
+
+.cheatNumber {
+  min-width: 72px;
+  text-align: right;
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.cheatText {
+  color: var(--color-text-primary);
+}
+
+.cheatHint {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}

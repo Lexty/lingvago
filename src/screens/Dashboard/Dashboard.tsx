@@ -20,8 +20,10 @@ export default function Dashboard() {
     const vocabMode = modes.find((m) => m.id === 'vocabulary')
     if (vocabMode) {
       vocabMode.getStats().then(setVocabStats)
-      vocabMode.getDueCount().then((c) =>
-        setDueCounts((prev) => ({ ...prev, vocabulary: c })),
+    }
+    for (const mode of modes) {
+      mode.getDueCount().then((c) =>
+        setDueCounts((prev) => ({ ...prev, [mode.id]: c })),
       )
     }
   }, [modes, wordCount]) // re-run when word count changes
@@ -62,7 +64,7 @@ export default function Dashboard() {
                   {t(`mode.${mode.id}.title`)}
                 </span>
                 <span className={styles.modeDue}>
-                  {dueCounts[mode.id] != null
+                  {dueCounts[mode.id] != null && dueCounts[mode.id] >= 0
                     ? `${dueCounts[mode.id]} ${t('dashboard.due')}`
                     : t('dashboard.alwaysAvailable')}
                 </span>

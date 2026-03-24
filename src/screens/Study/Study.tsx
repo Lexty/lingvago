@@ -1,11 +1,15 @@
+import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { getMode } from '../../modes/registry'
 import { useSession } from '../../hooks/useSession'
 import { db } from '../../db/index'
+import type { LearningMode } from '../../modes/types'
 import MultipleChoice from '../../modes/vocabulary/components/MultipleChoice'
 import FlipCard from '../../modes/vocabulary/components/FlipCard'
+import NumberInput from '../../modes/numbers/components/NumberInput'
+import NumbersSetup from '../../modes/numbers/components/NumbersSetup'
 import SessionSummary from './SessionSummary'
 import styles from './Study.module.css'
 
@@ -19,12 +23,11 @@ export default function Study() {
   const { modeId } = useParams<{ modeId: string }>()
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const [numbersReady, setNumbersReady] = useState(false)
 
   const settings = useLiveQuery(() => db.settings.get('global'))
-  const sessionSize = settings?.sessionSize ?? 10
 
   const mode = getMode(modeId ?? '')
-  const session = useSession(mode, sessionSize)
 
   if (settings === undefined) {
     return (
@@ -46,6 +49,22 @@ export default function Study() {
       </div>
     )
   }
+
+  if (mode.id === 'numbers' && !numbersReady) {
+    return (
+      <div className={styles.container}>
+        <NumbersSetup onStart={() => setNumbersReady(true)} />
+      </div>
+    )
+  }
+
+  return <StudySession mode={mode} sessionSize={settings?.sessionSize ?? 10} />
+}
+
+function StudySession({ mode, sessionSize }: { mode: LearningMode; sessionSize: number }) {
+  const { t } = useTranslation()
+  const navigate = useNavigate()
+  const session = useSession(mode, sessionSize)
 
   if (session.status === 'loading') {
     return (
@@ -107,6 +126,9 @@ export default function Study() {
       )}
       {currentItem?.exerciseType === 'flip-card' && (
         <FlipCard key={currentItem.id} item={currentItem} onAnswer={session.submitAnswer} />
+      )}
+      {currentItem?.exerciseType === 'number-input' && (
+        <NumberInput key={currentItem.id} item={currentItem} onAnswer={session.submitAnswer} />
       )}
     </div>
   )

@@ -5,11 +5,13 @@ import i18n from './i18n'
 import { registerMode } from './modes/registry'
 import { db } from './db/index'
 import { VocabularyMode } from './modes/vocabulary/VocabularyMode'
+import { NumbersMode } from './modes/numbers/NumbersMode'
 import { seedDatabase } from './db/seed'
 import { ensureSettings } from './db/operations'
 import App from './App'
 
 registerMode(new VocabularyMode())
+registerMode(new NumbersMode())
 
 const root = createRoot(document.getElementById('root')!)
 root.render(

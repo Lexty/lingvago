@@ -91,6 +91,19 @@
     "import": "Import CSV",
     "empty": "No words in this deck"
   },
+  "numbers": {
+    "check": "Check",
+    "correct": "Correct!",
+    "wrong": "Wrong",
+    "writeNumber": "Write the number",
+    "writeWord": "Write in Portuguese",
+    "start": "Start",
+    "level100": "Up to 100",
+    "level1000": "Up to 1,000",
+    "level1m": "Up to 1,000,000",
+    "cheatSheet": "Cheat sheet",
+    "compositionHint": "Compound numbers use \"e\":"
+  },
   "common": {
     "save": "Save",
     "cancel": "Cancel",
