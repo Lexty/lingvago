@@ -21,10 +21,24 @@ export default function Stats() {
     const allCards = await db.cardStates.where('wordId').anyOf([...wordIds]).toArray()
     const cards = allCards.filter((cs) => directions.includes(cs.direction))
 
-    // Count by FSRS state
+    // Count cards by FSRS state (for bar chart)
     const stateCounts = [0, 0, 0, 0] // New, Learning, Review, Relearning
     for (const cs of cards) {
       if (cs.state >= 0 && cs.state <= 3) stateCounts[cs.state]++
+    }
+
+    // Count unique words by best card state (for summary)
+    // A word is "learned" if ANY of its cards reached Review (state=2)
+    const wordBestState = new Map<number, number>()
+    for (const cs of cards) {
+      const prev = wordBestState.get(cs.wordId) ?? -1
+      if (cs.state > prev) wordBestState.set(cs.wordId, cs.state)
+    }
+    let learnedWords = 0
+    let newWords = 0
+    for (const state of wordBestState.values()) {
+      if (state === 2) learnedWords++
+      else if (state === 0) newWords++
     }
 
     // Retention
@@ -40,8 +54,8 @@ export default function Stats() {
 
     return {
       totalWords: words.length,
-      learnedCount: stateCounts[2], // Review state
-      newCount: stateCounts[0],
+      learnedCount: learnedWords,
+      newCount: newWords,
       stateCounts,
       averageRetention,
       totalReviews,
@@ -62,7 +76,7 @@ export default function Stats() {
     return (
       <div className={styles.container}>
         <h1 className={styles.title}>{t('stats.title')}</h1>
-        <p className={styles.empty}>{t('decks.empty')}</p>
+        <p className={styles.empty}>{t('stats.noActiveDecks')}</p>
       </div>
     )
   }

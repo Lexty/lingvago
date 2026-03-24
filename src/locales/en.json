@@ -67,7 +67,8 @@
     "retention": "Retention",
     "totalReviews": "reviews",
     "sessions": "Recent sessions",
-    "noSessions": "No completed sessions"
+    "noSessions": "No completed sessions",
+    "noActiveDecks": "No active decks"
   },
   "decks": {
     "title": "Decks",

@@ -67,7 +67,8 @@
     "retention": "Запоминание",
     "totalReviews": "повторений",
     "sessions": "Последние сессии",
-    "noSessions": "Нет завершённых сессий"
+    "noSessions": "Нет завершённых сессий",
+    "noActiveDecks": "Нет активных колод"
   },
   "decks": {
     "title": "Колоды",
