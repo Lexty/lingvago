@@ -69,7 +69,7 @@ Deck is the primary word organization unit (like Anki decks). `Word.deckId` FK �
 
 ### Dexie Hooks
 
-`src/db/hooks.ts` — creating hook auto-generates two CardState records per Word (directions based on `studyLanguage`); deleting hook cascades removal. Deleting a Deck cascades to all its Words → CardStates.
+`src/db/hooks.ts` — deleting hooks only (cascade removal). Deleting a Deck cascades to all its Words → CardStates. **No creating hook** — CardState records are created explicitly alongside Word insertion (via `addWordWithCards` helper or inside a transaction). Dexie async hooks are unreliable for guaranteeing related record creation.
 
 ### i18n
 
@@ -82,6 +82,13 @@ UI language and study language are **independent** settings.
 ### Reactive Queries
 
 `useLiveQuery` from dexie-react-hooks returns `undefined` during initial load — always handle this in components.
+
+## Problem-Solving Principles
+
+- **Fix the root cause, not the symptom.** When a bug appears, don't patch around it — find and eliminate the architectural reason it was possible in the first place. Prefer redesigning the problematic part over adding workarounds.
+- **Pre-1.0: breaking changes are free.** While version is below 1.0.0, there is no backward compatibility constraint. Change schemas, APIs, data formats freely if it leads to a better design.
+- **If a mechanism is unreliable, don't use it.** Don't rely on async hooks, fire-and-forget callbacks, or implicit side effects for critical data integrity. Make important operations explicit and transactional.
+- **Defect found manually → consider adding an autotest.** When a bug is caught during manual testing (by a human or an agent), evaluate whether an automated test would prevent regression. Add one if the defect is non-trivial and testable. Don't add tests for things that are obvious or where the cost of the test outweighs the risk.
 
 ## Key Conventions
 

@@ -1,0 +1,108 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: var(--space-xl);
+  gap: var(--space-lg);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.ringContainer {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  margin: var(--space-md) 0;
+}
+
+.ring {
+  display: block;
+}
+
+.ringText {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ringScore {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+.ringPercent {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-xs);
+}
+
+.time {
+  display: flex;
+  gap: var(--space-sm);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+}
+
+.timeLabel {
+  font-weight: 500;
+}
+
+.noCards {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 280px;
+}
+
+.studyMoreButton {
+  padding: var(--space-md);
+  background: var(--color-accent);
+  color: #ffffff;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  transition: background 0.15s;
+}
+
+.studyMoreButton:hover {
+  background: var(--color-accent-hover);
+}
+
+.studyMoreButton:active {
+  transform: scale(0.98);
+}
+
+.homeButton {
+  padding: var(--space-md);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  border: 1px solid var(--color-border);
+  transition: background 0.15s;
+}
+
+.homeButton:active {
+  transform: scale(0.98);
+}

@@ -1,0 +1,47 @@
+export interface Deck {
+  id?: number
+  name: string
+  description: string
+  isActive: boolean
+  createdAt: number
+}
+
+export interface Word {
+  id?: number
+  pt: string
+  translations: Record<string, string>
+  deckId: number
+  createdAt: number
+}
+
+export interface CardState {
+  id?: number
+  wordId: number
+  direction: string
+  due: number
+  stability: number
+  difficulty: number
+  elapsed_days: number
+  scheduled_days: number
+  reps: number
+  lapses: number
+  state: number
+  last_review: number
+}
+
+export interface Session {
+  id?: number
+  modeId: string
+  startedAt: number
+  finishedAt: number
+  totalCards: number
+  correctCards: number
+}
+
+export interface Settings {
+  id: string
+  sessionSize: number
+  theme: 'light' | 'dark' | 'system'
+  uiLanguage: string
+  studyLanguage: string
+}

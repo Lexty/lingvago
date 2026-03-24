@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest'
 import App from './App'
 
 describe('App', () => {
-  it('renders app name', () => {
+  it('renders dashboard title', () => {
     render(<App />)
     expect(screen.getByText('Lingvago')).toBeInTheDocument()
   })
