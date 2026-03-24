@@ -197,13 +197,39 @@ export class VocabularyMode implements LearningMode {
   }
 
   private generateOptions(correct: string, pool: string[]): string[] {
-    const distractors = pool.filter((t) => t !== correct)
-    // Shuffle and pick 3
-    const shuffled = distractors.sort(() => Math.random() - 0.5)
-    const selected = shuffled.slice(0, 3)
-    // Combine with correct and shuffle
-    const options = [correct, ...selected]
-    return options.sort(() => Math.random() - 0.5)
+    const unique = [...new Set(pool.filter((t) => t !== correct))]
+    if (unique.length <= 3) {
+      return this.shuffle([correct, ...unique])
+    }
+
+    const correctWords = correct.split(/\s+/).length
+    const correctLen = correct.length
+
+    // Score each distractor: lower = more similar to correct answer
+    const scored = unique.map((text) => ({
+      text,
+      score:
+        Math.abs(text.split(/\s+/).length - correctWords) * 100 +
+        Math.abs(text.length - correctLen),
+    }))
+
+    scored.sort((a, b) => a.score - b.score)
+
+    // 1 confusing distractor (from top 5 most similar) + 2 random from the rest
+    const confusing = this.shuffle(scored.slice(0, Math.min(5, scored.length)))[0].text
+    const rest = unique.filter((t) => t !== confusing)
+    const random2 = this.shuffle(rest).slice(0, 2)
+
+    return this.shuffle([correct, confusing, ...random2])
+  }
+
+  private shuffle<T>(arr: T[]): T[] {
+    const copy = [...arr]
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[copy[i], copy[j]] = [copy[j], copy[i]]
+    }
+    return copy
   }
 
   private mapAnswerToRating(answer: Answer): number {
