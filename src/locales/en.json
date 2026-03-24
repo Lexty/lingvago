@@ -54,6 +54,21 @@
     "reset": "Reset all data",
     "resetConfirm": "Are you sure? All progress will be reset."
   },
+  "stats": {
+    "title": "Stats",
+    "totalWords": "Total words",
+    "learned": "Learned",
+    "newCards": "New",
+    "cardStates": "Card states",
+    "stateNew": "New",
+    "stateLearning": "Learning",
+    "stateReview": "Review",
+    "stateRelearning": "Relearning",
+    "retention": "Retention",
+    "totalReviews": "reviews",
+    "sessions": "Recent sessions",
+    "noSessions": "No completed sessions"
+  },
   "decks": {
     "title": "Decks",
     "name": "Name",

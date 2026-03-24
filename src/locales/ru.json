@@ -54,6 +54,21 @@
     "reset": "Сбросить все данные",
     "resetConfirm": "Вы уверены? Все данные будут удалены."
   },
+  "stats": {
+    "title": "Статистика",
+    "totalWords": "Всего слов",
+    "learned": "Изучено",
+    "newCards": "Новых",
+    "cardStates": "Состояние карточек",
+    "stateNew": "Новые",
+    "stateLearning": "Изучаемые",
+    "stateReview": "На повторе",
+    "stateRelearning": "Переучивание",
+    "retention": "Запоминание",
+    "totalReviews": "повторений",
+    "sessions": "Последние сессии",
+    "noSessions": "Нет завершённых сессий"
+  },
   "decks": {
     "title": "Колоды",
     "name": "Название",
