@@ -23,19 +23,9 @@ export default function GrammarInput({ item, onAnswer }: GrammarInputProps) {
   const [showCheat, setShowCheat] = useState(false)
 
   const category = item.payload.category as string
-  const isConjugation = category === 'conjugation'
-
-  const hint = isConjugation ? t('grammar.conjugate') : t('grammar.writePlural')
-
-  const contextLine = isConjugation ? (
-    <div className={styles.context}>
-      <span className={styles.person}>{item.payload.personLabel as string}</span>
-      <span className={styles.separator}>·</span>
-      <span className={styles.tense}>
-        {t(`grammar.tense.${item.payload.tense as string}`)}
-      </span>
-    </div>
-  ) : null
+  const hint = category === 'conjugation'
+    ? t('grammar.conjugate')
+    : t('grammar.writePlural')
 
   return (
     <TextInput
@@ -51,8 +41,6 @@ export default function GrammarInput({ item, onAnswer }: GrammarInputProps) {
         next: 'grammar.next',
       }}
     >
-      {contextLine}
-
       <button
         className={styles.cheatToggle}
         onClick={() => setShowCheat((v) => !v)}

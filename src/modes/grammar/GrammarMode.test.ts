@@ -8,13 +8,12 @@ const mode = new GrammarMode()
 
 beforeEach(async () => {
   await db.sessions.clear()
-  // Reset to defaults
   setCategories(['conjugation'])
   setTenses(['presente'])
 })
 
 describe('GrammarMode.getSessionItems', () => {
-  it('generates conjugation items with correct structure', async () => {
+  it('generates conjugation items as sentences with blanks', async () => {
     setCategories(['conjugation'])
     setTenses(['presente'])
 
@@ -24,10 +23,8 @@ describe('GrammarMode.getSessionItems', () => {
     for (const item of items) {
       expect(item.exerciseType).toBe('grammar-input')
       expect(item.payload.category).toBe('conjugation')
-      expect(item.payload.tense).toBe('presente')
-      expect(typeof item.payload.person).toBe('string')
-      expect(typeof item.payload.personLabel).toBe('string')
-      expect(item.question.length).toBeGreaterThan(0)
+      expect(item.question).toContain('___')
+      expect(item.question).toContain('(')
       expect(item.correctAnswer.length).toBeGreaterThan(0)
     }
   })
@@ -49,7 +46,7 @@ describe('GrammarMode.getSessionItems', () => {
     }
   })
 
-  it('generates article items as multiple-choice with 2 options', async () => {
+  it('generates article items as sentences with blanks', async () => {
     setCategories(['articles'])
 
     const items = await mode.getSessionItems(5)
@@ -58,12 +55,13 @@ describe('GrammarMode.getSessionItems', () => {
     for (const item of items) {
       expect(item.exerciseType).toBe('multiple-choice')
       expect(item.payload.category).toBe('articles')
+      expect(item.question).toContain('___')
       expect(item.options).toBeDefined()
       expect(item.options!.length).toBe(2)
     }
   })
 
-  it('generates plural items as grammar-input', async () => {
+  it('generates plural items as sentences with blanks', async () => {
     setCategories(['plural'])
 
     const items = await mode.getSessionItems(5)
@@ -72,7 +70,8 @@ describe('GrammarMode.getSessionItems', () => {
     for (const item of items) {
       expect(item.exerciseType).toBe('grammar-input')
       expect(item.payload.category).toBe('plural')
-      expect(item.question.length).toBeGreaterThan(0)
+      expect(item.question).toContain('___')
+      expect(item.question).toContain('(')
       expect(item.correctAnswer.length).toBeGreaterThan(0)
     }
   })
@@ -124,7 +123,6 @@ describe('GrammarMode.getSessionItems', () => {
     const items = await mode.getSessionItems(30)
     const usedTenses = new Set(items.map((i) => i.payload.tense as string))
 
-    // With 30 items and 3 tenses, at least 2 should be used
     expect(usedTenses.size).toBeGreaterThanOrEqual(2)
   })
 })

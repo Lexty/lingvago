@@ -1,5 +1,6 @@
 import type { SessionItem } from '../../types'
 import { NOUNS } from '../data/nouns'
+import { PLURAL_TEMPLATES } from '../data/sentences'
 
 function shuffle<T>(arr: T[]): T[] {
   const copy = [...arr]
@@ -13,14 +14,19 @@ function shuffle<T>(arr: T[]): T[] {
 export function generatePluralItems(count: number): SessionItem[] {
   const nouns = shuffle(NOUNS).slice(0, count)
 
-  return nouns.map((noun, i) => ({
-    id: `plr-${i}-${Date.now()}`,
-    question: noun.word,
-    correctAnswer: noun.plural,
-    exerciseType: 'grammar-input',
-    payload: {
-      category: 'plural',
-      translation: noun.translation,
-    },
-  }))
+  return nouns.map((noun, i) => {
+    const template = PLURAL_TEMPLATES[Math.floor(Math.random() * PLURAL_TEMPLATES.length)]
+    const question = template.template.replace('{noun}', noun.word)
+
+    return {
+      id: `plr-${i}-${Date.now()}`,
+      question,
+      correctAnswer: noun.plural,
+      exerciseType: 'grammar-input',
+      payload: {
+        category: 'plural',
+        translation: noun.translation,
+      },
+    }
+  })
 }

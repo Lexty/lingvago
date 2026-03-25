@@ -6,3 +6,6 @@ export type { NounData } from './nouns'
 
 export { PREPOSITIONS } from './prepositions'
 export type { PrepositionItem } from './prepositions'
+
+export { CONJUGATION_TEMPLATES, ARTICLE_TEMPLATES, PLURAL_TEMPLATES } from './sentences'
+export type { ConjugationTemplate, ArticleTemplate, ArticleType, PluralTemplate } from './sentences'

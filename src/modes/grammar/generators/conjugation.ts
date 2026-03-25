@@ -1,6 +1,7 @@
 import type { SessionItem } from '../../types'
 import type { Tense, Person } from '../data/verbs'
-import { VERBS, PERSON_LABELS } from '../data/verbs'
+import { VERBS } from '../data/verbs'
+import { CONJUGATION_TEMPLATES } from '../data/sentences'
 
 function shuffle<T>(arr: T[]): T[] {
   const copy = [...arr]
@@ -22,16 +23,23 @@ export function generateConjugationItems(count: number, tenses: Tense[]): Sessio
     const person = PERSONS[Math.floor(Math.random() * PERSONS.length)]
     const correctAnswer = verb.conjugations[tense][person]
 
+    // Pick a random template for this person+tense
+    const matching = CONJUGATION_TEMPLATES.filter(
+      (t) => t.person === person && t.tense === tense,
+    )
+    const template = matching[Math.floor(Math.random() * matching.length)]
+
+    const question = template.template.replace('{verb}', verb.infinitive)
+
     items.push({
       id: `conj-${i}-${Date.now()}`,
-      question: verb.infinitive,
+      question,
       correctAnswer,
       exerciseType: 'grammar-input',
       payload: {
         category: 'conjugation',
         tense,
         person,
-        personLabel: PERSON_LABELS[person],
       },
     })
   }
