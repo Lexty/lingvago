@@ -100,7 +100,17 @@ export default function WordOrder({ item, onAnswer }: WordOrderProps) {
       {hintKey && <p className={styles.hint}>{t(hintKey)}</p>}
 
       {translationText && (
-        <div className={styles.question}>{translationText}</div>
+        <>
+          <button
+            className={styles.translationToggle}
+            onClick={() => setShowTranslation((v) => !v)}
+          >
+            {t('common.translation')} {showTranslation ? '▲' : '▼'}
+          </button>
+          {showTranslation && (
+            <p className={styles.translationText}>{translationText}</p>
+          )}
+        </>
       )}
 
       <div
@@ -189,23 +199,6 @@ export default function WordOrder({ item, onAnswer }: WordOrderProps) {
         </>
       )}
 
-      {!translationText && (() => {
-        const fallback = getTranslationText(item.payload, i18n.language)
-        if (!fallback) return null
-        return (
-          <>
-            <button
-              className={styles.translationToggle}
-              onClick={() => setShowTranslation((v) => !v)}
-            >
-              {t('common.translation')} {showTranslation ? '▲' : '▼'}
-            </button>
-            {showTranslation && (
-              <p className={styles.translationText}>{fallback}</p>
-            )}
-          </>
-        )
-      })()}
     </div>
   )
 }
