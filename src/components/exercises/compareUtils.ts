@@ -34,6 +34,7 @@ export function levenshtein(a: string, b: string): number {
 export function fuzzyCompare(
   input: string,
   correct: string,
+  options?: { allowTypos?: boolean },
 ): 'exact' | 'close' | 'wrong' {
   const normInput = normalize(input)
   const normCorrect = normalize(correct)
@@ -43,8 +44,9 @@ export function fuzzyCompare(
   // Close match: same letters but different accents
   if (stripAccents(normInput) === stripAccents(normCorrect)) return 'close'
 
-  // Close match: Levenshtein distance ≤ 1
-  if (normInput.length > 2 && levenshtein(normInput, normCorrect) <= 1) return 'close'
+  // Close match: Levenshtein distance ≤ 1 (opt-out for vocabulary where 1-char
+  // differences like gata/gato, falo/fala are distinct words, not typos)
+  if (options?.allowTypos !== false && normInput.length > 2 && levenshtein(normInput, normCorrect) <= 1) return 'close'
 
   return 'wrong'
 }

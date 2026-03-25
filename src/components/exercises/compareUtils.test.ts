@@ -88,4 +88,23 @@ describe('fuzzyCompare', () => {
   it('returns wrong for multi-char differences', () => {
     expect(fuzzyCompare('falar', 'comer')).toBe('wrong')
   })
+
+  describe('allowTypos: false (vocabulary mode)', () => {
+    it('still returns close for accent-only differences', () => {
+      expect(fuzzyCompare('cafe', 'café', { allowTypos: false })).toBe('close')
+      expect(fuzzyCompare('informacao', 'informação', { allowTypos: false })).toBe('close')
+    })
+
+    it('returns wrong for single-char typo (not accent)', () => {
+      expect(fuzzyCompare('gata', 'gato', { allowTypos: false })).toBe('wrong')
+      expect(fuzzyCompare('falo', 'fala', { allowTypos: false })).toBe('wrong')
+      expect(fuzzyCompare('pela', 'pelo', { allowTypos: false })).toBe('wrong')
+      expect(fuzzyCompare('casas', 'casa', { allowTypos: false })).toBe('wrong')
+    })
+
+    it('default (no options) still allows typos', () => {
+      expect(fuzzyCompare('gata', 'gato')).toBe('close')
+      expect(fuzzyCompare('casas', 'casa')).toBe('close')
+    })
+  })
 })
