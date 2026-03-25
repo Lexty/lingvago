@@ -11,27 +11,23 @@ function shuffle<T>(arr: T[]): T[] {
   return copy
 }
 
-const ARTICLE_OPTIONS: Record<ArticleType, string[]> = {
-  def: ['o', 'a'],
-  indef: ['um', 'uma'],
-  defPl: ['os', 'as'],
-  indefPl: ['uns', 'umas'],
-}
+// 4 options per number: mix definite + indefinite for harder exercise
+const SINGULAR_OPTIONS = ['o', 'a', 'um', 'uma']
+const PLURAL_OPTIONS = ['os', 'as', 'uns', 'umas']
 
 export function generateArticleItems(count: number): SessionItem[] {
   const nouns = shuffle(NOUNS).slice(0, count)
 
   return nouns.map((noun, i) => {
-    // Pick a random article type and matching template
     const templates = shuffle(ARTICLE_TEMPLATES)
     const template = templates[0]
-    const articleType = template.articleType
+    const articleType: ArticleType = template.articleType
     const correct = noun.articles[articleType]
 
     const isPlural = articleType === 'defPl' || articleType === 'indefPl'
     const nounForm = isPlural ? noun.plural : noun.word
     const question = template.template.replace('{noun}', nounForm)
-    const options = shuffle(ARTICLE_OPTIONS[articleType])
+    const options = shuffle(isPlural ? [...PLURAL_OPTIONS] : [...SINGULAR_OPTIONS])
 
     return {
       id: `art-${i}-${Date.now()}`,
@@ -43,6 +39,7 @@ export function generateArticleItems(count: number): SessionItem[] {
         category: 'articles',
         articleType,
         translation: noun.translation,
+        hint: 'grammar.articleQuestion',
       },
     }
   })

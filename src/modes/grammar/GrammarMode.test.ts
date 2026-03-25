@@ -57,7 +57,7 @@ describe('GrammarMode.getSessionItems', () => {
       expect(item.payload.category).toBe('articles')
       expect(item.question).toContain('___')
       expect(item.options).toBeDefined()
-      expect(item.options!.length).toBe(2)
+      expect(item.options!.length).toBe(4)
     }
   })
 

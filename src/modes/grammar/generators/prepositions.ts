@@ -22,6 +22,7 @@ export function generatePrepositionItems(count: number): SessionItem[] {
     payload: {
       category: 'prepositions',
       translation: item.translation,
+      hint: 'grammar.prepositionQuestion',
     },
   }))
 }

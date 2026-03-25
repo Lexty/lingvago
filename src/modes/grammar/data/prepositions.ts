@@ -248,9 +248,15 @@ export const PREPOSITIONS: PrepositionItem[] = [
     distractors: ['no', 'do', 'pelo'],
   },
   {
-    sentence: 'As crianças gostam ___ brincar ___ parque.',
+    sentence: 'As crianças gostam ___ brincar.',
     answer: 'de',
-    translation: { ru: 'Дети любят играть в парке.', en: 'The children like to play in the park.' },
+    translation: { ru: 'Дети любят играть.', en: 'The children like to play.' },
     distractors: ['em', 'a', 'para'],
+  },
+  {
+    sentence: 'As crianças brincam ___ parque.',
+    answer: 'no',
+    translation: { ru: 'Дети играют в парке.', en: 'The children play in the park.' },
+    distractors: ['ao', 'do', 'pelo'],
   },
 ]

@@ -22,6 +22,7 @@ export function generateGenderItems(count: number): SessionItem[] {
     payload: {
       category: 'gender',
       translation: noun.translation,
+      hint: 'grammar.genderQuestion',
     },
   }))
 }

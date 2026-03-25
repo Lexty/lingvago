@@ -66,8 +66,11 @@ export default function MultipleChoice({ item, onAnswer }: MultipleChoiceProps) 
 
   const translationText = getTranslationText(item.payload, i18n.language)
 
+  const hintKey = item.payload.hint as string | undefined
+
   return (
     <div className={styles.container}>
+      {hintKey && <p className={styles.hint}>{t(hintKey)}</p>}
       <div className={styles.question}>{item.question}</div>
       <div className={styles.optionsGrid}>
         {item.options?.map((option) => (
