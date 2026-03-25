@@ -128,6 +128,7 @@ describe('seedDatabase', () => {
       theme: 'system',
       uiLanguage: 'en',
       studyLanguage: 'en',
+      strictAccents: true,
     })
 
     await seedDatabase()

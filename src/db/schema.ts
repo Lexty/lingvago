@@ -63,4 +63,5 @@ export interface Settings {
   theme: 'light' | 'dark' | 'system'
   uiLanguage: string
   studyLanguage: string
+  strictAccents: boolean
 }

@@ -15,6 +15,7 @@ export async function ensureSettings(): Promise<void> {
     theme: 'system',
     uiLanguage: navigator.language.startsWith('ru') ? 'ru' : 'en',
     studyLanguage: 'ru',
+    strictAccents: true,
   })
 }
 

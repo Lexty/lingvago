@@ -79,6 +79,12 @@
   color: var(--color-text-secondary);
 }
 
+.settingDesc {
+  margin: 0 0 var(--space-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
 .dangerSection {
   margin-top: var(--space-2xl);
   padding-top: var(--space-lg);

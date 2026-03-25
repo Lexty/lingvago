@@ -107,4 +107,24 @@ describe('fuzzyCompare', () => {
       expect(fuzzyCompare('casas', 'casa')).toBe('close')
     })
   })
+
+  describe('strictAccents: true', () => {
+    it('returns wrong for accent-only differences', () => {
+      expect(fuzzyCompare('cafe', 'café', { strictAccents: true })).toBe('wrong')
+      expect(fuzzyCompare('informacao', 'informação', { strictAccents: true })).toBe('wrong')
+    })
+
+    it('still returns exact for identical strings', () => {
+      expect(fuzzyCompare('café', 'café', { strictAccents: true })).toBe('exact')
+    })
+
+    it('can combine with allowTypos: false', () => {
+      expect(fuzzyCompare('cafe', 'café', { strictAccents: true, allowTypos: false })).toBe('wrong')
+      expect(fuzzyCompare('gata', 'gato', { strictAccents: true, allowTypos: false })).toBe('wrong')
+    })
+
+    it('default (no option) treats accents as close', () => {
+      expect(fuzzyCompare('cafe', 'café')).toBe('close')
+    })
+  })
 })

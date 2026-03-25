@@ -31,22 +31,31 @@ export function levenshtein(a: string, b: string): number {
   return matrix[a.length][b.length]
 }
 
+export interface FuzzyCompareOptions {
+  /** Allow Levenshtein ≤ 1 as "close" (default: true). Vocabulary disables this. */
+  allowTypos?: boolean
+  /** Treat accent-only differences as "wrong" instead of "close" (default: false). */
+  strictAccents?: boolean
+}
+
 export function fuzzyCompare(
   input: string,
   correct: string,
-  options?: { allowTypos?: boolean },
+  options?: FuzzyCompareOptions,
 ): 'exact' | 'close' | 'wrong' {
   const normInput = normalize(input)
   const normCorrect = normalize(correct)
 
   if (normInput === normCorrect) return 'exact'
 
-  // Close match: same letters but different accents
-  if (stripAccents(normInput) === stripAccents(normCorrect)) return 'close'
+  const isAccentDiff = stripAccents(normInput) === stripAccents(normCorrect)
 
-  // Close match: Levenshtein distance ≤ 1 (opt-out for vocabulary where 1-char
-  // differences like gata/gato, falo/fala are distinct words, not typos)
-  if (options?.allowTypos !== false && normInput.length > 2 && levenshtein(normInput, normCorrect) <= 1) return 'close'
+  // Close match: same letters but different accents (unless strict mode)
+  if (!options?.strictAccents && isAccentDiff) return 'close'
+
+  // Close match: Levenshtein distance ≤ 1 (opt-out for vocabulary; also skip
+  // if it's an accent difference — Levenshtein catches those too)
+  if (options?.allowTypos !== false && !isAccentDiff && normInput.length > 2 && levenshtein(normInput, normCorrect) <= 1) return 'close'
 
   return 'wrong'
 }

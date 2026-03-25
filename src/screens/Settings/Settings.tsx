@@ -13,6 +13,7 @@ export default function Settings() {
 
   const uiLanguage = settings?.uiLanguage ?? (navigator.language.startsWith('ru') ? 'ru' : 'en')
   const sessionSize = settings?.sessionSize ?? 10
+  const strictAccents = settings?.strictAccents ?? true
 
   const updateSetting = async (patch: Record<string, unknown>) => {
     const existing = await db.settings.get('global')
@@ -25,6 +26,7 @@ export default function Settings() {
         theme: 'system',
         uiLanguage: navigator.language.startsWith('ru') ? 'ru' : 'en',
         studyLanguage: 'ru',
+        strictAccents: true,
         ...patch,
       })
     }
@@ -107,6 +109,23 @@ export default function Settings() {
             onChange={(e) => handleSessionSizeChange(Number(e.target.value))}
           />
           <span className={styles.cardsLabel}>{t('settings.cards')}</span>
+        </div>
+      </div>
+
+      <div className={styles.section}>
+        <label className={styles.label}>{t('settings.strictAccents')}</label>
+        <p className={styles.settingDesc}>{t('settings.strictAccentsDesc')}</p>
+        <div className={styles.themeGroup}>
+          {([true, false] as const).map((value) => (
+            <button
+              key={String(value)}
+              className={styles.themeButton}
+              data-active={strictAccents === value}
+              onClick={() => updateSetting({ strictAccents: value })}
+            >
+              {value ? t('settings.on') : t('settings.off')}
+            </button>
+          ))}
         </div>
       </div>
 

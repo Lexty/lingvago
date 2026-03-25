@@ -55,6 +55,10 @@
     "themeSystem": "System",
     "sessionSize": "Session size",
     "cards": "cards",
+    "strictAccents": "Strict accents",
+    "strictAccentsDesc": "Treat missing accents as errors",
+    "on": "On",
+    "off": "Off",
     "reset": "Reset all data",
     "resetConfirm": "Are you sure? All progress will be reset.",
     "version": "Version"

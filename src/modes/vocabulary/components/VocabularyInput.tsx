@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next'
+import { useLiveQuery } from 'dexie-react-hooks'
 import { TextInput } from '../../../components/exercises'
 import { fuzzyCompare } from '../../../components/exercises/compareUtils'
+import { db } from '../../../db/index'
 import type { SessionItem, Answer } from '../../types'
 
 interface VocabularyInputProps {
@@ -10,11 +12,11 @@ interface VocabularyInputProps {
 
 export default function VocabularyInput({ item, onAnswer }: VocabularyInputProps) {
   const { t } = useTranslation()
+  const settings = useLiveQuery(() => db.settings.get('global'))
+  const strictAccents = settings?.strictAccents ?? true
 
-  // Accent-only close matching for vocabulary: 1-char differences like
-  // gata/gato are distinct words, not typos — only accent differences count.
   const compare = (input: string, correct: string) =>
-    fuzzyCompare(input, correct, { allowTypos: false })
+    fuzzyCompare(input, correct, { allowTypos: false, strictAccents })
 
   const handleAnswer = (answer: Answer) => {
     // Enrich answer with nuanced result for FSRS rating.
