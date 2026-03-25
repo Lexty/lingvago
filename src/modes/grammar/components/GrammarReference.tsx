@@ -38,6 +38,11 @@ function ConjugationReference() {
     },
   ]
 
+  const pronounMapping = [
+    ['você / o senhor / a senhora', '→ ele/ela'],
+    ['vocês / os senhores / as senhoras', '→ eles/elas'],
+  ]
+
   return (
     <div className={styles.container}>
       <p className={styles.heading}>{t('grammar.refEndings')}</p>
@@ -54,6 +59,15 @@ function ConjugationReference() {
           ))}
         </div>
       ))}
+      <div className={styles.group}>
+        <p className={styles.groupLabel}>{t('grammar.refPronounMapping')}</p>
+        {pronounMapping.map(([pronouns, target]) => (
+          <div key={pronouns} className={styles.row}>
+            <span className={styles.rowLabel}>{pronouns}</span>
+            <span className={styles.rowValue}>{target}</span>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

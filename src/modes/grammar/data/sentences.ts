@@ -79,6 +79,50 @@ export const CONJUGATION_TEMPLATES: ConjugationTemplate[] = [
   },
 
   // ──────────────────────────────────────────────
+  // Presente — você (= ele/ela)
+  // ──────────────────────────────────────────────
+  {
+    person: 'ele_ela',
+    tense: 'presente',
+    template: 'Você ___ ({verb}) todos os dias?',
+    translation: { ru: 'Вы ___ ({verb}) каждый день?', en: 'Do you ___ ({verb}) every day?' },
+  },
+  {
+    person: 'ele_ela',
+    tense: 'presente',
+    template: 'Você ___ ({verb}) bem.',
+    translation: { ru: 'Вы ___ ({verb}) хорошо.', en: 'You ___ ({verb}) well.' },
+  },
+  {
+    person: 'ele_ela',
+    tense: 'presente',
+    template: 'Você ___ ({verb}) muito?',
+    translation: { ru: 'Вы ___ ({verb}) много?', en: 'Do you ___ ({verb}) a lot?' },
+  },
+
+  // ──────────────────────────────────────────────
+  // Presente — o senhor / a senhora (= ele/ela)
+  // ──────────────────────────────────────────────
+  {
+    person: 'ele_ela',
+    tense: 'presente',
+    template: 'O senhor ___ ({verb}) aqui?',
+    translation: { ru: 'Вы ___ ({verb}) здесь?', en: 'Do you ___ ({verb}) here, sir?' },
+  },
+  {
+    person: 'ele_ela',
+    tense: 'presente',
+    template: 'A senhora ___ ({verb}) todos os dias?',
+    translation: { ru: 'Вы ___ ({verb}) каждый день?', en: 'Do you ___ ({verb}) every day, ma\'am?' },
+  },
+  {
+    person: 'ele_ela',
+    tense: 'presente',
+    template: 'O senhor ___ ({verb}) bem.',
+    translation: { ru: 'Вы ___ ({verb}) хорошо.', en: 'You ___ ({verb}) well, sir.' },
+  },
+
+  // ──────────────────────────────────────────────
   // Presente — nós
   // ──────────────────────────────────────────────
   {
@@ -120,6 +164,50 @@ export const CONJUGATION_TEMPLATES: ConjugationTemplate[] = [
     tense: 'presente',
     template: 'Elas ___ ({verb}) muito.',
     translation: { ru: 'Они ___ ({verb}) много.', en: 'They ___ ({verb}) a lot.' },
+  },
+
+  // ──────────────────────────────────────────────
+  // Presente — vocês (= eles/elas)
+  // ──────────────────────────────────────────────
+  {
+    person: 'eles_elas',
+    tense: 'presente',
+    template: 'Vocês ___ ({verb}) juntos?',
+    translation: { ru: 'Вы ___ ({verb}) вместе?', en: 'Do you ___ ({verb}) together?' },
+  },
+  {
+    person: 'eles_elas',
+    tense: 'presente',
+    template: 'Vocês ___ ({verb}) todos os dias?',
+    translation: { ru: 'Вы ___ ({verb}) каждый день?', en: 'Do you all ___ ({verb}) every day?' },
+  },
+  {
+    person: 'eles_elas',
+    tense: 'presente',
+    template: 'Vocês ___ ({verb}) muito?',
+    translation: { ru: 'Вы ___ ({verb}) много?', en: 'Do you all ___ ({verb}) a lot?' },
+  },
+
+  // ──────────────────────────────────────────────
+  // Presente — os senhores / as senhoras (= eles/elas)
+  // ──────────────────────────────────────────────
+  {
+    person: 'eles_elas',
+    tense: 'presente',
+    template: 'Os senhores ___ ({verb}) aqui?',
+    translation: { ru: 'Вы ___ ({verb}) здесь?', en: 'Do you ___ ({verb}) here, sirs?' },
+  },
+  {
+    person: 'eles_elas',
+    tense: 'presente',
+    template: 'As senhoras ___ ({verb}) todos os dias?',
+    translation: { ru: 'Вы ___ ({verb}) каждый день?', en: 'Do you ___ ({verb}) every day, ladies?' },
+  },
+  {
+    person: 'eles_elas',
+    tense: 'presente',
+    template: 'Os senhores ___ ({verb}) bem.',
+    translation: { ru: 'Вы ___ ({verb}) хорошо.', en: 'You ___ ({verb}) well, sirs.' },
   },
 
   // ──────────────────────────────────────────────
@@ -189,6 +277,50 @@ export const CONJUGATION_TEMPLATES: ConjugationTemplate[] = [
   },
 
   // ──────────────────────────────────────────────
+  // Pretérito Perfeito — você (= ele/ela)
+  // ──────────────────────────────────────────────
+  {
+    person: 'ele_ela',
+    tense: 'preterito_perfeito',
+    template: 'Você ___ ({verb}) ontem?',
+    translation: { ru: 'Вы ___ ({verb}) вчера?', en: 'Did you ___ ({verb}) yesterday?' },
+  },
+  {
+    person: 'ele_ela',
+    tense: 'preterito_perfeito',
+    template: 'Você ___ ({verb}) no fim de semana?',
+    translation: { ru: 'Вы ___ ({verb}) в выходные?', en: 'Did you ___ ({verb}) on the weekend?' },
+  },
+  {
+    person: 'ele_ela',
+    tense: 'preterito_perfeito',
+    template: 'Você ___ ({verb}) bem ontem.',
+    translation: { ru: 'Вы ___ ({verb}) хорошо вчера.', en: 'You ___ ({verb}) well yesterday.' },
+  },
+
+  // ──────────────────────────────────────────────
+  // Pretérito Perfeito — o senhor / a senhora (= ele/ela)
+  // ──────────────────────────────────────────────
+  {
+    person: 'ele_ela',
+    tense: 'preterito_perfeito',
+    template: 'A senhora ___ ({verb}) ontem?',
+    translation: { ru: 'Вы ___ ({verb}) вчера?', en: 'Did you ___ ({verb}) yesterday, ma\'am?' },
+  },
+  {
+    person: 'ele_ela',
+    tense: 'preterito_perfeito',
+    template: 'O senhor ___ ({verb}) na semana passada?',
+    translation: { ru: 'Вы ___ ({verb}) на прошлой неделе?', en: 'Did you ___ ({verb}) last week, sir?' },
+  },
+  {
+    person: 'ele_ela',
+    tense: 'preterito_perfeito',
+    template: 'A senhora ___ ({verb}) muito ontem.',
+    translation: { ru: 'Вы ___ ({verb}) много вчера.', en: 'You ___ ({verb}) a lot yesterday, ma\'am.' },
+  },
+
+  // ──────────────────────────────────────────────
   // Pretérito Perfeito — nós
   // ──────────────────────────────────────────────
   {
@@ -230,6 +362,50 @@ export const CONJUGATION_TEMPLATES: ConjugationTemplate[] = [
     tense: 'preterito_perfeito',
     template: 'Elas ___ ({verb}) na semana passada.',
     translation: { ru: 'Они ___ ({verb}) на прошлой неделе.', en: 'They ___ ({verb}) last week.' },
+  },
+
+  // ──────────────────────────────────────────────
+  // Pretérito Perfeito — vocês (= eles/elas)
+  // ──────────────────────────────────────────────
+  {
+    person: 'eles_elas',
+    tense: 'preterito_perfeito',
+    template: 'Vocês ___ ({verb}) ontem?',
+    translation: { ru: 'Вы ___ ({verb}) вчера?', en: 'Did you all ___ ({verb}) yesterday?' },
+  },
+  {
+    person: 'eles_elas',
+    tense: 'preterito_perfeito',
+    template: 'Vocês ___ ({verb}) no sábado?',
+    translation: { ru: 'Вы ___ ({verb}) в субботу?', en: 'Did you all ___ ({verb}) on Saturday?' },
+  },
+  {
+    person: 'eles_elas',
+    tense: 'preterito_perfeito',
+    template: 'Vocês ___ ({verb}) juntos ontem?',
+    translation: { ru: 'Вы ___ ({verb}) вместе вчера?', en: 'Did you all ___ ({verb}) together yesterday?' },
+  },
+
+  // ──────────────────────────────────────────────
+  // Pretérito Perfeito — os senhores / as senhoras (= eles/elas)
+  // ──────────────────────────────────────────────
+  {
+    person: 'eles_elas',
+    tense: 'preterito_perfeito',
+    template: 'As senhoras ___ ({verb}) ontem?',
+    translation: { ru: 'Вы ___ ({verb}) вчера?', en: 'Did you ___ ({verb}) yesterday, ladies?' },
+  },
+  {
+    person: 'eles_elas',
+    tense: 'preterito_perfeito',
+    template: 'Os senhores ___ ({verb}) na semana passada?',
+    translation: { ru: 'Вы ___ ({verb}) на прошлой неделе?', en: 'Did you ___ ({verb}) last week, sirs?' },
+  },
+  {
+    person: 'eles_elas',
+    tense: 'preterito_perfeito',
+    template: 'As senhoras ___ ({verb}) muito ontem.',
+    translation: { ru: 'Вы ___ ({verb}) много вчера.', en: 'You ___ ({verb}) a lot yesterday, ladies.' },
   },
 
   // ──────────────────────────────────────────────
@@ -299,6 +475,50 @@ export const CONJUGATION_TEMPLATES: ConjugationTemplate[] = [
   },
 
   // ──────────────────────────────────────────────
+  // Pretérito Imperfeito — você (= ele/ela)
+  // ──────────────────────────────────────────────
+  {
+    person: 'ele_ela',
+    tense: 'preterito_imperfeito',
+    template: 'Você ___ ({verb}) muito antes?',
+    translation: { ru: 'Вы ___ ({verb}) много раньше?', en: 'Did you used to ___ ({verb}) a lot before?' },
+  },
+  {
+    person: 'ele_ela',
+    tense: 'preterito_imperfeito',
+    template: 'Quando era jovem, você ___ ({verb}) muito.',
+    translation: { ru: 'Когда вы были молодым, вы ___ ({verb}) много.', en: 'When you were young, you used to ___ ({verb}) a lot.' },
+  },
+  {
+    person: 'ele_ela',
+    tense: 'preterito_imperfeito',
+    template: 'Antes, você ___ ({verb}) todos os dias.',
+    translation: { ru: 'Раньше вы ___ ({verb}) каждый день.', en: 'Before, you used to ___ ({verb}) every day.' },
+  },
+
+  // ──────────────────────────────────────────────
+  // Pretérito Imperfeito — o senhor / a senhora (= ele/ela)
+  // ──────────────────────────────────────────────
+  {
+    person: 'ele_ela',
+    tense: 'preterito_imperfeito',
+    template: 'O senhor ___ ({verb}) muito antes?',
+    translation: { ru: 'Вы ___ ({verb}) много раньше?', en: 'Did you used to ___ ({verb}) a lot before, sir?' },
+  },
+  {
+    person: 'ele_ela',
+    tense: 'preterito_imperfeito',
+    template: 'A senhora ___ ({verb}) todos os dias antes.',
+    translation: { ru: 'Вы ___ ({verb}) каждый день раньше.', en: 'You used to ___ ({verb}) every day before, ma\'am.' },
+  },
+  {
+    person: 'ele_ela',
+    tense: 'preterito_imperfeito',
+    template: 'Antes, o senhor ___ ({verb}) aqui.',
+    translation: { ru: 'Раньше вы ___ ({verb}) здесь.', en: 'Before, you used to ___ ({verb}) here, sir.' },
+  },
+
+  // ──────────────────────────────────────────────
   // Pretérito Imperfeito — nós
   // ──────────────────────────────────────────────
   {
@@ -340,6 +560,50 @@ export const CONJUGATION_TEMPLATES: ConjugationTemplate[] = [
     tense: 'preterito_imperfeito',
     template: 'Elas ___ ({verb}) quando eram pequenas.',
     translation: { ru: 'Они ___ ({verb}), когда были маленькими.', en: 'They used to ___ ({verb}) when they were little.' },
+  },
+
+  // ──────────────────────────────────────────────
+  // Pretérito Imperfeito — vocês (= eles/elas)
+  // ──────────────────────────────────────────────
+  {
+    person: 'eles_elas',
+    tense: 'preterito_imperfeito',
+    template: 'Vocês ___ ({verb}) muito antes?',
+    translation: { ru: 'Вы ___ ({verb}) много раньше?', en: 'Did you all used to ___ ({verb}) a lot before?' },
+  },
+  {
+    person: 'eles_elas',
+    tense: 'preterito_imperfeito',
+    template: 'Antes, vocês ___ ({verb}) juntos.',
+    translation: { ru: 'Раньше вы ___ ({verb}) вместе.', en: 'Before, you all used to ___ ({verb}) together.' },
+  },
+  {
+    person: 'eles_elas',
+    tense: 'preterito_imperfeito',
+    template: 'Vocês ___ ({verb}) todos os fins de semana?',
+    translation: { ru: 'Вы ___ ({verb}) каждые выходные?', en: 'Did you all used to ___ ({verb}) every weekend?' },
+  },
+
+  // ──────────────────────────────────────────────
+  // Pretérito Imperfeito — os senhores / as senhoras (= eles/elas)
+  // ──────────────────────────────────────────────
+  {
+    person: 'eles_elas',
+    tense: 'preterito_imperfeito',
+    template: 'Os senhores ___ ({verb}) muito antes?',
+    translation: { ru: 'Вы ___ ({verb}) много раньше?', en: 'Did you used to ___ ({verb}) a lot before, sirs?' },
+  },
+  {
+    person: 'eles_elas',
+    tense: 'preterito_imperfeito',
+    template: 'As senhoras ___ ({verb}) todos os dias antes.',
+    translation: { ru: 'Вы ___ ({verb}) каждый день раньше.', en: 'You used to ___ ({verb}) every day before, ladies.' },
+  },
+  {
+    person: 'eles_elas',
+    tense: 'preterito_imperfeito',
+    template: 'Antes, os senhores ___ ({verb}) aqui.',
+    translation: { ru: 'Раньше вы ___ ({verb}) здесь.', en: 'Before, you used to ___ ({verb}) here, sirs.' },
   },
 ]
 
