@@ -48,14 +48,14 @@ describe('seedDatabase', () => {
     expect(ruToPt.length).toBe(226)
   })
 
-  it('adds missing seed decks when old seed decks exist (v2→v3 migration)', async () => {
-    // Simulate existing DB with old seed decks (have seedId for starter/passaporte)
+  it('backfills seedId on pre-v3 decks and does not duplicate them', async () => {
+    // Simulate pre-v3 DB: decks exist but without seedId (the actual bug)
     const deckId1 = (await db.decks.add({
       name: 'Starter',
       description: 'Базовые слова',
       isActive: true,
-      seedId: 'starter',
       createdAt: Date.now(),
+      // no seedId — this is the pre-v3 state
     })) as number
     await addWordWithCards(
       { pt: 'olá', translations: { ru: 'привет' }, deckId: deckId1, createdAt: Date.now() },
@@ -66,22 +66,30 @@ describe('seedDatabase', () => {
       name: 'Passaporte U1–U4',
       description: 'Passaporte',
       isActive: true,
-      seedId: 'passaporte-u1-u4',
       createdAt: Date.now(),
     })
 
     await seedDatabase()
 
+    // No duplicates: 2 old + 1 new = 3 total
     expect(await db.decks.count()).toBe(3)
     const decks = await db.decks.toArray()
+
+    // seedId was backfilled on old decks
+    const starter = decks.find((d) => d.name === 'Starter')!
+    expect(starter.seedId).toBe('starter')
+    const passaporte = decks.find((d) => d.name === 'Passaporte U1–U4')!
+    expect(passaporte.seedId).toBe('passaporte-u1-u4')
+
+    // New deck was added
     expect(decks.map((d) => d.seedId)).toContain('frases-dia-a-dia')
 
-    // Old deck should keep its original word count (not re-seeded)
+    // Old deck kept its original words (not re-seeded)
     const starterWords = await db.words.where('deckId').equals(deckId1).count()
     expect(starterWords).toBe(1)
   })
 
-  it('seeds all decks when only user-created decks exist (no seedId)', async () => {
+  it('seeds all decks when only user-created decks exist (no matching name)', async () => {
     await db.decks.add({
       name: 'My custom deck',
       description: 'User-created',
@@ -98,25 +106,6 @@ describe('seedDatabase', () => {
     expect(seedIds).toContain('starter')
     expect(seedIds).toContain('passaporte-u1-u4')
     expect(seedIds).toContain('frases-dia-a-dia')
-  })
-
-  it('user deck with same name as seed does not block seeding', async () => {
-    // User created a deck named "Starter" (no seedId)
-    await db.decks.add({
-      name: 'Starter',
-      description: 'User version',
-      isActive: true,
-      createdAt: Date.now(),
-    })
-
-    await seedDatabase()
-
-    // Both user's "Starter" and seed "Starter" should exist
-    const decks = await db.decks.toArray()
-    const starters = decks.filter((d) => d.name === 'Starter')
-    expect(starters.length).toBe(2)
-    expect(starters.some((d) => d.seedId === 'starter')).toBe(true)
-    expect(starters.some((d) => !d.seedId)).toBe(true)
   })
 
   it('reads studyLanguage from settings (not hardcoded)', async () => {

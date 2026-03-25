@@ -49,6 +49,15 @@ export async function seedDatabase() {
   const settings = await db.settings.get('global')
   const studyLanguage = settings?.studyLanguage ?? 'ru'
 
+  // Backfill seedId on pre-v3 seed decks (created before seedId was added)
+  const seedNameToId = new Map(SEED_DECKS.map((d) => [d.name, d.seedId]))
+  const allDecks = await db.decks.toArray()
+  for (const deck of allDecks) {
+    if (!deck.seedId && seedNameToId.has(deck.name)) {
+      await db.decks.update(deck.id!, { seedId: seedNameToId.get(deck.name) })
+    }
+  }
+
   const existingSeedIds = new Set(
     (await db.decks.toArray())
       .filter((d) => d.seedId)
