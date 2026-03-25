@@ -15,9 +15,11 @@ export default function WordOrder({ item, onAnswer }: WordOrderProps) {
   const { t, i18n } = useTranslation()
   const [selected, setSelected] = useState<number[]>([])
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null)
+  const [revealed, setRevealed] = useState(false)
   const [showTranslation, setShowTranslation] = useState(false)
   const [trackedId, setTrackedId] = useState(item.id)
   const startTime = useRef(0)
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(null)
   const pendingAnswer = useRef<Answer | null>(null)
 
   const words = item.options ?? []
@@ -29,33 +31,38 @@ export default function WordOrder({ item, onAnswer }: WordOrderProps) {
     setTrackedId(item.id)
     setSelected([])
     setFeedback(null)
+    setRevealed(false)
     setShowTranslation(false)
   }
 
   useEffect(() => {
     startTime.current = Date.now()
     pendingAnswer.current = null
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current)
+    }
   }, [trackedId])
 
+  const locked = feedback !== null
   const selectedSet = new Set(selected)
   const allPlaced = selected.length === words.length
   const selectedWords = selected.map((i) => words[i])
 
   const handlePoolTap = useCallback((index: number) => {
-    if (feedback !== null) return
+    if (locked) return
     setSelected((prev) => {
       if (prev.includes(index)) return prev
       return [...prev, index]
     })
-  }, [feedback])
+  }, [locked])
 
   const handleAnswerTap = useCallback((index: number) => {
-    if (feedback !== null) return
+    if (locked) return
     setSelected((prev) => prev.filter((i) => i !== index))
-  }, [feedback])
+  }, [locked])
 
   const handleCheck = useCallback(() => {
-    if (!allPlaced || feedback !== null) return
+    if (!allPlaced || locked) return
 
     const validAnswers = (item.payload.answers as string[]) ?? [item.correctAnswer]
     const userSentence = selectedWords.join(' ') + punctuation
@@ -67,14 +74,23 @@ export default function WordOrder({ item, onAnswer }: WordOrderProps) {
     setFeedback(correct ? 'correct' : 'wrong')
 
     if (correct) {
-      setTimeout(() => onAnswer(answer), FEEDBACK_DELAY)
+      timerRef.current = setTimeout(() => onAnswer(answer), FEEDBACK_DELAY)
     } else {
       pendingAnswer.current = answer
     }
-  }, [allPlaced, feedback, selectedWords, punctuation, item.payload.answers, item.correctAnswer, onAnswer])
+  }, [allPlaced, locked, selectedWords, punctuation, item.payload.answers, item.correctAnswer, onAnswer])
+
+  const handleTryAgain = () => {
+    setFeedback(null)
+  }
 
   const handleNext = () => {
-    if (pendingAnswer.current) onAnswer(pendingAnswer.current)
+    if (feedback === 'wrong' && !revealed) {
+      // First press: reveal correct answer
+      setRevealed(true)
+    } else if (pendingAnswer.current) {
+      onAnswer(pendingAnswer.current)
+    }
   }
 
   const translationText = getTranslationText(item.payload, i18n.language)
@@ -98,7 +114,7 @@ export default function WordOrder({ item, onAnswer }: WordOrderProps) {
             key={`answer-${selected[pos]}`}
             className={`${styles.tile} ${styles.tileSelected} ${feedback === 'correct' ? styles.tileCorrect : ''} ${feedback === 'wrong' ? styles.tileWrong : ''}`}
             onClick={() => handleAnswerTap(selected[pos])}
-            disabled={feedback !== null}
+            disabled={locked}
           >
             {word}
           </button>
@@ -114,7 +130,7 @@ export default function WordOrder({ item, onAnswer }: WordOrderProps) {
             key={`pool-${index}`}
             className={`${styles.tile} ${selectedSet.has(index) ? styles.tileHidden : ''}`}
             onClick={() => handlePoolTap(index)}
-            disabled={feedback !== null || selectedSet.has(index)}
+            disabled={locked || selectedSet.has(index)}
             aria-hidden={selectedSet.has(index)}
           >
             {word}
@@ -135,11 +151,11 @@ export default function WordOrder({ item, onAnswer }: WordOrderProps) {
         </div>
       )}
 
-      {feedback === 'wrong' && (
+      {feedback === 'wrong' && !revealed && (
         <>
           <div className={styles.feedbackWrong}>
             <span className={styles.feedbackIcon}>✗</span>
-            <span>{t('grammar.wrong')}: {item.correctAnswer}</span>
+            <span>{t('grammar.wrong')}</span>
           </div>
 
           {(() => {
@@ -148,6 +164,24 @@ export default function WordOrder({ item, onAnswer }: WordOrderProps) {
             if (!ruleText) return null
             return <p className={styles.ruleHint}>{ruleText}</p>
           })()}
+
+          <div className={styles.buttonRow}>
+            <button className={styles.tryAgainButton} onClick={handleTryAgain}>
+              {t('grammar.tryAgain')}
+            </button>
+            <button className={styles.nextButton} onClick={handleNext}>
+              {t('grammar.next')}
+            </button>
+          </div>
+        </>
+      )}
+
+      {feedback === 'wrong' && revealed && (
+        <>
+          <div className={styles.feedbackWrong}>
+            <span className={styles.feedbackIcon}>✗</span>
+            <span>{t('grammar.wrong')}: {item.correctAnswer}</span>
+          </div>
 
           <button className={styles.nextButton} onClick={handleNext}>
             {t('grammar.next')}

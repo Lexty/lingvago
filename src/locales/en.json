@@ -43,7 +43,7 @@
     },
     "grammar": {
       "title": "Grammar",
-      "desc": "Conjugation, gender, articles, word order"
+      "desc": "Conjugation, gender, articles, prepositions, word order"
     }
   },
   "settings": {
@@ -159,6 +159,7 @@
     "refContractions": "Contractions",
     "refPronounMapping": "Pronoun mapping",
     "almostCorrect": "Almost correct! Check the accents",
+    "tryAgain": "Try again",
     "wordOrderQuestion": "Arrange the words into a sentence",
     "refWordOrder": "Word order rules",
     "wordOrderSVO": "Subject — Verb — Object",
