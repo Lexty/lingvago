@@ -21,6 +21,9 @@ export class LingvagoDatabase extends Dexie {
     this.version(2).stores({
       grammarCardStates: '++id, itemId, category, due, state',
     })
+    this.version(3).stores({
+      decks: '++id, name, seedId',
+    })
   }
 }
 

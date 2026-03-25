@@ -4,6 +4,8 @@ export interface Deck {
   description: string
   isActive: boolean
   createdAt: number
+  /** Stable identifier for built-in seed decks. Undefined for user-created decks. */
+  seedId?: string
 }
 
 export interface Word {

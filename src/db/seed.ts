@@ -33,41 +33,52 @@ const STARTER_WORDS: Array<{ pt: string; ru: string }> = [
 ]
 
 interface DeckDef {
+  seedId: string
   name: string
   description: string
   words: Array<{ pt: string; ru: string }>
 }
 
 const SEED_DECKS: DeckDef[] = [
-  { name: 'Starter', description: 'Базовые слова', words: STARTER_WORDS },
-  { name: 'Passaporte U1–U4', description: 'Passaporte para Português, Unidades 1–4', words: PASSAPORTE_U1_U4 },
-  { name: 'Frases do dia-a-dia', description: 'Повседневные фразы', words: FRASES_DIA_A_DIA },
+  { seedId: 'starter', name: 'Starter', description: 'Базовые слова', words: STARTER_WORDS },
+  { seedId: 'passaporte-u1-u4', name: 'Passaporte U1–U4', description: 'Passaporte para Português, Unidades 1–4', words: PASSAPORTE_U1_U4 },
+  { seedId: 'frases-dia-a-dia', name: 'Frases do dia-a-dia', description: 'Повседневные фразы', words: FRASES_DIA_A_DIA },
 ]
 
 export async function seedDatabase() {
-  const existingNames = new Set((await db.decks.toArray()).map((d) => d.name))
-  const studyLanguage = 'ru'
+  const settings = await db.settings.get('global')
+  const studyLanguage = settings?.studyLanguage ?? 'ru'
+
+  const existingSeedIds = new Set(
+    (await db.decks.toArray())
+      .filter((d) => d.seedId)
+      .map((d) => d.seedId),
+  )
 
   for (const deck of SEED_DECKS) {
-    if (existingNames.has(deck.name)) continue
+    if (existingSeedIds.has(deck.seedId)) continue
 
-    const deckId = (await db.decks.add({
-      name: deck.name,
-      description: deck.description,
-      isActive: true,
-      createdAt: Date.now(),
-    })) as number
+    // Atomic: either deck + all words are created, or nothing
+    await db.transaction('rw', [db.decks, db.words, db.cardStates], async () => {
+      const deckId = (await db.decks.add({
+        name: deck.name,
+        description: deck.description,
+        isActive: true,
+        seedId: deck.seedId,
+        createdAt: Date.now(),
+      })) as number
 
-    for (const word of deck.words) {
-      await addWordWithCards(
-        {
-          pt: word.pt,
-          translations: { ru: word.ru },
-          deckId,
-          createdAt: Date.now(),
-        },
-        studyLanguage,
-      )
-    }
+      for (const word of deck.words) {
+        await addWordWithCards(
+          {
+            pt: word.pt,
+            translations: { ru: word.ru },
+            deckId,
+            createdAt: Date.now(),
+          },
+          studyLanguage,
+        )
+      }
+    })
   }
 }
