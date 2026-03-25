@@ -40,6 +40,8 @@ export function generateConjugationItems(count: number, tenses: Tense[]): Sessio
         category: 'conjugation',
         tense,
         person,
+        translation: template.translation,
+        verbTranslation: verb.translation,
       },
     })
   }

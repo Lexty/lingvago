@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { SessionItem, Answer } from '../../modes/types'
+import { getTranslationText } from './translationHelper'
 import styles from './TextInput.module.css'
 
 export interface TextInputProps {
@@ -47,9 +48,10 @@ export default function TextInput({
   children,
   i18nKeys,
 }: TextInputProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [input, setInput] = useState('')
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null)
+  const [showTranslation, setShowTranslation] = useState(false)
   const [trackedId, setTrackedId] = useState(item.id)
   const startTime = useRef(0)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -68,6 +70,7 @@ export default function TextInput({
     setTrackedId(item.id)
     setInput('')
     setFeedback(null)
+    setShowTranslation(false)
   }
 
   // Reset refs and re-focus when item changes
@@ -167,6 +170,24 @@ export default function TextInput({
           {t(keys.next)}
         </button>
       )}
+
+      {(() => {
+        const translationText = getTranslationText(item.payload, i18n.language)
+        if (!translationText) return null
+        return (
+          <>
+            <button
+              className={styles.translationToggle}
+              onClick={() => setShowTranslation((v) => !v)}
+            >
+              {t('common.translation')} {showTranslation ? '▲' : '▼'}
+            </button>
+            {showTranslation && (
+              <p className={styles.translationText}>{translationText}</p>
+            )}
+          </>
+        )
+      })()}
 
       {children}
     </div>

@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { SessionItem, Answer } from '../../modes/types'
+import { getTranslationText } from './translationHelper'
 import styles from './MultipleChoice.module.css'
 
 export interface MultipleChoiceProps {
@@ -10,8 +12,10 @@ export interface MultipleChoiceProps {
 const FEEDBACK_DELAY = 1500
 
 export default function MultipleChoice({ item, onAnswer }: MultipleChoiceProps) {
+  const { t, i18n } = useTranslation()
   const [selected, setSelected] = useState<string | null>(null)
   const [showFeedback, setShowFeedback] = useState(false)
+  const [showTranslation, setShowTranslation] = useState(false)
   const [trackedId, setTrackedId] = useState(item.id)
   const startTime = useRef(0)
   const feedbackActive = useRef(false)
@@ -21,6 +25,7 @@ export default function MultipleChoice({ item, onAnswer }: MultipleChoiceProps) 
     setTrackedId(item.id)
     setSelected(null)
     setShowFeedback(false)
+    setShowTranslation(false)
   }
 
   useEffect(() => {
@@ -59,6 +64,8 @@ export default function MultipleChoice({ item, onAnswer }: MultipleChoiceProps) 
     return classes.join(' ')
   }
 
+  const translationText = getTranslationText(item.payload, i18n.language)
+
   return (
     <div className={styles.container}>
       <div className={styles.question}>{item.question}</div>
@@ -74,6 +81,20 @@ export default function MultipleChoice({ item, onAnswer }: MultipleChoiceProps) 
           </button>
         ))}
       </div>
+
+      {translationText && (
+        <>
+          <button
+            className={styles.translationToggle}
+            onClick={() => setShowTranslation((v) => !v)}
+          >
+            {t('common.translation')} {showTranslation ? '▲' : '▼'}
+          </button>
+          {showTranslation && (
+            <p className={styles.translationText}>{translationText}</p>
+          )}
+        </>
+      )}
     </div>
   )
 }
