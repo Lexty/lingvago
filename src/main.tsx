@@ -6,12 +6,14 @@ import { registerMode } from './modes/registry'
 import { db } from './db/index'
 import { VocabularyMode } from './modes/vocabulary/VocabularyMode'
 import { NumbersMode } from './modes/numbers/NumbersMode'
+import { GrammarMode } from './modes/grammar/GrammarMode'
 import { seedDatabase } from './db/seed'
 import { ensureSettings } from './db/operations'
 import App from './App'
 
 registerMode(new VocabularyMode())
 registerMode(new NumbersMode())
+registerMode(new GrammarMode())
 
 const root = createRoot(document.getElementById('root')!)
 root.render(

@@ -40,6 +40,10 @@
     "numbers": {
       "title": "Числа",
       "desc": "Тренировка числительных"
+    },
+    "grammar": {
+      "title": "Грамматика",
+      "desc": "Спряжение, род, артикли, предлоги"
     }
   },
   "settings": {
@@ -105,6 +109,45 @@
     "cheatSheet": "Шпаргалка",
     "next": "Далее",
     "compositionHint": "Составные числа через «e»:"
+  },
+  "grammar": {
+    "check": "Проверить",
+    "correct": "Правильно!",
+    "wrong": "Неправильно",
+    "next": "Далее",
+    "start": "Начать",
+    "conjugate": "Проспрягайте глагол",
+    "writePlural": "Напишите множественное число",
+    "selectCategories": "Категории",
+    "selectTenses": "Времена",
+    "reference": "Шпаргалка",
+    "category": {
+      "conjugation": "Спряжение глаголов",
+      "gender": "Род существительных",
+      "articles": "Артикли",
+      "plural": "Множественное число",
+      "prepositions": "Предлоги"
+    },
+    "tense": {
+      "presente": "Presente",
+      "preterito_perfeito": "Pretérito Perfeito",
+      "preterito_imperfeito": "Pretérito Imperfeito"
+    },
+    "genderQuestion": "Какой род?",
+    "articleQuestion": "Какой артикль?",
+    "prepositionQuestion": "Какой предлог?",
+    "masculino": "Masculino",
+    "feminino": "Feminino",
+    "defSingular": "Определённый артикль",
+    "indefSingular": "Неопределённый артикль",
+    "defPlural": "Определённый артикль (мн.ч.)",
+    "indefPlural": "Неопределённый артикль (мн.ч.)",
+    "refEndings": "Окончания",
+    "refAr": "Глаголы на -ar",
+    "refEr": "Глаголы на -er",
+    "refIr": "Глаголы на -ir",
+    "refPluralRules": "Правила образования мн.ч.",
+    "refPrepositions": "Основные предлоги"
   },
   "csvImport": {
     "title": "Импорт CSV",

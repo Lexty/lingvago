@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import type { SessionItem, Answer } from '../../types'
+import type { SessionItem, Answer } from '../../modes/types'
 import styles from './MultipleChoice.module.css'
 
-interface MultipleChoiceProps {
+export interface MultipleChoiceProps {
   item: SessionItem
   onAnswer: (answer: Answer) => void
 }
@@ -12,13 +12,21 @@ const FEEDBACK_DELAY = 1500
 export default function MultipleChoice({ item, onAnswer }: MultipleChoiceProps) {
   const [selected, setSelected] = useState<string | null>(null)
   const [showFeedback, setShowFeedback] = useState(false)
+  const [trackedId, setTrackedId] = useState(item.id)
   const startTime = useRef(0)
   const feedbackActive = useRef(false)
 
-  // Set start time on mount (parent keys this component by item.id)
+  // Reset state during render when item changes
+  if (item.id !== trackedId) {
+    setTrackedId(item.id)
+    setSelected(null)
+    setShowFeedback(false)
+  }
+
   useEffect(() => {
     startTime.current = Date.now()
-  }, [])
+    feedbackActive.current = false
+  }, [trackedId])
 
   const handleSelect = useCallback(
     (option: string) => {

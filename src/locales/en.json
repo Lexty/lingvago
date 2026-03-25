@@ -40,6 +40,10 @@
     "numbers": {
       "title": "Numbers",
       "desc": "Practice numerals"
+    },
+    "grammar": {
+      "title": "Grammar",
+      "desc": "Conjugation, gender, articles, prepositions"
     }
   },
   "settings": {
@@ -105,6 +109,45 @@
     "cheatSheet": "Cheat sheet",
     "next": "Next",
     "compositionHint": "Compound numbers use \"e\":"
+  },
+  "grammar": {
+    "check": "Check",
+    "correct": "Correct!",
+    "wrong": "Wrong",
+    "next": "Next",
+    "start": "Start",
+    "conjugate": "Conjugate the verb",
+    "writePlural": "Write the plural",
+    "selectCategories": "Categories",
+    "selectTenses": "Tenses",
+    "reference": "Cheat sheet",
+    "category": {
+      "conjugation": "Verb conjugation",
+      "gender": "Noun gender",
+      "articles": "Articles",
+      "plural": "Plural forms",
+      "prepositions": "Prepositions"
+    },
+    "tense": {
+      "presente": "Presente",
+      "preterito_perfeito": "Pretérito Perfeito",
+      "preterito_imperfeito": "Pretérito Imperfeito"
+    },
+    "genderQuestion": "What is the gender?",
+    "articleQuestion": "Which article?",
+    "prepositionQuestion": "Which preposition?",
+    "masculino": "Masculino",
+    "feminino": "Feminino",
+    "defSingular": "Definite article",
+    "indefSingular": "Indefinite article",
+    "defPlural": "Definite article (pl.)",
+    "indefPlural": "Indefinite article (pl.)",
+    "refEndings": "Endings",
+    "refAr": "-ar verbs",
+    "refEr": "-er verbs",
+    "refIr": "-ir verbs",
+    "refPluralRules": "Plural formation rules",
+    "refPrepositions": "Main prepositions"
   },
   "csvImport": {
     "title": "Import CSV",

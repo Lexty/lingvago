@@ -1,0 +1,34 @@
+.context {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+}
+
+.person {
+  font-weight: 600;
+  color: var(--color-accent);
+  font-size: var(--font-size-lg);
+}
+
+.separator {
+  color: var(--color-text-secondary);
+}
+
+.tense {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-style: italic;
+}
+
+.cheatToggle {
+  padding: var(--space-xs);
+  border: none;
+  background: none;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+}

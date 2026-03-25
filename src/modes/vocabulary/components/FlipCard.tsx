@@ -12,12 +12,18 @@ interface FlipCardProps {
 export default function FlipCard({ item, onAnswer }: FlipCardProps) {
   const { t } = useTranslation()
   const [flipped, setFlipped] = useState(false)
+  const [trackedId, setTrackedId] = useState(item.id)
   const startTime = useRef(0)
 
-  // Set start time on mount (parent keys this component by item.id)
+  // Reset state during render when item changes
+  if (item.id !== trackedId) {
+    setTrackedId(item.id)
+    setFlipped(false)
+  }
+
   useEffect(() => {
     startTime.current = Date.now()
-  }, [])
+  }, [trackedId])
 
   const handleRating = useCallback(
     (rating: Rating) => {

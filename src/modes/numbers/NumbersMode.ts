@@ -1,12 +1,21 @@
 import { db } from '../../db/index'
-import type { LearningMode, ModeStats, SessionItem, Answer } from '../types'
+import type { LearningMode, ModeStats, SessionItem, Answer, ExerciseComponentProps } from '../types'
+import type { ComponentType } from 'react'
 import { numberToText, getLevel, getRangesForLevel, randomInRange } from './data'
+import NumberInput from './components/NumberInput'
+import NumbersSetup from './components/NumbersSetup'
 
 export class NumbersMode implements LearningMode {
   readonly id = 'numbers'
   readonly title = 'Числа'
   readonly description = 'Тренировка числительных'
   readonly icon = '🔢'
+
+  readonly exerciseComponents: Record<string, ComponentType<ExerciseComponentProps>> = {
+    'number-input': NumberInput,
+  }
+
+  readonly setupComponent = NumbersSetup
 
   async getSessionItems(count: number): Promise<SessionItem[]> {
     const ranges = getRangesForLevel(getLevel())

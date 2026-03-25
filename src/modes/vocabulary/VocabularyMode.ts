@@ -1,8 +1,11 @@
 import { FSRS, Rating, type Grade } from 'ts-fsrs'
 import { db } from '../../db/index'
 import { toFSRSCard, fromFSRSCard } from '../../db/fsrs-helpers'
-import type { LearningMode, SessionItem, Answer, ModeStats } from '../types'
+import { MultipleChoice } from '../../components/exercises'
+import type { LearningMode, SessionItem, Answer, ModeStats, ExerciseComponentProps } from '../types'
+import type { ComponentType } from 'react'
 import type { CardState, Word } from '../../db/schema'
+import FlipCard from './components/FlipCard'
 
 const fsrs = new FSRS({})
 
@@ -13,6 +16,11 @@ export class VocabularyMode implements LearningMode {
   readonly title = 'Словарь'
   readonly description = 'Изучение слов с интервальным повторением'
   readonly icon = '📚'
+
+  readonly exerciseComponents: Record<string, ComponentType<ExerciseComponentProps>> = {
+    'multiple-choice': MultipleChoice,
+    'flip-card': FlipCard,
+  }
 
   async getSessionItems(count: number): Promise<SessionItem[]> {
     const settings = await db.settings.get('global')
