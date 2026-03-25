@@ -24,6 +24,13 @@ function makeReviewCardFields(targetStability: number) {
   }
 }
 
+/** Create a Learning card (state=1) by answering a new card correctly once */
+function makeLearningCardFields() {
+  const card = createEmptyCard()
+  const r1 = fsrs.next(card, new Date(), Rating.Good)
+  return fromFSRSCard(r1.card)
+}
+
 /** Create a Relearning card by lapsing from Review */
 function makeRelearningCardFields() {
   let card = createEmptyCard()
@@ -127,6 +134,52 @@ describe('exercise type progression', () => {
     for (const item of items) {
       expect(item.exerciseType).toBe('multiple-choice')
     }
+  })
+
+  it('lang→PT learning cards (state=1) get text-input', async () => {
+    const deckId = await createDeck()
+    const wordId = (await db.words.add({
+      pt: 'gato',
+      translations: { ru: 'кот' },
+      deckId,
+      createdAt: Date.now(),
+    })) as number
+
+    const fields = makeLearningCardFields()
+    await db.cardStates.add({
+      wordId,
+      direction: 'ru→pt',
+      ...fields,
+      due: Date.now() - 1000,
+    })
+
+    const items = await mode.getSessionItems(10)
+    const ruToPt = items.find((i) => (i.payload.direction as string) === 'ru→pt')
+    expect(ruToPt).toBeDefined()
+    expect(ruToPt!.exerciseType).toBe('text-input')
+  })
+
+  it('PT→lang learning cards (state=1) stay multiple-choice', async () => {
+    const deckId = await createDeck()
+    const wordId = (await db.words.add({
+      pt: 'gato',
+      translations: { ru: 'кот' },
+      deckId,
+      createdAt: Date.now(),
+    })) as number
+
+    const fields = makeLearningCardFields()
+    await db.cardStates.add({
+      wordId,
+      direction: 'pt→ru',
+      ...fields,
+      due: Date.now() - 1000,
+    })
+
+    const items = await mode.getSessionItems(10)
+    const ptToRu = items.find((i) => (i.payload.direction as string) === 'pt→ru')
+    expect(ptToRu).toBeDefined()
+    expect(ptToRu!.exerciseType).toBe('multiple-choice')
   })
 
   it('lang→PT review cards with low stability get text-input', async () => {

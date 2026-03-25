@@ -201,8 +201,11 @@ export class VocabularyMode implements LearningMode {
   private getExerciseType(cs: CardState): 'multiple-choice' | 'text-input' | 'flip-card' {
     const isProduction = cs.direction.endsWith('→pt')
 
-    // New and Learning → always multiple-choice (recognition)
-    if (cs.state === 0 || cs.state === 1) return 'multiple-choice'
+    // First encounter → always MC (recognition)
+    if (cs.state === 0) return 'multiple-choice'
+
+    // Learning → production starts typing, comprehension stays MC
+    if (cs.state === 1) return isProduction ? 'text-input' : 'multiple-choice'
 
     if (isProduction) {
       // lang→PT: MC → text-input → flip-card
