@@ -43,7 +43,7 @@
     },
     "grammar": {
       "title": "Грамматика",
-      "desc": "Спряжение, род, артикли, предлоги"
+      "desc": "Спряжение, род, артикли, порядок слов"
     }
   },
   "settings": {
@@ -130,7 +130,8 @@
       "gender": "Род существительных",
       "articles": "Артикли",
       "plural": "Множественное число",
-      "prepositions": "Предлоги"
+      "prepositions": "Предлоги",
+      "word_order": "Порядок слов"
     },
     "tense": {
       "presente": "Presente",
@@ -157,7 +158,12 @@
     "refArticles": "Таблица артиклей",
     "refContractions": "Контракции",
     "refPronounMapping": "Маппинг местоимений",
-    "almostCorrect": "Почти правильно! Обратите внимание на акценты"
+    "almostCorrect": "Почти правильно! Обратите внимание на акценты",
+    "wordOrderQuestion": "Составьте предложение из слов",
+    "refWordOrder": "Правила порядка слов",
+    "wordOrderSVO": "Подлежащее — Сказуемое — Дополнение",
+    "wordOrderNegation": "não перед глаголом",
+    "wordOrderArticles": "Артикль перед существительным"
   },
   "vocabulary": {
     "typePortuguese": "Напишите по-португальски",

@@ -2,7 +2,7 @@ import type { ComponentType } from 'react'
 import { FSRS, Rating, type Grade } from 'ts-fsrs'
 import { db } from '../../db/index'
 import { toFSRSCard, fromFSRSCard } from '../../db/fsrs-helpers'
-import { MultipleChoice } from '../../components/exercises'
+import { MultipleChoice, WordOrder } from '../../components/exercises'
 import type { LearningMode, SessionItem, Answer, ModeStats, ExerciseComponentProps } from '../types'
 import type { GrammarCategory, Tense } from './state'
 import { seedCategoryIfNeeded, buildSessionItem } from './items'
@@ -29,6 +29,7 @@ export class GrammarMode implements LearningMode {
   readonly exerciseComponents: Record<string, ComponentType<ExerciseComponentProps>> = {
     'grammar-input': GrammarInput,
     'multiple-choice': MultipleChoice,
+    'word-order': WordOrder,
   }
 
   readonly setupComponent = GrammarSetup

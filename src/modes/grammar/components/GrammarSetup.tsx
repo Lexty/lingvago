@@ -17,6 +17,7 @@ const ALL_CATEGORIES: GrammarCategory[] = [
   'articles',
   'plural',
   'prepositions',
+  'word_order',
 ]
 
 const ALL_TENSES: Tense[] = ['presente', 'preterito_perfeito', 'preterito_imperfeito']
@@ -129,6 +130,7 @@ export default function GrammarSetup({ onStart }: GrammarSetupProps) {
           <GrammarReference category="articles" />
           <GrammarReference category="plural" />
           <GrammarReference category="prepositions" />
+          <GrammarReference category="word_order" />
         </div>
       )}
     </div>

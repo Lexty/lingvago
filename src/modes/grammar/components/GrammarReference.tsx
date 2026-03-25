@@ -208,6 +208,28 @@ function PrepositionReference() {
   )
 }
 
+function WordOrderReference() {
+  const { t } = useTranslation()
+
+  const rules = [
+    [t('grammar.wordOrderSVO'), 'Eu como uma maçã.'],
+    [t('grammar.wordOrderNegation'), 'Eu não falo inglês.'],
+    [t('grammar.wordOrderArticles'), 'O gato dorme na cozinha.'],
+  ]
+
+  return (
+    <div className={styles.container}>
+      <p className={styles.heading}>{t('grammar.refWordOrder')}</p>
+      {rules.map(([rule, example]) => (
+        <div key={rule} className={styles.row}>
+          <span className={styles.rowLabel}>{rule}</span>
+          <span className={styles.rowValue}>{example}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export default function GrammarReference({ category }: GrammarReferenceProps) {
   switch (category) {
     case 'conjugation': return <ConjugationReference />
@@ -215,6 +237,7 @@ export default function GrammarReference({ category }: GrammarReferenceProps) {
     case 'articles': return <ArticleReference />
     case 'plural': return <PluralReference />
     case 'prepositions': return <PrepositionReference />
+    case 'word_order': return <WordOrderReference />
     default: return null
   }
 }

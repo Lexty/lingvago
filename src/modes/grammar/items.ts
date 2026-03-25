@@ -11,6 +11,7 @@ import { VERBS, PERSON_LABELS, type Tense, type Person } from './data/verbs'
 import { NOUNS } from './data/nouns'
 import { PREPOSITIONS } from './data/prepositions'
 import { CONJUGATION_TEMPLATES, ARTICLE_TEMPLATES, PLURAL_TEMPLATES } from './data/sentences'
+import { WORD_ORDER_SENTENCES } from './data/word-order'
 import type { SessionItem } from '../types'
 import type { GrammarCategory } from './state'
 
@@ -69,6 +70,10 @@ export function pluralItemId(noun: string): string {
 
 export function prepItemId(index: number): string {
   return `prep:${index}`
+}
+
+export function wordOrderItemId(index: number): string {
+  return `wo:${index}`
 }
 
 // ─── Seed all items for a category ───────────────────────────────────────────
@@ -142,6 +147,11 @@ export async function seedCategoryIfNeeded(category: GrammarCategory): Promise<v
         records.push(createNewGrammarCardState(prepItemId(i), 'prepositions'))
       }
       break
+    case 'word_order':
+      for (let i = 0; i < WORD_ORDER_SENTENCES.length; i++) {
+        records.push(createNewGrammarCardState(wordOrderItemId(i), 'word_order'))
+      }
+      break
   }
 
   await db.grammarCardStates.bulkAdd(records)
@@ -165,6 +175,8 @@ export function buildSessionItem(
       return buildPluralItem(cardId, itemId)
     case 'prepositions':
       return buildPrepositionItem(cardId, itemId)
+    case 'word_order':
+      return buildWordOrderItem(cardId, itemId)
     default:
       return null
   }
@@ -324,6 +336,53 @@ function buildPrepositionItem(cardId: number, itemId: string): SessionItem | nul
       category: 'prepositions',
       translation: item.translation,
       hint: 'grammar.prepositionQuestion',
+      grammarCardId: cardId,
+    },
+  }
+}
+
+function shuffleEnsureDifferent(
+  words: string[],
+  validAnswers: string[],
+  punctuation: string,
+): string[] {
+  for (let attempt = 0; attempt < 10; attempt++) {
+    const shuffled = shuffle([...words])
+    const joined = (shuffled.join(' ') + punctuation).trim().toLowerCase()
+    const matches = validAnswers.some(
+      (a) => a.trim().toLowerCase() === joined,
+    )
+    if (!matches) return shuffled
+  }
+  return [...words].reverse()
+}
+
+function buildWordOrderItem(cardId: number, itemId: string): SessionItem | null {
+  const index = parseInt(itemId.replace('wo:', ''), 10)
+  const sentence = WORD_ORDER_SENTENCES[index]
+  if (!sentence) return null
+
+  const primary = sentence.answers[0]
+  const punctMatch = primary.match(/([.!?]+)$/)
+  const punctuation = punctMatch?.[1] ?? '.'
+  const withoutPunct = primary.replace(/[.!?]+$/, '').trim()
+
+  const words = withoutPunct.split(/\s+/)
+  const shuffled = shuffleEnsureDifferent(words, sentence.answers, punctuation)
+
+  return {
+    id: `wo-${cardId}`,
+    question: primary,
+    correctAnswer: primary,
+    exerciseType: 'word-order',
+    options: shuffled,
+    payload: {
+      category: 'word_order',
+      answers: sentence.answers,
+      translation: sentence.translation,
+      rule: sentence.rule,
+      punctuation,
+      hint: 'grammar.wordOrderQuestion',
       grammarCardId: cardId,
     },
   }

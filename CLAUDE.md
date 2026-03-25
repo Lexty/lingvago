@@ -47,7 +47,15 @@ Pluggable learning modes in `src/modes/`. Each implements `LearningMode` interfa
 
 Adding a new mode: create class in `src/modes/<name>/`, add components in `components/`, register in `main.tsx`. No existing code changes needed.
 
-Current modes: `vocabulary` (FSRS flashcards), `numbers` (generative number exercises).
+Current modes: `vocabulary` (FSRS flashcards), `numbers` (generative number exercises), `grammar` (conjugation, gender, articles, plural, prepositions).
+
+### Exercise vs. Learning Program Separation
+
+Exercise components (`src/components/exercises/`) are reusable UI mechanics (multiple-choice, text-input, flip-card) — they handle rendering, user interaction, and visual feedback. They know nothing about FSRS, card states, or learning progression.
+
+Learning programs (mode classes in `src/modes/`) own the business logic: which exercise type to assign, how to grade answers, when to promote a card. They select and configure exercise components via `SessionItem.exerciseType`, but never contain UI code themselves.
+
+Keep this boundary strict: exercise components receive data and return answers; learning modes decide what data to show and what to do with answers. Shared comparison logic lives in `src/components/exercises/compareUtils.ts`; mode-specific wrappers (e.g. `VocabularyInput`, `GrammarInput`) bridge between the generic exercise and mode-specific grading policy.
 
 ### FSRS Integration
 

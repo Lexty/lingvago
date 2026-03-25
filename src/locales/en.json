@@ -43,7 +43,7 @@
     },
     "grammar": {
       "title": "Grammar",
-      "desc": "Conjugation, gender, articles, prepositions"
+      "desc": "Conjugation, gender, articles, word order"
     }
   },
   "settings": {
@@ -130,7 +130,8 @@
       "gender": "Noun gender",
       "articles": "Articles",
       "plural": "Plural forms",
-      "prepositions": "Prepositions"
+      "prepositions": "Prepositions",
+      "word_order": "Word order"
     },
     "tense": {
       "presente": "Presente",
@@ -157,7 +158,12 @@
     "refArticles": "Article table",
     "refContractions": "Contractions",
     "refPronounMapping": "Pronoun mapping",
-    "almostCorrect": "Almost correct! Check the accents"
+    "almostCorrect": "Almost correct! Check the accents",
+    "wordOrderQuestion": "Arrange the words into a sentence",
+    "refWordOrder": "Word order rules",
+    "wordOrderSVO": "Subject — Verb — Object",
+    "wordOrderNegation": "não before the verb",
+    "wordOrderArticles": "Article before the noun"
   },
   "vocabulary": {
     "typePortuguese": "Type in Portuguese",
