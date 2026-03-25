@@ -26,6 +26,7 @@ export function generatePluralItems(count: number): SessionItem[] {
       payload: {
         category: 'plural',
         translation: noun.translation,
+        rule: noun.pluralRule,
       },
     }
   })

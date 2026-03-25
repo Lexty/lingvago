@@ -40,6 +40,9 @@ export function generateArticleItems(count: number): SessionItem[] {
         articleType,
         translation: noun.translation,
         hint: 'grammar.articleQuestion',
+        rule: noun.gender === 'masculino'
+          ? { ru: 'masculino → o/um', en: 'masculino → o/um' }
+          : { ru: 'feminino → a/uma', en: 'feminino → a/uma' },
       },
     }
   })

@@ -56,6 +56,37 @@
   background: color-mix(in srgb, var(--color-error) 10%, var(--color-bg-card));
 }
 
+.nextButton {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  padding: var(--space-md);
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  display: block;
+}
+
+.nextButton:active {
+  opacity: 0.85;
+}
+
+.ruleHint {
+  margin: 0;
+  padding: var(--space-sm) var(--space-md);
+  background: color-mix(in srgb, var(--color-warning, #f59e0b) 10%, var(--color-bg-card));
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--color-warning, #f59e0b) 25%, var(--color-border));
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
 .translationToggle {
   padding: var(--space-xs);
   border: none;

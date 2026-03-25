@@ -23,6 +23,7 @@ export function generateGenderItems(count: number): SessionItem[] {
       category: 'gender',
       translation: noun.translation,
       hint: 'grammar.genderQuestion',
+      rule: noun.genderRule,
     },
   }))
 }

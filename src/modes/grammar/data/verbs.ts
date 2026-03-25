@@ -4,6 +4,7 @@ export type Person = 'eu' | 'tu' | 'ele_ela' | 'nos' | 'eles_elas'
 export interface VerbData {
   infinitive: string
   translation: Record<string, string>
+  group: 'ar' | 'er' | 'ir' | 'irregular'
   conjugations: Record<Tense, Record<Person, string>>
 }
 
@@ -28,6 +29,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'falar',
     translation: { ru: 'говорить', en: 'to speak' },
+    group: 'ar',
     conjugations: {
       presente: {
         eu: 'falo',
@@ -55,6 +57,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'morar',
     translation: { ru: 'жить, проживать', en: 'to live (reside)' },
+    group: 'ar',
     conjugations: {
       presente: {
         eu: 'moro',
@@ -82,6 +85,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'trabalhar',
     translation: { ru: 'работать', en: 'to work' },
+    group: 'ar',
     conjugations: {
       presente: {
         eu: 'trabalho',
@@ -109,6 +113,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'estudar',
     translation: { ru: 'учиться, изучать', en: 'to study' },
+    group: 'ar',
     conjugations: {
       presente: {
         eu: 'estudo',
@@ -136,6 +141,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'gostar',
     translation: { ru: 'нравиться, любить', en: 'to like' },
+    group: 'ar',
     conjugations: {
       presente: {
         eu: 'gosto',
@@ -163,6 +169,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'comprar',
     translation: { ru: 'покупать', en: 'to buy' },
+    group: 'ar',
     conjugations: {
       presente: {
         eu: 'compro',
@@ -190,6 +197,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'andar',
     translation: { ru: 'ходить, идти', en: 'to walk' },
+    group: 'ar',
     conjugations: {
       presente: {
         eu: 'ando',
@@ -217,6 +225,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'chamar',
     translation: { ru: 'звать, называть', en: 'to call' },
+    group: 'ar',
     conjugations: {
       presente: {
         eu: 'chamo',
@@ -248,6 +257,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'comer',
     translation: { ru: 'есть, кушать', en: 'to eat' },
+    group: 'er',
     conjugations: {
       presente: {
         eu: 'como',
@@ -275,6 +285,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'beber',
     translation: { ru: 'пить', en: 'to drink' },
+    group: 'er',
     conjugations: {
       presente: {
         eu: 'bebo',
@@ -302,6 +313,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'viver',
     translation: { ru: 'жить', en: 'to live' },
+    group: 'er',
     conjugations: {
       presente: {
         eu: 'vivo',
@@ -329,6 +341,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'aprender',
     translation: { ru: 'учить, изучать', en: 'to learn' },
+    group: 'er',
     conjugations: {
       presente: {
         eu: 'aprendo',
@@ -360,6 +373,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'partir',
     translation: { ru: 'уезжать, отправляться', en: 'to leave, to depart' },
+    group: 'ir',
     conjugations: {
       presente: {
         eu: 'parto',
@@ -387,6 +401,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'abrir',
     translation: { ru: 'открывать', en: 'to open' },
+    group: 'ir',
     conjugations: {
       presente: {
         eu: 'abro',
@@ -414,6 +429,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'decidir',
     translation: { ru: 'решать', en: 'to decide' },
+    group: 'ir',
     conjugations: {
       presente: {
         eu: 'decido',
@@ -445,6 +461,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'ser',
     translation: { ru: 'быть (постоянно)', en: 'to be (permanent)' },
+    group: 'irregular',
     conjugations: {
       presente: {
         eu: 'sou',
@@ -472,6 +489,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'estar',
     translation: { ru: 'быть (временно), находиться', en: 'to be (temporary)' },
+    group: 'irregular',
     conjugations: {
       presente: {
         eu: 'estou',
@@ -499,6 +517,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'ter',
     translation: { ru: 'иметь', en: 'to have' },
+    group: 'irregular',
     conjugations: {
       presente: {
         eu: 'tenho',
@@ -526,6 +545,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'ir',
     translation: { ru: 'идти, ехать', en: 'to go' },
+    group: 'irregular',
     conjugations: {
       presente: {
         eu: 'vou',
@@ -553,6 +573,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'fazer',
     translation: { ru: 'делать', en: 'to do, to make' },
+    group: 'irregular',
     conjugations: {
       presente: {
         eu: 'faço',
@@ -580,6 +601,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'poder',
     translation: { ru: 'мочь', en: 'to be able to, can' },
+    group: 'irregular',
     conjugations: {
       presente: {
         eu: 'posso',
@@ -607,6 +629,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'querer',
     translation: { ru: 'хотеть', en: 'to want' },
+    group: 'irregular',
     conjugations: {
       presente: {
         eu: 'quero',
@@ -634,6 +657,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'saber',
     translation: { ru: 'знать, уметь', en: 'to know' },
+    group: 'irregular',
     conjugations: {
       presente: {
         eu: 'sei',
@@ -661,6 +685,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'dizer',
     translation: { ru: 'говорить, сказать', en: 'to say, to tell' },
+    group: 'irregular',
     conjugations: {
       presente: {
         eu: 'digo',
@@ -688,6 +713,7 @@ export const VERBS: VerbData[] = [
   {
     infinitive: 'vir',
     translation: { ru: 'приходить', en: 'to come' },
+    group: 'irregular',
     conjugations: {
       presente: {
         eu: 'venho',

@@ -1,6 +1,6 @@
 import type { SessionItem } from '../../types'
-import type { Tense, Person } from '../data/verbs'
-import { VERBS } from '../data/verbs'
+import type { Tense, Person, VerbData } from '../data/verbs'
+import { VERBS, PERSON_LABELS } from '../data/verbs'
 import { CONJUGATION_TEMPLATES } from '../data/sentences'
 
 function shuffle<T>(arr: T[]): T[] {
@@ -14,6 +14,45 @@ function shuffle<T>(arr: T[]): T[] {
 
 const PERSONS: Person[] = ['eu', 'tu', 'ele_ela', 'nos', 'eles_elas']
 
+const REGULAR_ENDINGS: Record<string, Record<Tense, string>> = {
+  ar: {
+    presente: '-o, -as, -a, -amos, -am',
+    preterito_perfeito: '-ei, -aste, -ou, -ámos, -aram',
+    preterito_imperfeito: '-ava, -avas, -ava, -ávamos, -avam',
+  },
+  er: {
+    presente: '-o, -es, -e, -emos, -em',
+    preterito_perfeito: '-i, -este, -eu, -emos, -eram',
+    preterito_imperfeito: '-ia, -ias, -ia, -íamos, -iam',
+  },
+  ir: {
+    presente: '-o, -es, -e, -imos, -em',
+    preterito_perfeito: '-i, -iste, -iu, -imos, -iram',
+    preterito_imperfeito: '-ia, -ias, -ia, -íamos, -iam',
+  },
+}
+
+function getConjugationRule(
+  verb: VerbData,
+  tense: Tense,
+  person: Person,
+): Record<string, string> | undefined {
+  if (verb.group === 'irregular') {
+    const form = verb.conjugations[tense][person]
+    const label = PERSON_LABELS[person]
+    return {
+      ru: `${verb.infinitive} — неправильный глагол: ${label} ${form}`,
+      en: `${verb.infinitive} — irregular verb: ${label} ${form}`,
+    }
+  }
+  const endings = REGULAR_ENDINGS[verb.group]?.[tense]
+  if (!endings) return undefined
+  return {
+    ru: `Глаголы на -${verb.group}: ${endings}`,
+    en: `-${verb.group} verbs: ${endings}`,
+  }
+}
+
 export function generateConjugationItems(count: number, tenses: Tense[]): SessionItem[] {
   const items: SessionItem[] = []
 
@@ -23,7 +62,6 @@ export function generateConjugationItems(count: number, tenses: Tense[]): Sessio
     const person = PERSONS[Math.floor(Math.random() * PERSONS.length)]
     const correctAnswer = verb.conjugations[tense][person]
 
-    // Pick a random template for this person+tense
     const matching = CONJUGATION_TEMPLATES.filter(
       (t) => t.person === person && t.tense === tense,
     )
@@ -42,6 +80,7 @@ export function generateConjugationItems(count: number, tenses: Tense[]): Sessio
         person,
         translation: template.translation,
         verbTranslation: verb.translation,
+        rule: getConjugationRule(verb, tense, person),
       },
     })
   }

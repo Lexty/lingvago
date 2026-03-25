@@ -156,6 +156,48 @@ describe('GrammarMode.getStats', () => {
   })
 })
 
+describe('GrammarMode rule hints in payload', () => {
+  it('conjugation items have rule in payload', async () => {
+    setCategories(['conjugation'])
+    setTenses(['presente'])
+
+    const items = await mode.getSessionItems(5)
+    for (const item of items) {
+      expect(item.payload.rule).toBeDefined()
+      const rule = item.payload.rule as Record<string, string>
+      expect(rule.ru).toBeDefined()
+      expect(rule.en).toBeDefined()
+    }
+  })
+
+  it('article items have rule in payload', async () => {
+    setCategories(['articles'])
+
+    const items = await mode.getSessionItems(5)
+    for (const item of items) {
+      expect(item.payload.rule).toBeDefined()
+    }
+  })
+
+  it('gender items have hint in payload', async () => {
+    setCategories(['gender'])
+
+    const items = await mode.getSessionItems(5)
+    for (const item of items) {
+      expect(item.payload.hint).toBe('grammar.genderQuestion')
+    }
+  })
+
+  it('preposition items have hint in payload', async () => {
+    setCategories(['prepositions'])
+
+    const items = await mode.getSessionItems(5)
+    for (const item of items) {
+      expect(item.payload.hint).toBe('grammar.prepositionQuestion')
+    }
+  })
+})
+
 describe('GrammarMode.exerciseComponents', () => {
   it('has grammar-input and multiple-choice components', () => {
     expect(mode.exerciseComponents['grammar-input']).toBeDefined()

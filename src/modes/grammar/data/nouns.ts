@@ -9,6 +9,8 @@ export interface NounData {
     defPl: string
     indefPl: string
   }
+  genderRule?: Record<string, string>
+  pluralRule?: Record<string, string>
 }
 
 export const NOUNS: NounData[] = [
@@ -184,6 +186,7 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'dias',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    genderRule: { ru: 'Исключение: «dia» — masculino', en: "Exception: 'dia' is masculine" },
   },
   {
     word: 'mapa',
@@ -191,6 +194,7 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'mapas',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    genderRule: { ru: 'Слова на -ma часто masculino (греч.)', en: 'Words ending in -ma are often masculine (Greek origin)' },
   },
   {
     word: 'problema',
@@ -198,6 +202,7 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'problemas',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    genderRule: { ru: 'Слова на -ma часто masculino (греч.)', en: 'Words ending in -ma are often masculine (Greek origin)' },
   },
   {
     word: 'sistema',
@@ -205,6 +210,7 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'sistemas',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    genderRule: { ru: 'Слова на -ma часто masculino (греч.)', en: 'Words ending in -ma are often masculine (Greek origin)' },
   },
   {
     word: 'programa',
@@ -212,6 +218,7 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'programas',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    genderRule: { ru: 'Слова на -ma часто masculino (греч.)', en: 'Words ending in -ma are often masculine (Greek origin)' },
   },
 
   // ── Masculine not ending in -o (exceptions) ──────────────────────
@@ -221,6 +228,7 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'cafés',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    genderRule: { ru: 'Слова на -é обычно masculino', en: 'Words ending in -é are usually masculine' },
   },
   {
     word: 'leite',
@@ -228,6 +236,7 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'leites',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    genderRule: { ru: 'Слова на -e могут быть любого рода — запомнить', en: 'Words ending in -e can be either gender — memorize' },
   },
   {
     word: 'pão',
@@ -235,6 +244,8 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'pães',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    genderRule: { ru: 'Слова на -ão чаще masculino', en: 'Words ending in -ão are usually masculine' },
+    pluralRule: { ru: '-ão → -ães (исключение)', en: '-ão → -ães (exception)' },
   },
   {
     word: 'hotel',
@@ -242,6 +253,8 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'hotéis',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    genderRule: { ru: 'Слова на -l обычно masculino', en: 'Words ending in -l are usually masculine' },
+    pluralRule: { ru: '-el → -éis', en: '-el → -éis' },
   },
   {
     word: 'sol',
@@ -249,6 +262,8 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'sóis',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    genderRule: { ru: 'Слова на -l обычно masculino', en: 'Words ending in -l are usually masculine' },
+    pluralRule: { ru: '-ol → -óis', en: '-ol → -óis' },
   },
   {
     word: 'mar',
@@ -256,6 +271,8 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'mares',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    genderRule: { ru: 'Слова на -r обычно masculino', en: 'Words ending in -r are usually masculine' },
+    pluralRule: { ru: '-r → -res', en: '-r → -res' },
   },
   {
     word: 'nome',
@@ -263,6 +280,7 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'nomes',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    genderRule: { ru: 'Слова на -e могут быть любого рода — запомнить', en: 'Words ending in -e can be either gender — memorize' },
   },
 
   // ── Feminine not ending in -a (exceptions) ────────────────────────
@@ -272,6 +290,7 @@ export const NOUNS: NounData[] = [
     gender: 'feminino',
     plural: 'cidades',
     articles: { def: 'a', indef: 'uma', defPl: 'as', indefPl: 'umas' },
+    genderRule: { ru: 'Слова на -dade — feminino', en: 'Words ending in -dade are feminine' },
   },
   {
     word: 'noite',
@@ -279,6 +298,7 @@ export const NOUNS: NounData[] = [
     gender: 'feminino',
     plural: 'noites',
     articles: { def: 'a', indef: 'uma', defPl: 'as', indefPl: 'umas' },
+    genderRule: { ru: 'Слова на -e могут быть любого рода — запомнить', en: 'Words ending in -e can be either gender — memorize' },
   },
   {
     word: 'chave',
@@ -286,6 +306,7 @@ export const NOUNS: NounData[] = [
     gender: 'feminino',
     plural: 'chaves',
     articles: { def: 'a', indef: 'uma', defPl: 'as', indefPl: 'umas' },
+    genderRule: { ru: 'Слова на -e могут быть любого рода — запомнить', en: 'Words ending in -e can be either gender — memorize' },
   },
   {
     word: 'viagem',
@@ -293,6 +314,8 @@ export const NOUNS: NounData[] = [
     gender: 'feminino',
     plural: 'viagens',
     articles: { def: 'a', indef: 'uma', defPl: 'as', indefPl: 'umas' },
+    genderRule: { ru: 'Слова на -gem — feminino', en: 'Words ending in -gem are feminine' },
+    pluralRule: { ru: '-m → -ns', en: '-m → -ns' },
   },
   {
     word: 'cor',
@@ -300,6 +323,8 @@ export const NOUNS: NounData[] = [
     gender: 'feminino',
     plural: 'cores',
     articles: { def: 'a', indef: 'uma', defPl: 'as', indefPl: 'umas' },
+    genderRule: { ru: 'Исключение: «cor» — feminino', en: "Exception: 'cor' is feminine" },
+    pluralRule: { ru: '-r → -res', en: '-r → -res' },
   },
   {
     word: 'flor',
@@ -307,6 +332,8 @@ export const NOUNS: NounData[] = [
     gender: 'feminino',
     plural: 'flores',
     articles: { def: 'a', indef: 'uma', defPl: 'as', indefPl: 'umas' },
+    genderRule: { ru: 'Исключение: «flor» — feminino', en: "Exception: 'flor' is feminine" },
+    pluralRule: { ru: '-r → -res', en: '-r → -res' },
   },
   {
     word: 'luz',
@@ -314,6 +341,8 @@ export const NOUNS: NounData[] = [
     gender: 'feminino',
     plural: 'luzes',
     articles: { def: 'a', indef: 'uma', defPl: 'as', indefPl: 'umas' },
+    genderRule: { ru: 'Исключение: «luz» — feminino', en: "Exception: 'luz' is feminine" },
+    pluralRule: { ru: '-z → -zes', en: '-z → -zes' },
   },
   {
     word: 'voz',
@@ -321,6 +350,8 @@ export const NOUNS: NounData[] = [
     gender: 'feminino',
     plural: 'vozes',
     articles: { def: 'a', indef: 'uma', defPl: 'as', indefPl: 'umas' },
+    genderRule: { ru: 'Исключение: «voz» — feminino', en: "Exception: 'voz' is feminine" },
+    pluralRule: { ru: '-z → -zes', en: '-z → -zes' },
   },
 
   // ── Irregular plurals: -ão → -ões ─────────────────────────────────
@@ -330,6 +361,7 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'aviões',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    pluralRule: { ru: '-ão → -ões (основное правило)', en: '-ão → -ões (main pattern)' },
   },
   {
     word: 'coração',
@@ -337,6 +369,7 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'corações',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    pluralRule: { ru: '-ão → -ões (основное правило)', en: '-ão → -ões (main pattern)' },
   },
   {
     word: 'estação',
@@ -344,6 +377,8 @@ export const NOUNS: NounData[] = [
     gender: 'feminino',
     plural: 'estações',
     articles: { def: 'a', indef: 'uma', defPl: 'as', indefPl: 'umas' },
+    genderRule: { ru: 'Слова на -ção — feminino', en: 'Words ending in -ção are feminine' },
+    pluralRule: { ru: '-ão → -ões (основное правило)', en: '-ão → -ões (main pattern)' },
   },
   {
     word: 'lição',
@@ -351,6 +386,8 @@ export const NOUNS: NounData[] = [
     gender: 'feminino',
     plural: 'lições',
     articles: { def: 'a', indef: 'uma', defPl: 'as', indefPl: 'umas' },
+    genderRule: { ru: 'Слова на -ção — feminino', en: 'Words ending in -ção are feminine' },
+    pluralRule: { ru: '-ão → -ões (основное правило)', en: '-ão → -ões (main pattern)' },
   },
 
   // ── Irregular plurals: -ão → -ães ─────────────────────────────────
@@ -360,6 +397,7 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'cães',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    pluralRule: { ru: '-ão → -ães (исключение)', en: '-ão → -ães (exception)' },
   },
 
   // ── Irregular plurals: -ão → -ãos (exception!) ────────────────────
@@ -369,6 +407,8 @@ export const NOUNS: NounData[] = [
     gender: 'feminino',
     plural: 'mãos',
     articles: { def: 'a', indef: 'uma', defPl: 'as', indefPl: 'umas' },
+    genderRule: { ru: 'Исключение: «mão» — feminino', en: "Exception: 'mão' is feminine" },
+    pluralRule: { ru: '-ão → -ãos (исключение)', en: '-ão → -ãos (exception)' },
   },
   {
     word: 'irmão',
@@ -376,6 +416,7 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'irmãos',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    pluralRule: { ru: '-ão → -ãos (исключение)', en: '-ão → -ãos (exception)' },
   },
 
   // ── Irregular plurals: -l → -is ───────────────────────────────────
@@ -385,6 +426,7 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'animais',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    pluralRule: { ru: '-al → -ais', en: '-al → -ais' },
   },
   {
     word: 'papel',
@@ -392,6 +434,7 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'papéis',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    pluralRule: { ru: '-el → -éis', en: '-el → -éis' },
   },
 
   // ── Irregular plurals: -m → -ns ───────────────────────────────────
@@ -401,6 +444,7 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'homens',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    pluralRule: { ru: '-m → -ns', en: '-m → -ns' },
   },
   {
     word: 'jardim',
@@ -408,5 +452,6 @@ export const NOUNS: NounData[] = [
     gender: 'masculino',
     plural: 'jardins',
     articles: { def: 'o', indef: 'um', defPl: 'os', indefPl: 'uns' },
+    pluralRule: { ru: '-m → -ns', en: '-m → -ns' },
   },
 ]

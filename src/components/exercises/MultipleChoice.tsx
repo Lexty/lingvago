@@ -19,6 +19,7 @@ export default function MultipleChoice({ item, onAnswer }: MultipleChoiceProps) 
   const [trackedId, setTrackedId] = useState(item.id)
   const startTime = useRef(0)
   const feedbackActive = useRef(false)
+  const pendingAnswer = useRef<Answer | null>(null)
 
   // Reset state during render when item changes
   if (item.id !== trackedId) {
@@ -31,6 +32,7 @@ export default function MultipleChoice({ item, onAnswer }: MultipleChoiceProps) 
   useEffect(() => {
     startTime.current = Date.now()
     feedbackActive.current = false
+    pendingAnswer.current = null
   }, [trackedId])
 
   const handleSelect = useCallback(
@@ -43,14 +45,28 @@ export default function MultipleChoice({ item, onAnswer }: MultipleChoiceProps) 
 
       const timeMs = Date.now() - startTime.current
       const correct = option === item.correctAnswer
+      const answer: Answer = { value: option, correct, timeMs }
 
-      setTimeout(() => {
-        feedbackActive.current = false
-        onAnswer({ value: option, correct, timeMs })
-      }, FEEDBACK_DELAY)
+      if (correct) {
+        // Auto-advance on correct
+        setTimeout(() => {
+          feedbackActive.current = false
+          onAnswer(answer)
+        }, FEEDBACK_DELAY)
+      } else {
+        // Wait for manual "Next" on wrong — gives time to read rule/feedback
+        pendingAnswer.current = answer
+      }
     },
     [item.correctAnswer, onAnswer],
   )
+
+  const handleNext = () => {
+    if (pendingAnswer.current) {
+      feedbackActive.current = false
+      onAnswer(pendingAnswer.current)
+    }
+  }
 
   const getOptionClass = (option: string): string => {
     const classes = [styles.option]
@@ -65,8 +81,8 @@ export default function MultipleChoice({ item, onAnswer }: MultipleChoiceProps) 
   }
 
   const translationText = getTranslationText(item.payload, i18n.language)
-
   const hintKey = item.payload.hint as string | undefined
+  const isWrong = showFeedback && selected !== item.correctAnswer
 
   return (
     <div className={styles.container}>
@@ -84,6 +100,19 @@ export default function MultipleChoice({ item, onAnswer }: MultipleChoiceProps) 
           </button>
         ))}
       </div>
+
+      {isWrong && (() => {
+        const rule = item.payload.rule as Record<string, string> | undefined
+        const ruleText = rule?.[i18n.language] ?? rule?.en ?? rule?.ru
+        if (!ruleText) return null
+        return <p className={styles.ruleHint}>{ruleText}</p>
+      })()}
+
+      {isWrong && (
+        <button className={styles.nextButton} onClick={handleNext}>
+          {t('grammar.next')}
+        </button>
+      )}
 
       {translationText && (
         <>

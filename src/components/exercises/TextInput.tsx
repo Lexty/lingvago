@@ -165,6 +165,13 @@ export default function TextInput({
         </div>
       )}
 
+      {feedback === 'wrong' && (() => {
+        const rule = item.payload.rule as Record<string, string> | undefined
+        const ruleText = rule?.[i18n.language] ?? rule?.en ?? rule?.ru
+        if (!ruleText) return null
+        return <p className={styles.ruleHint}>{ruleText}</p>
+      })()}
+
       {feedback === 'wrong' && (
         <button className={styles.nextButton} onClick={handleNext}>
           {t(keys.next)}
