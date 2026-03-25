@@ -20,7 +20,7 @@ export interface TextInputProps {
   /** Extra content rendered between feedback and cheat sheet area */
   children?: React.ReactNode
   /** i18n keys override. Defaults to generic study.* keys */
-  i18nKeys?: { check: string; correct: string; wrong: string; next: string }
+  i18nKeys?: { check: string; correct: string; wrong: string; next: string; almostCorrect?: string }
 }
 
 const FEEDBACK_DELAY = 1500
@@ -63,6 +63,7 @@ export default function TextInput({
     correct: i18nKeys?.correct ?? 'numbers.correct',
     wrong: i18nKeys?.wrong ?? 'numbers.wrong',
     next: i18nKeys?.next ?? 'numbers.next',
+    almostCorrect: i18nKeys?.almostCorrect ?? 'grammar.almostCorrect',
   }
 
   // Reset state during render when item changes (React-approved pattern)
@@ -173,7 +174,7 @@ export default function TextInput({
             {feedback === 'correct'
               ? t(keys.correct)
               : feedback === 'close'
-                ? `${t('grammar.almostCorrect')}: ${displayCorrect}`
+                ? `${t(keys.almostCorrect)}: ${displayCorrect}`
                 : `${t(keys.wrong)}: ${displayCorrect}`}
           </span>
         </div>

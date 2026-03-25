@@ -6,10 +6,11 @@ import type { LearningMode, SessionItem, Answer, ModeStats, ExerciseComponentPro
 import type { ComponentType } from 'react'
 import type { CardState, Word } from '../../db/schema'
 import FlipCard from './components/FlipCard'
+import VocabularyInput from './components/VocabularyInput'
 
 const fsrs = new FSRS({})
 
-const STABILITY_THRESHOLD_DAYS = 10
+const FLIP_CARD_STABILITY = 21
 
 export class VocabularyMode implements LearningMode {
   readonly id = 'vocabulary'
@@ -19,6 +20,7 @@ export class VocabularyMode implements LearningMode {
 
   readonly exerciseComponents: Record<string, ComponentType<ExerciseComponentProps>> = {
     'multiple-choice': MultipleChoice,
+    'text-input': VocabularyInput,
     'flip-card': FlipCard,
   }
 
@@ -196,12 +198,22 @@ export class VocabularyMode implements LearningMode {
     return new Set(decks.filter((d) => d.isActive).map((d) => d.id!))
   }
 
-  private getExerciseType(cs: CardState): 'multiple-choice' | 'flip-card' {
-    // Review cards with high stability → flip card (self-assessment)
-    if (cs.state === 2 && cs.stability >= STABILITY_THRESHOLD_DAYS) {
+  private getExerciseType(cs: CardState): 'multiple-choice' | 'text-input' | 'flip-card' {
+    const isProduction = cs.direction.endsWith('→pt')
+
+    // New and Learning → always multiple-choice (recognition)
+    if (cs.state === 0 || cs.state === 1) return 'multiple-choice'
+
+    if (isProduction) {
+      // lang→PT: MC → text-input → flip-card
+      if (cs.state === 3) return 'text-input' // Relearning: prove recall
+      // state === 2 (Review)
+      if (cs.stability >= FLIP_CARD_STABILITY) return 'flip-card'
+      return 'text-input'
+    } else {
+      // PT→lang: MC → flip-card (no text-input due to translation variability)
       return 'flip-card'
     }
-    return 'multiple-choice'
   }
 
   private generateOptions(correct: string, pool: string[]): string[] {
@@ -241,6 +253,8 @@ export class VocabularyMode implements LearningMode {
   }
 
   private mapAnswerToRating(answer: Answer): number {
+    // Close match (accent/typo): treat as Hard — right word, wrong details
+    if (answer.result === 'close') return Rating.Hard
     if (!answer.correct) return Rating.Again
     if (answer.timeMs < 3000) return Rating.Easy
     if (answer.timeMs <= 8000) return Rating.Good

@@ -39,6 +39,8 @@ export interface SessionItem {
 export interface Answer {
   value: string
   correct: boolean
+  /** Nuanced comparison result for FSRS rating (close = accent/typo difference) */
+  result?: 'exact' | 'close' | 'wrong'
   fsrsRating?: number
   timeMs: number
 }

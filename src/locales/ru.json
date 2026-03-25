@@ -154,6 +154,14 @@
     "refContractions": "Контракции",
     "almostCorrect": "Почти правильно! Обратите внимание на акценты"
   },
+  "vocabulary": {
+    "typePortuguese": "Напишите по-португальски",
+    "check": "Проверить",
+    "correct": "Правильно!",
+    "wrong": "Неправильно",
+    "next": "Далее",
+    "almostCorrect": "Почти правильно!"
+  },
   "csvImport": {
     "title": "Импорт CSV",
     "selectFile": "Выберите CSV-файл (pt,перевод)",

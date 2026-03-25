@@ -154,6 +154,14 @@
     "refContractions": "Contractions",
     "almostCorrect": "Almost correct! Check the accents"
   },
+  "vocabulary": {
+    "typePortuguese": "Type in Portuguese",
+    "check": "Check",
+    "correct": "Correct!",
+    "wrong": "Wrong",
+    "next": "Next",
+    "almostCorrect": "Almost correct!"
+  },
   "csvImport": {
     "title": "Import CSV",
     "selectFile": "Select a CSV file (pt,translation)",
