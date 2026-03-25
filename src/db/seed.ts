@@ -1,6 +1,7 @@
 import { db } from './index'
 import { addWordWithCards } from './operations'
 import { PASSAPORTE_U1_U4 } from './decks/passaporte-u1-u4'
+import { FRASES_DIA_A_DIA } from './decks/frases-dia-a-dia'
 
 const STARTER_WORDS: Array<{ pt: string; ru: string }> = [
   { pt: 'olá', ru: 'привет' },
@@ -40,15 +41,16 @@ interface DeckDef {
 const SEED_DECKS: DeckDef[] = [
   { name: 'Starter', description: 'Базовые слова', words: STARTER_WORDS },
   { name: 'Passaporte U1–U4', description: 'Passaporte para Português, Unidades 1–4', words: PASSAPORTE_U1_U4 },
+  { name: 'Frases do dia-a-dia', description: 'Повседневные фразы', words: FRASES_DIA_A_DIA },
 ]
 
 export async function seedDatabase() {
-  const deckCount = await db.decks.count()
-  if (deckCount > 0) return
-
+  const existingNames = new Set((await db.decks.toArray()).map((d) => d.name))
   const studyLanguage = 'ru'
 
   for (const deck of SEED_DECKS) {
+    if (existingNames.has(deck.name)) continue
+
     const deckId = (await db.decks.add({
       name: deck.name,
       description: deck.description,
