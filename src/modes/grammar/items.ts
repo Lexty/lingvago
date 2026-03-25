@@ -56,8 +56,11 @@ export function genderItemId(noun: string): string {
   return `gender:${noun}`
 }
 
-export function articleItemId(noun: string): string {
-  return `article:${noun}`
+export type ArticleType = 'def' | 'indef' | 'defPl' | 'indefPl'
+const ARTICLE_TYPES: ArticleType[] = ['def', 'indef', 'defPl', 'indefPl']
+
+export function articleItemId(articleType: ArticleType, noun: string): string {
+  return `article:${articleType}:${noun}`
 }
 
 export function pluralItemId(noun: string): string {
@@ -78,8 +81,19 @@ export async function seedCategoryIfNeeded(category: GrammarCategory): Promise<v
   const existing = await db.grammarCardStates
     .where('category')
     .equals(category)
-    .count()
-  if (existing > 0) return
+    .toArray()
+
+  // Check if articles need re-seeding (old format: "article:noun" → new: "article:type:noun")
+  if (category === 'articles' && existing.length > 0) {
+    const hasOldFormat = existing.some((cs) => cs.itemId.split(':').length === 2)
+    if (hasOldFormat) {
+      await db.grammarCardStates.where('category').equals('articles').delete()
+    } else {
+      return // already seeded in new format
+    }
+  } else if (existing.length > 0) {
+    return
+  }
 
   const records: Array<Omit<import('../../db/schema').GrammarCardState, 'id'>> = []
 
@@ -112,8 +126,10 @@ export async function seedCategoryIfNeeded(category: GrammarCategory): Promise<v
       }
       break
     case 'articles':
-      for (const noun of NOUNS) {
-        records.push(createNewGrammarCardState(articleItemId(noun.word), 'articles'))
+      for (const articleType of ARTICLE_TYPES) {
+        for (const noun of NOUNS) {
+          records.push(createNewGrammarCardState(articleItemId(articleType, noun.word), 'articles'))
+        }
       }
       break
     case 'plural':
@@ -229,14 +245,20 @@ function buildGenderItem(cardId: number, itemId: string): SessionItem | null {
 }
 
 function buildArticleItem(cardId: number, itemId: string): SessionItem | null {
-  const nounWord = itemId.replace('article:', '')
+  // Parse: "article:articleType:noun"
+  const parts = itemId.split(':')
+  if (parts.length < 3) return null
+  const articleType = parts[1] as ArticleType
+  const nounWord = parts.slice(2).join(':')
+
   const noun = NOUNS.find((n) => n.word === nounWord)
   if (!noun) return null
 
-  const templates = shuffle(ARTICLE_TEMPLATES)
-  const template = templates[0]
-  const articleType = template.articleType
   const correct = noun.articles[articleType]
+
+  // Pick a template matching this article type
+  const matching = ARTICLE_TEMPLATES.filter((t) => t.articleType === articleType)
+  const template = matching[Math.floor(Math.random() * matching.length)]
 
   const isPlural = articleType === 'defPl' || articleType === 'indefPl'
   const nounForm = isPlural ? noun.plural : noun.word

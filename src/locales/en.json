@@ -147,7 +147,12 @@
     "refEr": "-er verbs",
     "refIr": "-ir verbs",
     "refPluralRules": "Plural formation rules",
-    "refPrepositions": "Main prepositions"
+    "refPrepositions": "Main prepositions",
+    "refGenderRules": "Gender rules",
+    "refExceptions": "Exceptions",
+    "refArticles": "Article table",
+    "refContractions": "Contractions",
+    "almostCorrect": "Almost correct! Check the accents"
   },
   "csvImport": {
     "title": "Import CSV",

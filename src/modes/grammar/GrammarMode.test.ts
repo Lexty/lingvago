@@ -49,11 +49,11 @@ describe('GrammarMode.getSessionItems', () => {
     }
   })
 
-  it('generates article items as sentences with 4 options', async () => {
+  it('generates article items as sentences with 4 options and fixed articleType', async () => {
     mode.setCategories(['articles'])
 
-    const items = await mode.getSessionItems(5)
-    expect(items.length).toBe(5)
+    const items = await mode.getSessionItems(8)
+    expect(items.length).toBe(8)
 
     for (const item of items) {
       expect(item.exerciseType).toBe('multiple-choice')
@@ -61,7 +61,30 @@ describe('GrammarMode.getSessionItems', () => {
       expect(item.question).toContain('___')
       expect(item.options).toBeDefined()
       expect(item.options!.length).toBe(4)
+      expect(item.payload.articleType).toBeDefined()
     }
+
+    // Each item has a fixed articleType from the itemId
+    for (const item of items) {
+      expect(['def', 'indef', 'defPl', 'indefPl']).toContain(item.payload.articleType)
+    }
+  })
+
+  it('seeds 4x article cards per noun (one per article type)', async () => {
+    mode.setCategories(['articles'])
+    await mode.getSessionItems(1) // triggers seeding
+
+    const all = await db.grammarCardStates.where('category').equals('articles').toArray()
+    // Each noun has 4 article cards
+    expect(all.length % 4).toBe(0)
+    expect(all.length).toBeGreaterThanOrEqual(200)
+
+    // Verify all 4 types are present
+    const types = new Set(all.map((cs) => cs.itemId.split(':')[1]))
+    expect(types).toContain('def')
+    expect(types).toContain('indef')
+    expect(types).toContain('defPl')
+    expect(types).toContain('indefPl')
   })
 
   it('generates plural items as sentences with blanks', async () => {

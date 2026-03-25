@@ -51,3 +51,23 @@
 .rowValue {
   color: var(--color-text-primary);
 }
+
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-sm);
+  font-size: var(--font-size-sm);
+  padding: 2px 0;
+}
+
+.tableHeader {
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-align: center;
+}

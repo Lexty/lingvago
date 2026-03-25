@@ -147,7 +147,12 @@
     "refEr": "Глаголы на -er",
     "refIr": "Глаголы на -ir",
     "refPluralRules": "Правила образования мн.ч.",
-    "refPrepositions": "Основные предлоги"
+    "refPrepositions": "Основные предлоги",
+    "refGenderRules": "Правила определения рода",
+    "refExceptions": "Исключения",
+    "refArticles": "Таблица артиклей",
+    "refContractions": "Контракции",
+    "almostCorrect": "Почти правильно! Обратите внимание на акценты"
   },
   "csvImport": {
     "title": "Импорт CSV",

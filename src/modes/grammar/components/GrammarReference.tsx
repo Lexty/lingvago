@@ -58,6 +58,74 @@ function ConjugationReference() {
   )
 }
 
+function GenderReference() {
+  const { t } = useTranslation()
+
+  const rules = [
+    ['-o → masculino', 'livro, gato, carro'],
+    ['-a → feminino', 'casa, mesa, porta'],
+    ['-dade → feminino', 'cidade, universidade'],
+    ['-gem → feminino', 'viagem, garagem'],
+    ['-ção → feminino', 'estação, lição'],
+    ['-ão → masculino', 'avião, coração'],
+  ]
+
+  const exceptions = 'o dia, o mapa, o problema, o sistema, o programa'
+
+  return (
+    <div className={styles.container}>
+      <p className={styles.heading}>{t('grammar.refGenderRules')}</p>
+      {rules.map(([rule, examples]) => (
+        <div key={rule} className={styles.row}>
+          <span className={styles.rowLabel}>{rule}</span>
+          <span className={styles.rowValue}>{examples}</span>
+        </div>
+      ))}
+      <div className={styles.group}>
+        <p className={styles.groupLabel}>{t('grammar.refExceptions')}</p>
+        <p className={styles.rowValue}>{exceptions}</p>
+      </div>
+    </div>
+  )
+}
+
+function ArticleReference() {
+  const { t } = useTranslation()
+
+  return (
+    <div className={styles.container}>
+      <p className={styles.heading}>{t('grammar.refArticles')}</p>
+      <div className={styles.table}>
+        <div className={styles.tableRow}>
+          <span className={styles.tableHeader} />
+          <span className={styles.tableHeader}>masc.</span>
+          <span className={styles.tableHeader}>fem.</span>
+        </div>
+        <div className={styles.tableRow}>
+          <span className={styles.rowLabel}>def. sg.</span>
+          <span className={styles.rowValue}>o</span>
+          <span className={styles.rowValue}>a</span>
+        </div>
+        <div className={styles.tableRow}>
+          <span className={styles.rowLabel}>indef. sg.</span>
+          <span className={styles.rowValue}>um</span>
+          <span className={styles.rowValue}>uma</span>
+        </div>
+        <div className={styles.tableRow}>
+          <span className={styles.rowLabel}>def. pl.</span>
+          <span className={styles.rowValue}>os</span>
+          <span className={styles.rowValue}>as</span>
+        </div>
+        <div className={styles.tableRow}>
+          <span className={styles.rowLabel}>indef. pl.</span>
+          <span className={styles.rowValue}>uns</span>
+          <span className={styles.rowValue}>umas</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function PluralReference() {
   const { t } = useTranslation()
 
@@ -85,8 +153,54 @@ function PluralReference() {
   )
 }
 
+function PrepositionReference() {
+  const { t } = useTranslation()
+
+  const preps = [
+    ['a', 'ir a, chegar a'],
+    ['de', 'ser de, gostar de'],
+    ['em', 'morar em, estar em'],
+    ['para', 'ir para, trabalhar para'],
+    ['por', 'passar por, viajar por'],
+    ['com', 'falar com, viver com'],
+  ]
+
+  const contractions = [
+    ['em + o/a = no/na', 'em + os/as = nos/nas'],
+    ['de + o/a = do/da', 'de + os/as = dos/das'],
+    ['a + o/a = ao/à', 'a + os/as = aos/às'],
+    ['por + o/a = pelo/pela', 'por + os/as = pelos/pelas'],
+  ]
+
+  return (
+    <div className={styles.container}>
+      <p className={styles.heading}>{t('grammar.refPrepositions')}</p>
+      {preps.map(([prep, examples]) => (
+        <div key={prep} className={styles.row}>
+          <span className={styles.rowLabel}>{prep}</span>
+          <span className={styles.rowValue}>{examples}</span>
+        </div>
+      ))}
+      <div className={styles.group}>
+        <p className={styles.groupLabel}>{t('grammar.refContractions')}</p>
+        {contractions.map(([left, right]) => (
+          <div key={left} className={styles.row}>
+            <span className={styles.rowValue}>{left}</span>
+            <span className={styles.rowValue}>{right}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function GrammarReference({ category }: GrammarReferenceProps) {
-  if (category === 'conjugation') return <ConjugationReference />
-  if (category === 'plural') return <PluralReference />
-  return null
+  switch (category) {
+    case 'conjugation': return <ConjugationReference />
+    case 'gender': return <GenderReference />
+    case 'articles': return <ArticleReference />
+    case 'plural': return <PluralReference />
+    case 'prepositions': return <PrepositionReference />
+    default: return null
+  }
 }

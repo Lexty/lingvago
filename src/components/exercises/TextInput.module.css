@@ -51,6 +51,11 @@
   background: color-mix(in srgb, var(--color-success) 10%, var(--color-bg-card));
 }
 
+.inputClose {
+  border-color: var(--color-warning, #f59e0b);
+  background: color-mix(in srgb, var(--color-warning, #f59e0b) 10%, var(--color-bg-card));
+}
+
 .inputWrong {
   border-color: var(--color-error);
   background: color-mix(in srgb, var(--color-error) 10%, var(--color-bg-card));
@@ -94,6 +99,11 @@
 .feedbackCorrect {
   background: color-mix(in srgb, var(--color-success) 12%, var(--color-bg-card));
   color: var(--color-success);
+}
+
+.feedbackClose {
+  background: color-mix(in srgb, var(--color-warning, #f59e0b) 12%, var(--color-bg-card));
+  color: var(--color-warning, #f59e0b);
 }
 
 .feedbackWrong {

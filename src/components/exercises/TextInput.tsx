@@ -11,8 +11,8 @@ export interface TextInputProps {
   hint?: string
   /** Input mode for mobile keyboard */
   inputMode?: 'text' | 'numeric'
-  /** Custom answer comparison. Default: case-insensitive trimmed equality */
-  compareAnswer?: (userInput: string, correctAnswer: string) => boolean
+  /** Custom answer comparison. Return boolean or 'exact'|'close'|'wrong' for nuanced feedback */
+  compareAnswer?: (userInput: string, correctAnswer: string) => boolean | 'exact' | 'close' | 'wrong'
   /** Format question for display. Default: identity */
   formatQuestion?: (question: string) => string
   /** Format correct answer in "Wrong: ..." feedback. Default: identity */
@@ -50,7 +50,7 @@ export default function TextInput({
 }: TextInputProps) {
   const { t, i18n } = useTranslation()
   const [input, setInput] = useState('')
-  const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null)
+  const [feedback, setFeedback] = useState<'correct' | 'close' | 'wrong' | null>(null)
   const [showTranslation, setShowTranslation] = useState(false)
   const [trackedId, setTrackedId] = useState(item.id)
   const startTime = useRef(0)
@@ -86,12 +86,22 @@ export default function TextInput({
     submitted.current = true
 
     const timeMs = Date.now() - startTime.current
-    const correct = compareAnswer(input, item.correctAnswer)
+    const result = compareAnswer(input, item.correctAnswer)
 
-    setFeedback(correct ? 'correct' : 'wrong')
-    const answer: Answer = { value: input.trim(), correct, timeMs }
+    // Normalize result: boolean → 'exact'/'wrong', string passthrough
+    const resultStr = typeof result === 'boolean'
+      ? (result ? 'exact' : 'wrong')
+      : result
 
-    if (correct) {
+    const isCorrect = resultStr === 'exact'
+    const feedbackType = resultStr === 'exact' ? 'correct' as const
+      : resultStr === 'close' ? 'close' as const
+      : 'wrong' as const
+
+    setFeedback(feedbackType)
+    const answer: Answer = { value: input.trim(), correct: isCorrect, timeMs }
+
+    if (isCorrect) {
       setTimeout(() => onAnswer(answer), FEEDBACK_DELAY)
     } else {
       pendingAnswer.current = answer
@@ -104,7 +114,7 @@ export default function TextInput({
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      if (feedback === 'wrong') {
+      if (feedback === 'wrong' || feedback === 'close') {
         handleNext()
       } else if (feedback === null) {
         checkAnswer()
@@ -126,7 +136,7 @@ export default function TextInput({
         <input
           key={item.id}
           ref={inputRef}
-          className={`${styles.input} ${feedback === 'correct' ? styles.inputCorrect : ''} ${feedback === 'wrong' ? styles.inputWrong : ''}`}
+          className={`${styles.input} ${feedback === 'correct' ? styles.inputCorrect : ''} ${feedback === 'close' ? styles.inputClose : ''} ${feedback === 'wrong' ? styles.inputWrong : ''}`}
           type="text"
           inputMode={inputMode}
           value={input}
@@ -154,25 +164,29 @@ export default function TextInput({
 
       {feedback !== null && (
         <div
-          className={`${styles.feedback} ${feedback === 'correct' ? styles.feedbackCorrect : styles.feedbackWrong}`}
+          className={`${styles.feedback} ${feedback === 'correct' ? styles.feedbackCorrect : feedback === 'close' ? styles.feedbackClose : styles.feedbackWrong}`}
         >
-          <span className={styles.feedbackIcon}>{feedback === 'correct' ? '✓' : '✗'}</span>
+          <span className={styles.feedbackIcon}>
+            {feedback === 'correct' ? '✓' : feedback === 'close' ? '≈' : '✗'}
+          </span>
           <span>
             {feedback === 'correct'
               ? t(keys.correct)
-              : `${t(keys.wrong)}: ${displayCorrect}`}
+              : feedback === 'close'
+                ? `${t('grammar.almostCorrect')}: ${displayCorrect}`
+                : `${t(keys.wrong)}: ${displayCorrect}`}
           </span>
         </div>
       )}
 
-      {feedback === 'wrong' && (() => {
+      {(feedback === 'wrong' || feedback === 'close') && (() => {
         const rule = item.payload.rule as Record<string, string> | undefined
         const ruleText = rule?.[i18n.language] ?? rule?.en ?? rule?.ru
         if (!ruleText) return null
         return <p className={styles.ruleHint}>{ruleText}</p>
       })()}
 
-      {feedback === 'wrong' && (
+      {(feedback === 'wrong' || feedback === 'close') && (
         <button className={styles.nextButton} onClick={handleNext}>
           {t(keys.next)}
         </button>
