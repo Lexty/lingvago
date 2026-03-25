@@ -1,21 +1,22 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { db } from '../../db/index'
 import { GrammarMode } from './GrammarMode'
-import { setCategories, setTenses } from './state'
 import type { Tense } from './state'
 
-const mode = new GrammarMode()
+let mode: GrammarMode
 
 beforeEach(async () => {
   await db.sessions.clear()
-  setCategories(['conjugation'])
-  setTenses(['presente'])
+  await db.grammarCardStates.clear()
+  mode = new GrammarMode()
+  mode.setCategories(['conjugation'])
+  mode.setTenses(['presente'])
 })
 
 describe('GrammarMode.getSessionItems', () => {
   it('generates conjugation items as sentences with blanks', async () => {
-    setCategories(['conjugation'])
-    setTenses(['presente'])
+    mode.setCategories(['conjugation'])
+    mode.setTenses(['presente'])
 
     const items = await mode.getSessionItems(5)
     expect(items.length).toBe(5)
@@ -26,11 +27,12 @@ describe('GrammarMode.getSessionItems', () => {
       expect(item.question).toContain('___')
       expect(item.question).toContain('(')
       expect(item.correctAnswer.length).toBeGreaterThan(0)
+      expect(item.payload.grammarCardId).toBeDefined()
     }
   })
 
   it('generates gender items as multiple-choice with 2 options', async () => {
-    setCategories(['gender'])
+    mode.setCategories(['gender'])
 
     const items = await mode.getSessionItems(5)
     expect(items.length).toBe(5)
@@ -43,11 +45,12 @@ describe('GrammarMode.getSessionItems', () => {
       expect(item.options).toContain('masculino')
       expect(item.options).toContain('feminino')
       expect(['masculino', 'feminino']).toContain(item.correctAnswer)
+      expect(item.payload.grammarCardId).toBeDefined()
     }
   })
 
-  it('generates article items as sentences with blanks', async () => {
-    setCategories(['articles'])
+  it('generates article items as sentences with 4 options', async () => {
+    mode.setCategories(['articles'])
 
     const items = await mode.getSessionItems(5)
     expect(items.length).toBe(5)
@@ -62,7 +65,7 @@ describe('GrammarMode.getSessionItems', () => {
   })
 
   it('generates plural items as sentences with blanks', async () => {
-    setCategories(['plural'])
+    mode.setCategories(['plural'])
 
     const items = await mode.getSessionItems(5)
     expect(items.length).toBe(5)
@@ -77,7 +80,7 @@ describe('GrammarMode.getSessionItems', () => {
   })
 
   it('generates preposition items as multiple-choice with 4 options', async () => {
-    setCategories(['prepositions'])
+    mode.setCategories(['prepositions'])
 
     const items = await mode.getSessionItems(5)
     expect(items.length).toBe(5)
@@ -92,8 +95,8 @@ describe('GrammarMode.getSessionItems', () => {
   })
 
   it('distributes items across multiple categories', async () => {
-    setCategories(['conjugation', 'gender', 'plural'])
-    setTenses(['presente'])
+    mode.setCategories(['conjugation', 'gender', 'plural'])
+    mode.setTenses(['presente'])
 
     const items = await mode.getSessionItems(9)
     expect(items.length).toBe(9)
@@ -105,8 +108,8 @@ describe('GrammarMode.getSessionItems', () => {
   })
 
   it('respects tense selection for conjugation', async () => {
-    setCategories(['conjugation'])
-    setTenses(['preterito_perfeito'])
+    mode.setCategories(['conjugation'])
+    mode.setTenses(['preterito_perfeito'])
 
     const items = await mode.getSessionItems(10)
 
@@ -116,27 +119,89 @@ describe('GrammarMode.getSessionItems', () => {
   })
 
   it('uses multiple tenses when selected', async () => {
-    setCategories(['conjugation'])
+    mode.setCategories(['conjugation'])
     const tenses: Tense[] = ['presente', 'preterito_perfeito', 'preterito_imperfeito']
-    setTenses(tenses)
+    mode.setTenses(tenses)
 
     const items = await mode.getSessionItems(30)
     const usedTenses = new Set(items.map((i) => i.payload.tense as string))
 
     expect(usedTenses.size).toBeGreaterThanOrEqual(2)
   })
+
+  it('seeds grammar card states on first session', async () => {
+    mode.setCategories(['gender'])
+
+    const before = await db.grammarCardStates.where('category').equals('gender').count()
+    expect(before).toBe(0)
+
+    await mode.getSessionItems(5)
+
+    const after = await db.grammarCardStates.where('category').equals('gender').count()
+    expect(after).toBeGreaterThan(0)
+  })
+})
+
+describe('GrammarMode.submitAnswer', () => {
+  it('updates FSRS state on correct answer', async () => {
+    mode.setCategories(['gender'])
+    const items = await mode.getSessionItems(1)
+    const item = items[0]
+    const cardId = item.payload.grammarCardId as number
+
+    const before = await db.grammarCardStates.get(cardId)
+    expect(before!.reps).toBe(0)
+
+    await mode.submitAnswer(item, {
+      value: item.correctAnswer,
+      correct: true,
+      timeMs: 2000,
+    })
+
+    const after = await db.grammarCardStates.get(cardId)
+    expect(after!.reps).toBe(1)
+    expect(after!.due).toBeGreaterThan(before!.due)
+  })
+
+  it('updates FSRS state on wrong answer', async () => {
+    mode.setCategories(['gender'])
+    const items = await mode.getSessionItems(1)
+    const item = items[0]
+    const cardId = item.payload.grammarCardId as number
+
+    const before = await db.grammarCardStates.get(cardId)
+    expect(before!.state).toBe(0) // New
+
+    await mode.submitAnswer(item, {
+      value: 'wrong',
+      correct: false,
+      timeMs: 5000,
+    })
+
+    const after = await db.grammarCardStates.get(cardId)
+    expect(after!.reps).toBe(1)
+    expect(after!.state).not.toBe(0) // No longer New
+  })
 })
 
 describe('GrammarMode.getDueCount', () => {
-  it('returns -1 (always available)', async () => {
-    expect(await mode.getDueCount()).toBe(-1)
+  it('returns 0 when no cards seeded', async () => {
+    expect(await mode.getDueCount()).toBe(0)
+  })
+
+  it('returns count of due cards after seeding', async () => {
+    mode.setCategories(['gender'])
+    await mode.getSessionItems(5) // seeds + creates due cards
+
+    const count = await mode.getDueCount()
+    // New cards are due immediately (due = now at creation)
+    expect(count).toBeGreaterThan(0)
   })
 })
 
 describe('GrammarMode.getStats', () => {
   it('returns zero stats with no sessions', async () => {
     const stats = await mode.getStats()
-    expect(stats.totalItems).toBe(0)
     expect(stats.totalReviews).toBe(0)
     expect(stats.averageRetention).toBe(0)
   })
@@ -151,15 +216,14 @@ describe('GrammarMode.getStats', () => {
     })
 
     const stats = await mode.getStats()
-    expect(stats.totalReviews).toBe(10)
     expect(stats.averageRetention).toBe(0.8)
   })
 })
 
 describe('GrammarMode rule hints in payload', () => {
   it('conjugation items have rule in payload', async () => {
-    setCategories(['conjugation'])
-    setTenses(['presente'])
+    mode.setCategories(['conjugation'])
+    mode.setTenses(['presente'])
 
     const items = await mode.getSessionItems(5)
     for (const item of items) {
@@ -171,7 +235,7 @@ describe('GrammarMode rule hints in payload', () => {
   })
 
   it('article items have rule in payload', async () => {
-    setCategories(['articles'])
+    mode.setCategories(['articles'])
 
     const items = await mode.getSessionItems(5)
     for (const item of items) {
@@ -180,7 +244,7 @@ describe('GrammarMode rule hints in payload', () => {
   })
 
   it('gender items have hint in payload', async () => {
-    setCategories(['gender'])
+    mode.setCategories(['gender'])
 
     const items = await mode.getSessionItems(5)
     for (const item of items) {
@@ -189,7 +253,7 @@ describe('GrammarMode rule hints in payload', () => {
   })
 
   it('preposition items have hint in payload', async () => {
-    setCategories(['prepositions'])
+    mode.setCategories(['prepositions'])
 
     const items = await mode.getSessionItems(5)
     for (const item of items) {

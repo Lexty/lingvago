@@ -30,6 +30,22 @@ export interface CardState {
   last_review: number
 }
 
+export interface GrammarCardState {
+  id?: number
+  itemId: string        // "conj:eu:presente:falar", "gender:casa", "plural:mão", "prep:0"
+  category: string      // "conjugation" | "gender" | "articles" | "plural" | "prepositions"
+  due: number
+  stability: number
+  difficulty: number
+  elapsed_days: number
+  scheduled_days: number
+  learning_steps: number
+  reps: number
+  lapses: number
+  state: number
+  last_review: number
+}
+
 export interface Session {
   id?: number
   modeId: string

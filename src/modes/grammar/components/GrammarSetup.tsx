@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
-import { setCategories, setTenses, type GrammarCategory, type Tense } from '../state'
+import { getMode } from '../../registry'
+import type { GrammarCategory, Tense } from '../state'
+import type { GrammarMode } from '../GrammarMode'
 import GrammarReference from './GrammarReference'
 import styles from './GrammarSetup.module.css'
 
@@ -59,8 +61,9 @@ export default function GrammarSetup({ onStart }: GrammarSetupProps) {
     (!selectedCats.has('conjugation') || selectedTenses.size > 0)
 
   const handleStart = () => {
-    setCategories([...selectedCats])
-    setTenses([...selectedTenses])
+    const mode = getMode('grammar') as GrammarMode
+    mode.setCategories([...selectedCats])
+    mode.setTenses([...selectedTenses])
     onStart()
   }
 

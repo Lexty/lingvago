@@ -1,10 +1,11 @@
 import Dexie, { type Table } from 'dexie'
-import type { Deck, Word, CardState, Session, Settings } from './schema'
+import type { Deck, Word, CardState, GrammarCardState, Session, Settings } from './schema'
 
 export class LingvagoDatabase extends Dexie {
   decks!: Table<Deck, number>
   words!: Table<Word, number>
   cardStates!: Table<CardState, number>
+  grammarCardStates!: Table<GrammarCardState, number>
   sessions!: Table<Session, number>
   settings!: Table<Settings, string>
 
@@ -16,6 +17,9 @@ export class LingvagoDatabase extends Dexie {
       cardStates: '++id, wordId, direction, due, state, [wordId+direction]',
       sessions: '++id, modeId, startedAt',
       settings: 'id',
+    })
+    this.version(2).stores({
+      grammarCardStates: '++id, itemId, category, due, state',
     })
   }
 }

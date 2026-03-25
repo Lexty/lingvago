@@ -1,7 +1,21 @@
 import { createEmptyCard, type Card, State } from 'ts-fsrs'
-import type { CardState } from './schema'
+import type { CardState, GrammarCardState } from './schema'
 
-export function toFSRSCard(cs: CardState): Card {
+/** Shared FSRS fields present in both CardState and GrammarCardState */
+interface FSRSFields {
+  due: number
+  stability: number
+  difficulty: number
+  elapsed_days: number
+  scheduled_days: number
+  learning_steps: number
+  reps: number
+  lapses: number
+  state: number
+  last_review: number
+}
+
+export function toFSRSCard(cs: FSRSFields): Card {
   return {
     due: new Date(cs.due),
     stability: cs.stability,
@@ -16,7 +30,7 @@ export function toFSRSCard(cs: CardState): Card {
   }
 }
 
-export function fromFSRSCard(card: Card): Partial<CardState> {
+export function fromFSRSCard(card: Card): FSRSFields {
   return {
     due: card.due.getTime(),
     stability: card.stability,
@@ -41,5 +55,18 @@ export function createNewCardState(
     wordId,
     direction,
     ...fields,
-  } as Omit<CardState, 'id'>
+  }
+}
+
+export function createNewGrammarCardState(
+  itemId: string,
+  category: string,
+): Omit<GrammarCardState, 'id'> {
+  const empty = createEmptyCard()
+  const fields = fromFSRSCard(empty)
+  return {
+    itemId,
+    category,
+    ...fields,
+  }
 }
