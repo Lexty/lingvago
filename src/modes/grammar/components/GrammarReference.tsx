@@ -106,6 +106,26 @@ function GenderReference() {
 function ArticleReference() {
   const { t } = useTranslation()
 
+  const definiteRules = [
+    [t('grammar.refArtKnown'), 'Vi um carro. O carro era vermelho.'],
+    [t('grammar.refArtPossessive'), 'O meu livro é novo.'],
+    [t('grammar.refArtNames'), 'O João, a Maria'],
+    [t('grammar.refArtDays'), 'Na segunda-feira'],
+    [t('grammar.refArtAbstract'), 'A beleza, o sal'],
+  ]
+
+  const indefiniteRules = [
+    [t('grammar.refArtFirstMention'), 'Há um carro.'],
+    [t('grammar.refArtAfterVerb'), 'Preciso de um livro.'],
+    [t('grammar.refArtProfWithAdj'), 'Ela é uma boa professora.'],
+  ]
+
+  const omitRules = [
+    [t('grammar.refArtProfession'), 'Sou professor.'],
+    [t('grammar.refArtMonths'), 'Em janeiro'],
+    [t('grammar.refArtDemonstratives'), 'Este livro'],
+  ]
+
   return (
     <div className={styles.container}>
       <p className={styles.heading}>{t('grammar.refArticles')}</p>
@@ -135,6 +155,36 @@ function ArticleReference() {
           <span className={styles.rowValue}>uns</span>
           <span className={styles.rowValue}>umas</span>
         </div>
+      </div>
+
+      <div className={styles.group}>
+        <p className={styles.groupLabel}>{t('grammar.refArticleWhenDef')}</p>
+        {definiteRules.map(([rule, example]) => (
+          <div key={rule} className={styles.row}>
+            <span className={styles.rowLabel}>{rule}</span>
+            <span className={styles.rowValue}>{example}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className={styles.group}>
+        <p className={styles.groupLabel}>{t('grammar.refArticleWhenIndef')}</p>
+        {indefiniteRules.map(([rule, example]) => (
+          <div key={rule} className={styles.row}>
+            <span className={styles.rowLabel}>{rule}</span>
+            <span className={styles.rowValue}>{example}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className={styles.group}>
+        <p className={styles.groupLabel}>{t('grammar.refArticleOmit')}</p>
+        {omitRules.map(([rule, example]) => (
+          <div key={rule} className={styles.row}>
+            <span className={styles.rowLabel}>{rule}</span>
+            <span className={styles.rowValue}>{example}</span>
+          </div>
+        ))}
       </div>
     </div>
   )
@@ -171,30 +221,64 @@ function PrepositionReference() {
   const { t } = useTranslation()
 
   const preps = [
-    ['a', 'ir a, chegar a'],
-    ['de', 'ser de, gostar de'],
-    ['em', 'morar em, estar em'],
-    ['para', 'ir para, trabalhar para'],
-    ['por', 'passar por, viajar por'],
+    ['a', 'ir a Lisboa, dar ao João'],
+    ['de', 'ser de Portugal, livro do João, falar de'],
+    ['em', 'morar em Lisboa, no inverno'],
+    ['para', 'ir para Angola, para mim'],
+    ['por', 'passar por, pelo caminho'],
     ['com', 'falar com, viver com'],
   ]
 
+  const aVsPara = [
+    [t('grammar.refPrepAShort'), 'a', 'Vou à padaria.'],
+    [t('grammar.refPrepParaLong'), 'para', 'Vou para Angola.'],
+  ]
+
+  const verbPreps = [
+    ['de', 'gostar, precisar, lembrar-se, esquecer-se'],
+    ['em', 'pensar, acreditar, morar, confiar'],
+    ['a', 'chegar, telefonar, assistir, responder'],
+    ['com', 'falar, concordar, sonhar, preocupar-se'],
+    ['por', 'esperar, passar, lutar'],
+  ]
+
   const contractions = [
-    ['em + o/a = no/na', 'em + os/as = nos/nas'],
     ['de + o/a = do/da', 'de + os/as = dos/das'],
+    ['em + o/a = no/na', 'em + os/as = nos/nas'],
     ['a + o/a = ao/à', 'a + os/as = aos/às'],
     ['por + o/a = pelo/pela', 'por + os/as = pelos/pelas'],
   ]
 
   return (
     <div className={styles.container}>
-      <p className={styles.heading}>{t('grammar.refPrepositions')}</p>
+      <p className={styles.heading}>{t('grammar.refPrepMeaning')}</p>
       {preps.map(([prep, examples]) => (
         <div key={prep} className={styles.row}>
           <span className={styles.rowLabel}>{prep}</span>
           <span className={styles.rowValue}>{examples}</span>
         </div>
       ))}
+
+      <div className={styles.group}>
+        <p className={styles.groupLabel}>{t('grammar.refPrepAvsP')}</p>
+        {aVsPara.map(([rule, prep, example]) => (
+          <div key={prep} className={styles.row}>
+            <span className={styles.rowLabel}>{rule}</span>
+            <span className={styles.rowValue}>{example}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className={styles.group}>
+        <p className={styles.groupLabel}>{t('grammar.refVerbPrep')}</p>
+        {verbPreps.map(([prep, verbs]) => (
+          <div key={prep} className={styles.row}>
+            <span className={styles.rowLabel}>{prep}</span>
+            <span className={styles.rowValue}>{verbs}</span>
+          </div>
+        ))}
+      </div>
+
       <div className={styles.group}>
         <p className={styles.groupLabel}>{t('grammar.refContractions')}</p>
         {contractions.map(([left, right]) => (
