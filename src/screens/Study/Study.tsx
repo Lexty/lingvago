@@ -6,6 +6,8 @@ import { getMode } from '../../modes/registry'
 import { useSession } from '../../hooks/useSession'
 import { db } from '../../db/index'
 import type { LearningMode } from '../../modes/types'
+import type { GrammarCategory } from '../../modes/grammar/state'
+import GrammarGuide from '../../modes/grammar/components/GrammarGuide'
 import SessionSummary from './SessionSummary'
 import styles from './Study.module.css'
 
@@ -63,6 +65,8 @@ function StudySession({ mode, sessionSize }: { mode: LearningMode; sessionSize: 
   const { t } = useTranslation()
   const navigate = useNavigate()
   const session = useSession(mode, sessionSize)
+  const [guideOpen, setGuideOpen] = useState(false)
+  const isGrammar = mode.id === 'grammar'
 
   if (session.status === 'loading') {
     return (
@@ -113,6 +117,11 @@ function StudySession({ mode, sessionSize }: { mode: LearningMode; sessionSize: 
             total: totalCount,
           })}
         </span>
+        {isGrammar && (
+          <button className={styles.guideButton} onClick={() => setGuideOpen(true)} aria-label={t('grammar.openGuide')}>
+            &#128214;
+          </button>
+        )}
         <span className={styles.timer}>{formatTime(elapsedTime)}</span>
       </div>
 
@@ -125,6 +134,15 @@ function StudySession({ mode, sessionSize }: { mode: LearningMode; sessionSize: 
 
       {ExerciseComponent && currentItem && (
         <ExerciseComponent item={currentItem} onAnswer={session.submitAnswer} />
+      )}
+
+      {isGrammar && (
+        <GrammarGuide
+          open={guideOpen}
+          onClose={() => setGuideOpen(false)}
+          initialCategory={currentItem?.payload?.category as GrammarCategory | undefined}
+          highlightVerb={currentItem?.payload?.infinitive as string | undefined}
+        />
       )}
     </div>
   )

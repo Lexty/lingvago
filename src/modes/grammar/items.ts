@@ -227,6 +227,7 @@ function buildConjugationItem(cardId: number, itemId: string): SessionItem | nul
       category: 'conjugation',
       tense,
       person,
+      infinitive: verb.infinitive,
       translation: template.translation,
       verbTranslation: verb.translation,
       rule,

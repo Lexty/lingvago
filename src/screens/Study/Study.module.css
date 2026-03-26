@@ -19,6 +19,15 @@
   color: var(--color-text-primary);
 }
 
+.guideButton {
+  background: none;
+  border: none;
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+  padding: var(--space-xs);
+  line-height: 1;
+}
+
 .timer {
   font-size: var(--font-size-base);
   color: var(--color-text-secondary);

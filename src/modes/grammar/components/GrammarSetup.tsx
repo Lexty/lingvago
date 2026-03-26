@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { getMode } from '../../registry'
 import type { GrammarCategory, Tense } from '../state'
 import type { GrammarMode } from '../GrammarMode'
-import GrammarReference from './GrammarReference'
+import GrammarGuide from './GrammarGuide'
 import styles from './GrammarSetup.module.css'
 
 interface GrammarSetupProps {
@@ -31,7 +31,7 @@ export default function GrammarSetup({ onStart }: GrammarSetupProps) {
   const [selectedTenses, setSelectedTenses] = useState<Set<Tense>>(
     new Set(['presente']),
   )
-  const [showCheat, setShowCheat] = useState(false)
+  const [guideOpen, setGuideOpen] = useState(false)
 
   const toggleCategory = (cat: GrammarCategory) => {
     setSelectedCats((prev) => {
@@ -118,18 +118,12 @@ export default function GrammarSetup({ onStart }: GrammarSetupProps) {
 
       <button
         className={styles.cheatToggle}
-        onClick={() => setShowCheat((v) => !v)}
+        onClick={() => setGuideOpen(true)}
       >
-        {t('grammar.reference')} {showCheat ? '▲' : '▼'}
+        {t('grammar.openGuide')}
       </button>
 
-      {showCheat && (
-        <div className={styles.cheatContainer}>
-          {ALL_CATEGORIES.filter((c) => selectedCats.has(c)).map((c) => (
-            <GrammarReference key={c} category={c} />
-          ))}
-        </div>
-      )}
+      <GrammarGuide open={guideOpen} onClose={() => setGuideOpen(false)} />
     </div>
   )
 }
