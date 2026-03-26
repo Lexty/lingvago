@@ -140,13 +140,19 @@
         "irregularVerbs": "Irregular verbs"
       },
       "gender": {
-        "intro": "Every Portuguese noun has a grammatical gender: masculino or feminino. The ending of a word usually indicates its gender, but there are many exceptions that must be memorized."
+        "intro": "Every Portuguese noun has a grammatical gender: masculino or feminino. The ending of a word usually indicates its gender, but there are many exceptions that must be memorized.",
+        "nounList": "All nouns",
+        "mascO": "Masculino ending in -o",
+        "femA": "Feminino ending in -a",
+        "mascExc": "Masculino (exceptions)",
+        "femIrr": "Feminino not ending in -a"
       },
       "articles": {
         "intro": "Portuguese uses articles more frequently than English. Definite articles (o, a, os, as) indicate a specific item. Indefinite articles (um, uma, uns, umas) indicate any or non-specific item. The article must agree with the noun in gender and number."
       },
       "plural": {
-        "intro": "Portuguese plural formation depends on the ending of the singular form. Most nouns simply add -s, but there are several special patterns."
+        "intro": "Portuguese plural formation depends on the ending of the singular form. Most nouns simply add -s, but there are several special patterns.",
+        "nounList": "All nouns"
       },
       "prepositions": {
         "intro": "Portuguese prepositions express relationships of place, time, direction, and more. Many prepositions obligatorily contract with articles. Verbs often require a specific preposition (verbal regency)."

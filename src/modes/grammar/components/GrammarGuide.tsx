@@ -24,16 +24,6 @@ export interface GrammarGuideProps {
 export default function GrammarGuide({ open, onClose, initialCategory, highlightVerb }: GrammarGuideProps) {
   const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState<GrammarCategory>(initialCategory ?? 'conjugation')
-  const [trackedOpen, setTrackedOpen] = useState(false)
-
-  // Sync activeTab when overlay opens with a new initialCategory
-  if (open && !trackedOpen) {
-    setTrackedOpen(true)
-    if (initialCategory) setActiveTab(initialCategory)
-  }
-  if (!open && trackedOpen) {
-    setTrackedOpen(false)
-  }
 
   useEffect(() => {
     if (!open) return

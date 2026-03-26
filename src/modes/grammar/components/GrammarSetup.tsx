@@ -123,7 +123,12 @@ export default function GrammarSetup({ onStart }: GrammarSetupProps) {
         {t('grammar.openGuide')}
       </button>
 
-      <GrammarGuide open={guideOpen} onClose={() => setGuideOpen(false)} />
+      <GrammarGuide
+        key={guideOpen ? 'open' : 'closed'}
+        open={guideOpen}
+        onClose={() => setGuideOpen(false)}
+        initialCategory={[...selectedCats][0]}
+      />
     </div>
   )
 }

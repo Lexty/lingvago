@@ -138,6 +138,7 @@ function StudySession({ mode, sessionSize }: { mode: LearningMode; sessionSize: 
 
       {isGrammar && (
         <GrammarGuide
+          key={guideOpen ? 'open' : 'closed'}
           open={guideOpen}
           onClose={() => setGuideOpen(false)}
           initialCategory={currentItem?.payload?.category as GrammarCategory | undefined}
