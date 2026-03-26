@@ -125,12 +125,9 @@ export default function GrammarSetup({ onStart }: GrammarSetupProps) {
 
       {showCheat && (
         <div className={styles.cheatContainer}>
-          <GrammarReference category="conjugation" />
-          <GrammarReference category="gender" />
-          <GrammarReference category="articles" />
-          <GrammarReference category="plural" />
-          <GrammarReference category="prepositions" />
-          <GrammarReference category="word_order" />
+          {ALL_CATEGORIES.filter((c) => selectedCats.has(c)).map((c) => (
+            <GrammarReference key={c} category={c} />
+          ))}
         </div>
       )}
     </div>

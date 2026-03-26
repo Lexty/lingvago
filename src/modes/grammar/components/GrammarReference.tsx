@@ -116,7 +116,7 @@ function ArticleReference() {
 
   const indefiniteRules = [
     [t('grammar.refArtFirstMention'), 'Há um carro.'],
-    [t('grammar.refArtAfterVerb'), 'Preciso de um livro.'],
+    [t('grammar.refArtNonSpecific'), 'Quero um café. (qualquer)'],
     [t('grammar.refArtProfWithAdj'), 'Ela é uma boa professora.'],
   ]
 
@@ -230,8 +230,8 @@ function PrepositionReference() {
   ]
 
   const aVsPara = [
-    [t('grammar.refPrepAShort'), 'a', 'Vou à padaria.'],
-    [t('grammar.refPrepParaLong'), 'para', 'Vou para Angola.'],
+    [t('grammar.refPrepAShort'), 'a', 'Vou ao supermercado.'],
+    [t('grammar.refPrepParaLong'), 'para', 'Vou para casa. / Vou para o Porto.'],
   ]
 
   const verbPreps = [
