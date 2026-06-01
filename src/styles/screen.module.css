@@ -23,18 +23,21 @@
   color: var(--text);
 }
 
-/* The title ↔ nav header row shared across screens. */
+/* The title ↔ nav header row shared across screens. On narrow (phone) widths
+   the title + the nav links wrap instead of overflowing past the viewport. */
 .header {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: var(--s-4);
+  gap: var(--s-3) var(--s-4);
 }
 
 .nav {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: var(--s-4);
+  gap: var(--s-2) var(--s-4);
 }
 
 .navLink {
