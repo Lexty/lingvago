@@ -1,0 +1,50 @@
+{
+  "_meta": {
+    "description": "Vocabulary from teacher handouts: A FAMÍLIA + Os espaços da escola. Gender/article taken directly from the printed o/a (high confidence).",
+    "source": ["A FAMÍLIA.pdf", "Os espaços da escola_1.pdf"]
+  },
+  "familia": [
+    { "pt": "o avô", "lemma": "avô", "gender": "m", "article": "o", "en": "grandfather" },
+    { "pt": "a avó", "lemma": "avó", "gender": "f", "article": "a", "en": "grandmother" },
+    { "pt": "os avós", "lemma": "avós", "gender": "m", "article": "os", "en": "grandparents", "note": "avós = grandparents; avôs = grandfathers" },
+    { "pt": "os sogros", "lemma": "sogro", "gender": "m", "article": "os", "en": "parents-in-law" },
+    { "pt": "o filho", "lemma": "filho", "gender": "m", "article": "o", "en": "son" },
+    { "pt": "a filha", "lemma": "filha", "gender": "f", "article": "a", "en": "daughter" },
+    { "pt": "o pai", "lemma": "pai", "gender": "m", "article": "o", "en": "father" },
+    { "pt": "a mãe", "lemma": "mãe", "gender": "f", "article": "a", "en": "mother" },
+    { "pt": "os pais", "lemma": "pais", "gender": "m", "article": "os", "en": "parents", "note": "pais (parents) ≠ parentes (relatives)" },
+    { "pt": "o irmão", "lemma": "irmão", "gender": "m", "article": "o", "en": "brother" },
+    { "pt": "a irmã", "lemma": "irmã", "gender": "f", "article": "a", "en": "sister" },
+    { "pt": "os irmãos", "lemma": "irmãos", "gender": "m", "article": "os", "en": "siblings" },
+    { "pt": "o primo", "lemma": "primo", "gender": "m", "article": "o", "en": "cousin (m)" },
+    { "pt": "a prima", "lemma": "prima", "gender": "f", "article": "a", "en": "cousin (f)" },
+    { "pt": "o sobrinho", "lemma": "sobrinho", "gender": "m", "article": "o", "en": "nephew" },
+    { "pt": "a sobrinha", "lemma": "sobrinha", "gender": "f", "article": "a", "en": "niece" },
+    { "pt": "o tio", "lemma": "tio", "gender": "m", "article": "o", "en": "uncle" },
+    { "pt": "a tia", "lemma": "tia", "gender": "f", "article": "a", "en": "aunt" },
+    { "pt": "o neto", "lemma": "neto", "gender": "m", "article": "o", "en": "grandson" },
+    { "pt": "a neta", "lemma": "neta", "gender": "f", "article": "a", "en": "granddaughter" },
+    { "pt": "a nora", "lemma": "nora", "gender": "f", "article": "a", "en": "daughter-in-law" },
+    { "pt": "o genro", "lemma": "genro", "gender": "m", "article": "o", "en": "son-in-law" },
+    { "pt": "o marido", "lemma": "marido", "gender": "m", "article": "o", "en": "husband", "note": "= o esposo" },
+    { "pt": "a mulher", "lemma": "mulher", "gender": "f", "article": "a", "en": "wife/woman", "note": "= a esposa" },
+    { "pt": "o cunhado", "lemma": "cunhado", "gender": "m", "article": "o", "en": "brother-in-law" },
+    { "pt": "a cunhada", "lemma": "cunhada", "gender": "f", "article": "a", "en": "sister-in-law" },
+    { "pt": "o padrasto", "lemma": "padrasto", "gender": "m", "article": "o", "en": "step-father" },
+    { "pt": "a madrasta", "lemma": "madrasta", "gender": "f", "article": "a", "en": "step-mother" },
+    { "pt": "os parentes", "lemma": "parente", "gender": "m", "article": "os", "en": "relatives" }
+  ],
+  "espacos_escola": [
+    { "pt": "a pasta", "lemma": "pasta", "gender": "f", "article": "a", "en": "folder/briefcase" },
+    { "pt": "a mochila", "lemma": "mochila", "gender": "f", "article": "a", "en": "backpack" },
+    { "pt": "a sala de aula", "lemma": "sala de aula", "gender": "f", "article": "a", "en": "classroom" },
+    { "pt": "a biblioteca", "lemma": "biblioteca", "gender": "f", "article": "a", "en": "library" },
+    { "pt": "o recreio", "lemma": "recreio", "gender": "m", "article": "o", "en": "playground" },
+    { "pt": "o refeitório", "lemma": "refeitório", "gender": "m", "article": "o", "en": "canteen" },
+    { "pt": "a casa de banho", "lemma": "casa de banho", "gender": "f", "article": "a", "en": "bathroom" },
+    { "pt": "a sanita", "lemma": "sanita", "gender": "f", "article": "a", "en": "toilet" },
+    { "pt": "o lavatório", "lemma": "lavatório", "gender": "m", "article": "o", "en": "sink" },
+    { "pt": "o quadro", "lemma": "quadro", "gender": "m", "article": "o", "en": "board" },
+    { "pt": "o computador", "lemma": "computador", "gender": "m", "article": "o", "en": "computer" }
+  ]
+}

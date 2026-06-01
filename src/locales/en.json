@@ -1,248 +1,237 @@
 {
-  "nav": {
-    "home": "Home",
-    "decks": "Decks",
-    "stats": "Stats",
-    "settings": "Settings"
-  },
-  "dashboard": {
-    "title": "Lingvago",
-    "study": "Study",
-    "words": "Words",
-    "learned": "Learned",
-    "retention": "Retention",
-    "due": "due",
-    "alwaysAvailable": "Always available",
-    "activeDecks": "Active decks"
-  },
-  "study": {
-    "progress": "{{current}} / {{total}}",
-    "sessionComplete": "Session complete",
-    "time": "Time",
-    "studyMore": "Study more",
-    "toHome": "Home",
-    "noCards": "All cards reviewed! Come back later.",
-    "error": "Something went wrong",
-    "retry": "Try again",
-    "showAnswer": "Show answer",
-    "again": "Again",
-    "hard": "Hard",
-    "good": "Good",
-    "easy": "Easy",
-    "min": "min",
-    "sec": "sec"
-  },
-  "mode": {
-    "vocabulary": {
-      "title": "Vocabulary",
-      "desc": "Learn words with spaced repetition"
-    },
-    "numbers": {
-      "title": "Numbers",
-      "desc": "Practice numerals"
-    },
-    "grammar": {
-      "title": "Grammar",
-      "desc": "Conjugation, gender, articles, prepositions, word order"
+  "app": {
+    "title": "lingvago2",
+    "nav": {
+      "settings": "Settings"
     }
   },
   "settings": {
     "title": "Settings",
-    "uiLang": "Interface language",
-    "theme": "Theme",
-    "themeLight": "Light",
-    "themeDark": "Dark",
-    "themeSystem": "System",
-    "sessionSize": "Session size",
-    "cards": "cards",
-    "strictAccents": "Strict accents",
-    "strictAccentsDesc": "Treat missing accents as errors",
-    "on": "On",
-    "off": "Off",
-    "reset": "Reset all data",
-    "resetConfirm": "Are you sure? All progress will be reset.",
-    "version": "Version"
+    "theme": {
+      "label": "Theme",
+      "auto": "Auto",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "language": {
+      "label": "Language",
+      "ru": "Русский",
+      "en": "English"
+    },
+    "data": {
+      "label": "Data",
+      "hint": "Export your progress to a file to back it up or move it to another device. Import restores your own progress from such a file. Stays on your device — no account, no network.",
+      "export": "Export progress",
+      "import": "Import progress",
+      "exported": "Progress exported.",
+      "exportError": "Couldn't export your progress. Please try again.",
+      "confirmOverwrite": "Restore will OVERWRITE your current progress on this device. This cannot be undone.",
+      "confirm": "Overwrite and restore",
+      "cancel": "Cancel",
+      "imported": "Progress restored.",
+      "importInvalid": "That file isn't a valid lingvago2 progress backup. Your current progress is unchanged.",
+      "importError": "Couldn't import that file. Your current progress is unchanged."
+    }
   },
-  "stats": {
-    "title": "Stats",
-    "totalWords": "Total words",
-    "learned": "Learned",
-    "newCards": "New",
-    "cardStates": "Card states",
-    "stateNew": "New",
-    "stateLearning": "Learning",
-    "stateReview": "Review",
-    "stateRelearning": "Relearning",
-    "retention": "Retention",
-    "totalReviews": "reviews",
-    "sessions": "Recent sessions",
-    "noSessions": "No completed sessions",
-    "noActiveDecks": "No active decks"
+  "reference": {
+    "title": "Reference",
+    "intro": "Quick grammar cards to re-read before a mock — articles & gender, prepositions, ser/estar, and verb endings.",
+    "nav": {
+      "back": "Back",
+      "list": "All cards"
+    },
+    "loading": "Loading cards…",
+    "empty": "No reference cards are available yet. They load with the app content.",
+    "notFound": "That reference card was not found.",
+    "error": "Couldn't load reference cards. Please try again."
   },
-  "decks": {
-    "title": "Decks",
-    "name": "Name",
-    "desc": "Description",
-    "create": "Create deck",
-    "delete": "Delete",
-    "deleteConfirm": "Delete this deck and all its words?",
-    "import": "Import CSV",
-    "empty": "No decks",
-    "words": "words"
-  },
-  "words": {
-    "search": "Search",
-    "portuguese": "Portuguese word",
-    "translation": "Translation",
-    "add": "Add word",
-    "edit": "Edit",
-    "delete": "Delete",
-    "import": "Import CSV",
-    "empty": "No words in this deck"
-  },
-  "numbers": {
-    "check": "Check",
-    "correct": "Correct!",
-    "wrong": "Wrong",
-    "writeNumber": "Write the number",
-    "writeWord": "Write in Portuguese",
-    "start": "Start",
-    "level100": "Up to 100",
-    "level1000": "Up to 1,000",
-    "level1m": "Up to 1,000,000",
-    "cheatSheet": "Cheat sheet",
-    "next": "Next",
-    "compositionHint": "Compound numbers use \"e\":"
-  },
-  "grammar": {
-    "check": "Check",
-    "correct": "Correct!",
-    "wrong": "Wrong",
-    "next": "Next",
-    "start": "Start",
-    "conjugate": "Conjugate the verb",
-    "writePlural": "Write the plural",
-    "selectCategories": "Categories",
-    "selectTenses": "Tenses",
-    "reference": "Cheat sheet",
-    "guideTitle": "Grammar Guide",
-    "openGuide": "Reference",
-    "guide": {
-      "conjugation": {
-        "intro": "Portuguese verbs are divided into three conjugation groups based on their infinitive ending: -ar, -er, and -ir. Each group follows its own pattern of endings. Irregular verbs must be memorized individually. European Portuguese uses 5 person forms: eu, tu, ele/ela, nós, eles/elas.",
-        "pronounMapping": "Pronoun mapping",
-        "regularEndings": "Regular verb endings",
-        "tenses": "Tenses",
-        "tensePresente": "Presente — habitual actions, general truths, and current states.",
-        "tensePerfeito": "Pretérito Perfeito — completed actions in the past with a definite endpoint.",
-        "tenseImperfeito": "Pretérito Imperfeito — ongoing or habitual past actions, descriptions, and narrative background.",
-        "regularVerbs": "Regular verbs",
-        "irregularVerbs": "Irregular verbs"
-      },
-      "gender": {
-        "intro": "Every Portuguese noun has a grammatical gender: masculino or feminino. The ending of a word usually indicates its gender, but there are many exceptions that must be memorized.",
-        "nounList": "All nouns",
-        "mascO": "Masculino ending in -o",
-        "femA": "Feminino ending in -a",
-        "mascExc": "Masculino (exceptions)",
-        "femIrr": "Feminino not ending in -a"
-      },
-      "articles": {
-        "intro": "Portuguese uses articles more frequently than English. Definite articles (o, a, os, as) indicate a specific item. Indefinite articles (um, uma, uns, umas) indicate any or non-specific item. The article must agree with the noun in gender and number."
-      },
-      "plural": {
-        "intro": "Portuguese plural formation depends on the ending of the singular form. Most nouns simply add -s, but there are several special patterns.",
-        "nounList": "All nouns"
-      },
-      "prepositions": {
-        "intro": "Portuguese prepositions express relationships of place, time, direction, and more. Many prepositions obligatorily contract with articles. Verbs often require a specific preposition (verbal regency)."
-      },
-      "wordOrder": {
-        "intro": "Portuguese generally follows Subject-Verb-Object (SVO) order, similar to English. But there are differences in negation placement, articles, and adjective position."
+  "survivalKit": {
+    "title": "Exam Survival Kit",
+    "nav": {
+      "numbers": "Numbers",
+      "conjugation": "Conjugation",
+      "gender": "Gender & articles",
+      "preposition": "Prepositions",
+      "mock": "Mock",
+      "reference": "Reference",
+      "settings": "Settings"
+    },
+    "today": {
+      "label": "Focus on today",
+      "body": "One calm step at a time. Listen to live European Portuguese, write a short text, drill your weak groups, and run a mock when you're ready. No countdowns — just today's work."
+    },
+    "checklist": {
+      "label": "Exam groups checklist",
+      "hint": "Tick a group once you've prepared it.",
+      "group": {
+        "I": "Grupo I — Listening",
+        "II": "Grupo II — Reading",
+        "III": "Grupo III — Grammar",
+        "IV": "Grupo IV — Writing"
       }
     },
-    "category": {
-      "conjugation": "Verb conjugation",
-      "gender": "Noun gender",
-      "articles": "Articles",
-      "plural": "Plural forms",
-      "prepositions": "Prepositions",
-      "word_order": "Word order"
+    "materials": {
+      "label": "Materials",
+      "items": {
+        "matrix": "Exam matrix (teacher_matriz)",
+        "livro": "Course book & notebook",
+        "dailyPlan": "Daily study protocol"
+      }
     },
-    "tense": {
-      "presente": "Presente",
-      "preterito_perfeito": "Pretérito Perfeito",
-      "preterito_imperfeito": "Pretérito Imperfeito"
+    "mock": {
+      "label": "Mock results by group",
+      "hint": "Enter each group's score out of 50 after a paper mock run.",
+      "groupColumn": "Group",
+      "scoreColumn": "Score (0–50)",
+      "scoreAria": "Score for {{group}} out of 50",
+      "total": "Total",
+      "totalOf": "{{score}} of {{max}}",
+      "clear": "Clear scores"
     },
-    "genderQuestion": "What is the gender?",
-    "articleQuestion": "Which article?",
-    "prepositionQuestion": "Which preposition?",
-    "masculino": "Masculino",
-    "feminino": "Feminino",
-    "defSingular": "Definite article",
-    "indefSingular": "Indefinite article",
-    "defPlural": "Definite article (pl.)",
-    "indefPlural": "Indefinite article (pl.)",
-    "refEndings": "Endings",
-    "refAr": "-ar verbs",
-    "refEr": "-er verbs",
-    "refIr": "-ir verbs",
-    "refPluralRules": "Plural formation rules",
-    "refPrepositions": "Main prepositions",
-    "refPrepMeaning": "Preposition meanings",
-    "refPrepAvsP": "a vs para",
-    "refPrepAShort": "Specific place",
-    "refPrepParaLong": "Direction, purpose",
-    "refVerbPrep": "Verb + preposition",
-    "refGenderRules": "Gender rules",
-    "refExceptions": "Exceptions",
-    "refArticles": "Article table",
-    "refArticleWhenDef": "Definite (o, a)",
-    "refArticleWhenIndef": "Indefinite (um, uma)",
-    "refArticleOmit": "No article",
-    "refArtKnown": "Known, mentioned",
-    "refArtPossessive": "With possessives",
-    "refArtNames": "With names (EP)",
-    "refArtDays": "Days of the week",
-    "refArtAbstract": "Abstract / material",
-    "refArtFirstMention": "First mention, non-specific",
-    "refArtNonSpecific": "Any, non-specific",
-    "refArtProfWithAdj": "Profession + modifier",
-    "refArtProfession": "Profession without modifier",
-    "refArtMonths": "Months",
-    "refArtDemonstratives": "After este, esse, aquele",
-    "refContractions": "Contractions",
-    "refPronounMapping": "Pronoun mapping",
-    "almostCorrect": "Almost correct! Check the accents",
-    "tryAgain": "Try again",
-    "wordOrderQuestion": "Arrange the words into a sentence",
-    "refWordOrder": "Word order rules",
-    "wordOrderSVO": "Subject — Verb — Object",
-    "wordOrderNegation": "não before the verb",
-    "wordOrderArticles": "Article before the noun"
+    "threshold": {
+      "label": "Pass thresholds",
+      "hint": "Optional — ask your teacher. Leave blank to keep scores informational only.",
+      "totalLabel": "Total to pass (of 200)",
+      "totalAria": "Total points required to pass, out of 200",
+      "minGroupLabel": "Minimum per group (of 50)",
+      "minGroupAria": "Minimum points required per group, out of 50",
+      "unset": "unknown"
+    },
+    "verdict": {
+      "label": "Verdict",
+      "pass": "On track to pass",
+      "passDetail": "Every set threshold is met.",
+      "risk": "At risk",
+      "riskDetail": "At least one set threshold is not met yet.",
+      "none": "No verdict yet",
+      "noneDetail": "Set at least one pass threshold to see a verdict. Until then, here are your raw scores by group."
+    },
+    "warning": {
+      "zeroGroup": "Don't zero a group — a group at 0 needs attention even if your total looks fine."
+    }
   },
-  "vocabulary": {
-    "typePortuguese": "Type in Portuguese",
+  "numbers": {
+    "title": "Numbers",
+    "nav": {
+      "home": "Back"
+    },
+    "intro": "Type the answer — both directions, cardinals and ordinals. A generative production drill (no multiple choice). Not gamified.",
+    "empty": "No items in this session.",
+    "task": {
+      "digitToWord": "Write the number in Portuguese",
+      "wordToDigit": "Write the digits"
+    },
+    "kind": {
+      "cardinal": "cardinal",
+      "ordinal": "ordinal"
+    },
+    "answerLabel": "Your answer",
     "check": "Check",
-    "correct": "Correct!",
-    "wrong": "Wrong",
     "next": "Next",
-    "almostCorrect": "Almost correct!"
+    "feedback": {
+      "correct": "Correct",
+      "wrong": "Not quite — answer: {{answer}}"
+    }
   },
-  "csvImport": {
-    "title": "Import CSV",
-    "selectFile": "Select a CSV file (pt,translation)",
-    "importButton": "Import {{count}} words",
-    "success": "Imported {{count}} words",
-    "invalidRows": "{{count}} invalid rows skipped",
-    "empty": "File is empty or has no valid rows",
-    "close": "Close"
+  "conjugation": {
+    "title": "Conjugation",
+    "nav": {
+      "home": "Back"
+    },
+    "intro": "Type the present-tense form — a single person, or assemble the whole table. A generative production drill (no multiple choice) over verified verbs only. Not gamified.",
+    "empty": "No items in this session.",
+    "task": {
+      "fillForm": "Write the present-tense form",
+      "assembleTable": "Assemble the present-tense table (all 5 persons)"
+    },
+    "answerLabel": "Your answer",
+    "check": "Check",
+    "next": "Next",
+    "feedback": {
+      "correct": "Correct",
+      "wrong": "Not quite — answer: {{answer}}"
+    }
   },
-  "common": {
-    "save": "Save",
-    "cancel": "Cancel",
-    "loading": "Loading...",
-    "comingSoon": "Coming soon",
-    "translation": "Translation"
+  "gender": {
+    "title": "Gender & articles",
+    "nav": {
+      "home": "Back"
+    },
+    "intro": "Pick or type the article — definite, indefinite, and contractions (do/da/no/na/ao/à). Production-first over verified nouns only. Not gamified.",
+    "empty": "No items in this session.",
+    "level": "Level {{level}}",
+    "answerLabel": "Your answer",
+    "check": "Check",
+    "next": "Next",
+    "reference": "Open the reference card",
+    "feedback": {
+      "correct": "Correct",
+      "wrong": "Not quite — answer: {{answer}}"
+    }
+  },
+  "preposition": {
+    "title": "Prepositions",
+    "nav": {
+      "home": "Back"
+    },
+    "intro": "Fill the blank with the right preposition — time, place, and movement. Production-first cloze over verified examples only. Not gamified.",
+    "empty": "No items in this session.",
+    "level": "Level {{level}}",
+    "answerLabel": "Your answer",
+    "check": "Check",
+    "next": "Next",
+    "reference": "Open the reference card",
+    "feedback": {
+      "correct": "Correct",
+      "wrong": "Not quite — answer: {{answer}}"
+    }
+  },
+  "mock": {
+    "title": "Mock run",
+    "nav": {
+      "home": "Back"
+    },
+    "group": {
+      "I": "Group I — Listening",
+      "II": "Group II — Reading",
+      "III": "Group III — Grammar",
+      "IV": "Group IV — Writing"
+    },
+    "setup": {
+      "label": "Paper simulation · 90 minutes",
+      "body": "This is a 90-minute timed exam simulation. No hints and no instant grading: solve the real exam on paper or against the matrix while the clock runs. When you finish, manually enter your per-group score.",
+      "hint": "The app never grades the exam and never hints during the run.",
+      "start": "Start mock"
+    },
+    "running": {
+      "label": "Run in progress",
+      "remainingAria": "Time remaining",
+      "pause": "Pause",
+      "resume": "Resume",
+      "finish": "Finish"
+    },
+    "entry": {
+      "label": "Enter your per-group score",
+      "hint": "Out of 50 per group — from your paper run.",
+      "groupColumn": "Group",
+      "scoreColumn": "Score (0–50)",
+      "scoreAria": "Score for {{group}} out of 50",
+      "total": "Total",
+      "totalOf": "{{score}} of {{max}}",
+      "review": "To review"
+    },
+    "review": {
+      "label": "Review",
+      "unset": "—",
+      "zeroWarning": "Don't zero a group — a group at 0 needs attention even if the total looks fine.",
+      "verdictLabel": "Verdict",
+      "verdict": {
+        "pass": "On track to pass",
+        "risk": "At risk",
+        "none": "No verdict yet"
+      },
+      "save": "Save result",
+      "saved": "Result saved to your exam survival kit."
+    }
   }
 }

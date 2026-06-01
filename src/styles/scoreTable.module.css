@@ -1,0 +1,97 @@
+/* Shared manual-score-entry chrome (MVP_PLAN WP-A SurvivalKit + WP-D MockExam).
+ *
+ * The 0–50-per-group score table, its number-input cell, the verdict banner, and
+ * the «don't zero a group» warning are identical across the SurvivalKit landing
+ * mock table and the MockExam review/entry phases. They live here ONCE and are
+ * `composes`d from both screens (the same convention the screens already use for
+ * the shared screen/drill chrome) so the two can never silently drift.
+ *
+ * The `--score-input-w` custom prop (single-cell width) is declared on each
+ * screen's `.screen` root, since it scopes the input width per page.
+ */
+
+/* ---------- score table ---------- */
+.table {
+  border-collapse: collapse;
+  inline-size: 100%;
+}
+
+.th,
+.td {
+  text-align: start;
+  padding: var(--s-2) var(--s-3);
+  border-block-end: 1px solid var(--border);
+  font-size: var(--t-body);
+  color: var(--text);
+}
+
+.th {
+  font-size: var(--t-cap);
+  letter-spacing: var(--ls-cap);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: var(--fw-semi);
+}
+
+.totalRow .td {
+  border-block-end: 0;
+  font-weight: var(--fw-bold);
+}
+
+.scoreInput {
+  inline-size: var(--score-input-w);
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-input);
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+}
+
+.scoreInput:focus-visible {
+  outline: 2px solid var(--input-focus);
+  outline-offset: 1px;
+}
+
+/* ---------- verdict banner ---------- */
+.verdict {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  padding: var(--card-pad);
+  border-radius: var(--r-card);
+}
+
+.verdictPass {
+  background: var(--primary-soft);
+  color: var(--primary-ink);
+}
+
+.verdictRisk {
+  background: var(--fb-error-bg);
+  color: var(--fb-error-fg);
+}
+
+.verdictNone {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.verdictHeadline {
+  margin: 0;
+  font-weight: var(--fw-bold);
+  font-size: var(--t-lg);
+}
+
+/* ---------- «don't zero a group» warning ---------- */
+.warning {
+  margin: 0;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-card);
+  background: var(--highlight);
+  color: var(--highlight-ink);
+  font-size: var(--t-sm);
+  line-height: var(--lh-body);
+  font-weight: var(--fw-semi);
+}

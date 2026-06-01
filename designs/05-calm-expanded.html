@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calm · pastel — больше экранов + тёмная тема</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101015;color:#ece9ef;font-family:"Hanken Grotesk",sans-serif;-webkit-font-smoothing:antialiased}
+.page{max-width:1320px;margin:0 auto;padding:40px 24px 80px}
+.k{color:#e7a6ab;font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:12px}
+h1{font-family:"Fraunces";font-style:italic;font-weight:500;font-size:40px;margin:6px 0 4px}
+.lead{color:#a39fae;max-width:74ch;font-size:16px;margin:0}
+.sechead{display:flex;align-items:baseline;gap:12px;margin:34px 0 14px}
+.sechead h2{font-family:"Fraunces";font-style:italic;font-weight:500;font-size:26px;margin:0}
+.sechead .t{font-size:13px;color:#86828f;border:1px solid #2c2c38;border-radius:20px;padding:3px 11px}
+.strip{display:flex;gap:26px;overflow-x:auto;padding:8px 4px 22px;scroll-snap-type:x proximity}
+.item{scroll-snap-align:start}
+.cap{text-align:center;font-weight:700;font-size:12.5px;margin-top:11px;color:#8e8a97}
+
+/* ===== theme tokens ===== */
+.theme-light{
+  --bg:#f7f4ef; --grad1:#fbe9eb; --grad2:#e6f0e8; --grad3:#efeafb;
+  --card:#ffffff; --ink:#3a3640; --muted:#928c98; --line:#efeaf2;
+  --sage:#9bbfa6; --sage-bg:#e6f0e8; --blush:#f0c9cd; --blush-bg:#fbe9eb;
+  --lav:#cfc8ee; --lav-ink:#5b4f87; --lav-bg:#efeafb; --butter:#f6e4b8; --ok:#5aa37a; --warn:#c77b76;
+  --shadow:0 14px 34px -22px rgba(120,90,120,.55); --shadow-sm:0 6px 18px -14px rgba(120,90,120,.5);
+}
+.theme-dark{
+  --bg:#1a1822; --grad1:#2a2030; --grad2:#1d2723; --grad3:#221f33;
+  --card:#262232; --ink:#ece7f2; --muted:#9b95a8; --line:#332e40;
+  --sage:#86b497; --sage-bg:#28332d; --blush:#c79aa0; --blush-bg:#352830;
+  --lav:#9a8fd0; --lav-ink:#c8bff0; --lav-bg:#2c2740; --butter:#cdb681; --ok:#74b894; --warn:#d68f8a;
+  --shadow:0 18px 40px -22px rgba(0,0,0,.6); --shadow-sm:0 10px 24px -16px rgba(0,0,0,.55);
+}
+
+/* ===== phone shell ===== */
+.ph{width:330px;flex:0 0 auto;background:var(--card);border-radius:44px;padding:11px;box-shadow:0 30px 70px -34px rgba(0,0,0,.5)}
+.theme-dark .ph{background:#0e0d13}
+.bz{border-radius:34px;overflow:hidden;
+  background:
+   radial-gradient(360px 280px at 8% 0%, var(--grad1), transparent 60%),
+   radial-gradient(380px 300px at 98% 10%, var(--grad2), transparent 60%),
+   radial-gradient(360px 360px at 60% 100%, var(--grad3), transparent 60%),
+   var(--bg)}
+.sb{display:flex;justify-content:space-between;padding:12px 20px 4px;font-size:11.5px;color:var(--muted);font-weight:700}
+.scr{height:638px;overflow:hidden;padding:4px 17px 18px;color:var(--ink)}
+
+/* ===== shared components ===== */
+.hello{font-family:"Fraunces";font-style:italic;font-size:25px;margin:10px 2px 0}
+.subtle{color:var(--muted);font-size:14px;font-weight:600;margin:1px 2px 0}
+.focus{display:flex;align-items:center;gap:13px;background:var(--card);border-radius:20px;padding:14px 15px;margin:14px 0 2px;box-shadow:var(--shadow-sm)}
+.focus .leaf{width:46px;height:46px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:22px;background:var(--sage-bg)}
+.focus b{font-family:"Fraunces";font-style:italic;font-size:17px;display:block}
+.focus span{color:var(--muted);font-size:13px;font-weight:600}
+.sec{font-family:"Fraunces";font-style:italic;font-size:18px;margin:20px 4px 11px}
+.plan{display:flex;flex-direction:column;gap:9px}
+.row{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:18px;padding:12px 14px;font-size:14.5px;font-weight:600;box-shadow:var(--shadow-sm)}
+.dot{width:23px;height:23px;border-radius:50%;background:var(--blush-bg);border:2px solid var(--blush);flex:0 0 auto}
+.row.on{opacity:.66}.row.on .dot{background:var(--sage);border-color:var(--sage);position:relative}
+.row.on .dot::after{content:"✓";color:#fff;position:absolute;inset:0;text-align:center;font-size:12px;font-weight:800;line-height:19px}
+.drill{background:var(--card);border-radius:20px;padding:14px 15px;margin-bottom:10px;box-shadow:var(--shadow)}
+.drill h3{font-family:"Fraunces";font-style:italic;font-size:18px;margin:0 0 1px}
+.drill .ds{color:var(--muted);font-size:13px;font-weight:600}
+.lvls{display:flex;gap:8px;margin-top:10px}
+.lvls a{flex:1;text-align:center;text-decoration:none;font-weight:700;font-size:13.5px;color:var(--ink);background:var(--bg);border-radius:14px;padding:9px 0}
+.theme-dark .lvls a{background:#2f2a3a}
+.lvls a.on{background:var(--sage);color:#13261b}
+.theme-dark .lvls a.on{color:#0e1a13}
+
+.back{color:var(--muted);font-weight:700;font-size:14px}
+.tag{background:var(--lav-bg);color:var(--lav-ink);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700}
+.dtop{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.bar{height:8px;background:var(--lav-bg);border-radius:10px;margin:15px 0}.bar>span{display:block;height:100%;background:var(--sage);border-radius:10px}
+.q{text-align:center;font-family:"Fraunces";font-style:italic;color:var(--muted);font-size:18px;margin-top:28px}
+.prompt{text-align:center;font-family:"Fraunces";font-size:33px;margin:11px 0 24px}
+.prompt .bl{color:var(--lav-ink);background:var(--lav-bg);border-radius:14px;padding:2px 15px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.opts a{text-decoration:none;text-align:center;font-family:"Fraunces";font-size:30px;color:var(--ink);background:var(--card);border-radius:20px;padding:22px 0;box-shadow:var(--shadow)}
+.fb{background:var(--blush-bg);border-radius:18px;padding:14px 16px;color:var(--warn);font-weight:700;font-size:14.5px}
+.theme-dark .fb{color:#eaa9a4}
+.fb b{font-family:"Fraunces";font-style:italic;font-weight:500;color:var(--ink)}
+.acts{display:flex;gap:9px;margin-top:12px}
+.bt{flex:1;text-align:center;text-decoration:none;font-weight:700;font-size:13.5px;padding:12px;border-radius:16px;background:var(--card);color:var(--ink);box-shadow:var(--shadow-sm)}
+.bt.go{flex:1.4;background:var(--ok);color:#fff}
+.note{color:var(--muted);font-size:13px;font-weight:500;margin-top:10px}
+
+/* reference list */
+.rcard{display:flex;justify-content:space-between;align-items:center;background:var(--card);border-radius:16px;padding:13px 15px;margin-bottom:9px;box-shadow:var(--shadow-sm)}
+.rcard b{font-family:"Fraunces";font-style:italic;font-weight:500;font-size:16px}
+.rcard .ch{color:var(--muted)}
+.refttl{font-family:"Fraunces";font-style:italic;font-size:26px;margin:6px 0 13px}
+.refk{color:var(--warn);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:11px;margin-top:8px}
+.refbody{background:var(--card);border-radius:22px;padding:17px 18px;font-size:15.5px;line-height:1.55;box-shadow:var(--shadow)}
+.refbody p{margin:9px 0}.refbody b{color:var(--lav-ink)}
+.refbody .div{height:1px;background:var(--line);margin:12px 0}
+.pill{display:inline-block;border-radius:12px;padding:2px 11px;font-family:"Fraunces";font-style:italic;font-size:15px}
+.pill.a{background:var(--butter);color:#5b4a16}.pill.p{background:var(--sage-bg);color:#23402c}
+.theme-dark .pill.a{color:#3a2f10}.theme-dark .pill.p{color:#cfe6d6}
+
+/* summary */
+.bigcircle{width:120px;height:120px;border-radius:50%;margin:24px auto 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 30% 25%,var(--card),var(--sage-bg));border:7px solid var(--sage)}
+.bigcircle b{font-family:"Fraunces";font-size:42px;line-height:1}.bigcircle span{font-size:12px;color:var(--muted);font-weight:700}
+.sumttl{font-family:"Fraunces";font-style:italic;font-size:26px;text-align:center;margin-top:10px}
+
+/* settings */
+.field{background:var(--card);border-radius:18px;padding:14px 15px;margin-bottom:11px;box-shadow:var(--shadow-sm)}
+.field .fl{font-weight:700;font-size:14px;margin-bottom:9px}
+.seg{display:flex;background:var(--bg);border-radius:14px;padding:3px;gap:3px}
+.theme-dark .seg{background:#2f2a3a}
+.seg a{flex:1;text-align:center;text-decoration:none;font-weight:700;font-size:13.5px;color:var(--ink);padding:8px 0;border-radius:11px}
+.seg a.on{background:var(--lav);color:#26204a;box-shadow:var(--shadow-sm)}
+.theme-dark .seg a.on{color:#1a1626}
+.bigbtn{display:block;text-align:center;text-decoration:none;background:var(--ok);color:#fff;font-weight:700;border-radius:16px;padding:14px;font-size:15px;box-shadow:var(--shadow-sm)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="k">Calm · pastel · выбранное направление</div>
+  <h1>Больше экранов + светлая и тёмная темы</h1>
+  <p class="lead">Тот же спокойный характер: мягкие пастельные тона, воздух, скруглённые карточки, курсивный Fraunces. Без навязчивого счётчика дней — вместо него спокойный фокус «на сегодня». 7 экранов в каждой теме.</p>
+
+  <div class="sechead"><h2>Светлая</h2><span class="t">light</span></div>
+  <div class="strip theme-light" id="lightStrip"></div>
+
+  <div class="sechead"><h2>Тёмная</h2><span class="t">dark</span></div>
+  <div class="strip theme-dark" id="darkStrip"></div>
+</div>
+
+<script>
+const screens = [
+  { cap:'Главная · фокус дня', html:`
+    <div class="hello">Bom dia 🌿</div>
+    <div class="subtle">Спокойный темп. Сегодня — три шага.</div>
+    <div class="focus"><div class="leaf">🎧</div><div><b>Начни с аудио</b><span>послушай живой PT 30–45 мин</span></div></div>
+    <div class="sec">План на сегодня</div>
+    <div class="plan">
+      <div class="row on"><span class="dot"></span>🎧 Слушать живой EP · 30–45 мин</div>
+      <div class="row"><span class="dot"></span>✍️ Письмо 70–90 слов</div>
+      <div class="row"><span class="dot"></span>📖 Чтение + V/F</div>
+      <div class="row"><span class="dot"></span>⏱️ Mock (каждые 2–3 дня)</div>
+    </div>
+    <div class="sec">Дриллы</div>
+    <div class="drill"><h3>Род и артикль</h3><div class="ds">o / a · género</div><div class="lvls"><a class="on">L1</a><a>L2</a><a>L3</a></div></div>` },
+
+  { cap:'Справочник · список', html:`
+    <div class="back">Справочник</div>
+    <div class="refttl">Что повторить</div>
+    <div class="refk">Предлоги</div>
+    <div class="rcard"><b>Откуда / где: de · em</b><span class="ch">›</span></div>
+    <div class="rcard"><b>Движение: a vs para</b><span class="ch">›</span></div>
+    <div class="rcard"><b>Время: a · de · em</b><span class="ch">›</span></div>
+    <div class="rcard"><b>Место (locuções)</b><span class="ch">›</span></div>
+    <div class="refk">Грамматика</div>
+    <div class="rcard"><b>Род и артикль</b><span class="ch">›</span></div>
+    <div class="rcard"><b>Ser vs Estar</b><span class="ch">›</span></div>
+    <div class="rcard"><b>Глаголы · Presente</b><span class="ch">›</span></div>` },
+
+  { cap:'Справочник · карточка', html:`
+    <div class="back">‹ Справочник</div>
+    <div class="refk">Предлоги</div>
+    <div class="refttl">Движение: a vs para</div>
+    <div class="refbody">
+      <p><span class="pill a">a</span> короткое / ненадолго: «Vou <b>a</b> Paris».</p>
+      <p><span class="pill p">para</span> длительное / пункт: «Vou <b>para</b> o Brasil».</p>
+      <div class="div"></div>
+      <p><b>ir a casa</b> — домой ненадолго.<br><b>ir para casa</b> — домой, остаться.</p>
+      <div class="div"></div>
+      <p><b>chegar a</b> casa · <b>sair de</b> casa · <b>sair para</b> a escola.<br>Транспорт: <b>de</b> carro; <b>a</b> pé.</p>
+    </div>` },
+
+  { cap:'Дрилл · род (выбор o/a)', html:`
+    <div class="dtop"><span class="back">‹ Выйти</span><span class="tag">Род · L1</span></div>
+    <div class="bar"><span style="width:40%"></span></div>
+    <div class="q">Выбери артикль</div>
+    <div class="prompt"><span class="bl">&nbsp;&nbsp;</span> cidade</div>
+    <div class="opts"><a>o</a><a>a</a></div>
+    <div class="note" style="text-align:center;margin-top:18px">-ade → обычно feminino</div>` },
+
+  { cap:'Дрилл · предлоги (фидбэк)', html:`
+    <div class="dtop"><span class="back">‹ Выйти</span><span class="tag">Предлоги · L1</span></div>
+    <div class="bar"><span style="width:30%"></span></div>
+    <div class="q">De onde és?</div>
+    <div class="prompt">Sou <span class="bl">da</span> Rússia.</div>
+    <div class="fb">✗ Неверно — правильно: <b>Sou da Rússia.</b></div>
+    <div class="acts"><a class="bt">📖 Правило</a><a class="bt">⚑ Пометить</a><a class="bt go">Дальше</a></div>
+    <div class="refbody" style="margin-top:22px;padding:13px 15px"><p style="margin:0">Rússia — <b>feminino</b> → <b>a</b> → de + a = <b>da</b>.</p></div>` },
+
+  { cap:'Итог сессии', html:`
+    <div class="back">‹ Выйти</div>
+    <div class="bigcircle"><b>8/10</b><span>верно</span></div>
+    <div class="sumttl">Хорошо! 🌿</div>
+    <div class="note" style="text-align:center">Предлоги · L1 · 80% · ~2 мин</div>
+    <div class="sec" style="text-align:center">Подтянуть</div>
+    <div class="rcard"><b>da / de — feminino страны</b><span class="ch">2 ✗</span></div>
+    <div class="acts" style="margin-top:18px"><a class="bt">На главную</a><a class="bt go">Ещё 10</a></div>` },
+
+  { cap:'Настройки · тема и язык', html:`
+    <div class="back">Настройки</div>
+    <div class="refttl">Оформление</div>
+    <div class="field"><div class="fl">Тема</div><div class="seg"><a class="on">Авто</a><a>Светлая</a><a>Тёмная</a></div><div class="note">Авто — по системным настройкам телефона.</div></div>
+    <div class="field"><div class="fl">Язык интерфейса</div><div class="seg"><a class="on">Русский</a><a>English</a></div><div class="note">По умолчанию — системный; если не RU/EN → English.</div></div>
+    <div class="sec">Данные</div>
+    <a class="bigbtn">⤓ Выгрузить телеметрию (JSON)</a>
+    <div class="note">Всё хранится только на устройстве.</div>` },
+]
+
+function build(stripId){
+  const strip = document.getElementById(stripId)
+  for(const s of screens){
+    const item = document.createElement('div'); item.className='item'
+    item.innerHTML = `<div class="ph"><div class="bz"><div class="sb"><span>9:41</span><span>●●● ⌁ ▮</span></div><div class="scr">${s.html}</div></div></div><div class="cap">${s.cap}</div>`
+    strip.appendChild(item)
+  }
+}
+build('lightStrip'); build('darkStrip')
+</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+{
+  "_meta": { "units": [1, 2], "source": ["livro:u1-2", "caderno:u1-2", "notebook:p1-4"] },
+  "grammar": [
+    {
+      "id": "gram:artigo-definido",
+      "title": "Artigo definido",
+      "unit": 1,
+      "kind": "rule",
+      "data": {
+        "table": { "masculino": "o", "feminino": "a", "masc_plural": "os", "fem_plural": "as" },
+        "with_names": "Antes de nomes próprios usa-se o artigo com SER e como sujeito ('Sou o Paulo', 'És a Clara', 'A Teresa é enfermeira'), mas NÃO com CHAMAR-SE ('Ela chama-se Teresa', 'Chamo-me Paulo'). Cf. caixa IMPORTANTE do livro: 'Chamo-me Paulo. / Sou o Paulo.'",
+        "examples": ["Sou o Tiago.", "É a Rita.", "Sou a Inês.", "Eu sou o Aleksandr."]
+      },
+      "source": "livro:u1:p10 + caderno:u1:F + notebook:p2",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:ser:presente",
+      "title": "Verbo SER — Presente do Indicativo",
+      "unit": 1,
+      "kind": "conjugation",
+      "data": {
+        "eu": "sou", "tu": "és", "voce_ele_ela": "é",
+        "nos": "somos", "voces_eles_elas": "são"
+      },
+      "source": "livro:u1 + notebook:p2",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:chamar-se:presente",
+      "title": "Verbo CHAMAR-SE (pronominal) — Presente",
+      "unit": 1,
+      "kind": "conjugation",
+      "data": {
+        "eu": "chamo-me", "tu": "chamas-te", "voce_ele_ela": "chama-se",
+        "nos": "chamamo-nos", "voces_eles_elas": "chamam-se"
+      },
+      "questions": ["Como te chamas? (informal)", "Como se chama? (formal)", "Como é que o senhor se chama?"],
+      "source": "livro:u1 + caderno:u1:E + notebook:p1-2",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:pronomes-pessoais",
+      "title": "Pronomes pessoais + formas de tratamento",
+      "unit": 1,
+      "kind": "rule",
+      "data": {
+        "pronouns": ["eu", "tu", "você/ele/ela", "nós", "vocês/eles/elas"],
+        "treatment_scale": ["tu (informal)", "você (formal médio)", "o senhor / a senhora (mais formal)"]
+      },
+      "source": "livro:u1-2 + notebook:p1,p3",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:ser-vs-ficar",
+      "title": "SER vs FICAR (localização)",
+      "unit": 2,
+      "kind": "contrast",
+      "data": {
+        "rule": "Para localizar lugares/cidades, 'ser' e 'ficar' são intercambiáveis: 'Lisboa é em Portugal' = 'Lisboa fica em Portugal'.",
+        "examples": [
+          { "ser": "Moscovo é na Rússia.", "ficar": "Moscovo fica na Rússia." },
+          { "ser": "Berlim é na Alemanha.", "ficar": "Berlim fica na Alemanha." }
+        ],
+        "not_interchangeable": "Não se substitui quando 'ser' = identidade/origem: 'Quem é ele?', 'O Felipe é do Brasil.'"
+      },
+      "source": "livro:u2:p16 + caderno:u2:E,I",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:prep-de-origem",
+      "title": "Preposição DE (origem) + contração com artigo",
+      "unit": 2,
+      "kind": "contraction-table",
+      "data": {
+        "pattern": "De onde é? — Sou ___",
+        "contractions": { "de+o": "do", "de+a": "da", "de+os": "dos", "de+as": "das", "de (sem artigo)": "de" },
+        "examples": ["Sou do Brasil.", "Somos da Alemanha.", "É de Portugal.", "É da Grécia.", "É dos Estados Unidos.", "É do Japão."]
+      },
+      "source": "livro:u2:p15-16 + caderno:u2:C,F,H,I",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:prep-em-local",
+      "title": "Preposição EM (localização) + contração com artigo",
+      "unit": 2,
+      "kind": "contraction-table",
+      "data": {
+        "pattern": "Onde fica? — Fica ___ / Onde é? — É ___",
+        "contractions": { "em+o": "no", "em+a": "na", "em+os": "nos", "em+as": "nas", "em (sem artigo)": "em" },
+        "examples": ["É em Portugal.", "É na Grécia.", "É no México.", "É nos Estados Unidos.", "Coimbra é em Portugal.", "Atenas é na Grécia."]
+      },
+      "source": "livro:u2:p16-17 + caderno:u2:D,H",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:interrogativos",
+      "title": "Interrogativos: como, quem, onde, de onde, qual",
+      "unit": 2,
+      "kind": "rule",
+      "data": {
+        "items": [
+          { "word": "como", "use": "Como se chama? / Como está?" },
+          { "word": "quem", "use": "Quem é ele?" },
+          { "word": "onde", "use": "Onde fica Lisboa?" },
+          { "word": "de onde", "use": "De onde é?" },
+          { "word": "qual", "use": "Qual é a sua nacionalidade? (notebook)" }
+        ]
+      },
+      "source": "livro:u1-2 + notebook:p1-2",
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,1008 @@
+{
+  "_meta": {
+    "units": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+    "source": ["livro:gramatica:u1-16"],
+    "note": "All verb conjugations and contraction tables copied verbatim from the verified GRAMÁTICA pages of livro_do_aluno_1.pdf. Confidence 'high' = table taken directly from a grammar page."
+  },
+  "grammar": [
+    {
+      "id": "gram:chamar-se:presente",
+      "title": "Verbo CHAMAR-SE (pronominal) — Presente do Indicativo",
+      "unit": 1,
+      "kind": "conjugation",
+      "data": {
+        "eu": "chamo-me",
+        "tu": "chamas-te",
+        "voce_ele_ela": "chama-se",
+        "nos": "chamamo-nos",
+        "voces_eles_elas": "chamam-se",
+        "notes": [
+          "O pronome reflexo (me, te, se) vem ANTES do verbo depois da palavra interrogativa: Como se chama?",
+          "Normalmente, não se usa o pronome pessoal (eu, tu, etc.).",
+          "A 2.ª pessoa é informal: Como te chamas?",
+          "A 3.ª pessoa é, normalmente, formal: Como se chama?"
+        ]
+      },
+      "source": "livro:u1:p26",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:ser:presente",
+      "title": "Verbo SER — Presente do Indicativo",
+      "unit": 1,
+      "kind": "conjugation",
+      "data": {
+        "eu": "sou",
+        "tu": "és",
+        "voce_ele_ela": "é",
+        "nos": "somos",
+        "voces_eles_elas": "são",
+        "negativa": "(eu) não sou, (tu) não és, etc."
+      },
+      "source": "livro:u1:p26 + livro:u2:p27",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:artigo-definido",
+      "title": "Artigo definido (singular e plural)",
+      "unit": 1,
+      "kind": "rule",
+      "data": {
+        "table": { "masculino": "o", "feminino": "a", "masc_plural": "os", "fem_plural": "as" },
+        "with_names": "Em português, usa-se frequentemente o artigo definido antes dos nomes próprios: o Filipe, a Joana.",
+        "with_countries": [
+          "O artigo é obrigatório antes dos nomes da maioria dos países.",
+          "É opcional antes de: Espanha, Itália, França e Inglaterra.",
+          "Países sem artigo: Portugal, Marrocos, Angola, Moçambique, Cuba, Israel.",
+          "Os nomes das cidades não têm artigo. Exceções: o Rio de Janeiro, o Porto."
+        ],
+        "examples": ["o Filipe", "a Joana", "a Alemanha", "os Estados Unidos", "as Filipinas"]
+      },
+      "source": "livro:u1:p26 + livro:u2:p27",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:pronomes-pessoais",
+      "title": "Pronomes pessoais + formas de tratamento",
+      "unit": 2,
+      "kind": "rule",
+      "data": {
+        "singular": ["eu", "tu", "você", "o senhor", "a senhora", "ele", "ela"],
+        "plural": ["nós", "vocês", "os senhores", "as senhoras", "eles", "elas"],
+        "pairs": [
+          { "sing": "eu", "plur": "nós" },
+          { "sing": "tu", "plur": "vocês" },
+          { "sing": "você", "plur": "vocês / as senhoras / os senhores" },
+          { "sing": "o senhor", "plur": "os senhores" },
+          { "sing": "a senhora", "plur": "as senhoras" },
+          { "sing": "ele", "plur": "eles" },
+          { "sing": "ela", "plur": "elas" }
+        ]
+      },
+      "source": "livro:u2:p27",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:prep-de-origem",
+      "title": "Preposição DE (origem) + contração com artigo definido",
+      "unit": 2,
+      "kind": "contraction-table",
+      "data": {
+        "rule": "A preposição de indica origem: Ele é de Lisboa.",
+        "contractions": { "de+o": "do", "de+a": "da", "de+os": "dos", "de+as": "das" },
+        "examples": ["Ele é de Lisboa.", "A Wilma é da Suécia.", "Sou do Japão."]
+      },
+      "source": "livro:u2:p27",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:prep-em-local",
+      "title": "Preposição EM (localização) + contração com artigo definido",
+      "unit": 2,
+      "kind": "contraction-table",
+      "data": {
+        "rule": "A preposição em indica localização: Lisboa é em Portugal. Quando falamos da localização geográfica usamos os verbos ser ou ficar.",
+        "contractions": { "em+o": "no", "em+a": "na", "em+os": "nos", "em+as": "nas" },
+        "examples": ["Lisboa é em Portugal.", "Munique é na Alemanha.", "Chicago é nos Estados Unidos."]
+      },
+      "source": "livro:u2:p27",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:frases-negativas",
+      "title": "Frases negativas",
+      "unit": 2,
+      "kind": "rule",
+      "data": {
+        "rule": "Forma-se a negativa com não antes do verbo.",
+        "examples": ["(eu) sou → (eu) não sou", "(tu) és → (tu) não és"]
+      },
+      "source": "livro:u2:p27",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:genero-numero-nacionalidades",
+      "title": "Género e número das nacionalidades",
+      "unit": 3,
+      "kind": "rule",
+      "data": {
+        "table": [
+          { "masc_sing": "inglês", "fem_sing": "inglesa", "masc_plural": "ingleses", "fem_plural": "inglesas" },
+          { "masc_sing": "italiano", "fem_sing": "italiana", "masc_plural": "italianos", "fem_plural": "italianas" },
+          { "masc_sing": "espanhol", "fem_sing": "espanhola", "masc_plural": "espanhóis", "fem_plural": "espanholas" },
+          { "masc_sing": "alemão", "fem_sing": "alemã", "masc_plural": "alemães", "fem_plural": "alemãs" },
+          { "masc_sing": "belga", "fem_sing": "belga", "masc_plural": "belgas", "fem_plural": "belgas" }
+        ]
+      },
+      "source": "livro:u3:p28",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:falar:presente",
+      "title": "Verbo FALAR — Presente do Indicativo (regular -ar, 1.ª conjugação)",
+      "unit": 3,
+      "kind": "conjugation",
+      "data": {
+        "eu": "falo",
+        "tu": "falas",
+        "voce_ele_ela": "fala",
+        "nos": "falamos",
+        "voces_eles_elas": "falam",
+        "note": "Os verbos ficar e morar conjugam-se como falar. Também: viajar, trabalhar, ganhar, usar, estudar, adorar, detestar, jogar, passar, estacionar, tomar, pagar, andar."
+      },
+      "source": "livro:u3:p28 + livro:u8:p51",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:estar:presente",
+      "title": "Verbo ESTAR — Presente do Indicativo",
+      "unit": 3,
+      "kind": "conjugation",
+      "data": {
+        "eu": "estou",
+        "tu": "estás",
+        "voce_ele_ela": "está",
+        "nos": "estamos",
+        "voces_eles_elas": "estão"
+      },
+      "source": "livro:u3:p28",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:ser-vs-estar",
+      "title": "SER vs ESTAR",
+      "unit": 3,
+      "kind": "contrast",
+      "data": {
+        "rules": [
+          "O verbo estar indica localização ou estado temporário.",
+          "O verbo ser indica localização ou estado permanente.",
+          "Usamos o verbo ser para descrever a aparência física: Ele é alto.",
+          "Usamos o verbo estar para descrever estados fisiológicos: Ele está cansado. Ele está com fome."
+        ],
+        "examples": [
+          { "ser": "Ele é alto.", "estar": "Ele está cansado." },
+          { "ser": "Este hotel é muito grande.", "estar": "Ela está muito cansada." },
+          { "ser": "O meu irmão é loiro.", "estar": "Estou em casa porque estou doente." }
+        ]
+      },
+      "source": "livro:u3:p28 + livro:u10:p71",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:artigo-indefinido-genero-nomes",
+      "title": "Artigo indefinido e género dos nomes",
+      "unit": 4,
+      "kind": "rule",
+      "data": {
+        "table": { "masculino": "um", "feminino": "uma" },
+        "genero": [
+          "Os nomes masculinos acabam, normalmente, em -o, -l, -s, -ão, -r, -e, -z ou -m. Alguns nomes masculinos acabam também em -a.",
+          "Os nomes femininos acabam, normalmente, em -a, -ão, -r, -e, -z ou -m."
+        ],
+        "uso": [
+          "Usamos um/uma quando falamos sobre algo indefinido ou pela primeira vez.",
+          "Usamos o/a quando falamos sobre algo definido ou algo que já conhecemos."
+        ]
+      },
+      "source": "livro:u4:p29",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:numero-dos-nomes",
+      "title": "Número dos nomes (plural)",
+      "unit": 4,
+      "kind": "rule",
+      "data": {
+        "examples_table": [
+          { "singular": "mesa", "plural": "mesas" },
+          { "singular": "livro", "plural": "livros" },
+          { "singular": "parede", "plural": "paredes" },
+          { "singular": "computador", "plural": "computadores" },
+          { "singular": "rapaz", "plural": "rapazes" },
+          { "singular": "país", "plural": "países" },
+          { "singular": "jornal", "plural": "jornais" },
+          { "singular": "viagem", "plural": "viagens" },
+          { "singular": "cão", "plural": "cães" },
+          { "singular": "avião", "plural": "aviões" },
+          { "singular": "mão", "plural": "mãos" },
+          { "singular": "lápis", "plural": "lápis" }
+        ],
+        "patterns": [
+          "-ão → -ões (avião → aviões), -ães (cão → cães) ou -ãos (mão → mãos)",
+          "-l → -is (jornal → jornais)",
+          "-m → -ns (viagem → viagens)",
+          "-r/-s/-z → +es (computador → computadores, rapaz → rapazes)",
+          "palavras terminadas em -s não acentuado são invariáveis (lápis → lápis)"
+        ],
+        "article_note": "o livro (sing.) → os livros (pl.); um livro (sing.) → livros (pl.)"
+      },
+      "source": "livro:u4:p29",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:demonstrativos-invariaveis",
+      "title": "Demonstrativos invariáveis: isto / isso / aquilo",
+      "unit": 4,
+      "kind": "rule",
+      "data": {
+        "items": [
+          { "word": "isto", "use": "para o que está perto do falante" },
+          { "word": "isso", "use": "para o que está perto do ouvinte" },
+          { "word": "aquilo", "use": "para o que está longe do falante e do ouvinte" }
+        ]
+      },
+      "source": "livro:u4:p29",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:cores",
+      "title": "Cores — género e número",
+      "unit": 4,
+      "kind": "rule",
+      "data": {
+        "table": [
+          { "masc_sing": "branco", "fem_sing": "branca", "masc_plural": "brancos", "fem_plural": "brancas" },
+          { "masc_sing": "verde", "fem_sing": "verde", "masc_plural": "verdes", "fem_plural": "verdes" },
+          { "masc_sing": "azul", "fem_sing": "azul", "masc_plural": "azuis", "fem_plural": "azuis" },
+          { "masc_sing": "cor de rosa", "fem_sing": "cor de rosa", "masc_plural": "cor de rosa", "fem_plural": "cor de rosa" }
+        ]
+      },
+      "source": "livro:u4:p29",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:prep-de-posse",
+      "title": "Preposição DE (posse) e posição dos adjetivos",
+      "unit": 4,
+      "kind": "rule",
+      "data": {
+        "rules": [
+          "Usamos a preposição de para indicar posse: É o dicionário do João.",
+          "Os adjetivos (cores, nacionalidades) vêm depois do nome: A bandeira azul e branca é da Grécia.",
+          "Dizemos o carro do João, mas uma garrafa de água."
+        ]
+      },
+      "source": "livro:u4:p29 + livro:u5:p48",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:ter:presente",
+      "title": "Verbo TER — Presente do Indicativo",
+      "unit": 5,
+      "kind": "conjugation",
+      "data": {
+        "eu": "tenho",
+        "tu": "tens",
+        "voce_ele_ela": "tem",
+        "nos": "temos",
+        "voces_eles_elas": "têm"
+      },
+      "source": "livro:u5:p48",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:expressao-e-que",
+      "title": "Expressão É QUE",
+      "unit": 5,
+      "kind": "rule",
+      "data": {
+        "rule": "Nas perguntas que começam com uma palavra interrogativa podemos usar é que: Onde (é que) fica Siena?",
+        "examples": ["Como é que se chama?", "Onde é que fica Siena?"]
+      },
+      "source": "livro:u5:p48",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:cardinais-um-dois",
+      "title": "Cardinais — formas femininas de um e dois",
+      "unit": 5,
+      "kind": "rule",
+      "data": {
+        "rule": "Os cardinais um e dois têm as formas femininas uma e duas.",
+        "forms": { "um": "uma", "dois": "duas" },
+        "examples": ["Tenho só um lápis. Tenho só uma caneta.", "Tenho dois livros. Tenho duas mesas."]
+      },
+      "source": "livro:u5:p48",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:possessivos-singular",
+      "title": "Possessivos (singular)",
+      "unit": 5,
+      "kind": "rule",
+      "data": {
+        "table": [
+          { "pessoa": "eu", "masculino": "meu", "feminino": "minha" },
+          { "pessoa": "tu", "masculino": "teu", "feminino": "tua" },
+          { "pessoa": "você", "masculino": "seu", "feminino": "sua" },
+          { "pessoa": "ele", "masculino": "dele", "feminino": "dele" },
+          { "pessoa": "ela", "masculino": "dela", "feminino": "dela" },
+          { "pessoa": "nós", "masculino": "nosso", "feminino": "nossa" },
+          { "pessoa": "vocês", "masculino": "vosso", "feminino": "vossa" },
+          { "pessoa": "eles", "masculino": "deles", "feminino": "deles" },
+          { "pessoa": "elas", "masculino": "delas", "feminino": "delas" }
+        ],
+        "notes": [
+          "Usamos os possessivos com o artigo definido (o meu relógio).",
+          "Usamos os possessivos dele(s) e dela(s) depois do nome (o relógio dele)."
+        ]
+      },
+      "source": "livro:u5:p48",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:possessivos-plural",
+      "title": "Possessivos (plural)",
+      "unit": 9,
+      "kind": "rule",
+      "data": {
+        "table": [
+          { "pessoa": "eu", "masculino": "meus", "feminino": "minhas" },
+          { "pessoa": "tu", "masculino": "teus", "feminino": "tuas" },
+          { "pessoa": "você / o senhor", "masculino": "seus", "feminino": "suas" },
+          { "pessoa": "ele", "masculino": "dele", "feminino": "dele" },
+          { "pessoa": "ela", "masculino": "dela", "feminino": "dela" },
+          { "pessoa": "nós", "masculino": "nossos", "feminino": "nossas" },
+          { "pessoa": "vocês", "masculino": "vossos", "feminino": "vossas" },
+          { "pessoa": "eles", "masculino": "deles", "feminino": "deles" },
+          { "pessoa": "elas", "masculino": "delas", "feminino": "delas" }
+        ],
+        "note": "Nas linhas ele/ela/eles/elas a forma (dele/dela/deles/delas) é invariável em género (uma única célula abrange masculino e feminino)."
+      },
+      "source": "livro:u9:p70",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:adverbios-lugar-aqui-ai-ali",
+      "title": "Advérbios de lugar: aqui / aí / ali",
+      "unit": 5,
+      "kind": "rule",
+      "data": {
+        "items": [
+          { "word": "aqui", "use": "coisas/pessoas perto do falante (corresponde a isto)" },
+          { "word": "aí", "use": "coisas/pessoas perto do ouvinte (corresponde a isso)" },
+          { "word": "ali", "use": "coisas longe do falante e do ouvinte (corresponde àquilo)" }
+        ]
+      },
+      "source": "livro:u5:p48",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:genero-profissoes",
+      "title": "Género das profissões",
+      "unit": 6,
+      "kind": "rule",
+      "data": {
+        "table": [
+          { "masculino": "médico", "feminino": "médica" },
+          { "masculino": "professor", "feminino": "professora" },
+          { "masculino": "ator", "feminino": "atriz" },
+          { "masculino": "estudante", "feminino": "estudante" },
+          { "masculino": "jornalista", "feminino": "jornalista" }
+        ],
+        "rule": "Quando dizemos qual é a profissão, não usamos o artigo antes do nome: Sou médico."
+      },
+      "source": "livro:u6:p49",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:ordinais",
+      "title": "Ordinais (1.º–10.º)",
+      "unit": 6,
+      "kind": "rule",
+      "data": {
+        "table": [
+          { "cardinal": "um", "ordinal": "primeiro" },
+          { "cardinal": "dois", "ordinal": "segundo" },
+          { "cardinal": "três", "ordinal": "terceiro" },
+          { "cardinal": "quatro", "ordinal": "quarto" },
+          { "cardinal": "cinco", "ordinal": "quinto" },
+          { "cardinal": "seis", "ordinal": "sexto" },
+          { "cardinal": "sete", "ordinal": "sétimo" },
+          { "cardinal": "oito", "ordinal": "oitavo" },
+          { "cardinal": "nove", "ordinal": "nono" },
+          { "cardinal": "dez", "ordinal": "décimo" }
+        ],
+        "ordem": [
+          "Os ordinais vêm antes do nome (o primeiro nome, o último nome).",
+          "A palavra completo, como adjetivo, vem depois do nome (o nome completo)."
+        ]
+      },
+      "source": "livro:u6:p49",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:interrogativa-quanto",
+      "title": "Interrogativa QUANTO (concorda em género e número)",
+      "unit": 6,
+      "kind": "rule",
+      "data": {
+        "table": [
+          { "forma": "quanto", "exemplo": "dinheiro" },
+          { "forma": "quanta", "exemplo": "água" },
+          { "forma": "quantos", "exemplo": "médicos" },
+          { "forma": "quantas", "exemplo": "alunas" }
+        ],
+        "rule": "A palavra interrogativa quanto concorda em número e género com o nome."
+      },
+      "source": "livro:u6:p49",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:genero-numero-adjetivos",
+      "title": "Género e número dos adjetivos",
+      "unit": 7,
+      "kind": "rule",
+      "data": {
+        "table": [
+          { "masc_sing": "bonito", "fem_sing": "bonita", "masc_plural": "bonitos", "fem_plural": "bonitas" },
+          { "masc_sing": "falador", "fem_sing": "faladora", "masc_plural": "faladores", "fem_plural": "faladoras" },
+          { "masc_sing": "grande", "fem_sing": "grande", "masc_plural": "grandes", "fem_plural": "grandes" },
+          { "masc_sing": "difícil", "fem_sing": "difícil", "masc_plural": "difíceis", "fem_plural": "difíceis" },
+          { "masc_sing": "agradável", "fem_sing": "agradável", "masc_plural": "agradáveis", "fem_plural": "agradáveis" },
+          { "masc_sing": "bom", "fem_sing": "boa", "masc_plural": "bons", "fem_plural": "boas" },
+          { "masc_sing": "mau", "fem_sing": "má", "masc_plural": "maus", "fem_plural": "más" }
+        ],
+        "ordem": [
+          "Os advérbios de quantidade vêm antes do adjetivo (muito bonito, bastante bonito) e depois do verbo (gosto muito).",
+          "Os adjetivos concordam em género e número com os nomes e vêm normalmente depois do nome (uma rua antiga, um carro bonito)."
+        ]
+      },
+      "source": "livro:u7:p50",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:verbo-gostar",
+      "title": "Verbo GOSTAR (+ de)",
+      "unit": 7,
+      "kind": "rule",
+      "data": {
+        "rule": "Depois do verbo gostar usa-se a preposição de: Gosto de Portugal.",
+        "examples": ["Gosto de Portugal.", "Gostas da minha casa?"]
+      },
+      "source": "livro:u7:p50",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:contracoes-de-em-demonstrativos-adverbios",
+      "title": "Contrações de DE e EM com demonstrativos invariáveis e advérbios de lugar",
+      "unit": 7,
+      "kind": "contraction-table",
+      "data": {
+        "contractions": {
+          "de+isto": "disto",
+          "de+isso": "disso",
+          "de+aquilo": "daquilo",
+          "de+aqui": "daqui",
+          "de+aí": "daí",
+          "de+ali": "dali",
+          "em+isto": "nisto",
+          "em+isso": "nisso",
+          "em+aquilo": "naquilo"
+        }
+      },
+      "source": "livro:u7:p50",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:terceira-pessoa-tratamento",
+      "title": "3.ª pessoa: uso e referência (tratamento formal)",
+      "unit": 7,
+      "kind": "rule",
+      "data": {
+        "rules": [
+          "A 3.ª pessoa é uma forma de tratamento formal. Normalmente, não se usa o pronome: Tem carta de condução.",
+          "Quando não sabemos o nome do interlocutor, podemos usar o senhor: O senhor tem carta de condução?",
+          "Quando sabemos o nome do interlocutor, podemos usar o nome: O Miguel tem carta de condução."
+        ]
+      },
+      "source": "livro:u7:p50",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:contracoes-de-em-artigos-indefinidos",
+      "title": "Contração de EM e DE com os artigos indefinidos",
+      "unit": 8,
+      "kind": "contraction-table",
+      "data": {
+        "contractions": {
+          "em+um": "num",
+          "em+uma": "numa",
+          "de+um": "dum",
+          "de+uma": "duma"
+        }
+      },
+      "source": "livro:u8:p51",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:muito-pouco",
+      "title": "MUITO e POUCO",
+      "unit": 8,
+      "kind": "rule",
+      "data": {
+        "table": [
+          { "forma": "muito / pouco", "exemplo": "café" },
+          { "forma": "muita / pouca", "exemplo": "água" },
+          { "forma": "muitos / poucos", "exemplo": "livros" },
+          { "forma": "muitas / poucas", "exemplo": "horas" }
+        ],
+        "rules": [
+          "Muito e pouco concordam com os nomes em género e em número.",
+          "Com os verbos, muito e pouco são invariáveis: A Rita trabalha muito. Estudo pouco."
+        ]
+      },
+      "source": "livro:u8:p51",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:prep-por-frequencia",
+      "title": "Preposição POR (frequência)",
+      "unit": 8,
+      "kind": "rule",
+      "data": {
+        "rule": "Usa-se a preposição por para indicar a frequência num período de tempo (por dia, por semana, por ano)."
+      },
+      "source": "livro:u8:p51",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:demonstrativos-variaveis",
+      "title": "Demonstrativos variáveis: este / esse / aquele",
+      "unit": 9,
+      "kind": "rule",
+      "data": {
+        "table": [
+          { "invariavel": "isto", "masc_sing": "este", "masc_plural": "estes", "fem_sing": "esta", "fem_plural": "estas" },
+          { "invariavel": "isso", "masc_sing": "esse", "masc_plural": "esses", "fem_sing": "essa", "fem_plural": "essas" },
+          { "invariavel": "aquilo", "masc_sing": "aquele", "masc_plural": "aqueles", "fem_sing": "aquela", "fem_plural": "aquelas" }
+        ],
+        "rules": [
+          "Os demonstrativos variáveis concordam em género e número com o nome.",
+          "Este - usa-se para coisas que estão perto do falante.",
+          "Esse - usa-se para coisas que estão perto do ouvinte.",
+          "Aquele - usa-se para coisas que estão longe do falante e do ouvinte."
+        ]
+      },
+      "source": "livro:u9:p70",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:interrogativo-qual",
+      "title": "Pronome interrogativo QUAL / QUAIS",
+      "unit": 10,
+      "kind": "rule",
+      "data": {
+        "rules": [
+          "Qual usa-se para identificar algo ou alguém: Qual é o seu nome? Qual é que é a tua caneta? A azul ou a verde?",
+          "O plural de qual é quais: Qual é a sua profissão? Quais são as vossas profissões?"
+        ],
+        "forms": { "singular": "qual", "plural": "quais" }
+      },
+      "source": "livro:u10:p71",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:ver:presente",
+      "title": "Verbo VER — Presente do Indicativo",
+      "unit": 10,
+      "kind": "conjugation",
+      "data": {
+        "eu": "vejo",
+        "tu": "vês",
+        "voce_ele_ela": "vê",
+        "nos": "vemos",
+        "voces_eles_elas": "veem"
+      },
+      "source": "livro:u10:p71",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:ler:presente",
+      "title": "Verbo LER — Presente do Indicativo",
+      "unit": 10,
+      "kind": "conjugation",
+      "data": {
+        "eu": "leio",
+        "tu": "lês",
+        "voce_ele_ela": "lê",
+        "nos": "lemos",
+        "voces_eles_elas": "leem"
+      },
+      "source": "livro:u10:p71",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:ir:presente",
+      "title": "Verbo IR — Presente do Indicativo",
+      "unit": 11,
+      "kind": "conjugation",
+      "data": {
+        "eu": "vou",
+        "tu": "vais",
+        "voce_ele_ela": "vai",
+        "nos": "vamos",
+        "voces_eles_elas": "vão"
+      },
+      "source": "livro:u11:p72",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:prep-a-direcao",
+      "title": "Preposição A (direção) + contração com artigos definidos",
+      "unit": 11,
+      "kind": "contraction-table",
+      "data": {
+        "rules": [
+          "Usamos a preposição a com o verbo ir. Esta preposição indica direção: Vou a casa.",
+          "Usamos também a preposição a em várias expressões (à noite, às vezes, etc.).",
+          "Ao contrário das preposições em e de, a preposição a não se contrai com o artigo indefinido: Vamos a um restaurante no centro."
+        ],
+        "contractions": { "a+o": "ao", "a+os": "aos", "a+a": "à", "a+as": "às" },
+        "examples": ["Gosto de ir aos restaurantes italianos.", "Vamos ao teatro.", "Quem vai à praia?", "Adoro ir às compras."]
+      },
+      "source": "livro:u11:p72",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:prep-de-transporte",
+      "title": "Preposição DE com meios de transporte",
+      "unit": 12,
+      "kind": "rule",
+      "data": {
+        "rule": "Usamos a preposição de com os meios de transporte (andar de bicicleta)."
+      },
+      "source": "livro:u12:p73",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:interrogativas-confirmacao",
+      "title": "Interrogativas de confirmação (tag questions)",
+      "unit": 12,
+      "kind": "rule",
+      "data": {
+        "rules": [
+          "Nas frases afirmativas usa-se o verbo precedido de não: Vais ao cinema, não vais? Ela é rica, não é?",
+          "Nas frases negativas é sempre pois não: Não vais ao cinema, pois não? Ela não é rica, pois não?"
+        ],
+        "examples_afirmativa": ["Vais ao cinema, não vais?", "Ela é rica, não é?", "Vocês estão cansados, não estão?", "Eles têm uma casa em Sintra, não têm?"],
+        "examples_negativa": ["Não vais ao cinema, pois não?", "Ela não é rica, pois não?", "Vocês não estão cansados, pois não?", "Vocês não têm uma casa em Sintra, pois não?"]
+      },
+      "source": "livro:u12:p73",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:adverbios-lugar-ca-la",
+      "title": "Advérbios de lugar CÁ e LÁ",
+      "unit": 12,
+      "kind": "rule",
+      "data": {
+        "rules": [
+          "Cá refere-se a um espaço genérico em que o falante se encontra: Cá, no meu país, as pessoas são muito simpáticas.",
+          "Lá refere-se a um espaço genérico em que o falante não se encontra: O Andreas, agora, está lá na Alemanha."
+        ]
+      },
+      "source": "livro:u12:p73",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:as-horas",
+      "title": "As horas",
+      "unit": 13,
+      "kind": "rule",
+      "data": {
+        "examples": [
+          { "hora": "14h00", "dizer": "São duas horas." },
+          { "hora": "14h05", "dizer": "São duas e cinco." },
+          { "hora": "14h15", "dizer": "São duas e um quarto." },
+          { "hora": "14h30", "dizer": "São duas e meia." },
+          { "hora": "14h40", "dizer": "São vinte para as três." },
+          { "hora": "14h45", "dizer": "É um quarto para as três." },
+          { "hora": "15h00", "dizer": "São três horas." },
+          { "hora": "24h00", "dizer": "É meia-noite." },
+          { "hora": "12h00", "dizer": "É meio-dia." }
+        ],
+        "perguntas": [
+          "Para saber as horas — Pergunta: Que horas são? Resposta: É uma, São duas, etc.",
+          "Para saber quando algo acontece — Pergunta: A que horas acaba o filme? Resposta: À uma, Às duas, À meia-noite, Ao meio-dia, etc."
+        ]
+      },
+      "source": "livro:u13:p92",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:expressao-daqui-a",
+      "title": "Expressão DAQUI A",
+      "unit": 13,
+      "kind": "rule",
+      "data": {
+        "rule": "Usamos a expressão daqui a para dizer quanto tempo falta: A aula começa daqui a duas horas."
+      },
+      "source": "livro:u13:p92",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:fazer:presente",
+      "title": "Verbo FAZER — Presente do Indicativo",
+      "unit": 13,
+      "kind": "conjugation",
+      "data": {
+        "eu": "faço",
+        "tu": "fazes",
+        "voce_ele_ela": "faz",
+        "nos": "fazemos",
+        "voces_eles_elas": "fazem"
+      },
+      "source": "livro:u13:p92",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:preposicoes-datas",
+      "title": "Preposições com meses, anos, dias festivos e datas",
+      "unit": 13,
+      "kind": "rule",
+      "data": {
+        "rules": [
+          "Com os meses, anos e dias festivos usamos a preposição em (em janeiro, em 1990, no Natal, na Páscoa).",
+          "Com as datas usamos a preposição a ou no dia (a 10 de março ou no dia 10 de março)."
+        ]
+      },
+      "source": "livro:u13:p92",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:levantar-se:presente",
+      "title": "Verbos reflexos — LEVANTAR-SE (afirmativa e negativa)",
+      "unit": 14,
+      "kind": "conjugation",
+      "data": {
+        "afirmativa": {
+          "eu": "levanto-me",
+          "tu": "levantas-te",
+          "voce_ele_ela": "levanta-se",
+          "nos": "levantamo-nos",
+          "voces_eles_elas": "levantam-se"
+        },
+        "negativa": {
+          "eu": "não me levanto",
+          "tu": "não te levantas",
+          "voce_ele_ela": "não se levanta",
+          "nos": "não nos levantamos",
+          "voces_eles_elas": "não se levantam"
+        },
+        "colocacao": "O pronome reflexo vem ANTES do verbo: 1) depois de palavras interrogativas (Onde te encontras com a Ana?); 2) depois de não (Não me levanto às 7h00.); 3) depois de outras palavras como raramente, nunca, já, ainda, só, também, que, porque e todos.",
+        "outros_verbos": ["deitar-se", "encontrar-se", "chamar-se"]
+      },
+      "source": "livro:u14:p93",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:prep-a-para-verbos",
+      "title": "Preposições A e PARA com verbos de movimento",
+      "unit": 14,
+      "kind": "rule",
+      "data": {
+        "rules": [
+          "Depois dos verbos ir e voltar: a para permanência curta (Vou a casa. Volto já.); para para permanência longa (Vou para casa. Até amanhã.).",
+          "Depois do verbo chegar usamos sempre a preposição a: Normalmente, chego a casa muito tarde."
+        ]
+      },
+      "source": "livro:u14:p93",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:preposicoes-locucoes-tempo",
+      "title": "Preposições com locuções de tempo",
+      "unit": 14,
+      "kind": "rule",
+      "data": {
+        "items": [
+          { "prep": "a", "exemplo": "à tarde, à noite" },
+          { "prep": "em", "exemplo": "na hora do almoço" },
+          { "prep": "de", "exemplo": "de manhã" },
+          { "prep": "durante", "exemplo": "durante a semana" }
+        ],
+        "notes": [
+          "Atenção: Vou ao cinema à tarde mas Vou ao cinema às 2 da tarde.",
+          "Com os dias da semana e o fim de semana: em quando algo acontece pontualmente, só uma vez (Na 6.ª feira faço um jantar em casa.); a quando algo acontece regularmente (À 6.ª feira vou ao ginásio.).",
+          "Para limitar o tempo, usamos as preposições de, a e até (das oito às quatro, até às quatro)."
+        ]
+      },
+      "source": "livro:u14:p93",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:adjetivo-advervio-mau-mal",
+      "title": "Adjetivos e advérbios: mau/má vs mal",
+      "unit": 15,
+      "kind": "contrast",
+      "data": {
+        "table": [{ "adjetivo": "mau / má", "adverbio": "mal" }],
+        "examples": ["O teu cão é muito mau. (adjetivo)", "A minha avó vê muito mal. (advérbio)"]
+      },
+      "source": "livro:u15:p94",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:beber:presente",
+      "title": "Verbo BEBER — Presente do Indicativo (regular -er, 2.ª conjugação)",
+      "unit": 15,
+      "kind": "conjugation",
+      "data": {
+        "eu": "bebo",
+        "tu": "bebes",
+        "voce_ele_ela": "bebe",
+        "nos": "bebemos",
+        "voces_eles_elas": "bebem",
+        "notes": [
+          "Outros verbos regulares -er: comer, viver.",
+          "Existe mudança ortográfica nos verbos que terminam com -cer: esqueço-me, esqueces-te, esquece-se, etc."
+        ]
+      },
+      "source": "livro:u15:p94",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:esquecer-se:presente",
+      "title": "Verbo ESQUECER-SE (reflexo, -cer com mudança ortográfica)",
+      "unit": 15,
+      "kind": "conjugation",
+      "data": {
+        "eu": "esqueço-me",
+        "tu": "esqueces-te",
+        "voce_ele_ela": "esquece-se",
+        "note": "Verbos em -cer têm mudança ortográfica na 1.ª pessoa do singular (c → ç antes de o): esqueço-me. As restantes formas (nós esquecemo-nos, vocês/eles/elas esquecem-se) não aparecem listadas verbatim — o livro só apresenta esqueço-me, esqueces-te, esquece-se, etc."
+      },
+      "source": "livro:u15:p94",
+      "confidence": "medium"
+    },
+    {
+      "id": "gram:dormir:presente",
+      "title": "Verbo DORMIR — Presente do Indicativo (-ir com alteração vocálica)",
+      "unit": 15,
+      "kind": "conjugation",
+      "data": {
+        "eu": "durmo",
+        "tu": "dormes",
+        "voce_ele_ela": "dorme",
+        "nos": "dormimos",
+        "voces_eles_elas": "dormem"
+      },
+      "source": "livro:u15:p94",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:adverbios-frequencia",
+      "title": "Advérbios de frequência",
+      "unit": 15,
+      "kind": "rule",
+      "data": {
+        "scale": [
+          { "freq": "100%", "adverbio": "sempre" },
+          { "freq": "", "adverbio": "frequentemente" },
+          { "freq": "", "adverbio": "às vezes" },
+          { "freq": "", "adverbio": "raramente" },
+          { "freq": "", "adverbio": "quase nunca" },
+          { "freq": "0%", "adverbio": "nunca" }
+        ],
+        "rules": [
+          "O advérbio sempre vem depois do verbo. Os outros advérbios de frequência podem vir antes ou depois do verbo.",
+          "Atenção: Nunca vou ao cinema ou Não vou nunca ao cinema."
+        ]
+      },
+      "source": "livro:u15:p94",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:determinantes-todo-algum",
+      "title": "Determinantes indefinidos TODO e ALGUM",
+      "unit": 15,
+      "kind": "rule",
+      "data": {
+        "rules": [
+          "Todo e algum concordam em género e número com o nome (todo o açúcar, todas as noites, alguns dias, alguma água).",
+          "Todo é seguido de artigo definido (todos os alunos)."
+        ]
+      },
+      "source": "livro:u15:p94",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:por:presente",
+      "title": "Verbo PÔR — Presente do Indicativo",
+      "unit": 16,
+      "kind": "conjugation",
+      "data": {
+        "eu": "ponho",
+        "tu": "pões",
+        "voce_ele_ela": "põe",
+        "nos": "pomos",
+        "voces_eles_elas": "põem"
+      },
+      "source": "livro:u16:p95",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:saber:presente",
+      "title": "Verbo SABER — Presente do Indicativo",
+      "unit": 16,
+      "kind": "conjugation",
+      "data": {
+        "eu": "sei",
+        "tu": "sabes",
+        "voce_ele_ela": "sabe",
+        "nos": "sabemos",
+        "voces_eles_elas": "sabem"
+      },
+      "source": "livro:u16:p95",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:querer:presente",
+      "title": "Verbo QUERER — Presente do Indicativo",
+      "unit": 16,
+      "kind": "conjugation",
+      "data": {
+        "eu": "quero",
+        "tu": "queres",
+        "voce_ele_ela": "quer",
+        "nos": "queremos",
+        "voces_eles_elas": "querem"
+      },
+      "source": "livro:u16:p95",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:poder:presente",
+      "title": "Verbo PODER — Presente do Indicativo",
+      "unit": 16,
+      "kind": "conjugation",
+      "data": {
+        "eu": "posso",
+        "tu": "podes",
+        "voce_ele_ela": "pode",
+        "nos": "podemos",
+        "voces_eles_elas": "podem",
+        "usos": [
+          "possibilidade: Não posso fazer o jantar porque não tenho tempo.",
+          "pedidos: Podes desligar a televisão?",
+          "permissão/proibição: Você pode/não pode fumar aqui."
+        ]
+      },
+      "source": "livro:u16:p95",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:locucoes-prep-lugar",
+      "title": "Preposições e locuções preposicionais de lugar",
+      "unit": 16,
+      "kind": "rule",
+      "data": {
+        "items": ["ao lado de", "debaixo de", "em cima de", "em frente de", "atrás de", "dentro de", "entre"]
+      },
+      "source": "livro:u16:p95",
+      "confidence": "high"
+    }
+  ]
+}

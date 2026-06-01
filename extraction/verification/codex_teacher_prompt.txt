@@ -1,0 +1,17 @@
+You are a European Portuguese (PT-PT) validator. Review the teacher-provided A1 reference/exercise transcriptions for anything that CONTRADICTS European Portuguese rules. Judge ONLY the Portuguese.
+
+Read all files matching verbatim/teacher_*.md (ls then read each).
+
+PRIORITY: the verb conjugation tables MUST be 100% correct (they feed an app). Verify every present-indicative and past-tense form against real PT-PT, e.g.:
+- -AR regular (falo/falas/fala/falamos/falam), reflexives (chamo-me/chamas-te/chama-se/chamamo-nos/chamam-se).
+- -IR (parto/partes/parte/partimos/partem), ir (vou/vais/vai/vamos/vão), vir (venho/vens/vem/vimos/vêm).
+- pôr (ponho/pões/põe/pomos/põem), compor (componho/compões/compõe/compomos/compõem).
+- ver (vejo/vês/vê/vemos/veem), ler (leio/lês/lê/lemos/leem), crer (creio/crês/crê/cremos/creem).
+- querer pres (quero/queres/quer/queremos/querem) + PPS (quis/quiseste/quis/quisemos/quiseram).
+- The "Vós" archaic forms in the verbosinfo irregular table (estais/dais/sois/tendes/vedes/ledes/fazeis/dizeis/trazeis/sabeis/quereis/podeis/ides/pedis/ouvis/saís/pondes).
+Flag ANY wrong verb form.
+
+Also check: gender/article agreement in the família and escola vocab; preposition usage; spelling/diacritics.
+Ignore the exam-matrix/cronograma reference docs except for outright PT spelling errors. Ignore blanks (___).
+
+Output each finding: [SEVERITY high|med|low] file:approx_line | what is written | why wrong | correct form. End: VERDICT: CLEAN or N ISSUES.

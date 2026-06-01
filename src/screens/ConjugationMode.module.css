@@ -1,0 +1,88 @@
+.screen {
+  composes: screen from '../styles/screen.module.css';
+}
+
+.header {
+  composes: header from '../styles/screen.module.css';
+}
+
+.title {
+  composes: title from '../styles/screen.module.css';
+}
+
+.nav {
+  composes: nav from '../styles/screen.module.css';
+}
+
+.navLink {
+  composes: navLink from '../styles/screen.module.css';
+}
+
+/* Production-drill card chrome — shared with NumbersMode via drill.module.css. */
+.intro {
+  composes: intro from '../styles/drill.module.css';
+}
+
+.card {
+  composes: card from '../styles/drill.module.css';
+}
+
+.label {
+  composes: label from '../styles/drill.module.css';
+}
+
+.body {
+  composes: body from '../styles/drill.module.css';
+}
+
+.prompt {
+  composes: prompt from '../styles/drill.module.css';
+}
+
+.form {
+  composes: form from '../styles/drill.module.css';
+}
+
+.inputLabel {
+  composes: inputLabel from '../styles/drill.module.css';
+}
+
+.input {
+  composes: input from '../styles/drill.module.css';
+}
+
+.primaryButton {
+  composes: primaryButton from '../styles/drill.module.css';
+}
+
+.feedback {
+  composes: feedback from '../styles/drill.module.css';
+}
+
+.correct {
+  composes: correct from '../styles/drill.module.css';
+}
+
+.wrong {
+  composes: wrong from '../styles/drill.module.css';
+}
+
+/* ConjugationMode-only: the assemble-table 5-person input grid. */
+.tableGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: minmax(4rem, auto) 1fr;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.tableLabel {
+  font-size: var(--t-body);
+  font-style: italic;
+  color: var(--text-muted);
+}

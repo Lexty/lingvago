@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03 · Azulejo / Lisboa</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cobalt:#1f4ea3; --cobalt2:#2e63c4; --sky:#e7eefb; --cream:#fbf7ee; --cream2:#fffdf7;
+  --ink:#16243f; --muted:#6f7d96; --terra:#c2562f; --terra-soft:#f6e2d6; --line:#dfe4ef; --ok:#2f8f63;
+}
+*{box-sizing:border-box}
+.tilebg{background-color:var(--sky);background-image:
+  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><rect width='80' height='80' fill='%23eef3fc'/><g fill='none' stroke='%231f4ea3' stroke-width='1.4' opacity='.5'><path d='M40 8c8 14 24 18 24 32S48 58 40 72C32 58 16 54 16 40S32 22 40 8z'/><circle cx='40' cy='40' r='6'/><path d='M0 40h12M68 40h12M40 0v12M40 68v12'/></g></svg>");
+}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 24px 80px}
+.head .k{color:var(--terra);font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:12px}
+.head h1{font-family:"DM Serif Display";font-size:42px;margin:6px 0 3px;color:var(--cobalt)}
+.head p{color:#52617c;max-width:62ch;margin:0;font-size:16px}
+.stage{display:flex;gap:34px;flex-wrap:wrap;justify-content:center;margin-top:34px}
+.cap{text-align:center;color:var(--muted);font-weight:700;font-size:13px;margin-top:13px}
+
+.phone{width:344px;flex:0 0 auto;background:#fff;border:6px solid var(--cobalt);border-radius:34px;padding:8px;
+  box-shadow:0 30px 60px -28px rgba(31,78,163,.5)}
+.bezel{border-radius:24px;overflow:hidden;background:var(--cream2)}
+.status{display:flex;justify-content:space-between;padding:11px 20px 3px;font-size:12px;color:var(--muted);font-weight:700}
+.scr{height:662px;overflow:hidden;padding:6px 18px 20px}
+
+.tilehdr{margin:6px -18px 0;padding:18px;color:#fff;position:relative;overflow:hidden;border-bottom:4px solid var(--terra)}
+.tilehdr .k{font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:11px;opacity:.9}
+.tilehdr .big{font-family:"DM Serif Display";font-size:64px;line-height:.9;margin-top:4px}
+.tilehdr small{display:block;opacity:.92;font-size:14px;margin-top:6px}
+.sec{font-family:"DM Serif Display";color:var(--cobalt);font-size:21px;margin:20px 0 10px;display:flex;align-items:center;gap:9px}
+.sec::before{content:"❖";color:var(--terra);font-size:15px}
+.plan{list-style:none;margin:0;padding:0}
+.plan li{display:flex;gap:11px;align-items:center;background:#fff;border:1px solid var(--line);border-left:4px solid var(--cobalt);border-radius:6px;padding:11px 13px;margin-bottom:8px;font-size:15px}
+.plan li.done{border-left-color:var(--ok);opacity:.65}.plan li .x{margin-left:auto;color:var(--ok);font-weight:800}
+.drill{background:var(--cream2);border:1px solid var(--line);border-radius:10px;padding:13px 15px;margin-bottom:11px;
+  background-image:linear-gradient(135deg,rgba(31,78,163,.05),transparent 40%)}
+.drill h3{font-family:"DM Serif Display";font-size:19px;margin:0 0 1px;color:var(--ink)}
+.drill .sub{color:var(--muted);font-size:14px}
+.lvls{display:flex;gap:7px;margin-top:10px}
+.lvls a{flex:1;text-align:center;text-decoration:none;font-weight:700;font-size:14px;color:var(--cobalt);border:1.5px solid var(--cobalt);border-radius:7px;padding:7px 0}
+.lvls a.on{background:var(--cobalt);color:#fff}
+
+/* drill */
+.dtop{display:flex;justify-content:space-between;align-items:center;color:var(--cobalt);font-weight:700;margin-top:6px}
+.tag{background:var(--terra-soft);color:var(--terra);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700}
+.bar{height:6px;background:var(--sky);border-radius:4px;margin:14px 0}.bar>span{display:block;height:100%;width:30%;background:var(--terra);border-radius:4px}
+.q{text-align:center;color:var(--muted);font-weight:700;margin-top:30px}
+.prompt{font-family:"DM Serif Display";text-align:center;font-size:36px;margin:10px 0 26px;color:var(--ink)}
+.prompt .bl{color:#fff;background:var(--cobalt);border-radius:8px;padding:2px 14px}
+.fb{background:var(--terra-soft);border:1px solid #e8c4b3;border-radius:10px;padding:13px 15px;color:#9b3f1f;font-weight:600}
+.fb b{font-family:"DM Serif Display";font-weight:400}
+.actions{display:flex;gap:9px;margin-top:13px}
+.bt{flex:1;text-align:center;text-decoration:none;font-weight:700;font-size:14px;padding:11px;border-radius:8px;border:1.5px solid var(--line);background:#fff;color:var(--ink)}
+.bt.go{flex:1.3;background:var(--ok);border-color:var(--ok);color:#fff}
+
+/* reference */
+.refk{color:var(--terra);font-weight:700;text-transform:uppercase;letter-spacing:.16em;font-size:11px;margin-top:8px}
+.refttl{font-family:"DM Serif Display";font-size:28px;color:var(--cobalt);margin:5px 0 14px;line-height:1.05}
+.refcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:0;overflow:hidden}
+.refcard .top{padding:16px 18px}
+.refcard p{margin:9px 0;font-size:16px;line-height:1.5}
+.refcard b{color:var(--cobalt)}
+.refcard .strip{height:8px;background:var(--terra)}
+.refcard .div{height:1px;background:var(--line);margin:12px 0}
+.tab{display:inline-block;font-family:"DM Serif Display";background:var(--sky);color:var(--cobalt);border-radius:7px;padding:1px 11px;margin-right:4px}
+</style>
+</head>
+<body class="">
+<div class="wrap">
+  <div class="head">
+    <div class="k">Направление 03</div>
+    <h1>Azulejo · Lisboa</h1>
+    <p>Португальская плитка-азулежу: кобальт и тёплый крем, терракотовые акценты, изразцовые узоры и рамки, серифный дисплейный шрифт (DM Serif Display). Культурно, тепло, с характером места.</p>
+  </div>
+  <div class="stage">
+    <!-- A -->
+    <div>
+      <div class="phone"><div class="bezel">
+        <div class="status"><span>9:41</span><span>●●● ⌁ ▮</span></div>
+        <div class="scr">
+          <div class="tilehdr tilebg" style="background-blend-mode:multiply;background-color:var(--cobalt)">
+            <div class="k">A1 · Língua de Acolhimento</div>
+            <div class="big">11</div><small>дней до экзамена · 11.06.2026</small>
+          </div>
+          <div class="sec">План на сегодня</div>
+          <ul class="plan">
+            <li class="done">🎧 Слушать живой EP · 30–45 мин<span class="x">✓</span></li>
+            <li>✍️ Письмо 70–90 слов</li>
+            <li>⏱️ Полный mock с таймером</li>
+          </ul>
+          <div class="sec">Дриллы</div>
+          <div class="drill"><h3>Род и артикль</h3><div class="sub">o / a · género</div>
+            <div class="lvls"><a class="on">L1</a><a>L2</a><a>L3</a></div></div>
+          <div class="drill"><h3>Предлоги: откуда</h3><div class="sub">de / da / do</div>
+            <div class="lvls"><a class="on">L1</a><a>L2</a><a>L3</a></div></div>
+        </div>
+      </div></div>
+      <div class="cap">Главная · Survival Kit</div>
+    </div>
+    <!-- B -->
+    <div>
+      <div class="phone"><div class="bezel">
+        <div class="status"><span>9:41</span><span>●●● ⌁ ▮</span></div>
+        <div class="scr">
+          <div class="dtop"><span>← Выйти</span><span class="tag">Предлоги · L1</span></div>
+          <div class="bar"><span></span></div>
+          <div class="q">De onde és?</div>
+          <div class="prompt">Sou <span class="bl">da</span> Rússia.</div>
+          <div class="fb">✗ Неверно — правильно: <b>Sou da Rússia.</b></div>
+          <div class="actions"><a class="bt">📖 Правило</a><a class="bt">⚑ Пометить</a><a class="bt go">Дальше</a></div>
+          <div class="sec" style="margin-top:34px">Почему</div>
+          <div class="refcard"><div class="top"><p style="margin:0">Rússia — <b>feminino</b> → <b>a</b> → <b>de + a = da</b>.</p></div></div>
+        </div>
+      </div></div>
+      <div class="cap">Дрилл · фидбэк</div>
+    </div>
+    <!-- C -->
+    <div>
+      <div class="phone"><div class="bezel">
+        <div class="status"><span>9:41</span><span>●●● ⌁ ▮</span></div>
+        <div class="scr">
+          <span style="color:var(--cobalt);font-weight:700">← Справочник</span>
+          <div class="refk">Предлоги</div>
+          <div class="refttl">Движение: a vs para</div>
+          <div class="refcard">
+            <div class="strip"></div>
+            <div class="top">
+              <p><span class="tab">a</span> короткое / ненадолго: «Vou <b>a</b> Paris».</p>
+              <p><span class="tab">para</span> длительное / пункт: «Vou <b>para</b> o Brasil».</p>
+              <div class="div"></div>
+              <p><b>ir a casa</b> — домой ненадолго.<br><b>ir para casa</b> — домой, остаться.</p>
+              <div class="div"></div>
+              <p><b>chegar a</b> casa · <b>sair de</b> casa · <b>sair para</b> a escola.<br>Транспорт: <b>de</b> carro; <b>a</b> pé.</p>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap">Справочник · карточка</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+/* Shared class map for the GrammarDrill-backed screens (GenderDrill,
+   PrepositionDrill). Both screens render through the same GrammarDrill component
+   and add NO screen-specific declarations, so they import this ONE module
+   instead of maintaining byte-identical copies that could drift. Token-only:
+   every rule composes from the shared screen/drill modules (no bare hex). */
+
+.screen {
+  composes: screen from './screen.module.css';
+}
+
+.header {
+  composes: header from './screen.module.css';
+}
+
+.title {
+  composes: title from './screen.module.css';
+}
+
+.nav {
+  composes: nav from './screen.module.css';
+}
+
+.navLink {
+  composes: navLink from './screen.module.css';
+}
+
+/* Production-drill card chrome — shared with the other drills via drill.module.css. */
+.intro {
+  composes: intro from './drill.module.css';
+}
+
+.card {
+  composes: card from './drill.module.css';
+}
+
+.label {
+  composes: label from './drill.module.css';
+}
+
+.body {
+  composes: body from './drill.module.css';
+}
+
+.prompt {
+  composes: prompt from './drill.module.css';
+}
+
+.form {
+  composes: form from './drill.module.css';
+}
+
+.inputLabel {
+  composes: inputLabel from './drill.module.css';
+}
+
+.input {
+  composes: input from './drill.module.css';
+}
+
+.primaryButton {
+  composes: primaryButton from './drill.module.css';
+}
+
+.feedback {
+  composes: feedback from './drill.module.css';
+}
+
+.correct {
+  composes: correct from './drill.module.css';
+}
+
+.wrong {
+  composes: wrong from './drill.module.css';
+}
+
+.level {
+  composes: level from './drill.module.css';
+}
+
+.options {
+  composes: options from './drill.module.css';
+}
+
+.option {
+  composes: option from './drill.module.css';
+}
+
+.optionCorrect {
+  composes: optionCorrect from './drill.module.css';
+}
+
+.optionWrong {
+  composes: optionWrong from './drill.module.css';
+}
+
+.optionExplanation {
+  composes: optionExplanation from './drill.module.css';
+}
+
+.refLink {
+  composes: refLink from './drill.module.css';
+}

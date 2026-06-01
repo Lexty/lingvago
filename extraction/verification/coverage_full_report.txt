@@ -1,0 +1,8 @@
+# Bucketed OCR coverage (full corpus)
+
+## livro: ocr_content_words=1766 covered~81.2% absent=332
+   absent(>=6 chars, scan for real content): aanaeo, aananaousa, abalho, aciimisittr, aciinisitir, aciinisitta, acitntsitr, adoroo, afetos, aieaaaoo, aliinisittr, ametiarimtr, ametista, ametitaitr, ametitestittn, amiiiinisittr, amiintsittn, amiitiniittnr, amillivesitir, amititsitde, amitivtsittn, amoite, amportante, amvitintsimtr, anaeteos, anapenirancss, andarde, anetoxaneta, angolas, anmietitesitta, anmiintsittr, anntaoitnvdas, anosem, anveiiimtsimtr, apanharsol, aportantem, arraes, arussia, asameoru, asegtl, assess, astanoo, asvezes, ateitimtsicer, atelier, atiinisicin, atiinisicir, atiinsita, atiintlita, atlintsimtr, atrabalhar, atteracoes, aunediiaitz, ausdea, avttntcitin, awetiisittn, awitinisititr, bammdaa, barrafa, blicherstr
+
+## caderno: ocr_content_words=1131 covered~90.3% absent=110
+   absent(>=6 chars, scan for real content): aanaeorui, acerveja, acidadedopedroe, acontae, ainasios, aindabem, allisboal, almecar, aminhairmaecasada, aminhamae, aminhatiatem, anoite, aritatem, asferiasem, avanessae, avioes, bayonce, bomdia, bulario, cancoes, comcartao, comfome, dasuavisita, deaporoso, defuteboleo, dehorasao, deleite, delisboa, diigrafo, doluis, erikamnqyahoo, falarusso, gostomuitode, ibilantes, infelizamentenao, inimos, irfpraia, lecnicas, lividades, lorque, lorqueficanos, ltalia, ltsuki, manuelee, mmmetha, moradae, muitoocomputadorno, nachinaas, nacionalidad, naoestao, naotemmais, nouuromn, nsdomn, oacucar, obrasil, ocarro, olivao, omeuirmaoede, omeupaitem, ouseparada
+

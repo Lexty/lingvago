@@ -1,0 +1,1997 @@
+OpenAI Codex v0.128.0 (research preview)
+--------
+workdir: /Users/aleksandrmedvedev/dev/personal/lingvago2/extraction
+model: gpt-5.5
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: medium
+reasoning summaries: none
+session id: 019e7d39-d154-7f30-9f2e-423035a3d069
+--------
+user
+You are a European Portuguese (PT-PT) linguistic validator. Review the extracted A1 learning data in this directory for anything that CONTRADICTS the rules of European Portuguese. Do NOT check against any scan/PDF — judge ONLY whether the Portuguese itself is correct and internally consistent.
+
+Read these files:
+- normalized/countries.json
+- normalized/grammar_unit01-02.json
+- normalized/vocab_unit01-02.json
+- normalized/exercise_templates.json
+- verbatim/livro_unit01.md
+- verbatim/livro_unit02.md
+- verbatim/caderno_unit01.md
+- verbatim/caderno_unit02.md
+- verbatim/notebook_p01-04.md
+
+Check specifically for:
+1. GENDER/ARTICLE agreement: every noun/country's `gender` matches its `article` (o=masc, a=fem, os/as=plural), and matches real PT usage (e.g. "a mão" is feminine despite -ão; "o Brasil" masc; Portugal/Marrocos/Angola take no article).
+2. PREPOSITION CONTRACTIONS: de+o=do, de+a=da, de+os=dos; em+o=no, em+a=na, em+os=nos. Verify prep_origin/prep_location in countries.json are correct for each country's article, and that example sentences use them correctly.
+3. VERB CONJUGATIONS: ser (sou/és/é/somos/são), chamar-se (chamo-me/chamas-te/chama-se/chamamo-nos/chamam-se) — flag any wrong form.
+4. NUMBER WORDS: spelling and formation (e.g. seiscentos not "seis centos"; "vinte e três"; cem vs cento).
+5. SPELLING/ORTHOGRAPHY: any misspelled Portuguese word, wrong or missing diacritic, that makes it incorrect or a different word.
+6. INTERNAL CONTRADICTION: the same word/fact stated two different ways across files.
+
+For each finding output one line:
+  [SEVERITY high|med|low] file:approx_line | what is written | why it violates PT rules | suggested correct form
+
+IMPORTANT: The notebook file is HANDWRITTEN student notes and is explicitly marked as possibly containing the author's own errors (e.g. "seis centos" written separately). For notebook items, still report the error but tag it [NOTEBOOK]. Do not flag the intentional ASCII JSON keys (voce_ele_ela, needs_audio, audio) or English gloss fields ("en": ...) as Portuguese errors.
+
+Be precise and conservative: only flag genuine violations, not stylistic choices. End with a one-line VERDICT: CLEAN or N ISSUES.
+
+codex
+I’ll validate the extracted Portuguese only against PT-PT rules, and I’ll treat the notebook as student notes while still flagging real language errors there. I’m going to read the JSON and markdown files first, then cross-check the country/article/preposition tables against the examples.
+exec
+/bin/zsh -lc "sed -n '1,240p' normalized/countries.json" in /Users/aleksandrmedvedev/dev/personal/lingvago2/extraction
+exec
+/bin/zsh -lc "sed -n '1,260p' normalized/grammar_unit01-02.json" in /Users/aleksandrmedvedev/dev/personal/lingvago2/extraction
+exec
+/bin/zsh -lc "sed -n '1,280p' normalized/vocab_unit01-02.json" in /Users/aleksandrmedvedev/dev/personal/lingvago2/extraction
+exec
+/bin/zsh -lc "sed -n '1,260p' normalized/exercise_templates.json" in /Users/aleksandrmedvedev/dev/personal/lingvago2/extraction
+ succeeded in 0ms:
+{
+  "_meta": { "units": [1, 2], "source": ["livro:u1-2", "caderno:u1-2", "notebook:p3-4"] },
+  "numbers": [
+    {"n":0,"pt":"zero"},{"n":1,"pt":"um"},{"n":2,"pt":"dois"},{"n":3,"pt":"três"},{"n":4,"pt":"quatro"},
+    {"n":5,"pt":"cinco"},{"n":6,"pt":"seis"},{"n":7,"pt":"sete"},{"n":8,"pt":"oito"},{"n":9,"pt":"nove"},
+    {"n":10,"pt":"dez"},{"n":11,"pt":"onze"},{"n":12,"pt":"doze"},{"n":13,"pt":"treze"},{"n":14,"pt":"catorze"},
+    {"n":15,"pt":"quinze"},{"n":16,"pt":"dezasseis"},{"n":17,"pt":"dezassete"},{"n":18,"pt":"dezoito"},{"n":19,"pt":"dezanove"},
+    {"n":20,"pt":"vinte"},{"n":21,"pt":"vinte e um"},{"n":30,"pt":"trinta"},{"n":40,"pt":"quarenta"},{"n":50,"pt":"cinquenta"},
+    {"n":60,"pt":"sessenta"},{"n":70,"pt":"setenta"},{"n":80,"pt":"oitenta"},{"n":90,"pt":"noventa"},{"n":100,"pt":"cem"},
+    {"n":200,"pt":"duzentos"},{"n":300,"pt":"trezentos"},{"n":400,"pt":"quatrocentos"},{"n":500,"pt":"quinhentos"},
+    {"n":600,"pt":"seiscentos"},{"n":700,"pt":"setecentos"},{"n":800,"pt":"oitocentos"},{"n":900,"pt":"novecentos"},
+    {"n":1000,"pt":"mil"},{"n":1000000,"pt":"milhão"},
+    {"_examples":[
+      {"n":75,"pt":"setenta e cinco"},{"n":1789,"pt":"mil setecentos e oitenta e nove"},
+      {"n":2101,"pt":"dois mil cento e um"},{"n":1115115,"pt":"um milhão cento e quinze mil cento e quinze"}
+    ],"_note":"100=cem isolado; 101+=cento e um...; conjunção 'e' obrigatória entre dezenas e unidades (vinte e três).","source":"notebook:p4 (verificado contra livro u2)"}
+  ],
+  "weekdays": [
+    {"pt":"segunda-feira"},{"pt":"terça-feira"},{"pt":"quarta-feira"},{"pt":"quinta-feira"},
+    {"pt":"sexta-feira"},{"pt":"sábado","gender":"m","article":"o"},{"pt":"domingo","gender":"m","article":"o"}
+  ],
+  "greetings": [
+    {"pt":"Olá!","reg":"informal"},{"pt":"Bom dia!"},{"pt":"Boa tarde!"},{"pt":"Boa noite!"},
+    {"pt":"Tudo bem?","reg":"informal"},{"pt":"Como está?","reg":"formal"},
+    {"pt":"Muito prazer!"},{"pt":"Muito gosto!","note":"= Muito prazer!"},
+    {"pt":"Bem-vindo!","gender":"m"},{"pt":"Bem-vinda!","gender":"f"},
+    {"pt":"Obrigado!","gender":"m"},{"pt":"Obrigada!","gender":"f"}
+  ],
+  "farewells": [
+    {"pt":"Adeus!"},{"pt":"Até já!"},{"pt":"Até logo!"},{"pt":"Até amanhã!"},
+    {"pt":"Até à próxima!"},{"pt":"Até terça!"},{"pt":"Até sábado!"},{"pt":"Até quinta!"}
+  ],
+  "nouns_with_gender": {
+    "_note": "Da lista alfabética do notebook (p3); GÉNERO INFERIDO pela forma padrão do português, confidence=medium até confirmar.",
+    "items": [
+      {"pt":"árvore","gender":"f","article":"a","en":"tree","confidence":"medium"},
+      {"pt":"preço","gender":"m","article":"o","en":"price","confidence":"medium"},
+      {"pt":"dedo","gender":"m","article":"o","en":"finger","confidence":"medium"},
+      {"pt":"elefante","gender":"m","article":"o","en":"elephant","confidence":"medium"},
+      {"pt":"ideia","gender":"f","article":"a","en":"idea","confidence":"medium"},
+      {"pt":"fogo","gender":"m","article":"o","en":"fire","plural":"os fogos","confidence":"medium"},
+      {"pt":"gente","gender":"f","article":"a","en":"people","note":"a gente = 3.ª pess. sing.; ≠ agente","confidence":"medium"},
+      {"pt":"idade","gender":"f","article":"a","en":"age","confidence":"medium"},
+      {"pt":"jogo","gender":"m","article":"o","en":"game","plural":"os jogos","confidence":"medium"},
+      {"pt":"limão","gender":"m","article":"o","en":"lemon","confidence":"medium"},
+      {"pt":"filho","gender":"m","article":"o","en":"son","confidence":"medium"},
+      {"pt":"filha","gender":"f","article":"a","en":"daughter","confidence":"medium"},
+      {"pt":"mão","gender":"f","article":"a","en":"hand","note":"exceção: -ão feminino","confidence":"medium"},
+      {"pt":"perna","gender":"f","article":"a","en":"leg","confidence":"medium"},
+      {"pt":"rosto","gender":"m","article":"o","en":"face","confidence":"medium"},
+      {"pt":"porta","gender":"f","article":"a","en":"door","confidence":"medium"},
+      {"pt":"escola","gender":"f","article":"a","en":"school","confidence":"medium"},
+      {"pt":"universidade","gender":"f","article":"a","en":"university","confidence":"medium"},
+      {"pt":"táxi","gender":"m","article":"o","en":"taxi","confidence":"medium"},
+      {"pt":"exame","gender":"m","article":"o","en":"exam","confidence":"medium"},
+      {"pt":"xadrez","gender":"m","article":"o","en":"chess","confidence":"medium"}
+    ]
+  }
+}
+
+ succeeded in 0ms:
+{
+  "_meta": { "units": [1, 2], "source": ["livro:u1-2", "caderno:u1-2", "notebook:p1-4"] },
+  "grammar": [
+    {
+      "id": "gram:artigo-definido",
+      "title": "Artigo definido",
+      "unit": 1,
+      "kind": "rule",
+      "data": {
+        "table": { "masculino": "o", "feminino": "a", "masc_plural": "os", "fem_plural": "as" },
+        "with_names": "Usa-se antes de nomes próprios: 'Sou o Paulo', 'És a Clara', 'Ela chama-se a Teresa'.",
+        "examples": ["Sou o Tiago.", "É a Rita.", "Sou a Inês.", "Eu sou o Aleksandr."]
+      },
+      "source": "livro:u1:p10 + caderno:u1:F + notebook:p2",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:ser:presente",
+      "title": "Verbo SER — Presente do Indicativo",
+      "unit": 1,
+      "kind": "conjugation",
+      "data": {
+        "eu": "sou", "tu": "és", "voce_ele_ela": "é",
+        "nos": "somos", "voces_eles_elas": "são"
+      },
+      "source": "livro:u1 + notebook:p2",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:chamar-se:presente",
+      "title": "Verbo CHAMAR-SE (pronominal) — Presente",
+      "unit": 1,
+      "kind": "conjugation",
+      "data": {
+        "eu": "chamo-me", "tu": "chamas-te", "voce_ele_ela": "chama-se",
+        "nos": "chamamo-nos", "voces_eles_elas": "chamam-se"
+      },
+      "questions": ["Como te chamas? (informal)", "Como se chama? (formal)", "Como é que o senhor se chama?"],
+      "source": "livro:u1 + caderno:u1:E + notebook:p1-2",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:pronomes-pessoais",
+      "title": "Pronomes pessoais + formas de tratamento",
+      "unit": 1,
+      "kind": "rule",
+      "data": {
+        "pronouns": ["eu", "tu", "você/ele/ela", "nós", "vocês/eles/elas"],
+        "treatment_scale": ["tu (informal)", "você (formal médio)", "o senhor / a senhora (mais formal)"]
+      },
+      "source": "livro:u1-2 + notebook:p1,p3",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:ser-vs-ficar",
+      "title": "SER vs FICAR (localização)",
+      "unit": 2,
+      "kind": "contrast",
+      "data": {
+        "rule": "Para localizar lugares/cidades, 'ser' e 'ficar' são intercambiáveis: 'Lisboa é em Portugal' = 'Lisboa fica em Portugal'.",
+        "examples": [
+          { "ser": "Moscovo é na Rússia.", "ficar": "Moscovo fica na Rússia." },
+          { "ser": "Berlim é na Alemanha.", "ficar": "Berlim fica na Alemanha." }
+        ],
+        "not_interchangeable": "Não se substitui quando 'ser' = identidade/origem: 'Quem é ele?', 'O Felipe é do Brasil.'"
+      },
+      "source": "livro:u2:p16 + caderno:u2:E,I",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:prep-de-origem",
+      "title": "Preposição DE (origem) + contração com artigo",
+      "unit": 2,
+      "kind": "contraction-table",
+      "data": {
+        "pattern": "De onde é? — Sou ___",
+        "contractions": { "de+o": "do", "de+a": "da", "de+os": "dos", "de+as": "das", "de (sem artigo)": "de" },
+        "examples": ["Sou do Brasil.", "Somos da Alemanha.", "É de Portugal.", "É da Grécia.", "É dos Estados Unidos.", "É do Japão."]
+      },
+      "source": "livro:u2:p15-16 + caderno:u2:C,F,H,I",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:prep-em-local",
+      "title": "Preposição EM (localização) + contração com artigo",
+      "unit": 2,
+      "kind": "contraction-table",
+      "data": {
+        "pattern": "Onde fica? — Fica ___ / Onde é? — É ___",
+        "contractions": { "em+o": "no", "em+a": "na", "em+os": "nos", "em+as": "nas", "em (sem artigo)": "em" },
+        "examples": ["É em Portugal.", "É na Grécia.", "É no México.", "É nos Estados Unidos.", "Coimbra é em Portugal.", "Atenas é na Grécia."]
+      },
+      "source": "livro:u2:p16-17 + caderno:u2:D,H",
+      "confidence": "high"
+    },
+    {
+      "id": "gram:interrogativos",
+      "title": "Interrogativos: como, quem, onde, de onde, qual",
+      "unit": 2,
+      "kind": "rule",
+      "data": {
+        "items": [
+          { "word": "como", "use": "Como se chama? / Como está?" },
+          { "word": "quem", "use": "Quem é ele?" },
+          { "word": "onde", "use": "Onde fica Lisboa?" },
+          { "word": "de onde", "use": "De onde é?" },
+          { "word": "qual", "use": "Qual é a sua nacionalidade? (notebook)" }
+        ]
+      },
+      "source": "livro:u1-2 + notebook:p1-2",
+      "confidence": "high"
+    }
+  ]
+}
+
+ succeeded in 0ms:
+{
+  "_meta": {
+    "description": "Countries from livro/caderno unit 2 with gender, article and origin/location prepositions. Drives gender->article->preposition drills.",
+    "source": ["livro:u2:p14-17", "caderno:u2:p6-7"],
+    "rules": {
+      "prep_origin": "de + article -> de/da/do/dos (De onde e? Sou ___)",
+      "prep_location": "em + article -> em/na/no/nos (Onde fica? Fica ___)"
+    }
+  },
+  "countries": [
+    { "name": "Portugal",       "gender": "none",     "article": "none",     "prep_origin": "de", "prep_location": "em", "note": "sem artigo", "confidence": "high" },
+    { "name": "Espanha",        "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "livro imprime '(a) Espanha'; em origem/local normalmente sem artigo: de Espanha, em Espanha", "confidence": "high" },
+    { "name": "Itália",         "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "'(a) Itália'; de Itália, em Itália", "confidence": "high" },
+    { "name": "França",         "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "'(a) França'; tambem ocorre da França/na França", "confidence": "medium" },
+    { "name": "Inglaterra",     "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "'(a) Inglaterra'; de Inglaterra, em Inglaterra", "confidence": "high" },
+    { "name": "Suécia",         "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    { "name": "Alemanha",       "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    { "name": "Polónia",        "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    { "name": "Rússia",         "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    { "name": "Ucrânia",        "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    { "name": "Grécia",         "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    { "name": "Estados Unidos", "gender": "plural",   "article": "os",       "prep_origin": "dos","prep_location": "nos","confidence": "high" },
+    { "name": "Brasil",         "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "confidence": "high" },
+    { "name": "México",         "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "confidence": "high" },
+    { "name": "Marrocos",       "gender": "none",     "article": "none",     "prep_origin": "de", "prep_location": "em", "note": "sem artigo", "confidence": "high" },
+    { "name": "Angola",         "gender": "none",     "article": "none",     "prep_origin": "de", "prep_location": "em", "note": "sem artigo", "confidence": "high" },
+    { "name": "China",          "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    { "name": "Japão",          "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "confidence": "high" },
+    { "name": "Índia",          "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    { "name": "Canadá",         "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "note": "aparece em caderno u2 C (correções)", "confidence": "high" }
+  ]
+}
+
+ succeeded in 0ms:
+{
+  "_meta": {
+    "description": "Exercise-type taxonomy harvested from units 1-2 (livro + caderno). Each type = a generator the app can use to produce many items. 'needs_audio' marks the open audio question.",
+    "units": [1, 2]
+  },
+  "types": [
+    {
+      "id": "match",
+      "label": "Correspondência (colunas)",
+      "skill": ["recognition"],
+      "generatable": true, "needs_audio": false,
+      "example": { "left": ["Quem é ela?", "Como se chama?"], "right": ["É a Rita.", "Chamo-me Nuno."] },
+      "origins": ["livro:u1:E", "caderno:u1:A"]
+    },
+    {
+      "id": "gap-wordbank",
+      "label": "Completar com palavras da caixa",
+      "skill": ["vocab", "syntax"],
+      "generatable": true, "needs_audio": false,
+      "example": { "bank": ["como","sim","é","está","tu","te","bem"], "item": "Olá! Como ___?", "answer": "está" },
+      "origins": ["livro:u1:F", "livro:u2:C,D", "caderno:u1:C,D"]
+    },
+    {
+      "id": "complete-verb",
+      "label": "Completar com a forma verbal correta",
+      "skill": ["conjugation"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "Ela ___ Teresa.", "verb": "chamar-se", "person": "ela", "answer": "chama-se" },
+      "origins": ["caderno:u1:C", "caderno:u2:F"]
+    },
+    {
+      "id": "complete-article",
+      "label": "Completar com o / a (onde necessário)",
+      "skill": ["article", "gender"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "Ele é ___ Jorge Viegas.", "answer": "o" },
+      "note": "Inclui casos de artigo-zero (Marrocos, Angola, nomes sem artigo).",
+      "origins": ["caderno:u1:F"]
+    },
+    {
+      "id": "complete-prep",
+      "label": "Completar com de/da/do/dos ou em/na/no/nos",
+      "skill": ["preposition", "article", "gender"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "Tóquio é ___ Japão.", "answer": "no" },
+      "note": "CHAVE: requer conhecer género+artigo do país. Gerar a partir de countries.json.",
+      "origins": ["caderno:u2:H"]
+    },
+    {
+      "id": "complete-me-te-se",
+      "label": "Completar com me / te / se (pronome reflexo)",
+      "skill": ["pronoun", "conjugation"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "Ele chama-___ Rafael.", "answer": "se" },
+      "origins": ["caderno:u1:E"]
+    },
+    {
+      "id": "transform",
+      "label": "Reescrever (ser -> ficar, singular -> plural)",
+      "skill": ["transformation"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "Berlim é na Alemanha.", "op": "ser->ficar", "answer": "Berlim fica na Alemanha." },
+      "origins": ["livro:u2:I", "caderno:u2:G"]
+    },
+    {
+      "id": "correct-sentence",
+      "label": "Corrigir a frase (com pista)",
+      "skill": ["preposition", "knowledge"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "Madonna é de Itália.", "hint": "Estados Unidos", "answer": "Madonna não é de Itália. É dos Estados Unidos." },
+      "origins": ["caderno:u2:C"]
+    },
+    {
+      "id": "order-words",
+      "label": "Ordenar palavras para formar a frase",
+      "skill": ["syntax"],
+      "generatable": true, "needs_audio": false,
+      "example": { "tokens": ["do","Janeiro","de","somos","Rio"], "answer": "Somos do Rio de Janeiro." },
+      "origins": ["caderno:u1:G", "caderno:u2:I"]
+    },
+    {
+      "id": "order-time",
+      "label": "Ordenar expressões por critério (tempo)",
+      "skill": ["vocab"],
+      "generatable": true, "needs_audio": false,
+      "example": { "items": ["Até já!","Até amanhã!","Até sábado!"], "criterion": "menos -> mais tempo" },
+      "origins": ["livro:u1:K"]
+    },
+    {
+      "id": "number-spell",
+      "label": "Escrever números por extenso / fazer contas",
+      "skill": ["numbers"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "23 + 52 = ?", "answer": "setenta e cinco", "full": "vinte e três mais cinquenta e dois são setenta e cinco" },
+      "origins": ["livro:u1:H", "livro:u2:L", "caderno:u1:J", "caderno:u2:J"]
+    },
+    {
+      "id": "spelling-fill",
+      "label": "Completar as letras que faltam",
+      "skill": ["spelling"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "S _ B _ _ _", "answer": "sábado" },
+      "origins": ["caderno:u1:H", "caderno:u2:B"]
+    },
+    {
+      "id": "sequence-fill",
+      "label": "Escrever o termo que falta na sequência",
+      "skill": ["vocab", "numbers"],
+      "generatable": true, "needs_audio": false,
+      "example": { "seq": ["trinta e três","___","noventa e nove"], "answer": "sessenta e seis" },
+      "origins": ["caderno:u1:I", "caderno:u2:J"]
+    },
+    {
+      "id": "true-false",
+      "label": "Verdadeiro ou falso (factual + gramática)",
+      "skill": ["preposition", "knowledge"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "Miami é nos Estados Unidos.", "answer": true },
+      "origins": ["livro:u2:G"]
+    },
+    {
+      "id": "pron-underline",
+      "label": "Sublinhar sílaba tónica / som específico",
+      "skill": ["pronunciation"],
+      "generatable": true, "needs_audio": "optional",
+      "example": { "item": "domingo", "task": "[u]?", "answer": "doming[u]" },
+      "note": "Funciona sem áudio como exercício visual; áudio só reforça.",
+      "origins": ["livro:u1:PronB,C,D,E", "livro:u2:PronA-D", "caderno:u1:L,M,N", "caderno:u2:K,L"]
+    },
+    {
+      "id": "listen-and-do",
+      "label": "Ouça e ... (repetir / numerar / completar)",
+      "skill": ["listening"],
+      "generatable": false, "needs_audio": true,
+      "note": "OPEN QUESTION: itens atrás do ícone audio (A1..A9). Opções: (a) substituir por TTS pt-PT, (b) converter em leitura/escrita sem áudio, (c) omitir. A maioria tem variante não-áudio equivalente no caderno.",
+      "origins": ["livro:u1:A1,A2,A3,A4,A5", "livro:u2:A6,A7,A8,A9"]
+    }
+  ]
+}
+
+codex
+The normalized tables are mostly coherent on first pass. I’m now reading the verbatim unit files with line numbers so the final findings can point to the source lines instead of vague sections.
+exec
+/bin/zsh -lc "nl -ba verbatim/caderno_unit02.md | sed -n '1,340p'" in /Users/aleksandrmedvedev/dev/personal/lingvago2/extraction
+exec
+/bin/zsh -lc "nl -ba verbatim/livro_unit02.md | sed -n '1,320p'" in /Users/aleksandrmedvedev/dev/personal/lingvago2/extraction
+exec
+/bin/zsh -lc "nl -ba verbatim/livro_unit01.md | sed -n '1,260p'" in /Users/aleksandrmedvedev/dev/personal/lingvago2/extraction
+exec
+/bin/zsh -lc "nl -ba verbatim/caderno_unit01.md | sed -n '1,300p'" in /Users/aleksandrmedvedev/dev/personal/lingvago2/extraction
+ succeeded in 0ms:
+     1	---
+     2	source: caderno_de_exercicio_1.pdf
+     3	unit: 2
+     4	unit_title: "SOU DE LISBOA"
+     5	book_pages: [6, 7]
+     6	physical_pages: [7, 8]
+     7	channel: A (Claude vision)
+     8	confidence: high
+     9	---
+    10	
+    11	# CADERNO — UNIDADE 2 — SOU DE LISBOA
+    12	
+    13	(Cabeçalho idêntico ao livro: COMUNICAÇÃO falar sobre origem, localizar cidades · VOCABULÁRIO números 21-100, países, cidades · PRONÚNCIA acento, letra *s* · GRAMÁTICA *ser* e *ficar*, pronomes pessoais, artigo definido, preposições *de* e *em*, *onde*)
+    14	
+    15	## [book p.6 / phys 7]
+    16	
+    17	### A. Escreva os nomes dos países da caixa por baixo dos mapas.
+    18	Caixa: **França · Itália · Portugal · Grécia · Brasil · Alemanha · Suécia · Polónia**
+    19	(8 mapas/bandeiras numerados 1–8, para rotular)
+    20	
+    21	### B. Que país é este? Escreva as letras que faltam.
+    22	1. R Ú S S I A
+    23	2. I _ _ L _ A   (Itália) ⚠️ molde: I__L_A
+    24	3. _ _ _ N A   (China? ⚠️)
+    25	4. _ _ X I C _   (México)
+    26	5. _ _ D I A   (Índia)
+    27	6. B _ _ _ _ L   (Brasil)
+    28	
+    29	### C. Corrija as frases.
+    30	1. Nelly Furtado é dos Estados Unidos. *(Canadá)* → *Nelly Furtado não é dos Estados Unidos. É do Canadá.*
+    31	2. Woody Allen é de Londres. *(Nova Iorque)* → __________
+    32	3. Penélope Cruz é do México. *(Espanha)* → __________
+    33	4. Dulce Pontes é de Espanha. *(Portugal)* → __________
+    34	5. Madonna é de Itália. *(Estados Unidos)* → __________
+    35	6. Kate Winslet é da Alemanha. *(Inglaterra)* → __________
+    36	
+    37	## [book p.7 / phys 8]
+    38	
+    39	### D. Responda às perguntas.
+    40	1. Onde é Lisboa? → *Em Portugal.*
+    41	2. Onde é Hamburgo? → __________
+    42	3. Onde é São Paulo? → __________
+    43	4. Onde é Madrid? → __________
+    44	5. Onde é Luanda? → __________
+    45	
+    46	### E. Sublinhe as frases em que pode substituir *é* por *fica*.
+    47	1. Quem é ele?
+    48	2. Onde é Boston?
+    49	3. O Felipe é do Brasil.
+    50	4. Berlim é na Alemanha.
+    51	
+    52	### F. Complete com a palavra que falta.
+    53	1. A: De onde *és*? — B: Sou de Lisboa.
+    54	2. A: ______ fica Sevilha? — B: Em Espanha.
+    55	3. A: ______ de Lisboa? — B: Não, somos do Porto.
+    56	4. A: Ele é ______ Brasil? — B: É, sim.
+    57	5. A: ______ onde é ela? — B: Da Rússia.
+    58	6. A: Eles ______ de Itália? — B: Não sei.
+    59	
+    60	### G. Escreva o pronome no plural.
+    61	1. eu → *nós*
+    62	2. você → ______
+    63	3. o senhor → ______
+    64	4. tu → ______
+    65	5. ele → ______
+    66	6. ela → ______
+    67	
+    68	### H. Complete com *de/da/do/dos* ou *em/na/no/nos*.
+    69	1. Coimbra é *em* Portugal.
+    70	2. Ela é ______ Angola.
+    71	3. Tóquio é ______ Japão.
+    72	4. Somos ______ Suécia.
+    73	5. Atenas é ______ Grécia.
+    74	6. Miami é ______ Estados Unidos.
+    75	7. A Vanessa é ______ Rio de Janeiro.
+    76	8. O Josh é ______ Estados Unidos.
+    77	
+    78	### I. Escreva frases com as palavras dadas.
+    79	1. do / Janeiro / de / somos / Rio → *Somos do Rio de Janeiro.*
+    80	2. é / em / Paris / Itália / não → __________
+    81	3. é / ele / onde / de → __________?
+    82	4. são / elas / Portugal / não / de → __________
+    83	5. em / fica / Lyon / França → __________
+    84	6. Lisboa / o / é / Paulo / de → __________
+    85	
+    86	### J. Escreva o número que falta.
+    87	1. trinta, *quarenta*, cinquenta
+    88	2. cinquenta, setenta, __________
+    89	3. __________, cinquenta, setenta e cinco
+    90	4. trinta e três, __________, noventa e nove
+    91	5. sessenta, __________, cem
+    92	
+    93	### K. Sublinhe a sílaba com acento.
+    94	Brasil · China · França · Marrocos
+    95	
+    96	### L. Sublinhe as palavras em que a letra *s* é pronunciada como [ʃ].
+    97	nós · senhor · isto · Moscovo · Espanha
+    98	
+    99	> *Rodapé:* 6 / 7 — PASSAPORTE PARA PORTUGUÊS · © Lidel – Edições Técnicas, Lda.
+
+ succeeded in 0ms:
+     1	---
+     2	source: livro_do_aluno_1.pdf
+     3	unit: 2
+     4	unit_title: "SOU DE LISBOA"
+     5	book_pages: [14, 15, 16, 17]
+     6	physical_pages: [15, 16, 17, 18]
+     7	channel: A (Claude vision)
+     8	confidence: high
+     9	---
+    10	
+    11	# UNIDADE 2 — SOU DE LISBOA
+    12	
+    13	## Cabeçalho da unidade (header) — [book p.14 / phys 15]
+    14	
+    15	- **COMUNICAÇÃO:** falar sobre origem, localizar cidades
+    16	- **VOCABULÁRIO:** números 21-100, países, cidades
+    17	- **PRONÚNCIA:** acento, letra *s*
+    18	- **GRAMÁTICA:** *ser* e *ficar*, pronomes pessoais, artigo definido, preposições *de* e *em*, *onde*
+    19	
+    20	---
+    21	
+    22	## PAÍSES — [book p.14 / phys 15]
+    23	
+    24	### A. Escreva o nome do seu país em português. ___________
+    25	
+    26	(balão: «Desenhe o seu país aqui.»)
+    27	
+    28	### B. Faça a correspondência entre os mapas e os nomes dos países.
+    29	
+    30	Lista de países (com caixa para numerar) — **note o artigo definido**:
+    31	
+    32	- ☐ Portugal
+    33	- ☐ (a) Espanha
+    34	- ☐ (a) Itália
+    35	- ☐ (a) França
+    36	- ☐ (a) Inglaterra
+    37	- ☐ a Suécia
+    38	- ☐ a Alemanha
+    39	- ☐ a Polónia
+    40	- ☐ a Rússia
+    41	- ☐ a Ucrânia
+    42	- ☐ a Grécia
+    43	- ☐ os Estados Unidos
+    44	- ☐ o Brasil
+    45	- ☐ o México
+    46	- ☐ Marrocos
+    47	- ☐ Angola
+    48	- ☐ a China
+    49	- ☐ o Japão
+    50	- ☐ a Índia
+    51	
+    52	Mapas numerados 1–19 (bandeiras): 1 Polónia, 2 Portugal, 3 Espanha, 4 Índia, 5 Itália, 6 França, 7 Angola, 8 China, 9 Brasil, 10 México, 11 Alemanha, 12 Marrocos, 13 Itália⚠️(repetição? mapa pequeno), 14 Inglaterra, 15 Grécia, 16 Ucrânia, 17 Estados Unidos, 18 Rússia, 19 Suécia.
+    53	⚠️ A associação número→país é inferida das bandeiras nas imagens (não impressa). Verificar na chave de respostas.
+    54	
+    55	> ▶▶▶ **VÁ À GRAMÁTICA**, NA PÁGINA 27 E FAÇA O EXERCÍCIO A.
+    56	
+    57	---
+    58	
+    59	## DE ONDE É? — [book p.15 / phys 16]
+    60	
+    61	### 🔊 [áudio A6] C. De onde é esta música? Ouça e complete com as palavras da caixa.
+    62	
+    63	Caixa: **de Portugal / da Rússia / de Marrocos / da Grécia / ~~do Brasil~~** (do Brasil riscado = exemplo usado)
+    64	
+    65	1. É *do Brasil*. 2. É __________ 3. É __________ 4. É __________ 5. É __________
+    66	
+    67	### D. De onde são estes pratos? Complete com os nomes dos países.
+    68	
+    69	1. sashimi — É *do Japão.*
+    70	2. pierogi — É __________
+    71	3. guacamole — É __________
+    72	4. paella — É __________
+    73	5. spaghetti — É __________
+    74	
+    75	(fotografias de pratos numeradas 1–5: 1 sashimi, 2 pierogi, 3 guacamole, 4 paella, 5 spaghetti)
+    76	
+    77	> ▶▶▶ **VÁ À GRAMÁTICA**, NA PÁGINA 27 E FAÇA O EXERCÍCIO B.
+    78	
+    79	### E. Faça perguntas sobre os objetos que vê nas fotografias.
+    80	
+    81	Modelo (balões): — De onde é isto? / — É do Japão.
+    82	
+    83	Objetos numerados 1–9: 1 lata/dragão (China), 2 cabine telefónica vermelha (Inglaterra), 3 gato da sorte/maneki (Japão), 4 tamancos (Holanda ⚠️), 5 Torre Eiffel (França), 6 Coca-Cola (Estados Unidos), 7 sombrero/prato mexicano (México), 8 máscara (⚠️ Veneza/Itália?), 9 calças de cabedal/lederhosen (Alemanha).
+    84	⚠️ Países dos objetos inferidos das imagens.
+    85	
+    86	---
+    87	
+    88	## [book p.16 / phys 17]
+    89	
+    90	### 🔊 [áudio A7] F. Ouça e leia os diálogos. A seguir, faça a correspondência com as imagens.
+    91	
+    92	1.
+    93	- A: De onde são eles?
+    94	- B: São do Brasil.
+    95	
+    96	2.
+    97	- A: Vocês são de Inglaterra?
+    98	- B: Não. Somos da Alemanha.
+    99	
+   100	3.
+   101	- A: De onde é?
+   102	- B: Sou da Grécia.
+   103	
+   104	(imagens A, B, C para correspondência)
+   105	
+   106	> ▶▶▶ **VÁ À GRAMÁTICA**, NA PÁGINA 27 E FAÇA OS EXERCÍCIOS C E D.
+   107	
+   108	### ONDE FICA LISBOA?
+   109	
+   110	### G. Leia as frases. São verdadeiras ou falsas? Assinale. (V / F)
+   111	
+   112	1. Atenas é na Grécia. — **[V]** ✗ F  *(exemplo resolvido: X marcado na caixa V = verdadeiro; correto, Atenas fica na Grécia)*
+   113	2. Milão é em Espanha. — ☐V ☐F
+   114	3. Deli é no México. — ☐V ☐F
+   115	4. Miami é nos Estados Unidos. — ☐V ☐F
+   116	5. Varsóvia é na Ucrânia. — ☐V ☐F
+   117	6. Estocolmo é na Suécia. — ☐V ☐F
+   118	
+   119	(item 1 é o exemplo pré-marcado; itens 2–6 ficam em branco para o aluno)
+   120	
+   121	> ▶▶▶ **VÁ À GRAMÁTICA**, NA PÁGINA 27 E FAÇA O EXERCÍCIO E.
+   122	
+   123	### H. Onde são estas cidades?
+   124	
+   125	1. Madrid — *é em Espanha.*
+   126	2. Pequim — __________
+   127	3. O Rio de Janeiro — __________
+   128	4. Casablanca — __________
+   129	5. O Porto — __________
+   130	6. Nova Iorque — __________
+   131	
+   132	### I. Reescreva as frases substituindo o verbo *ser* por *ficar*.
+   133	
+   134	1. Moscovo é na Rússia. → *Moscovo fica na Rússia.*
+   135	2. Berlim é na Alemanha. → __________
+   136	3. Onde é Lisboa? → __________
+   137	4. Onde é Sevilha? → __________
+   138	
+   139	---
+   140	
+   141	## [book p.17 / phys 18]
+   142	
+   143	### J. Use os nomes das cidades do quadro para fazer perguntas ao seu colega.
+   144	
+   145	Quadro: **Veneza · Colónia · São Paulo · Roma · Barcelona · Granada · Londres · Boston · Cantão · Paris**
+   146	
+   147	Modelo (balões): — Onde fica Veneza? / — Em Itália.
+   148	
+   149	> 💡 **IMPORTANTE!** vinte **e** três · oitenta **e** sete
+   150	
+   151	### NÚMEROS (21-100)
+   152	
+   153	### 🔊 [áudio A8] K. Ouça e repita os números.
+   154	
+   155	| | |
+   156	|---|---|
+   157	| 21 vinte e um | 70 setenta |
+   158	| 30 trinta | 80 oitenta |
+   159	| 40 quarenta | 90 noventa |
+   160	| 50 cinquenta | 100 cem |
+   161	| 60 sessenta | |
+   162	
+   163	### L. Faça as contas e escreva a soma por extenso.
+   164	
+   165	1. 23 + 52 = 75 → *vinte e três mais cinquenta e dois são setenta e cinco*
+   166	2. 31 + 67 = __________
+   167	3. 44 + 45 = __________
+   168	4. 17 + 54 = __________
+   169	5. 68 + 26 = __________
+   170	
+   171	### PRONÚNCIA
+   172	
+   173	### 🔊 [áudio A9] A. Ouça as palavras e sublinhe a sílaba acentuada.
+   174	
+   175	unidos · Marrocos · Londres · Atenas · Portugal · Brasil · espanhol
+   176	
+   177	### 🔊 [áudio A9] B. Ouça e repita as palavras que começam com *es-*.
+   178	
+   179	estás · está · Espanha · estados
+   180	
+   181	### 🔊 [áudio A9] C. Ouça as palavras. Sublinhe todas as letras a vermelho pronunciadas como [ʃ].
+   182	
+   183	seis · dois · desculpe · sábado · três
+   184	
+   185	### 🔊 [áudio A9] D. Leia as palavras. Sublinhe todas as letras a vermelho pronunciadas como [ʃ]. A seguir, ouça para confirmar.
+   186	
+   187	isto · estados · Atenas · sete · Varsóvia
+   188	
+   189	> *Rodapé:* 14 / 15 / 16 / 17 — PASSAPORTE PARA PORTUGUÊS · © Lidel – Edições Técnicas, Lda.
+
+ succeeded in 0ms:
+     1	---
+     2	source: caderno_de_exercicio_1.pdf
+     3	unit: 1
+     4	unit_title: "OLÁ, BOM DIA!"
+     5	book_pages: [4, 5]
+     6	physical_pages: [5, 6]
+     7	channel: A (Claude vision)
+     8	confidence: high
+     9	---
+    10	
+    11	# CADERNO — UNIDADE 1 — OLÁ, BOM DIA!
+    12	
+    13	(Cabeçalho idêntico ao livro: COMUNICAÇÃO cumprimentar, identificar pessoas, apresentar-se, despedir-se · VOCABULÁRIO números 0-20, dias da semana · PRONÚNCIA vogais, sílabas, acento, letra *o* · GRAMÁTICA *ser* e *chamar-se*, pronomes pessoais, artigo definido, *como* e *quem*)
+    14	
+    15	## [book p.4 / phys 5]
+    16	
+    17	### A. Faça a correspondência entre as colunas.
+    18	1. Muito — a. tarde!
+    19	2. Como — b. dia!
+    20	3. Boa — c. bem?
+    21	4. Até — d. prazer!
+    22	5. Bom — e. está?
+    23	6. Tudo — f. logo!
+    24	(seta de exemplo: 1 → d)
+    25	
+    26	### B. Complete os diálogos.
+    27	1.
+    28	- A: *Como* se chama?
+    29	- B: Sara Vieira.
+    30	2.
+    31	- A: Olá, como está?
+    32	- B: Bem, obrigada. E ______?
+    33	3.
+    34	- A: ______ o Jorge?
+    35	- B: Sim, sou.
+    36	- A: Bem-______ a Lisboa!
+    37	4.
+    38	- A: Olá, tudo bem?
+    39	- B: ______ bem, obrigada.
+    40	5.
+    41	- A: ______ é ele?
+    42	- B: Ele? Não ______.
+    43	
+    44	### C. Complete com os verbos da caixa.
+    45	Caixa: **se chama / sou / chama-se / és / é / te chamas**
+    46	1. *Sou* a Rita. *(eu)*
+    47	2. Ela ______ Teresa.
+    48	3. Como ______? *(tu)*
+    49	4. Não sei quem ele ______.
+    50	5. Quem ______? *(tu)*
+    51	6. Como ______? *(você)*
+    52	
+    53	### D. Escreva as expressões da caixa nos balões. (3 imagens)
+    54	Caixa: **Obrigada! · Muito gosto! · Até amanhã!**
+    55	(balões vazios nas imagens 1, 2, 3)
+    56	
+    57	## [book p.5 / phys 6]
+    58	
+    59	### E. Complete com *me*, *te* ou *se*.
+    60	1. Como *se* chama?
+    61	2. Ele chama-______ Rafael.
+    62	3. Chamo-______ Ricardo.
+    63	4. Como ______ chamas?
+    64	5. O senhor chama-______ Rui Guerra?
+    65	6. Chamas-______ António?
+    66	7. Como ______ chama ela?
+    67	
+    68	### F. Complete com *o* ou *a* onde necessário.
+    69	1. Sou *a* Ana.
+    70	2. Chamo-me ______ Sónia.
+    71	3. És ______ Anabela?
+    72	4. Ele é ______ Jorge Viegas.
+    73	5. Ela chama-se ______ Teresa Pereira.
+    74	
+    75	### G. Escreva frases com as palavras dadas.
+    76	1. Joana / sou / a → *Sou a Joana.*
+    77	2. sei / és / não / quem → __________.
+    78	3. próxima / até / à → __________!
+    79	4. Ricardo / chama / ele / se → __________?
+    80	
+    81	### H. Escreva as letras que faltam nos dias da semana.
+    82	1. S E G U N D A - F E I R A
+    83	2. S _ B _ _ _
+    84	3. T _ _ _ A - F E I R A
+    85	4. S _ _ T A - F E I R A
+    86	5. Q _ _ N _ A - F E I R A
+    87	6. _ _ _ _ N _ O
+    88	7. _ _ _ R T _ - F E I R A
+    89	
+    90	### I. Escreva o dia da semana que falta.
+    91	1. segunda-feira, *terça-feira*, quarta-feira
+    92	2. __________, sábado, segunda-feira
+    93	3. terça-feira, quinta-feira, __________
+    94	4. __________, quinta-feira, sexta-feira
+    95	5. sexta-feira, __________, terça-feira
+    96	
+    97	### J. Escreva os números por extenso.
+    98	3 → *três* · 7 → ___ · 12 → ___ · 20 → ___ · 8 → ___ · 11 → ___ · 17 → ___ · 4 → ___ · 2 → ___ · 6 → ___
+    99	
+   100	### K. Despedidas e/ou cumprimentos? Assinale com ✓. (tabela, 2 colunas com ícones — aperto de mão / mão aberta a acenar; o aluno marca cada expressão como cumprimento ou despedida. ⚠️ Sem rótulos de texto no original — não se afirma aqui qual ícone é qual.)
+   101	1. Bom dia!
+   102	2. Até amanhã!
+   103	3. Adeus!
+   104	4. Boa noite!
+   105	5. Até logo!
+   106	
+   107	### L. Sublinhe as palavras em que a letra *o* é pronunciada como [u].
+   108	nove · chamo · cinco · doze · bom
+   109	
+   110	### M. Sublinhe as palavras com duas sílabas.
+   111	muito · quem · chamas · sábado · desculpe
+   112	
+   113	### N. Sublinhe as palavras com três sílabas.
+   114	amanhã · prazer · senhor · próxima
+   115	
+   116	> *Rodapé:* 4 / 5 — PASSAPORTE PARA PORTUGUÊS · © Lidel – Edições Técnicas, Lda.
+
+ succeeded in 0ms:
+     1	---
+     2	source: livro_do_aluno_1.pdf
+     3	unit: 1
+     4	unit_title: "OLÁ, BOM DIA!"
+     5	book_pages: [10, 11, 12, 13]
+     6	physical_pages: [11, 12, 13, 14]
+     7	channel: A (Claude vision)
+     8	confidence: high
+     9	---
+    10	
+    11	# UNIDADE 1 — OLÁ, BOM DIA!
+    12	
+    13	## Cabeçalho da unidade (header) — [book p.10 / phys 11]
+    14	
+    15	- **COMUNICAÇÃO:** cumprimentar, identificar pessoas, apresentar-se, despedir-se
+    16	- **VOCABULÁRIO:** números 0-20, dias da semana
+    17	- **PRONÚNCIA:** vogais, sílabas, acento, letra *o*
+    18	- **GRAMÁTICA:** *ser* e *chamar-se*, pronomes pessoais, artigo definido, *como* e *quem*
+    19	
+    20	---
+    21	
+    22	## OLÁ! SOU O PEDRO. — [book p.10 / phys 11]
+    23	
+    24	> 💡 **IMPORTANTE!** Chamo-me Paulo. / Sou **o** Paulo.
+    25	
+    26	### A. Leia os diálogos e olhe para as imagens. Qual é o diálogo formal? E o informal?
+    27	
+    28	Balões de fala (4 personagens, imagens 1 e 2):
+    29	- — Olá, Joana! Tudo bem?
+    30	- — Tudo bem, obrigada.
+    31	- — Bom dia! Como está?
+    32	- — Bem, obrigado. E a senhora?
+    33	
+    34	### 🔊 [áudio A1] B. Ouça e leia os diálogos. A seguir, faça a correspondência com as imagens.
+    35	
+    36	Diálogos 1–4, imagens A–D (correspondência):
+    37	
+    38	1.
+    39	- A: Olá! Como te chamas?
+    40	- B: Chamo-me Joana. E tu?
+    41	- A: Sou o Tiago.
+    42	
+    43	2.
+    44	- A: Quem é ele?
+    45	- B: Quem? Ele? É o Jorge.
+    46	
+    47	3.
+    48	- A: Boa tarde, Dr. Amaral. É o Ricardo.
+    49	- B: Muito prazer, Dr. Amaral.
+    50	- C: Muito prazer, Ricardo.
+    51	
+    52	4.
+    53	- A: Desculpe, é o Rui Nunes?
+    54	- B: Como?
+    55	- A: O senhor é o Rui Nunes?
+    56	- B: Sim, sou eu.
+    57	- A: Bem-vindo a Lisboa!
+    58	
+    59	> ▶▶▶ **VÁ À GRAMÁTICA**, NA PÁGINA 26 E FAÇA OS EXERCÍCIOS A, B, C E D.
+    60	
+    61	> \* Ficheiros áudio disponíveis em www.lidel.pt, até o livro se esgotar ou ser publicada nova edição atualizada ou com alterações
+    62	
+    63	---
+    64	
+    65	## [book p.11 / phys 12]
+    66	
+    67	### C. Olhe para as fotografias. Pergunte quem é e responda.
+    68	
+    69	Balões de fala (modelo):
+    70	- — Quem é (ele)?
+    71	- — É o Cristiano Ronaldo. **ou** Não sei.
+    72	
+    73	> 💡 **IMPORTANTE!** Muito gosto! = Muito prazer!
+    74	
+    75	> 💡 **IMPORTANTE!** Obrigad**o**! / Bem-vind**o**! (♂)  —  Obrigad**a**! / Bem-vind**a**! (♀)
+    76	
+    77	Grelha de 12 fotografias de pessoas conhecidas (3 linhas × 4):
+    78	- Linha 1: Madonna, Monica Bellucci, Jackie Chan, Penélope Cruz
+    79	- Linha 2: Antonio Banderas, Pelé, Cristiano Ronaldo, Claudia Schiffer
+    80	- Linha 3: José Mourinho, [mulher ⚠️ não identificada], Gérard Depardieu, Hugh Grant
+    81	
+    82	⚠️ Nomes das fotografias são inferidos das imagens (não impressos na página, exceto Cristiano Ronaldo citado no exemplo).
+    83	
+    84	---
+    85	
+    86	## [book p.12 / phys 13]
+    87	
+    88	### D. Escreva *Bom dia*, *Boa tarde* ou *Boa noite*. (relógios digitais)
+    89	
+    90	1. 21:00 → __________
+    91	2. 7:00 → __________
+    92	3. 14:00 → __________
+    93	4. 11:00 → __________
+    94	
+    95	### E. Faça a correspondência entre as colunas.
+    96	
+    97	Coluna 1 / Coluna 2:
+    98	1. Quem é ela? — a. Bem, obrigada.
+    99	2. Como se chama? — b. Sou.
+   100	3. Olá! Como está? — c. É a Rita.
+   101	4. És o Hugo? — d. Muito prazer!
+   102	5. Boa noite! — e. Chamo-me Nuno.
+   103	6. Muito prazer! — f. Boa noite!
+   104	
+   105	(seta de exemplo impressa ligando 1 → c)
+   106	
+   107	### F. Leia os diálogos e complete com as palavras da caixa.
+   108	
+   109	Caixa de palavras: **como · sim · é · está · tu · te · bem**
+   110	
+   111	1.
+   112	- A: Olá! Como ______?
+   113	- B: Bem, obrigado. E a senhora?
+   114	- A: ______, obrigada.
+   115	
+   116	2.
+   117	- A: És o David?
+   118	- B: ______?
+   119	- A: Tu és o David?
+   120	- B: ______, sou.
+   121	
+   122	3.
+   123	- A: Quem é ela?
+   124	- B: Ela? Não sei quem ______.
+   125	
+   126	4.
+   127	- A: Olá! Como ______ chamas?
+   128	- B: Sou o Daniel. E ______?
+   129	- A: Sou a Inês.
+   130	
+   131	### NÚMEROS (0-20)
+   132	
+   133	### 🔊 [áudio A2] G. Ouça e repita os números.
+   134	
+   135	| | | | |
+   136	|---|---|---|---|
+   137	| 0 zero | 6 seis | 12 doze | 18 dezoito |
+   138	| 1 um | 7 sete | 13 treze | 19 dezanove |
+   139	| 2 dois | 8 oito | 14 catorze | 20 vinte |
+   140	| 3 três | 9 nove | 15 quinze | |
+   141	| 4 quatro | 10 dez | 16 dezasseis | |
+   142	| 5 cinco | 11 onze | 17 dezassete | |
+   143	
+   144	**H. Leia os números de telefone.**
+   145	1. 21 654 21 48
+   146	2. 91 302 86 09
+   147	3. 22 415 71 33
+   148	4. 93 912 44 94
+   149	5. 21 130 25 86
+   150	6. 21 475 81 42
+   151	
+   152	### DIAS DA SEMANA
+   153	
+   154	### 🔊 [áudio A3] I. Ouça os nomes dos dias da semana e escreva os números de acordo com a ordem de audição.
+   155	
+   156	Etiquetas (com caixas para numerar): segunda-feira · terça-feira · quarta-feira [marcada «1»] · quinta-feira · sexta-feira · sábado · domingo
+   157	
+   158	---
+   159	
+   160	## [book p.13 / phys 14]
+   161	
+   162	### ATÉ AMANHÃ!
+   163	
+   164	### 🔊 [áudio A4] J. Ouça e leia as despedidas.
+   165	
+   166	- Adeus! Boa noite!
+   167	- Até à próxima!
+   168	- Até já!
+   169	- Até amanhã!
+   170	- Até logo!
+   171	
+   172	(imagem: rapariga a acenar; ao lado, calendário/agenda da semana 09–17)
+   173	
+   174	### K. Ponha as expressões por ordem de acordo com o tempo que falta desde agora até ao próximo encontro.
+   175	
+   176	Caixas a ordenar: ☐ Até logo! · ☐ Até quinta! · ☐ Até amanhã! · [1] Até já! · ☐ Até terça! · ☐ Até sábado!
+   177	
+   178	### PRONÚNCIA
+   179	
+   180	### 🔊 [áudio A5] A. Ouça e repita as vogais do português.
+   181	
+   182	| a [a] | a [ɐ] | e [ɛ] | e [e] | e [ɨ] |
+   183	|---|---|---|---|---|
+   184	| i [i] | o [ɔ] | o [o] | u [u] | |
+   185	
+   186	### B. Escreva as palavras da caixa nas colunas respetivas da tabela.
+   187	
+   188	Caixa: **domingo · já · sete · dezanove · Inglaterra · dez · logo · próxima**
+   189	
+   190	| 1 sílaba | 2 sílabas | 3 sílabas | 4 sílabas |
+   191	|---|---|---|---|
+   192	| bem | como | segunda | obrigado |
+   193	| | | | |
+   194	
+   195	(exemplos pré-preenchidos: bem / como / segunda / obrigado)
+   196	
+   197	### 🔊 [áudio A5] C. Ouça as palavras e sublinhe as sílabas acentuadas.
+   198	
+   199	tarde · domingo · como · segunda
+   200	você · sábado · amanhã · próxima
+   201	
+   202	### 🔊 [áudio A5] D. Ouça as palavras. Sublinhe todas as letras a vermelho pronunciadas como [u].
+   203	
+   204	como · muito · tudo · domingo · logo
+   205	
+   206	### E. Leia as palavras. Sublinhe todas as letras a vermelho pronunciadas como [u].
+   207	
+   208	quatro · oito · noite · sábado · cinco
+   209	
+   210	> *Rodapé:* 12 / 13 — PASSAPORTE PARA PORTUGUÊS · © Lidel – Edições Técnicas, Lda.
+
+codex
+I’ve reached the exercise source lines and see a few candidate issues, but several are blanks intended to be completed, so I’m separating actual written errors from prompts with missing answers. Next I’ll inspect the notebook and run targeted searches for high-risk spellings/forms.
+exec
+/bin/zsh -lc "nl -ba verbatim/notebook_p01-04.md | sed -n '1,320p'" in /Users/aleksandrmedvedev/dev/personal/lingvago2/extraction
+ succeeded in 0ms:
+     1	---
+     2	source: notebook.pdf
+     3	physical_pages: [1, 2, 3, 4]
+     4	channel: A (Claude vision)
+     5	confidence: medium
+     6	type: handwritten student notes
+     7	warning: >
+     8	  Rukopisnye konspekty. MOGUT SODERZHAT' OSHIBKI AVTORA (orfografiya,
+     9	  razdel'noe napisanie chisel, glossy). NE istochnik istiny — sveryaetsya s
+    10	  uchebnikom. ⚠️ = neuverennoe chtenie, ❓ = nerazborchivo.
+    11	related_units: [1, 2]
+    12	---
+    13	
+    14	# NOTEBOOK — páginas 1–4 (конспекты, юниты 1–2)
+    15	
+    16	> ⚠️ Транскрипция рукописи. Сохранена авторская орфография (включая вероятные ошибки, напр. раздельное написание сотен «quatro centos» вместо «quatrocentos»). Глоссы автора в скобках: (EN)/(RU).
+    17	
+    18	## Página 1 (без даты) — chamar-se, ser, origem
+    19	
+    20	**Como se chama?** (formal) → Eu chamo-me / Como se chama
+    21	**Como te chamas?** (informal)
+    22	
+    23	Conjugação *chamar-se* (coluna direita):
+    24	- tu chamas-te
+    25	- Ela chama-se
+    26	- Ele chama-se
+    27	- Nós chamamo-nos
+    28	- Você chama-se
+    29	- Eles chamam-se
+    30	- Elas chamam-se
+    31	
+    32	O senhor / a senhora chama-se
+    33	**Como é que o senhor se chama?**
+    34	**Como se chama o senhor?**
+    35	
+    36	**Qual é a sua nacionalidade?** — Sou…
+    37	**Há quanto tempo está em Portugal?** (How long…)
+    38	- Estou em Portugal há…
+    39	- Estamos em Portugal há…
+    40	
+    41	Nome / Apelido — mãe/pai ⚠️
+    42	**Está a trabalhar?** (Are you working?)
+    43	- Eu trabalho (online) (escritório = office)
+    44	- Nós estamos no ativo ⚠️
+    45	
+    46	**Qual é a sua naturalidade?** — Sou de (Minsk⚠️) cidade = city ⚠️
+    47	
+    48	(canto direito) Informal: «Tudo bem?» / «Bom dia!» — Formal: «Como está?» / «(Estou) Bem, obrigado. E a senhora?»
+    49	
+    50	## Página 2 (без даты) — prazer, chamar-se, ser, artigo definido
+    51	
+    52	- Prazer em conhecer
+    53	- Prazer em conhecê-lo
+    54	- Prazer em conhecê-la
+    55	- Chegada(s) (arrivals) — vb *chegar* (arrive)
+    56	
+    57	Coluna direita (glossário):
+    58	- Como? (say it again) / (pardon me)
+    59	- Desculpe (pardon me)
+    60	- Quem (Who?)
+    61	- Bem-vindo (welcome)
+    62	- antes (before)
+    63	- depois (after)
+    64	
+    65	Conjugação *chamar-se*:
+    66	| | chamar-se |
+    67	|---|---|
+    68	| eu | chamo-me |
+    69	| tu | chamas-te |
+    70	| você/ela/ele · o senhor/a senhora | chama-se |
+    71	
+    72	- **Como te chamas?** — ~~Chamo-me Joaquim?~~ → Eu não me chamo Joaquim
+    73	- **Como se chama?** — Chama-se Teresa Alves? — Ela chama-se Maria Lopes.
+    74	
+    75	Conjugação *ser*:
+    76	| | ser | |
+    77	|---|---|---|
+    78	| eu | sou | Eu sou |
+    79	| tu | és | Tu és |
+    80	| você/ele/ela · o senhor/a senhora | é | Ele/ela é · Nós somos · Vocês são · Eles/Elas são |
+    81	
+    82	**Artigo definido:**
+    83	| masculino | feminino |
+    84	|---|---|
+    85	| **o** | **a** |
+    86	
+    87	- Eles são os nossos Alexandres ⚠️
+    88	- Eu sou o Aleksandr ⚠️
+    89	- És a Clara (informal)
+    90	- É o Francisco? (formal)
+    91	
+    92	Ela é a Cristine, é enfermeira ⚠️
+    93	- é – (is) / e – (and)
+    94	- (This) Esta é a Cristine ⚠️ / Esta é cansada ⚠️ (provavelmente «está cansada»)
+    95	
+    96	## Página 3 — data 2026-02-12, N°2 — vocabulário alfabético
+    97	
+    98	Cabeçalho: dois rapazes / ~~duas raparigas~~
+    99	
+   100	Lista (letra — palavra — gloss):
+   101	- A – árvore (tree)
+   102	- B – branco (white)
+   103	- C – cinco (five)
+   104	- Ç – preço (price)
+   105	- D – dedo (finger)
+   106	- E – elefante (elephant); sete elefantes (seven elephants)
+   107	- I – ideia (idea)
+   108	- F – fogo (fire); o fogo – singular / os fogos – plural; (interesting) ⚠️
+   109	- G – giro (interesting/nice); gente (people); a gente ≠ agente (police officer); a gente é = 3.ª pessoa sing.; As pessoas são; um elefante grande; humidade (H₂O) ⚠️
+   110	- H – [agá] (nome da letra)
+   111	- i – idade (age)
+   112	- J – jogo; o jogo (singular) / os jogos (plural); (game)
+   113	- K – kavalé❓ (provavelmente nome estrangeiro)
+   114	- L – limão (lemon); filho (son) / filha (daughter)
+   115	- M – mão (hand); cem (100) / sem (without)
+   116	- N – não / sonho (dream); preto (preR❓) (black) ⚠️
+   117	- O – oito
+   118	- P – perna (leg)
+   119	- Q – que (what); quando (when); qual (which)
+   120	- R – rosto (face); porta (door)
+   121	- S – seis (six); escola (school); mesmo (same)
+   122	- T – tarde (late)
+   123	- U – universidade; V – vermelho (red)
+   124	- W·X – táxi; exame; xadrez (chess) ⚠️
+   125	- Y – (you?) ⚠️
+   126	- Z – doze (12) / onze (11) / dez (10) ⚠️; rapaz (boy)
+   127	
+   128	(canto sup. dir.) tu – informal / você – middle formal / a senhora – more formal / o senhor — P. 4-5 ⚠️
+   129	manhã (morning) / amanhã (tomorrow) / manhã (smart?❓)
+   130	
+   131	## Página 4 — data 2026-02-19, N°3 — números
+   132	
+   133	Centenas (ortografia do autor, frequentemente separada):
+   134	- 2 centos = duzentos
+   135	- 3 centos = trezentos
+   136	- 400 quatro centos
+   137	- 500 quinhentos
+   138	- 600 seis centos
+   139	- 700 sete centos
+   140	- 800 oito centos
+   141	- 900 nove centos
+   142	- 1000 ~~mil centos~~ mil
+   143	
+   144	Dezenas / unidades (colunas):
+   145	10 dez · 20 vinte · 30 trinta · 40 quarenta · 50 cinquenta · 60 sessenta · 70 setenta · 80 oitenta · 90 noventa · 100 cem / 1 – cento · 21 vinte e um
+   146	11 onze · 12 doze · 13 treze · 14 catorze · 15 quinze · 16 dezasseis · 17 dezassete · 18 dezoito · 19 dezanove
+   147	
+   148	Exemplos de números grandes:
+   149	- 654 – seis centos e cinquenta e quatro ⚠️ (seiscentos)
+   150	- 1789 – mil e setecentos e oitenta e nove
+   151	- 1026 – mil e vinte e seis
+   152	- 1100 – mil e cem
+   153	- 2099 – dois mil e noventa e nove
+   154	- 2101 – dois mil cento e um
+   155	- 1 000 000 – milhão (um milhão)
+   156	- 2 000 000 – dois milhões
+   157	- 1 115 115 – um milhão cento e quinze mil cento e quinze
+   158	
+   159	Despedidas: Até já! (see you soon) · Até logo! · Até amanhã! · Até sábado! · Até terça! · Até quinta! (most long period) ⚠️
+   160	
+   161	[u]: como · muito · tudo · domingo · logo
+   162	(coluna) tarde · domingo · como · segunda · você · sábado · amanhã · próxima
+
+exec
+/bin/zsh -lc 'rg -n "prep_origin|prep_location|article|gender|Estados Unidos|Brasil|México|Marrocos|Angola|Espanha|Itália|França|Inglaterra|Canadá|Japão|China|Índia" normalized/countries.json normalized/grammar_unit01-02.json normalized/vocab_unit01-02.json verbatim/*.md' in /Users/aleksandrmedvedev/dev/personal/lingvago2/extraction
+exec
+/bin/zsh -lc "rg -n \"seis centos|centos|cham|chamas|chama|chamam|chamamo|sou|és|é|somos|são|\\bdo\\b|\\bda\\b|\\bdos\\b|\\bno\\b|\\bna\\b|\\bnos\\b|Mexico|Polonia|Russia|Ucrania|Italia|sabado|proxima|ate|voce\" normalized verbatim" in /Users/aleksandrmedvedev/dev/personal/lingvago2/extraction
+ succeeded in 0ms:
+verbatim/livro_unit01.md:188:Caixa: **domingo · já · sete · dezanove · Inglaterra · dez · logo · próxima**
+verbatim/caderno_unit02.md:18:Caixa: **França · Itália · Portugal · Grécia · Brasil · Alemanha · Suécia · Polónia**
+verbatim/caderno_unit02.md:23:2. I _ _ L _ A   (Itália) ⚠️ molde: I__L_A
+verbatim/caderno_unit02.md:24:3. _ _ _ N A   (China? ⚠️)
+verbatim/caderno_unit02.md:25:4. _ _ X I C _   (México)
+verbatim/caderno_unit02.md:26:5. _ _ D I A   (Índia)
+verbatim/caderno_unit02.md:27:6. B _ _ _ _ L   (Brasil)
+verbatim/caderno_unit02.md:30:1. Nelly Furtado é dos Estados Unidos. *(Canadá)* → *Nelly Furtado não é dos Estados Unidos. É do Canadá.*
+verbatim/caderno_unit02.md:32:3. Penélope Cruz é do México. *(Espanha)* → __________
+verbatim/caderno_unit02.md:33:4. Dulce Pontes é de Espanha. *(Portugal)* → __________
+verbatim/caderno_unit02.md:34:5. Madonna é de Itália. *(Estados Unidos)* → __________
+verbatim/caderno_unit02.md:35:6. Kate Winslet é da Alemanha. *(Inglaterra)* → __________
+verbatim/caderno_unit02.md:49:3. O Felipe é do Brasil.
+verbatim/caderno_unit02.md:54:2. A: ______ fica Sevilha? — B: Em Espanha.
+verbatim/caderno_unit02.md:56:4. A: Ele é ______ Brasil? — B: É, sim.
+verbatim/caderno_unit02.md:58:6. A: Eles ______ de Itália? — B: Não sei.
+verbatim/caderno_unit02.md:70:2. Ela é ______ Angola.
+verbatim/caderno_unit02.md:71:3. Tóquio é ______ Japão.
+verbatim/caderno_unit02.md:74:6. Miami é ______ Estados Unidos.
+verbatim/caderno_unit02.md:76:8. O Josh é ______ Estados Unidos.
+verbatim/caderno_unit02.md:80:2. é / em / Paris / Itália / não → __________
+verbatim/caderno_unit02.md:83:5. em / fica / Lyon / França → __________
+verbatim/caderno_unit02.md:94:Brasil · China · França · Marrocos
+verbatim/caderno_unit02.md:97:nós · senhor · isto · Moscovo · Espanha
+normalized/countries.json:3:    "description": "Countries from livro/caderno unit 2 with gender, article and origin/location prepositions. Drives gender->article->preposition drills.",
+normalized/countries.json:6:      "prep_origin": "de + article -> de/da/do/dos (De onde e? Sou ___)",
+normalized/countries.json:7:      "prep_location": "em + article -> em/na/no/nos (Onde fica? Fica ___)"
+normalized/countries.json:11:    { "name": "Portugal",       "gender": "none",     "article": "none",     "prep_origin": "de", "prep_location": "em", "note": "sem artigo", "confidence": "high" },
+normalized/countries.json:12:    { "name": "Espanha",        "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "livro imprime '(a) Espanha'; em origem/local normalmente sem artigo: de Espanha, em Espanha", "confidence": "high" },
+normalized/countries.json:13:    { "name": "Itália",         "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "'(a) Itália'; de Itália, em Itália", "confidence": "high" },
+normalized/countries.json:14:    { "name": "França",         "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "'(a) França'; tambem ocorre da França/na França", "confidence": "medium" },
+normalized/countries.json:15:    { "name": "Inglaterra",     "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "'(a) Inglaterra'; de Inglaterra, em Inglaterra", "confidence": "high" },
+normalized/countries.json:16:    { "name": "Suécia",         "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+normalized/countries.json:17:    { "name": "Alemanha",       "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+normalized/countries.json:18:    { "name": "Polónia",        "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+normalized/countries.json:19:    { "name": "Rússia",         "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+normalized/countries.json:20:    { "name": "Ucrânia",        "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+normalized/countries.json:21:    { "name": "Grécia",         "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+normalized/countries.json:22:    { "name": "Estados Unidos", "gender": "plural",   "article": "os",       "prep_origin": "dos","prep_location": "nos","confidence": "high" },
+normalized/countries.json:23:    { "name": "Brasil",         "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "confidence": "high" },
+normalized/countries.json:24:    { "name": "México",         "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "confidence": "high" },
+normalized/countries.json:25:    { "name": "Marrocos",       "gender": "none",     "article": "none",     "prep_origin": "de", "prep_location": "em", "note": "sem artigo", "confidence": "high" },
+normalized/countries.json:26:    { "name": "Angola",         "gender": "none",     "article": "none",     "prep_origin": "de", "prep_location": "em", "note": "sem artigo", "confidence": "high" },
+normalized/countries.json:27:    { "name": "China",          "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+normalized/countries.json:28:    { "name": "Japão",          "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "confidence": "high" },
+normalized/countries.json:29:    { "name": "Índia",          "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+normalized/countries.json:30:    { "name": "Canadá",         "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "note": "aparece em caderno u2 C (correções)", "confidence": "high" }
+verbatim/livro_unit02.md:33:- ☐ (a) Espanha
+verbatim/livro_unit02.md:34:- ☐ (a) Itália
+verbatim/livro_unit02.md:35:- ☐ (a) França
+verbatim/livro_unit02.md:36:- ☐ (a) Inglaterra
+verbatim/livro_unit02.md:43:- ☐ os Estados Unidos
+verbatim/livro_unit02.md:44:- ☐ o Brasil
+verbatim/livro_unit02.md:45:- ☐ o México
+verbatim/livro_unit02.md:46:- ☐ Marrocos
+verbatim/livro_unit02.md:47:- ☐ Angola
+verbatim/livro_unit02.md:48:- ☐ a China
+verbatim/livro_unit02.md:49:- ☐ o Japão
+verbatim/livro_unit02.md:50:- ☐ a Índia
+verbatim/livro_unit02.md:52:Mapas numerados 1–19 (bandeiras): 1 Polónia, 2 Portugal, 3 Espanha, 4 Índia, 5 Itália, 6 França, 7 Angola, 8 China, 9 Brasil, 10 México, 11 Alemanha, 12 Marrocos, 13 Itália⚠️(repetição? mapa pequeno), 14 Inglaterra, 15 Grécia, 16 Ucrânia, 17 Estados Unidos, 18 Rússia, 19 Suécia.
+verbatim/livro_unit02.md:63:Caixa: **de Portugal / da Rússia / de Marrocos / da Grécia / ~~do Brasil~~** (do Brasil riscado = exemplo usado)
+verbatim/livro_unit02.md:65:1. É *do Brasil*. 2. É __________ 3. É __________ 4. É __________ 5. É __________
+verbatim/livro_unit02.md:69:1. sashimi — É *do Japão.*
+verbatim/livro_unit02.md:81:Modelo (balões): — De onde é isto? / — É do Japão.
+verbatim/livro_unit02.md:83:Objetos numerados 1–9: 1 lata/dragão (China), 2 cabine telefónica vermelha (Inglaterra), 3 gato da sorte/maneki (Japão), 4 tamancos (Holanda ⚠️), 5 Torre Eiffel (França), 6 Coca-Cola (Estados Unidos), 7 sombrero/prato mexicano (México), 8 máscara (⚠️ Veneza/Itália?), 9 calças de cabedal/lederhosen (Alemanha).
+verbatim/livro_unit02.md:94:- B: São do Brasil.
+verbatim/livro_unit02.md:97:- A: Vocês são de Inglaterra?
+verbatim/livro_unit02.md:113:2. Milão é em Espanha. — ☐V ☐F
+verbatim/livro_unit02.md:114:3. Deli é no México. — ☐V ☐F
+verbatim/livro_unit02.md:115:4. Miami é nos Estados Unidos. — ☐V ☐F
+verbatim/livro_unit02.md:125:1. Madrid — *é em Espanha.*
+verbatim/livro_unit02.md:147:Modelo (balões): — Onde fica Veneza? / — Em Itália.
+verbatim/livro_unit02.md:175:unidos · Marrocos · Londres · Atenas · Portugal · Brasil · espanhol
+verbatim/livro_unit02.md:179:estás · está · Espanha · estados
+normalized/grammar_unit01-02.json:65:        "not_interchangeable": "Não se substitui quando 'ser' = identidade/origem: 'Quem é ele?', 'O Felipe é do Brasil.'"
+normalized/grammar_unit01-02.json:78:        "examples": ["Sou do Brasil.", "Somos da Alemanha.", "É de Portugal.", "É da Grécia.", "É dos Estados Unidos.", "É do Japão."]
+normalized/grammar_unit01-02.json:91:        "examples": ["É em Portugal.", "É na Grécia.", "É no México.", "É nos Estados Unidos.", "Coimbra é em Portugal.", "Atenas é na Grécia."]
+normalized/vocab_unit01-02.json:20:    {"pt":"sexta-feira"},{"pt":"sábado","gender":"m","article":"o"},{"pt":"domingo","gender":"m","article":"o"}
+normalized/vocab_unit01-02.json:26:    {"pt":"Bem-vindo!","gender":"m"},{"pt":"Bem-vinda!","gender":"f"},
+normalized/vocab_unit01-02.json:27:    {"pt":"Obrigado!","gender":"m"},{"pt":"Obrigada!","gender":"f"}
+normalized/vocab_unit01-02.json:33:  "nouns_with_gender": {
+normalized/vocab_unit01-02.json:36:      {"pt":"árvore","gender":"f","article":"a","en":"tree","confidence":"medium"},
+normalized/vocab_unit01-02.json:37:      {"pt":"preço","gender":"m","article":"o","en":"price","confidence":"medium"},
+normalized/vocab_unit01-02.json:38:      {"pt":"dedo","gender":"m","article":"o","en":"finger","confidence":"medium"},
+normalized/vocab_unit01-02.json:39:      {"pt":"elefante","gender":"m","article":"o","en":"elephant","confidence":"medium"},
+normalized/vocab_unit01-02.json:40:      {"pt":"ideia","gender":"f","article":"a","en":"idea","confidence":"medium"},
+normalized/vocab_unit01-02.json:41:      {"pt":"fogo","gender":"m","article":"o","en":"fire","plural":"os fogos","confidence":"medium"},
+normalized/vocab_unit01-02.json:42:      {"pt":"gente","gender":"f","article":"a","en":"people","note":"a gente = 3.ª pess. sing.; ≠ agente","confidence":"medium"},
+normalized/vocab_unit01-02.json:43:      {"pt":"idade","gender":"f","article":"a","en":"age","confidence":"medium"},
+normalized/vocab_unit01-02.json:44:      {"pt":"jogo","gender":"m","article":"o","en":"game","plural":"os jogos","confidence":"medium"},
+normalized/vocab_unit01-02.json:45:      {"pt":"limão","gender":"m","article":"o","en":"lemon","confidence":"medium"},
+normalized/vocab_unit01-02.json:46:      {"pt":"filho","gender":"m","article":"o","en":"son","confidence":"medium"},
+normalized/vocab_unit01-02.json:47:      {"pt":"filha","gender":"f","article":"a","en":"daughter","confidence":"medium"},
+normalized/vocab_unit01-02.json:48:      {"pt":"mão","gender":"f","article":"a","en":"hand","note":"exceção: -ão feminino","confidence":"medium"},
+normalized/vocab_unit01-02.json:49:      {"pt":"perna","gender":"f","article":"a","en":"leg","confidence":"medium"},
+normalized/vocab_unit01-02.json:50:      {"pt":"rosto","gender":"m","article":"o","en":"face","confidence":"medium"},
+normalized/vocab_unit01-02.json:51:      {"pt":"porta","gender":"f","article":"a","en":"door","confidence":"medium"},
+normalized/vocab_unit01-02.json:52:      {"pt":"escola","gender":"f","article":"a","en":"school","confidence":"medium"},
+normalized/vocab_unit01-02.json:53:      {"pt":"universidade","gender":"f","article":"a","en":"university","confidence":"medium"},
+normalized/vocab_unit01-02.json:54:      {"pt":"táxi","gender":"m","article":"o","en":"taxi","confidence":"medium"},
+normalized/vocab_unit01-02.json:55:      {"pt":"exame","gender":"m","article":"o","en":"exam","confidence":"medium"},
+normalized/vocab_unit01-02.json:56:      {"pt":"xadrez","gender":"m","article":"o","en":"chess","confidence":"medium"}
+
+ succeeded in 0ms:
+normalized/vocab_unit01-02.json:2:  "_meta": { "units": [1, 2], "source": ["livro:u1-2", "caderno:u1-2", "notebook:p3-4"] },
+normalized/vocab_unit01-02.json:10:    {"n":200,"pt":"duzentos"},{"n":300,"pt":"trezentos"},{"n":400,"pt":"quatrocentos"},{"n":500,"pt":"quinhentos"},
+normalized/vocab_unit01-02.json:11:    {"n":600,"pt":"seiscentos"},{"n":700,"pt":"setecentos"},{"n":800,"pt":"oitocentos"},{"n":900,"pt":"novecentos"},
+normalized/vocab_unit01-02.json:14:      {"n":75,"pt":"setenta e cinco"},{"n":1789,"pt":"mil setecentos e oitenta e nove"},
+normalized/vocab_unit01-02.json:16:    ],"_note":"100=cem isolado; 101+=cento e um...; conjunção 'e' obrigatória entre dezenas e unidades (vinte e três).","source":"notebook:p4 (verificado contra livro u2)"}
+normalized/vocab_unit01-02.json:30:    {"pt":"Adeus!"},{"pt":"Até já!"},{"pt":"Até logo!"},{"pt":"Até amanhã!"},
+normalized/vocab_unit01-02.json:31:    {"pt":"Até à próxima!"},{"pt":"Até terça!"},{"pt":"Até sábado!"},{"pt":"Até quinta!"}
+normalized/vocab_unit01-02.json:34:    "_note": "Da lista alfabética do notebook (p3); GÉNERO INFERIDO pela forma padrão do português, confidence=medium até confirmar.",
+verbatim/caderno_unit02.md:2:source: caderno_de_exercicio_1.pdf
+verbatim/caderno_unit02.md:17:### A. Escreva os nomes dos países da caixa por baixo dos mapas.
+verbatim/caderno_unit02.md:18:Caixa: **França · Itália · Portugal · Grécia · Brasil · Alemanha · Suécia · Polónia**
+verbatim/caderno_unit02.md:21:### B. Que país é este? Escreva as letras que faltam.
+verbatim/caderno_unit02.md:25:4. _ _ X I C _   (México)
+verbatim/caderno_unit02.md:30:1. Nelly Furtado é dos Estados Unidos. *(Canadá)* → *Nelly Furtado não é dos Estados Unidos. É do Canadá.*
+verbatim/caderno_unit02.md:31:2. Woody Allen é de Londres. *(Nova Iorque)* → __________
+verbatim/caderno_unit02.md:32:3. Penélope Cruz é do México. *(Espanha)* → __________
+verbatim/caderno_unit02.md:33:4. Dulce Pontes é de Espanha. *(Portugal)* → __________
+verbatim/caderno_unit02.md:34:5. Madonna é de Itália. *(Estados Unidos)* → __________
+verbatim/caderno_unit02.md:35:6. Kate Winslet é da Alemanha. *(Inglaterra)* → __________
+verbatim/caderno_unit02.md:40:1. Onde é Lisboa? → *Em Portugal.*
+verbatim/caderno_unit02.md:41:2. Onde é Hamburgo? → __________
+verbatim/caderno_unit02.md:42:3. Onde é São Paulo? → __________
+verbatim/caderno_unit02.md:43:4. Onde é Madrid? → __________
+verbatim/caderno_unit02.md:44:5. Onde é Luanda? → __________
+verbatim/caderno_unit02.md:46:### E. Sublinhe as frases em que pode substituir *é* por *fica*.
+verbatim/caderno_unit02.md:47:1. Quem é ele?
+verbatim/caderno_unit02.md:48:2. Onde é Boston?
+verbatim/caderno_unit02.md:49:3. O Felipe é do Brasil.
+verbatim/caderno_unit02.md:50:4. Berlim é na Alemanha.
+verbatim/caderno_unit02.md:53:1. A: De onde *és*? — B: Sou de Lisboa.
+verbatim/caderno_unit02.md:55:3. A: ______ de Lisboa? — B: Não, somos do Porto.
+verbatim/caderno_unit02.md:56:4. A: Ele é ______ Brasil? — B: É, sim.
+verbatim/caderno_unit02.md:57:5. A: ______ onde é ela? — B: Da Rússia.
+verbatim/caderno_unit02.md:60:### G. Escreva o pronome no plural.
+verbatim/caderno_unit02.md:68:### H. Complete com *de/da/do/dos* ou *em/na/no/nos*.
+verbatim/caderno_unit02.md:69:1. Coimbra é *em* Portugal.
+verbatim/caderno_unit02.md:70:2. Ela é ______ Angola.
+verbatim/caderno_unit02.md:71:3. Tóquio é ______ Japão.
+verbatim/caderno_unit02.md:72:4. Somos ______ Suécia.
+verbatim/caderno_unit02.md:73:5. Atenas é ______ Grécia.
+verbatim/caderno_unit02.md:74:6. Miami é ______ Estados Unidos.
+verbatim/caderno_unit02.md:75:7. A Vanessa é ______ Rio de Janeiro.
+verbatim/caderno_unit02.md:76:8. O Josh é ______ Estados Unidos.
+verbatim/caderno_unit02.md:79:1. do / Janeiro / de / somos / Rio → *Somos do Rio de Janeiro.*
+verbatim/caderno_unit02.md:80:2. é / em / Paris / Itália / não → __________
+verbatim/caderno_unit02.md:81:3. é / ele / onde / de → __________?
+verbatim/caderno_unit02.md:82:4. são / elas / Portugal / não / de → __________
+verbatim/caderno_unit02.md:84:6. Lisboa / o / é / Paulo / de → __________
+verbatim/caderno_unit02.md:96:### L. Sublinhe as palavras em que a letra *s* é pronunciada como [ʃ].
+verbatim/caderno_unit02.md:99:> *Rodapé:* 6 / 7 — PASSAPORTE PARA PORTUGUÊS · © Lidel – Edições Técnicas, Lda.
+verbatim/notebook_p01-04.md:2:source: notebook.pdf
+verbatim/notebook_p01-04.md:11:related_units: [1, 2]
+verbatim/notebook_p01-04.md:16:> ⚠️ Транскрипция рукописи. Сохранена авторская орфография (включая вероятные ошибки, напр. раздельное написание сотен «quatro centos» вместо «quatrocentos»). Глоссы автора в скобках: (EN)/(RU).
+verbatim/notebook_p01-04.md:18:## Página 1 (без даты) — chamar-se, ser, origem
+verbatim/notebook_p01-04.md:20:**Como se chama?** (formal) → Eu chamo-me / Como se chama
+verbatim/notebook_p01-04.md:21:**Como te chamas?** (informal)
+verbatim/notebook_p01-04.md:23:Conjugação *chamar-se* (coluna direita):
+verbatim/notebook_p01-04.md:24:- tu chamas-te
+verbatim/notebook_p01-04.md:25:- Ela chama-se
+verbatim/notebook_p01-04.md:26:- Ele chama-se
+verbatim/notebook_p01-04.md:27:- Nós chamamo-nos
+verbatim/notebook_p01-04.md:28:- Você chama-se
+verbatim/notebook_p01-04.md:29:- Eles chamam-se
+verbatim/notebook_p01-04.md:30:- Elas chamam-se
+verbatim/notebook_p01-04.md:32:O senhor / a senhora chama-se
+verbatim/notebook_p01-04.md:33:**Como é que o senhor se chama?**
+verbatim/notebook_p01-04.md:34:**Como se chama o senhor?**
+verbatim/notebook_p01-04.md:36:**Qual é a sua nacionalidade?** — Sou…
+verbatim/notebook_p01-04.md:44:- Nós estamos no ativo ⚠️
+verbatim/notebook_p01-04.md:46:**Qual é a sua naturalidade?** — Sou de (Minsk⚠️) cidade = city ⚠️
+verbatim/notebook_p01-04.md:50:## Página 2 (без даты) — prazer, chamar-se, ser, artigo definido
+verbatim/notebook_p01-04.md:65:Conjugação *chamar-se*:
+verbatim/notebook_p01-04.md:66:| | chamar-se |
+verbatim/notebook_p01-04.md:68:| eu | chamo-me |
+verbatim/notebook_p01-04.md:69:| tu | chamas-te |
+verbatim/notebook_p01-04.md:70:| você/ela/ele · o senhor/a senhora | chama-se |
+verbatim/notebook_p01-04.md:72:- **Como te chamas?** — ~~Chamo-me Joaquim?~~ → Eu não me chamo Joaquim
+verbatim/notebook_p01-04.md:73:- **Como se chama?** — Chama-se Teresa Alves? — Ela chama-se Maria Lopes.
+verbatim/notebook_p01-04.md:78:| eu | sou | Eu sou |
+verbatim/notebook_p01-04.md:79:| tu | és | Tu és |
+verbatim/notebook_p01-04.md:80:| você/ele/ela · o senhor/a senhora | é | Ele/ela é · Nós somos · Vocês são · Eles/Elas são |
+verbatim/notebook_p01-04.md:87:- Eles são os nossos Alexandres ⚠️
+verbatim/notebook_p01-04.md:88:- Eu sou o Aleksandr ⚠️
+verbatim/notebook_p01-04.md:92:Ela é a Cristine, é enfermeira ⚠️
+verbatim/notebook_p01-04.md:93:- é – (is) / e – (and)
+verbatim/notebook_p01-04.md:94:- (This) Esta é a Cristine ⚠️ / Esta é cansada ⚠️ (provavelmente «está cansada»)
+verbatim/notebook_p01-04.md:96:## Página 3 — data 2026-02-12, N°2 — vocabulário alfabético
+verbatim/notebook_p01-04.md:109:- G – giro (interesting/nice); gente (people); a gente ≠ agente (police officer); a gente é = 3.ª pessoa sing.; As pessoas são; um elefante grande; humidade (H₂O) ⚠️
+verbatim/notebook_p01-04.md:110:- H – [agá] (nome da letra)
+verbatim/notebook_p01-04.md:113:- K – kavalé❓ (provavelmente nome estrangeiro)
+verbatim/notebook_p01-04.md:122:- T – tarde (late)
+verbatim/notebook_p01-04.md:133:Centenas (ortografia do autor, frequentemente separada):
+verbatim/notebook_p01-04.md:134:- 2 centos = duzentos
+verbatim/notebook_p01-04.md:135:- 3 centos = trezentos
+verbatim/notebook_p01-04.md:136:- 400 quatro centos
+verbatim/notebook_p01-04.md:138:- 600 seis centos
+verbatim/notebook_p01-04.md:139:- 700 sete centos
+verbatim/notebook_p01-04.md:140:- 800 oito centos
+verbatim/notebook_p01-04.md:141:- 900 nove centos
+verbatim/notebook_p01-04.md:142:- 1000 ~~mil centos~~ mil
+verbatim/notebook_p01-04.md:149:- 654 – seis centos e cinquenta e quatro ⚠️ (seiscentos)
+verbatim/notebook_p01-04.md:150:- 1789 – mil e setecentos e oitenta e nove
+verbatim/notebook_p01-04.md:159:Despedidas: Até já! (see you soon) · Até logo! · Até amanhã! · Até sábado! · Até terça! · Até quinta! (most long period) ⚠️
+verbatim/livro_unit01.md:2:source: livro_do_aluno_1.pdf
+verbatim/livro_unit01.md:13:## Cabeçalho da unidade (header) — [book p.10 / phys 11]
+verbatim/livro_unit01.md:16:- **VOCABULÁRIO:** números 0-20, dias da semana
+verbatim/livro_unit01.md:18:- **GRAMÁTICA:** *ser* e *chamar-se*, pronomes pessoais, artigo definido, *como* e *quem*
+verbatim/livro_unit01.md:26:### A. Leia os diálogos e olhe para as imagens. Qual é o diálogo formal? E o informal?
+verbatim/livro_unit01.md:39:- A: Olá! Como te chamas?
+verbatim/livro_unit01.md:44:- A: Quem é ele?
+verbatim/livro_unit01.md:53:- A: Desculpe, é o Rui Nunes?
+verbatim/livro_unit01.md:55:- A: O senhor é o Rui Nunes?
+verbatim/livro_unit01.md:56:- B: Sim, sou eu.
+verbatim/livro_unit01.md:61:> \* Ficheiros áudio disponíveis em www.lidel.pt, até o livro se esgotar ou ser publicada nova edição atualizada ou com alterações
+verbatim/livro_unit01.md:67:### C. Olhe para as fotografias. Pergunte quem é e responda.
+verbatim/livro_unit01.md:70:- — Quem é (ele)?
+verbatim/livro_unit01.md:78:- Linha 1: Madonna, Monica Bellucci, Jackie Chan, Penélope Cruz
+verbatim/livro_unit01.md:79:- Linha 2: Antonio Banderas, Pelé, Cristiano Ronaldo, Claudia Schiffer
+verbatim/livro_unit01.md:80:- Linha 3: José Mourinho, [mulher ⚠️ não identificada], Gérard Depardieu, Hugh Grant
+verbatim/livro_unit01.md:82:⚠️ Nomes das fotografias são inferidos das imagens (não impressos na página, exceto Cristiano Ronaldo citado no exemplo).
+verbatim/livro_unit01.md:98:1. Quem é ela? — a. Bem, obrigada.
+verbatim/livro_unit01.md:99:2. Como se chama? — b. Sou.
+verbatim/livro_unit01.md:107:### F. Leia os diálogos e complete com as palavras da caixa.
+verbatim/livro_unit01.md:109:Caixa de palavras: **como · sim · é · está · tu · te · bem**
+verbatim/livro_unit01.md:119:- A: Tu és o David?
+verbatim/livro_unit01.md:120:- B: ______, sou.
+verbatim/livro_unit01.md:123:- A: Quem é ela?
+verbatim/livro_unit01.md:127:- A: Olá! Como ______ chamas?
+verbatim/livro_unit01.md:154:### 🔊 [áudio A3] I. Ouça os nomes dos dias da semana e escreva os números de acordo com a ordem de audição.
+verbatim/livro_unit01.md:167:- Até à próxima!
+verbatim/livro_unit01.md:168:- Até já!
+verbatim/livro_unit01.md:169:- Até amanhã!
+verbatim/livro_unit01.md:170:- Até logo!
+verbatim/livro_unit01.md:172:(imagem: rapariga a acenar; ao lado, calendário/agenda da semana 09–17)
+verbatim/livro_unit01.md:174:### K. Ponha as expressões por ordem de acordo com o tempo que falta desde agora até ao próximo encontro.
+verbatim/livro_unit01.md:176:Caixas a ordenar: ☐ Até logo! · ☐ Até quinta! · ☐ Até amanhã! · [1] Até já! · ☐ Até terça! · ☐ Até sábado!
+verbatim/livro_unit01.md:180:### 🔊 [áudio A5] A. Ouça e repita as vogais do português.
+verbatim/livro_unit01.md:186:### B. Escreva as palavras da caixa nas colunas respetivas da tabela.
+verbatim/livro_unit01.md:188:Caixa: **domingo · já · sete · dezanove · Inglaterra · dez · logo · próxima**
+verbatim/livro_unit01.md:195:(exemplos pré-preenchidos: bem / como / segunda / obrigado)
+verbatim/livro_unit01.md:210:> *Rodapé:* 12 / 13 — PASSAPORTE PARA PORTUGUÊS · © Lidel – Edições Técnicas, Lda.
+verbatim/livro_unit02.md:2:source: livro_do_aluno_1.pdf
+verbatim/livro_unit02.md:13:## Cabeçalho da unidade (header) — [book p.14 / phys 15]
+verbatim/livro_unit02.md:24:### A. Escreva o nome do seu país em português. ___________
+verbatim/livro_unit02.md:28:### B. Faça a correspondência entre os mapas e os nomes dos países.
+verbatim/livro_unit02.md:36:- ☐ (a) Inglaterra
+verbatim/livro_unit02.md:37:- ☐ a Suécia
+verbatim/livro_unit02.md:42:- ☐ a Grécia
+verbatim/livro_unit02.md:45:- ☐ o México
+verbatim/livro_unit02.md:52:Mapas numerados 1–19 (bandeiras): 1 Polónia, 2 Portugal, 3 Espanha, 4 Índia, 5 Itália, 6 França, 7 Angola, 8 China, 9 Brasil, 10 México, 11 Alemanha, 12 Marrocos, 13 Itália⚠️(repetição? mapa pequeno), 14 Inglaterra, 15 Grécia, 16 Ucrânia, 17 Estados Unidos, 18 Rússia, 19 Suécia.
+verbatim/livro_unit02.md:53:⚠️ A associação número→país é inferida das bandeiras nas imagens (não impressa). Verificar na chave de respostas.
+verbatim/livro_unit02.md:61:### 🔊 [áudio A6] C. De onde é esta música? Ouça e complete com as palavras da caixa.
+verbatim/livro_unit02.md:63:Caixa: **de Portugal / da Rússia / de Marrocos / da Grécia / ~~do Brasil~~** (do Brasil riscado = exemplo usado)
+verbatim/livro_unit02.md:65:1. É *do Brasil*. 2. É __________ 3. É __________ 4. É __________ 5. É __________
+verbatim/livro_unit02.md:67:### D. De onde são estes pratos? Complete com os nomes dos países.
+verbatim/livro_unit02.md:69:1. sashimi — É *do Japão.*
+verbatim/livro_unit02.md:81:Modelo (balões): — De onde é isto? / — É do Japão.
+verbatim/livro_unit02.md:83:Objetos numerados 1–9: 1 lata/dragão (China), 2 cabine telefónica vermelha (Inglaterra), 3 gato da sorte/maneki (Japão), 4 tamancos (Holanda ⚠️), 5 Torre Eiffel (França), 6 Coca-Cola (Estados Unidos), 7 sombrero/prato mexicano (México), 8 máscara (⚠️ Veneza/Itália?), 9 calças de cabedal/lederhosen (Alemanha).
+verbatim/livro_unit02.md:84:⚠️ Países dos objetos inferidos das imagens.
+verbatim/livro_unit02.md:93:- A: De onde são eles?
+verbatim/livro_unit02.md:94:- B: São do Brasil.
+verbatim/livro_unit02.md:97:- A: Vocês são de Inglaterra?
+verbatim/livro_unit02.md:98:- B: Não. Somos da Alemanha.
+verbatim/livro_unit02.md:101:- A: De onde é?
+verbatim/livro_unit02.md:102:- B: Sou da Grécia.
+verbatim/livro_unit02.md:112:1. Atenas é na Grécia. — **[V]** ✗ F  *(exemplo resolvido: X marcado na caixa V = verdadeiro; correto, Atenas fica na Grécia)*
+verbatim/livro_unit02.md:113:2. Milão é em Espanha. — ☐V ☐F
+verbatim/livro_unit02.md:114:3. Deli é no México. — ☐V ☐F
+verbatim/livro_unit02.md:115:4. Miami é nos Estados Unidos. — ☐V ☐F
+verbatim/livro_unit02.md:116:5. Varsóvia é na Ucrânia. — ☐V ☐F
+verbatim/livro_unit02.md:117:6. Estocolmo é na Suécia. — ☐V ☐F
+verbatim/livro_unit02.md:119:(item 1 é o exemplo pré-marcado; itens 2–6 ficam em branco para o aluno)
+verbatim/livro_unit02.md:123:### H. Onde são estas cidades?
+verbatim/livro_unit02.md:125:1. Madrid — *é em Espanha.*
+verbatim/livro_unit02.md:134:1. Moscovo é na Rússia. → *Moscovo fica na Rússia.*
+verbatim/livro_unit02.md:135:2. Berlim é na Alemanha. → __________
+verbatim/livro_unit02.md:136:3. Onde é Lisboa? → __________
+verbatim/livro_unit02.md:137:4. Onde é Sevilha? → __________
+verbatim/livro_unit02.md:143:### J. Use os nomes das cidades do quadro para fazer perguntas ao seu colega.
+verbatim/livro_unit02.md:165:1. 23 + 52 = 75 → *vinte e três mais cinquenta e dois são setenta e cinco*
+verbatim/livro_unit02.md:189:> *Rodapé:* 14 / 15 / 16 / 17 — PASSAPORTE PARA PORTUGUÊS · © Lidel – Edições Técnicas, Lda.
+verbatim/caderno_unit01.md:2:source: caderno_de_exercicio_1.pdf
+verbatim/caderno_unit01.md:13:(Cabeçalho idêntico ao livro: COMUNICAÇÃO cumprimentar, identificar pessoas, apresentar-se, despedir-se · VOCABULÁRIO números 0-20, dias da semana · PRONÚNCIA vogais, sílabas, acento, letra *o* · GRAMÁTICA *ser* e *chamar-se*, pronomes pessoais, artigo definido, *como* e *quem*)
+verbatim/caderno_unit01.md:21:4. Até — d. prazer!
+verbatim/caderno_unit01.md:28:- A: *Como* se chama?
+verbatim/caderno_unit01.md:35:- B: Sim, sou.
+verbatim/caderno_unit01.md:41:- A: ______ é ele?
+verbatim/caderno_unit01.md:44:### C. Complete com os verbos da caixa.
+verbatim/caderno_unit01.md:45:Caixa: **se chama / sou / chama-se / és / é / te chamas**
+verbatim/caderno_unit01.md:53:### D. Escreva as expressões da caixa nos balões. (3 imagens)
+verbatim/caderno_unit01.md:54:Caixa: **Obrigada! · Muito gosto! · Até amanhã!**
+verbatim/caderno_unit01.md:60:1. Como *se* chama?
+verbatim/caderno_unit01.md:61:2. Ele chama-______ Rafael.
+verbatim/caderno_unit01.md:63:4. Como ______ chamas?
+verbatim/caderno_unit01.md:64:5. O senhor chama-______ Rui Guerra?
+verbatim/caderno_unit01.md:66:7. Como ______ chama ela?
+verbatim/caderno_unit01.md:72:4. Ele é ______ Jorge Viegas.
+verbatim/caderno_unit01.md:73:5. Ela chama-se ______ Teresa Pereira.
+verbatim/caderno_unit01.md:76:1. Joana / sou / a → *Sou a Joana.*
+verbatim/caderno_unit01.md:77:2. sei / és / não / quem → __________.
+verbatim/caderno_unit01.md:78:3. próxima / até / à → __________!
+verbatim/caderno_unit01.md:79:4. Ricardo / chama / ele / se → __________?
+verbatim/caderno_unit01.md:81:### H. Escreva as letras que faltam nos dias da semana.
+verbatim/caderno_unit01.md:90:### I. Escreva o dia da semana que falta.
+verbatim/caderno_unit01.md:100:### K. Despedidas e/ou cumprimentos? Assinale com ✓. (tabela, 2 colunas com ícones — aperto de mão / mão aberta a acenar; o aluno marca cada expressão como cumprimento ou despedida. ⚠️ Sem rótulos de texto no original — não se afirma aqui qual ícone é qual.)
+verbatim/caderno_unit01.md:102:2. Até amanhã!
+verbatim/caderno_unit01.md:105:5. Até logo!
+verbatim/caderno_unit01.md:107:### L. Sublinhe as palavras em que a letra *o* é pronunciada como [u].
+verbatim/caderno_unit01.md:108:nove · chamo · cinco · doze · bom
+verbatim/caderno_unit01.md:111:muito · quem · chamas · sábado · desculpe
+verbatim/caderno_unit01.md:116:> *Rodapé:* 4 / 5 — PASSAPORTE PARA PORTUGUÊS · © Lidel – Edições Técnicas, Lda.
+normalized/exercise_templates.json:12:      "example": { "left": ["Quem é ela?", "Como se chama?"], "right": ["É a Rita.", "Chamo-me Nuno."] },
+normalized/exercise_templates.json:17:      "label": "Completar com palavras da caixa",
+normalized/exercise_templates.json:20:      "example": { "bank": ["como","sim","é","está","tu","te","bem"], "item": "Olá! Como ___?", "answer": "está" },
+normalized/exercise_templates.json:28:      "example": { "item": "Ela ___ Teresa.", "verb": "chamar-se", "person": "ela", "answer": "chama-se" },
+normalized/exercise_templates.json:36:      "example": { "item": "Ele é ___ Jorge Viegas.", "answer": "o" },
+normalized/exercise_templates.json:42:      "label": "Completar com de/da/do/dos ou em/na/no/nos",
+normalized/exercise_templates.json:45:      "example": { "item": "Tóquio é ___ Japão.", "answer": "no" },
+normalized/exercise_templates.json:46:      "note": "CHAVE: requer conhecer género+artigo do país. Gerar a partir de countries.json.",
+normalized/exercise_templates.json:54:      "example": { "item": "Ele chama-___ Rafael.", "answer": "se" },
+normalized/exercise_templates.json:62:      "example": { "item": "Berlim é na Alemanha.", "op": "ser->ficar", "answer": "Berlim fica na Alemanha." },
+normalized/exercise_templates.json:70:      "example": { "item": "Madonna é de Itália.", "hint": "Estados Unidos", "answer": "Madonna não é de Itália. É dos Estados Unidos." },
+normalized/exercise_templates.json:78:      "example": { "tokens": ["do","Janeiro","de","somos","Rio"], "answer": "Somos do Rio de Janeiro." },
+normalized/exercise_templates.json:83:      "label": "Ordenar expressões por critério (tempo)",
+normalized/exercise_templates.json:86:      "example": { "items": ["Até já!","Até amanhã!","Até sábado!"], "criterion": "menos -> mais tempo" },
+normalized/exercise_templates.json:94:      "example": { "item": "23 + 52 = ?", "answer": "setenta e cinco", "full": "vinte e três mais cinquenta e dois são setenta e cinco" },
+normalized/exercise_templates.json:107:      "label": "Escrever o termo que falta na sequência",
+normalized/exercise_templates.json:118:      "example": { "item": "Miami é nos Estados Unidos.", "answer": true },
+normalized/exercise_templates.json:131:      "id": "listen-and-do",
+normalized/exercise_templates.json:135:      "note": "OPEN QUESTION: itens atrás do ícone audio (A1..A9). Opções: (a) substituir por TTS pt-PT, (b) converter em leitura/escrita sem áudio, (c) omitir. A maioria tem variante não-áudio equivalente no caderno.",
+normalized/countries.json:4:    "source": ["livro:u2:p14-17", "caderno:u2:p6-7"],
+normalized/countries.json:6:      "prep_origin": "de + article -> de/da/do/dos (De onde e? Sou ___)",
+normalized/countries.json:7:      "prep_location": "em + article -> em/na/no/nos (Onde fica? Fica ___)"
+normalized/countries.json:14:    { "name": "França",         "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "'(a) França'; tambem ocorre da França/na França", "confidence": "medium" },
+normalized/countries.json:15:    { "name": "Inglaterra",     "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "'(a) Inglaterra'; de Inglaterra, em Inglaterra", "confidence": "high" },
+normalized/countries.json:16:    { "name": "Suécia",         "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+normalized/countries.json:17:    { "name": "Alemanha",       "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+normalized/countries.json:18:    { "name": "Polónia",        "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+normalized/countries.json:19:    { "name": "Rússia",         "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+normalized/countries.json:20:    { "name": "Ucrânia",        "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+normalized/countries.json:21:    { "name": "Grécia",         "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+normalized/countries.json:22:    { "name": "Estados Unidos", "gender": "plural",   "article": "os",       "prep_origin": "dos","prep_location": "nos","confidence": "high" },
+normalized/countries.json:23:    { "name": "Brasil",         "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "confidence": "high" },
+normalized/countries.json:24:    { "name": "México",         "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "confidence": "high" },
+normalized/countries.json:27:    { "name": "China",          "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+normalized/countries.json:28:    { "name": "Japão",          "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "confidence": "high" },
+normalized/countries.json:29:    { "name": "Índia",          "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+normalized/countries.json:30:    { "name": "Canadá",         "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "note": "aparece em caderno u2 C (correções)", "confidence": "high" }
+normalized/grammar_unit01-02.json:2:  "_meta": { "units": [1, 2], "source": ["livro:u1-2", "caderno:u1-2", "notebook:p1-4"] },
+normalized/grammar_unit01-02.json:11:        "with_names": "Usa-se antes de nomes próprios: 'Sou o Paulo', 'És a Clara', 'Ela chama-se a Teresa'.",
+normalized/grammar_unit01-02.json:12:        "examples": ["Sou o Tiago.", "É a Rita.", "Sou a Inês.", "Eu sou o Aleksandr."]
+normalized/grammar_unit01-02.json:14:      "source": "livro:u1:p10 + caderno:u1:F + notebook:p2",
+normalized/grammar_unit01-02.json:19:      "title": "Verbo SER — Presente do Indicativo",
+normalized/grammar_unit01-02.json:23:        "eu": "sou", "tu": "és", "voce_ele_ela": "é",
+normalized/grammar_unit01-02.json:24:        "nos": "somos", "voces_eles_elas": "são"
+normalized/grammar_unit01-02.json:26:      "source": "livro:u1 + notebook:p2",
+normalized/grammar_unit01-02.json:30:      "id": "gram:chamar-se:presente",
+normalized/grammar_unit01-02.json:35:        "eu": "chamo-me", "tu": "chamas-te", "voce_ele_ela": "chama-se",
+normalized/grammar_unit01-02.json:36:        "nos": "chamamo-nos", "voces_eles_elas": "chamam-se"
+normalized/grammar_unit01-02.json:38:      "questions": ["Como te chamas? (informal)", "Como se chama? (formal)", "Como é que o senhor se chama?"],
+normalized/grammar_unit01-02.json:39:      "source": "livro:u1 + caderno:u1:E + notebook:p1-2",
+normalized/grammar_unit01-02.json:49:        "treatment_scale": ["tu (informal)", "você (formal médio)", "o senhor / a senhora (mais formal)"]
+normalized/grammar_unit01-02.json:51:      "source": "livro:u1-2 + notebook:p1,p3",
+normalized/grammar_unit01-02.json:60:        "rule": "Para localizar lugares/cidades, 'ser' e 'ficar' são intercambiáveis: 'Lisboa é em Portugal' = 'Lisboa fica em Portugal'.",
+normalized/grammar_unit01-02.json:62:          { "ser": "Moscovo é na Rússia.", "ficar": "Moscovo fica na Rússia." },
+normalized/grammar_unit01-02.json:63:          { "ser": "Berlim é na Alemanha.", "ficar": "Berlim fica na Alemanha." }
+normalized/grammar_unit01-02.json:65:        "not_interchangeable": "Não se substitui quando 'ser' = identidade/origem: 'Quem é ele?', 'O Felipe é do Brasil.'"
+normalized/grammar_unit01-02.json:67:      "source": "livro:u2:p16 + caderno:u2:E,I",
+normalized/grammar_unit01-02.json:76:        "pattern": "De onde é? — Sou ___",
+normalized/grammar_unit01-02.json:77:        "contractions": { "de+o": "do", "de+a": "da", "de+os": "dos", "de+as": "das", "de (sem artigo)": "de" },
+normalized/grammar_unit01-02.json:78:        "examples": ["Sou do Brasil.", "Somos da Alemanha.", "É de Portugal.", "É da Grécia.", "É dos Estados Unidos.", "É do Japão."]
+normalized/grammar_unit01-02.json:80:      "source": "livro:u2:p15-16 + caderno:u2:C,F,H,I",
+normalized/grammar_unit01-02.json:89:        "pattern": "Onde fica? — Fica ___ / Onde é? — É ___",
+normalized/grammar_unit01-02.json:90:        "contractions": { "em+o": "no", "em+a": "na", "em+os": "nos", "em+as": "nas", "em (sem artigo)": "em" },
+normalized/grammar_unit01-02.json:91:        "examples": ["É em Portugal.", "É na Grécia.", "É no México.", "É nos Estados Unidos.", "Coimbra é em Portugal.", "Atenas é na Grécia."]
+normalized/grammar_unit01-02.json:93:      "source": "livro:u2:p16-17 + caderno:u2:D,H",
+normalized/grammar_unit01-02.json:103:          { "word": "como", "use": "Como se chama? / Como está?" },
+normalized/grammar_unit01-02.json:104:          { "word": "quem", "use": "Quem é ele?" },
+normalized/grammar_unit01-02.json:106:          { "word": "de onde", "use": "De onde é?" },
+normalized/grammar_unit01-02.json:107:          { "word": "qual", "use": "Qual é a sua nacionalidade? (notebook)" }
+normalized/grammar_unit01-02.json:110:      "source": "livro:u1-2 + notebook:p1-2",
+normalized/SCHEMA.md:3:Derived from the verified verbatim layer. Every record carries `source` provenance
+normalized/SCHEMA.md:12:  "gender": "m|f|none|plural",      // none = no article (Portugal, Marrocos)
+normalized/SCHEMA.md:18:  "source": "livro:u2:p14",
+normalized/SCHEMA.md:29:  "prep_origin": "do",            // de+article: de/da/do/dos  -> "Sou DO Brasil"
+normalized/SCHEMA.md:30:  "prep_location": "no",          // em+article: em/na/no/nos   -> "fica NO Brasil"
+normalized/SCHEMA.md:32:  "source": "livro:u2:p14"
+normalized/SCHEMA.md:36:- **de + o/a/os/as** → do / da / dos / das  (origin: *De onde é? — Sou ___*)
+normalized/SCHEMA.md:37:- **em + o/a/os/as** → no / na / nos / nas  (location: *Onde fica? — Fica ___*)
+normalized/SCHEMA.md:39:  *(Espanha/Itália/França/Inglaterra: book prints article as "(a)" = optional; in
+normalized/SCHEMA.md:46:  "title": "Verbo SER — Presente do Indicativo",
+normalized/SCHEMA.md:50:  "source": "livro:u1:p10 + notebook:p2",
+normalized/SCHEMA.md:55:## exercise template (drives generated tasks in the app)
+normalized/SCHEMA.md:63:  "generatable": true,            // can the app auto-generate more items of this type?
+
+codex
+I’ve finished the substantive checks. The only normalized-data issue I see is minor orthography in metadata notes; the actual country genders/articles/prepositions and the core conjugation/number tables look consistent. The real language errors are concentrated in the handwritten notebook, as expected.
+exec
+/bin/zsh -lc "nl -ba normalized/countries.json | sed -n '1,40p'" in /Users/aleksandrmedvedev/dev/personal/lingvago2/extraction
+ succeeded in 0ms:
+     1	{
+     2	  "_meta": {
+     3	    "description": "Countries from livro/caderno unit 2 with gender, article and origin/location prepositions. Drives gender->article->preposition drills.",
+     4	    "source": ["livro:u2:p14-17", "caderno:u2:p6-7"],
+     5	    "rules": {
+     6	      "prep_origin": "de + article -> de/da/do/dos (De onde e? Sou ___)",
+     7	      "prep_location": "em + article -> em/na/no/nos (Onde fica? Fica ___)"
+     8	    }
+     9	  },
+    10	  "countries": [
+    11	    { "name": "Portugal",       "gender": "none",     "article": "none",     "prep_origin": "de", "prep_location": "em", "note": "sem artigo", "confidence": "high" },
+    12	    { "name": "Espanha",        "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "livro imprime '(a) Espanha'; em origem/local normalmente sem artigo: de Espanha, em Espanha", "confidence": "high" },
+    13	    { "name": "Itália",         "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "'(a) Itália'; de Itália, em Itália", "confidence": "high" },
+    14	    { "name": "França",         "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "'(a) França'; tambem ocorre da França/na França", "confidence": "medium" },
+    15	    { "name": "Inglaterra",     "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "'(a) Inglaterra'; de Inglaterra, em Inglaterra", "confidence": "high" },
+    16	    { "name": "Suécia",         "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    17	    { "name": "Alemanha",       "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    18	    { "name": "Polónia",        "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    19	    { "name": "Rússia",         "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    20	    { "name": "Ucrânia",        "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    21	    { "name": "Grécia",         "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    22	    { "name": "Estados Unidos", "gender": "plural",   "article": "os",       "prep_origin": "dos","prep_location": "nos","confidence": "high" },
+    23	    { "name": "Brasil",         "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "confidence": "high" },
+    24	    { "name": "México",         "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "confidence": "high" },
+    25	    { "name": "Marrocos",       "gender": "none",     "article": "none",     "prep_origin": "de", "prep_location": "em", "note": "sem artigo", "confidence": "high" },
+    26	    { "name": "Angola",         "gender": "none",     "article": "none",     "prep_origin": "de", "prep_location": "em", "note": "sem artigo", "confidence": "high" },
+    27	    { "name": "China",          "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    28	    { "name": "Japão",          "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "confidence": "high" },
+    29	    { "name": "Índia",          "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    30	    { "name": "Canadá",         "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "note": "aparece em caderno u2 C (correções)", "confidence": "high" }
+    31	  ]
+    32	}
+
+exec
+/bin/zsh -lc "nl -ba normalized/vocab_unit01-02.json | sed -n '1,75p'" in /Users/aleksandrmedvedev/dev/personal/lingvago2/extraction
+exec
+/bin/zsh -lc "nl -ba normalized/exercise_templates.json | sed -n '1,150p'" in /Users/aleksandrmedvedev/dev/personal/lingvago2/extraction
+exec
+/bin/zsh -lc "nl -ba normalized/grammar_unit01-02.json | sed -n '1,125p'" in /Users/aleksandrmedvedev/dev/personal/lingvago2/extraction
+ succeeded in 0ms:
+     1	{
+     2	  "_meta": { "units": [1, 2], "source": ["livro:u1-2", "caderno:u1-2", "notebook:p3-4"] },
+     3	  "numbers": [
+     4	    {"n":0,"pt":"zero"},{"n":1,"pt":"um"},{"n":2,"pt":"dois"},{"n":3,"pt":"três"},{"n":4,"pt":"quatro"},
+     5	    {"n":5,"pt":"cinco"},{"n":6,"pt":"seis"},{"n":7,"pt":"sete"},{"n":8,"pt":"oito"},{"n":9,"pt":"nove"},
+     6	    {"n":10,"pt":"dez"},{"n":11,"pt":"onze"},{"n":12,"pt":"doze"},{"n":13,"pt":"treze"},{"n":14,"pt":"catorze"},
+     7	    {"n":15,"pt":"quinze"},{"n":16,"pt":"dezasseis"},{"n":17,"pt":"dezassete"},{"n":18,"pt":"dezoito"},{"n":19,"pt":"dezanove"},
+     8	    {"n":20,"pt":"vinte"},{"n":21,"pt":"vinte e um"},{"n":30,"pt":"trinta"},{"n":40,"pt":"quarenta"},{"n":50,"pt":"cinquenta"},
+     9	    {"n":60,"pt":"sessenta"},{"n":70,"pt":"setenta"},{"n":80,"pt":"oitenta"},{"n":90,"pt":"noventa"},{"n":100,"pt":"cem"},
+    10	    {"n":200,"pt":"duzentos"},{"n":300,"pt":"trezentos"},{"n":400,"pt":"quatrocentos"},{"n":500,"pt":"quinhentos"},
+    11	    {"n":600,"pt":"seiscentos"},{"n":700,"pt":"setecentos"},{"n":800,"pt":"oitocentos"},{"n":900,"pt":"novecentos"},
+    12	    {"n":1000,"pt":"mil"},{"n":1000000,"pt":"milhão"},
+    13	    {"_examples":[
+    14	      {"n":75,"pt":"setenta e cinco"},{"n":1789,"pt":"mil setecentos e oitenta e nove"},
+    15	      {"n":2101,"pt":"dois mil cento e um"},{"n":1115115,"pt":"um milhão cento e quinze mil cento e quinze"}
+    16	    ],"_note":"100=cem isolado; 101+=cento e um...; conjunção 'e' obrigatória entre dezenas e unidades (vinte e três).","source":"notebook:p4 (verificado contra livro u2)"}
+    17	  ],
+    18	  "weekdays": [
+    19	    {"pt":"segunda-feira"},{"pt":"terça-feira"},{"pt":"quarta-feira"},{"pt":"quinta-feira"},
+    20	    {"pt":"sexta-feira"},{"pt":"sábado","gender":"m","article":"o"},{"pt":"domingo","gender":"m","article":"o"}
+    21	  ],
+    22	  "greetings": [
+    23	    {"pt":"Olá!","reg":"informal"},{"pt":"Bom dia!"},{"pt":"Boa tarde!"},{"pt":"Boa noite!"},
+    24	    {"pt":"Tudo bem?","reg":"informal"},{"pt":"Como está?","reg":"formal"},
+    25	    {"pt":"Muito prazer!"},{"pt":"Muito gosto!","note":"= Muito prazer!"},
+    26	    {"pt":"Bem-vindo!","gender":"m"},{"pt":"Bem-vinda!","gender":"f"},
+    27	    {"pt":"Obrigado!","gender":"m"},{"pt":"Obrigada!","gender":"f"}
+    28	  ],
+    29	  "farewells": [
+    30	    {"pt":"Adeus!"},{"pt":"Até já!"},{"pt":"Até logo!"},{"pt":"Até amanhã!"},
+    31	    {"pt":"Até à próxima!"},{"pt":"Até terça!"},{"pt":"Até sábado!"},{"pt":"Até quinta!"}
+    32	  ],
+    33	  "nouns_with_gender": {
+    34	    "_note": "Da lista alfabética do notebook (p3); GÉNERO INFERIDO pela forma padrão do português, confidence=medium até confirmar.",
+    35	    "items": [
+    36	      {"pt":"árvore","gender":"f","article":"a","en":"tree","confidence":"medium"},
+    37	      {"pt":"preço","gender":"m","article":"o","en":"price","confidence":"medium"},
+    38	      {"pt":"dedo","gender":"m","article":"o","en":"finger","confidence":"medium"},
+    39	      {"pt":"elefante","gender":"m","article":"o","en":"elephant","confidence":"medium"},
+    40	      {"pt":"ideia","gender":"f","article":"a","en":"idea","confidence":"medium"},
+    41	      {"pt":"fogo","gender":"m","article":"o","en":"fire","plural":"os fogos","confidence":"medium"},
+    42	      {"pt":"gente","gender":"f","article":"a","en":"people","note":"a gente = 3.ª pess. sing.; ≠ agente","confidence":"medium"},
+    43	      {"pt":"idade","gender":"f","article":"a","en":"age","confidence":"medium"},
+    44	      {"pt":"jogo","gender":"m","article":"o","en":"game","plural":"os jogos","confidence":"medium"},
+    45	      {"pt":"limão","gender":"m","article":"o","en":"lemon","confidence":"medium"},
+    46	      {"pt":"filho","gender":"m","article":"o","en":"son","confidence":"medium"},
+    47	      {"pt":"filha","gender":"f","article":"a","en":"daughter","confidence":"medium"},
+    48	      {"pt":"mão","gender":"f","article":"a","en":"hand","note":"exceção: -ão feminino","confidence":"medium"},
+    49	      {"pt":"perna","gender":"f","article":"a","en":"leg","confidence":"medium"},
+    50	      {"pt":"rosto","gender":"m","article":"o","en":"face","confidence":"medium"},
+    51	      {"pt":"porta","gender":"f","article":"a","en":"door","confidence":"medium"},
+    52	      {"pt":"escola","gender":"f","article":"a","en":"school","confidence":"medium"},
+    53	      {"pt":"universidade","gender":"f","article":"a","en":"university","confidence":"medium"},
+    54	      {"pt":"táxi","gender":"m","article":"o","en":"taxi","confidence":"medium"},
+    55	      {"pt":"exame","gender":"m","article":"o","en":"exam","confidence":"medium"},
+    56	      {"pt":"xadrez","gender":"m","article":"o","en":"chess","confidence":"medium"}
+    57	    ]
+    58	  }
+    59	}
+
+ succeeded in 0ms:
+     1	{
+     2	  "_meta": { "units": [1, 2], "source": ["livro:u1-2", "caderno:u1-2", "notebook:p1-4"] },
+     3	  "grammar": [
+     4	    {
+     5	      "id": "gram:artigo-definido",
+     6	      "title": "Artigo definido",
+     7	      "unit": 1,
+     8	      "kind": "rule",
+     9	      "data": {
+    10	        "table": { "masculino": "o", "feminino": "a", "masc_plural": "os", "fem_plural": "as" },
+    11	        "with_names": "Usa-se antes de nomes próprios: 'Sou o Paulo', 'És a Clara', 'Ela chama-se a Teresa'.",
+    12	        "examples": ["Sou o Tiago.", "É a Rita.", "Sou a Inês.", "Eu sou o Aleksandr."]
+    13	      },
+    14	      "source": "livro:u1:p10 + caderno:u1:F + notebook:p2",
+    15	      "confidence": "high"
+    16	    },
+    17	    {
+    18	      "id": "gram:ser:presente",
+    19	      "title": "Verbo SER — Presente do Indicativo",
+    20	      "unit": 1,
+    21	      "kind": "conjugation",
+    22	      "data": {
+    23	        "eu": "sou", "tu": "és", "voce_ele_ela": "é",
+    24	        "nos": "somos", "voces_eles_elas": "são"
+    25	      },
+    26	      "source": "livro:u1 + notebook:p2",
+    27	      "confidence": "high"
+    28	    },
+    29	    {
+    30	      "id": "gram:chamar-se:presente",
+    31	      "title": "Verbo CHAMAR-SE (pronominal) — Presente",
+    32	      "unit": 1,
+    33	      "kind": "conjugation",
+    34	      "data": {
+    35	        "eu": "chamo-me", "tu": "chamas-te", "voce_ele_ela": "chama-se",
+    36	        "nos": "chamamo-nos", "voces_eles_elas": "chamam-se"
+    37	      },
+    38	      "questions": ["Como te chamas? (informal)", "Como se chama? (formal)", "Como é que o senhor se chama?"],
+    39	      "source": "livro:u1 + caderno:u1:E + notebook:p1-2",
+    40	      "confidence": "high"
+    41	    },
+    42	    {
+    43	      "id": "gram:pronomes-pessoais",
+    44	      "title": "Pronomes pessoais + formas de tratamento",
+    45	      "unit": 1,
+    46	      "kind": "rule",
+    47	      "data": {
+    48	        "pronouns": ["eu", "tu", "você/ele/ela", "nós", "vocês/eles/elas"],
+    49	        "treatment_scale": ["tu (informal)", "você (formal médio)", "o senhor / a senhora (mais formal)"]
+    50	      },
+    51	      "source": "livro:u1-2 + notebook:p1,p3",
+    52	      "confidence": "high"
+    53	    },
+    54	    {
+    55	      "id": "gram:ser-vs-ficar",
+    56	      "title": "SER vs FICAR (localização)",
+    57	      "unit": 2,
+    58	      "kind": "contrast",
+    59	      "data": {
+    60	        "rule": "Para localizar lugares/cidades, 'ser' e 'ficar' são intercambiáveis: 'Lisboa é em Portugal' = 'Lisboa fica em Portugal'.",
+    61	        "examples": [
+    62	          { "ser": "Moscovo é na Rússia.", "ficar": "Moscovo fica na Rússia." },
+    63	          { "ser": "Berlim é na Alemanha.", "ficar": "Berlim fica na Alemanha." }
+    64	        ],
+    65	        "not_interchangeable": "Não se substitui quando 'ser' = identidade/origem: 'Quem é ele?', 'O Felipe é do Brasil.'"
+    66	      },
+    67	      "source": "livro:u2:p16 + caderno:u2:E,I",
+    68	      "confidence": "high"
+    69	    },
+    70	    {
+    71	      "id": "gram:prep-de-origem",
+    72	      "title": "Preposição DE (origem) + contração com artigo",
+    73	      "unit": 2,
+    74	      "kind": "contraction-table",
+    75	      "data": {
+    76	        "pattern": "De onde é? — Sou ___",
+    77	        "contractions": { "de+o": "do", "de+a": "da", "de+os": "dos", "de+as": "das", "de (sem artigo)": "de" },
+    78	        "examples": ["Sou do Brasil.", "Somos da Alemanha.", "É de Portugal.", "É da Grécia.", "É dos Estados Unidos.", "É do Japão."]
+    79	      },
+    80	      "source": "livro:u2:p15-16 + caderno:u2:C,F,H,I",
+    81	      "confidence": "high"
+    82	    },
+    83	    {
+    84	      "id": "gram:prep-em-local",
+    85	      "title": "Preposição EM (localização) + contração com artigo",
+    86	      "unit": 2,
+    87	      "kind": "contraction-table",
+    88	      "data": {
+    89	        "pattern": "Onde fica? — Fica ___ / Onde é? — É ___",
+    90	        "contractions": { "em+o": "no", "em+a": "na", "em+os": "nos", "em+as": "nas", "em (sem artigo)": "em" },
+    91	        "examples": ["É em Portugal.", "É na Grécia.", "É no México.", "É nos Estados Unidos.", "Coimbra é em Portugal.", "Atenas é na Grécia."]
+    92	      },
+    93	      "source": "livro:u2:p16-17 + caderno:u2:D,H",
+    94	      "confidence": "high"
+    95	    },
+    96	    {
+    97	      "id": "gram:interrogativos",
+    98	      "title": "Interrogativos: como, quem, onde, de onde, qual",
+    99	      "unit": 2,
+   100	      "kind": "rule",
+   101	      "data": {
+   102	        "items": [
+   103	          { "word": "como", "use": "Como se chama? / Como está?" },
+   104	          { "word": "quem", "use": "Quem é ele?" },
+   105	          { "word": "onde", "use": "Onde fica Lisboa?" },
+   106	          { "word": "de onde", "use": "De onde é?" },
+   107	          { "word": "qual", "use": "Qual é a sua nacionalidade? (notebook)" }
+   108	        ]
+   109	      },
+   110	      "source": "livro:u1-2 + notebook:p1-2",
+   111	      "confidence": "high"
+   112	    }
+   113	  ]
+   114	}
+
+ succeeded in 0ms:
+     1	{
+     2	  "_meta": {
+     3	    "description": "Exercise-type taxonomy harvested from units 1-2 (livro + caderno). Each type = a generator the app can use to produce many items. 'needs_audio' marks the open audio question.",
+     4	    "units": [1, 2]
+     5	  },
+     6	  "types": [
+     7	    {
+     8	      "id": "match",
+     9	      "label": "Correspondência (colunas)",
+    10	      "skill": ["recognition"],
+    11	      "generatable": true, "needs_audio": false,
+    12	      "example": { "left": ["Quem é ela?", "Como se chama?"], "right": ["É a Rita.", "Chamo-me Nuno."] },
+    13	      "origins": ["livro:u1:E", "caderno:u1:A"]
+    14	    },
+    15	    {
+    16	      "id": "gap-wordbank",
+    17	      "label": "Completar com palavras da caixa",
+    18	      "skill": ["vocab", "syntax"],
+    19	      "generatable": true, "needs_audio": false,
+    20	      "example": { "bank": ["como","sim","é","está","tu","te","bem"], "item": "Olá! Como ___?", "answer": "está" },
+    21	      "origins": ["livro:u1:F", "livro:u2:C,D", "caderno:u1:C,D"]
+    22	    },
+    23	    {
+    24	      "id": "complete-verb",
+    25	      "label": "Completar com a forma verbal correta",
+    26	      "skill": ["conjugation"],
+    27	      "generatable": true, "needs_audio": false,
+    28	      "example": { "item": "Ela ___ Teresa.", "verb": "chamar-se", "person": "ela", "answer": "chama-se" },
+    29	      "origins": ["caderno:u1:C", "caderno:u2:F"]
+    30	    },
+    31	    {
+    32	      "id": "complete-article",
+    33	      "label": "Completar com o / a (onde necessário)",
+    34	      "skill": ["article", "gender"],
+    35	      "generatable": true, "needs_audio": false,
+    36	      "example": { "item": "Ele é ___ Jorge Viegas.", "answer": "o" },
+    37	      "note": "Inclui casos de artigo-zero (Marrocos, Angola, nomes sem artigo).",
+    38	      "origins": ["caderno:u1:F"]
+    39	    },
+    40	    {
+    41	      "id": "complete-prep",
+    42	      "label": "Completar com de/da/do/dos ou em/na/no/nos",
+    43	      "skill": ["preposition", "article", "gender"],
+    44	      "generatable": true, "needs_audio": false,
+    45	      "example": { "item": "Tóquio é ___ Japão.", "answer": "no" },
+    46	      "note": "CHAVE: requer conhecer género+artigo do país. Gerar a partir de countries.json.",
+    47	      "origins": ["caderno:u2:H"]
+    48	    },
+    49	    {
+    50	      "id": "complete-me-te-se",
+    51	      "label": "Completar com me / te / se (pronome reflexo)",
+    52	      "skill": ["pronoun", "conjugation"],
+    53	      "generatable": true, "needs_audio": false,
+    54	      "example": { "item": "Ele chama-___ Rafael.", "answer": "se" },
+    55	      "origins": ["caderno:u1:E"]
+    56	    },
+    57	    {
+    58	      "id": "transform",
+    59	      "label": "Reescrever (ser -> ficar, singular -> plural)",
+    60	      "skill": ["transformation"],
+    61	      "generatable": true, "needs_audio": false,
+    62	      "example": { "item": "Berlim é na Alemanha.", "op": "ser->ficar", "answer": "Berlim fica na Alemanha." },
+    63	      "origins": ["livro:u2:I", "caderno:u2:G"]
+    64	    },
+    65	    {
+    66	      "id": "correct-sentence",
+    67	      "label": "Corrigir a frase (com pista)",
+    68	      "skill": ["preposition", "knowledge"],
+    69	      "generatable": true, "needs_audio": false,
+    70	      "example": { "item": "Madonna é de Itália.", "hint": "Estados Unidos", "answer": "Madonna não é de Itália. É dos Estados Unidos." },
+    71	      "origins": ["caderno:u2:C"]
+    72	    },
+    73	    {
+    74	      "id": "order-words",
+    75	      "label": "Ordenar palavras para formar a frase",
+    76	      "skill": ["syntax"],
+    77	      "generatable": true, "needs_audio": false,
+    78	      "example": { "tokens": ["do","Janeiro","de","somos","Rio"], "answer": "Somos do Rio de Janeiro." },
+    79	      "origins": ["caderno:u1:G", "caderno:u2:I"]
+    80	    },
+    81	    {
+    82	      "id": "order-time",
+    83	      "label": "Ordenar expressões por critério (tempo)",
+    84	      "skill": ["vocab"],
+    85	      "generatable": true, "needs_audio": false,
+    86	      "example": { "items": ["Até já!","Até amanhã!","Até sábado!"], "criterion": "menos -> mais tempo" },
+    87	      "origins": ["livro:u1:K"]
+    88	    },
+    89	    {
+    90	      "id": "number-spell",
+    91	      "label": "Escrever números por extenso / fazer contas",
+    92	      "skill": ["numbers"],
+    93	      "generatable": true, "needs_audio": false,
+    94	      "example": { "item": "23 + 52 = ?", "answer": "setenta e cinco", "full": "vinte e três mais cinquenta e dois são setenta e cinco" },
+    95	      "origins": ["livro:u1:H", "livro:u2:L", "caderno:u1:J", "caderno:u2:J"]
+    96	    },
+    97	    {
+    98	      "id": "spelling-fill",
+    99	      "label": "Completar as letras que faltam",
+   100	      "skill": ["spelling"],
+   101	      "generatable": true, "needs_audio": false,
+   102	      "example": { "item": "S _ B _ _ _", "answer": "sábado" },
+   103	      "origins": ["caderno:u1:H", "caderno:u2:B"]
+   104	    },
+   105	    {
+   106	      "id": "sequence-fill",
+   107	      "label": "Escrever o termo que falta na sequência",
+   108	      "skill": ["vocab", "numbers"],
+   109	      "generatable": true, "needs_audio": false,
+   110	      "example": { "seq": ["trinta e três","___","noventa e nove"], "answer": "sessenta e seis" },
+   111	      "origins": ["caderno:u1:I", "caderno:u2:J"]
+   112	    },
+   113	    {
+   114	      "id": "true-false",
+   115	      "label": "Verdadeiro ou falso (factual + gramática)",
+   116	      "skill": ["preposition", "knowledge"],
+   117	      "generatable": true, "needs_audio": false,
+   118	      "example": { "item": "Miami é nos Estados Unidos.", "answer": true },
+   119	      "origins": ["livro:u2:G"]
+   120	    },
+   121	    {
+   122	      "id": "pron-underline",
+   123	      "label": "Sublinhar sílaba tónica / som específico",
+   124	      "skill": ["pronunciation"],
+   125	      "generatable": true, "needs_audio": "optional",
+   126	      "example": { "item": "domingo", "task": "[u]?", "answer": "doming[u]" },
+   127	      "note": "Funciona sem áudio como exercício visual; áudio só reforça.",
+   128	      "origins": ["livro:u1:PronB,C,D,E", "livro:u2:PronA-D", "caderno:u1:L,M,N", "caderno:u2:K,L"]
+   129	    },
+   130	    {
+   131	      "id": "listen-and-do",
+   132	      "label": "Ouça e ... (repetir / numerar / completar)",
+   133	      "skill": ["listening"],
+   134	      "generatable": false, "needs_audio": true,
+   135	      "note": "OPEN QUESTION: itens atrás do ícone audio (A1..A9). Opções: (a) substituir por TTS pt-PT, (b) converter em leitura/escrita sem áudio, (c) omitir. A maioria tem variante não-áudio equivalente no caderno.",
+   136	      "origins": ["livro:u1:A1,A2,A3,A4,A5", "livro:u2:A6,A7,A8,A9"]
+   137	    }
+   138	  ]
+   139	}
+
+codex
+[SEVERITY low] normalized/countries.json:6 | `De onde e?` | missing diacritic changes correct verb form `é` to conjunction-like `e` | `De onde é?`
+
+[SEVERITY low] normalized/countries.json:14 | `tambem` | missing acute accent in PT spelling | `também`
+
+[SEVERITY med] verbatim/notebook_p01-04.md:94 | [NOTEBOOK] `Esta é cansada` | temporary state requires `estar`, not `ser` | `Esta está cansada`
+
+[SEVERITY med] verbatim/notebook_p01-04.md:134-141 | [NOTEBOOK] `2 centos`, `3 centos`, `quatro centos`, `seis centos`, `sete centos`, `oito centos`, `nove centos` | hundreds are single lexical forms in PT, not separated as `X centos` | `duzentos`, `trezentos`, `quatrocentos`, `seiscentos`, `setecentos`, `oitocentos`, `novecentos`
+
+[SEVERITY med] verbatim/notebook_p01-04.md:149 | [NOTEBOOK] `seis centos e cinquenta e quatro` | `600` is `seiscentos`, one word | `seiscentos e cinquenta e quatro`
+
+[SEVERITY low] verbatim/notebook_p01-04.md:150 | [NOTEBOOK] `mil e setecentos e oitenta e nove` | with thousands followed by hundreds, standard PT omits `e` after `mil` | `mil setecentos e oitenta e nove`
+
+VERDICT: 6 ISSUES
+tokens used
+56,322
+[SEVERITY low] normalized/countries.json:6 | `De onde e?` | missing diacritic changes correct verb form `é` to conjunction-like `e` | `De onde é?`
+
+[SEVERITY low] normalized/countries.json:14 | `tambem` | missing acute accent in PT spelling | `também`
+
+[SEVERITY med] verbatim/notebook_p01-04.md:94 | [NOTEBOOK] `Esta é cansada` | temporary state requires `estar`, not `ser` | `Esta está cansada`
+
+[SEVERITY med] verbatim/notebook_p01-04.md:134-141 | [NOTEBOOK] `2 centos`, `3 centos`, `quatro centos`, `seis centos`, `sete centos`, `oito centos`, `nove centos` | hundreds are single lexical forms in PT, not separated as `X centos` | `duzentos`, `trezentos`, `quatrocentos`, `seiscentos`, `setecentos`, `oitocentos`, `novecentos`
+
+[SEVERITY med] verbatim/notebook_p01-04.md:149 | [NOTEBOOK] `seis centos e cinquenta e quatro` | `600` is `seiscentos`, one word | `seiscentos e cinquenta e quatro`
+
+[SEVERITY low] verbatim/notebook_p01-04.md:150 | [NOTEBOOK] `mil e setecentos e oitenta e nove` | with thousands followed by hundreds, standard PT omits `e` after `mil` | `mil setecentos e oitenta e nove`
+
+VERDICT: 6 ISSUES

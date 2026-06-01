@@ -1,0 +1,16 @@
+You are a European Portuguese (PT-PT) linguistic validator. Review the extracted A1 textbook data for anything that CONTRADICTS the rules of European Portuguese. Judge ONLY the Portuguese itself (not any scan).
+
+Read ALL files matching verbatim/livro_*.md and the files in normalized/ (countries.json, grammar_unit01-02.json, vocab_unit01-02.json). Use shell/grep to enumerate then read them.
+
+Check for genuine rule violations only:
+1. GENDER/ARTICLE agreement (o masc / a fem; a mão is fem; o Brasil; Portugal/Marrocos/Angola no article).
+2. PREPOSITION CONTRACTIONS de+o=do, de+a=da, de+os=dos; em+o=no, em+a=na, em+os=nos; a+o=ao, a+a=à. Flag wrong ones in tables/examples.
+3. VERB CONJUGATIONS (ser, estar, ter, ir, fazer, poder, querer, saber, pôr, reflexives like levantar-se/chamar-se/esquecer-se). Flag wrong forms.
+4. NUMBER WORDS spelling/formation (seiscentos one word; cem vs cento; vinte e três).
+5. SPELLING / wrong-or-missing DIACRITICS that make a word incorrect or a different word.
+6. INTERNAL CONTRADICTIONS: the same word/fact spelled or stated two different ways across files.
+
+Output each finding as ONE line:
+  [SEVERITY high|med|low] file:approx_line | what is written | why it violates PT rules | suggested fix
+
+Be precise and conservative — only genuine violations, not stylistic choices, and NOT picture-inferred items already marked with ⚠️. End with: VERDICT: CLEAN or N ISSUES.

@@ -1,0 +1,51 @@
+/**
+ * Shared screen chrome (the page frame + display title + header/nav row) used by
+ * every top-level screen (Settings, SurvivalKit, NumbersMode, …). Consumed via
+ * CSS Modules `composes ... from` so the screen shell lives in ONE place and
+ * cannot drift between screens.
+ */
+
+.screen {
+  min-height: 100vh;
+  padding: var(--s-7) var(--s-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--fw-med);
+  font-size: var(--t-title);
+  line-height: var(--lh-tight);
+  color: var(--text);
+}
+
+/* The title ↔ nav header row shared across screens. */
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.nav {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+}
+
+.navLink {
+  font-size: var(--t-sm);
+  font-weight: var(--fw-semi);
+  color: var(--accent-ink);
+  text-decoration: none;
+}
+
+.navLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-chip);
+}

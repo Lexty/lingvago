@@ -1,0 +1,90 @@
+# Internal consistency check — diacritic/spelling variants
+
+21 word(s) appear with >1 spelling across files — REVIEW each:
+
+## 'antonio': 2 forms
+   - 'antónio'          (17x)  caderno_unit01.md:65, caderno_unit09-10.md:45, caderno_unit09-10.md:46, livro_unit06.md:110, livro_unit10.md:50, livro_unit16.md:127 ...
+   - 'antonio'          (1x)  livro_unit01.md:79
+
+## 'atelie': 2 forms
+   - 'ateliê'           (5x)  caderno_acao_resumo_02.md:159, caderno_unit08.md:22, livro_unit08.md:33, livro_unit14.md:78, notebook_p13-16.md:58
+   - 'atelié'           (1x)  notebook_p13-16.md:58
+
+## 'audio': 2 forms
+   - 'áudio'            (150x)  livro_acao_revisao_01-04.md:29, livro_acao_revisao_01-04.md:31, livro_acao_revisao_01-04.md:116, livro_acao_revisao_01-04.md:124, livro_acao_revisao_01-04.md:132, livro_acao_revisao_05-08.md:26 ...
+   - 'audio'            (19x)  exercise_templates.json:3, exercise_templates.json:3, exercise_templates.json:11, exercise_templates.json:19, exercise_templates.json:27, exercise_templates.json:35 ...
+
+## 'avos': 2 forms
+   - 'avós'             (4x)  livro_unit09.md:57, livro_unit09.md:80, livro_unit09.md:166, notebook_p13-16.md:127
+   - 'avôs'             (1x)  livro_unit09.md:166
+
+## 'conhece': 2 forms
+   - 'conhece'          (3x)  caderno_unit08.md:143, livro_unit12.md:75, livro_unit16.md:100
+   - 'conhecê'          (2x)  notebook_p01-04.md:53, notebook_p01-04.md:54
+
+## 'esqueco': 2 forms
+   - 'esqueco'          (4x)  notebook_p05-08.md:324, notebook_p05-08.md:324, notebook_p05-08.md:324, notebook_p05-08.md:324
+   - 'esqueço'          (3x)  livro_gramatica_13-16.md:196, notebook_p05-08.md:317, notebook_p05-08.md:324
+
+## 'esta': 2 forms
+   - 'está'             (198x)  caderno_acao_fronteira_p23.md:19, caderno_acao_fronteira_p23.md:35, caderno_acao_fronteira_p23.md:40, caderno_acao_resumo_01.md:37, caderno_acao_resumo_01.md:104, caderno_acao_resumo_01.md:246 ...
+   - 'esta'             (24x)  caderno_acao_resumo_04.md:42, caderno_unit09-10.md:64, caderno_unit09-10.md:101, livro_acao_revisao_09-12.md:169, livro_acao_revisao_09-12.md:169, livro_gramatica_09-12.md:39 ...
+
+## 'estas': 2 forms
+   - 'estás'            (15x)  caderno_acao_resumo_03.md:129, caderno_unit09-10.md:101, caderno_unit16.md:125, livro_acao_revisao_05-08.md:75, livro_acao_revisao_09-12.md:72, livro_gramatica_01-04.md:227 ...
+   - 'estas'            (9x)  caderno_unit03.md:27, caderno_unit09-10.md:101, livro_gramatica_09-12.md:39, livro_gramatica_09-12.md:53, livro_gramatica_09-12.md:59, livro_unit02.md:123 ...
+
+## 'exercicio': 2 forms
+   - 'exercício'        (60x)  caderno_acao_resumo_03.md:36, caderno_acao_resumo_04.md:37, caderno_acao_resumo_04.md:78, caderno_unit15.md:93, caderno_unit15.md:101, livro_acao_revisao_13-16.md:57 ...
+   - 'exercicio'        (19x)  caderno_acao_fronteira_p23.md:2, caderno_acao_resumo_01.md:2, caderno_acao_resumo_02.md:2, caderno_acao_resumo_03.md:2, caderno_acao_resumo_04.md:2, caderno_unit01.md:2 ...
+
+## 'gerard': 2 forms
+   - 'gerard'           (1x)  caderno_unit13-14.md:112
+   - 'gérard'           (1x)  livro_unit01.md:80
+
+## 'luis': 2 forms
+   - 'luís'             (16x)  caderno_unit07.md:37, caderno_unit07.md:39, caderno_unit09-10.md:43, caderno_unit09-10.md:44, caderno_unit13-14.md:103, caderno_unit15.md:123 ...
+   - 'luis'             (1x)  notebook_p13-16.md:196
+
+## 'marco': 2 forms
+   - 'marco'            (10x)  livro_acao_revisao_05-08.md:179, livro_acao_revisao_05-08.md:179, livro_acao_revisao_05-08.md:179, livro_acao_revisao_05-08.md:179, livro_acao_revisao_05-08.md:183, livro_acao_revisao_05-08.md:184 ...
+   - 'março'            (9x)  caderno_acao_resumo_04.md:62, caderno_unit13-14.md:73, caderno_unit13-14.md:78, caderno_unit13-14.md:141, livro_gramatica_13-16.md:51, livro_gramatica_13-16.md:51 ...
+
+## 'maria': 2 forms
+   - 'maria'            (8x)  caderno_unit09-10.md:197, livro_gramatica_01-04.md:247, livro_gramatica_01-04.md:248, livro_unit03.md:44, livro_unit06.md:95, livro_unit06.md:112 ...
+   - 'maría'            (2x)  caderno_unit03.md:20, livro_gramatica_01-04.md:59
+
+## 'monica': 2 forms
+   - 'mónica'           (2x)  livro_unit15.md:101, livro_unit15.md:109
+   - 'monica'           (1x)  livro_unit01.md:78
+
+## 'nuria': 2 forms
+   - 'núria'            (5x)  livro_unit08.md:67, livro_unit08.md:67, livro_unit08.md:71, livro_unit08.md:80, livro_unit08.md:125
+   - 'nuria'            (4x)  notebook_p13-16.md:95, notebook_p13-16.md:97, notebook_p13-16.md:98, notebook_p13-16.md:99
+
+## 'pais': 2 forms
+   - 'país'             (45x)  caderno_acao_resumo_02.md:39, caderno_unit02.md:21, caderno_unit05.md:107, caderno_unit06.md:101, caderno_unit07.md:29, caderno_unit07.md:95 ...
+   - 'pais'             (21x)  caderno_unit09-10.md:89, caderno_unit09-10.md:199, caderno_unit11.md:50, caderno_unit11.md:67, caderno_unit11.md:115, caderno_unit11.md:115 ...
+
+## 'porque': 2 forms
+   - 'porque'           (53x)  caderno_acao_resumo_02.md:147, caderno_unit07.md:13, caderno_unit07.md:67, caderno_unit11.md:117, caderno_unit12.md:32, caderno_unit13-14.md:213 ...
+   - 'porquê'           (13x)  caderno_unit12.md:61, caderno_unit15.md:114, livro_unit08.md:154, livro_unit10.md:145, livro_unit10.md:150, livro_unit11.md:48 ...
+
+## 'taxi': 2 forms
+   - 'táxi'             (2x)  notebook_p01-04.md:124, vocab_unit01-02.json:54
+   - 'taxi'             (1x)  vocab_unit01-02.json:54
+
+## 'vitor': 2 forms
+   - 'vitor'            (3x)  livro_unit12.md:68, livro_unit12.md:71, livro_unit12.md:73
+   - 'vítor'            (2x)  livro_unit10.md:86, livro_unit12.md:75
+
+## 'voce': 2 forms
+   - 'você'             (55x)  caderno_acao_resumo_01.md:87, caderno_unit01.md:51, caderno_unit02.md:62, caderno_unit03.md:56, caderno_unit05.md:30, caderno_unit05.md:84 ...
+   - 'voce'             (2x)  grammar_unit01-02.json:23, grammar_unit01-02.json:35
+
+## 'voces': 2 forms
+   - 'vocês'            (69x)  caderno_acao_resumo_01.md:146, caderno_unit03.md:61, caderno_unit03.md:103, caderno_unit05.md:35, caderno_unit05.md:44, caderno_unit05.md:78 ...
+   - 'voces'            (2x)  grammar_unit01-02.json:24, grammar_unit01-02.json:36
+
+
+Distinct deburr-keys: 2950 | total surface forms: 2971

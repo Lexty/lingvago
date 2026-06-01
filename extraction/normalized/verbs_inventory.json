@@ -1,0 +1,1596 @@
+{
+  "_meta": {
+    "description": "Полный инвентарь глаголов из всех дидактических материалов (учебник, тетрадь, конспект, листы преподавателя). hasTable=есть готовая таблица спряжения в данных; иначе нужно достроить по правилам/добавить.",
+    "total": 126,
+    "withTable": 43,
+    "withoutTable": 83,
+    "needsTableReview": [
+      "acontecer",
+      "agradecer",
+      "conhecer",
+      "desaparecer",
+      "haver",
+      "oferecer",
+      "sentir-se",
+      "valer",
+      "vestir"
+    ],
+    "byGroup": {
+      "-ir": 17,
+      "-ar": 80,
+      "-er": 27,
+      "-or": 2
+    }
+  },
+  "verbs": [
+    {
+      "infinitive": "abrir",
+      "group": "-ir",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p08-14",
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "acabar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p29-34",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "achar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "acontecer",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": true,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "acordar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "adorar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:livro_gramatica_09-12",
+        "exercise-cue:teacher_skm_p08-14",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "agradecer",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": true,
+      "sources": [
+        "exercise-cue:teacher_skm_p08-14"
+      ]
+    },
+    {
+      "infinitive": "almoçar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p02-07",
+        "exercise-cue:teacher_skm_p22-28",
+        "exercise-cue:teacher_skm_p29-34",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "alugar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_verbosinfo"
+      ]
+    },
+    {
+      "infinitive": "andar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:livro_gramatica_09-12",
+        "exercise-cue:teacher_skm_p02-07",
+        "exercise-cue:teacher_skm_p08-14",
+        "exercise-cue:teacher_skm_p15-21",
+        "exercise-cue:teacher_skm_p35-38",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "apanhar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p02-07",
+        "exercise-cue:teacher_skm_p22-28",
+        "exercise-cue:teacher_verbosinfo",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "arranhar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "arranjar-se",
+      "group": "-ar",
+      "reflexive": true,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p08-14"
+      ]
+    },
+    {
+      "infinitive": "arrumar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p29-34"
+      ]
+    },
+    {
+      "infinitive": "assistir",
+      "group": "-ir",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "beber",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p08-14",
+        "exercise-cue:teacher_skm_p22-28",
+        "grammar:conjugation",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "beijar-se",
+      "group": "-ar",
+      "reflexive": true,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p08-14"
+      ]
+    },
+    {
+      "infinitive": "cair",
+      "group": "-ir",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "cantar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:caderno_unit09-10",
+        "exercise-cue:teacher_skm_p29-34",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "casar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "chamar-se",
+      "group": "-ar",
+      "reflexive": true,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p01-05",
+        "grammar:conjugation",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "chegar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p02-07",
+        "exercise-cue:teacher_skm_p22-28",
+        "exercise-cue:teacher_skm_p29-34",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "colocar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p29-34"
+      ]
+    },
+    {
+      "infinitive": "começar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p22-28",
+        "exercise-cue:teacher_skm_p29-34",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "comer",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p08-14",
+        "exercise-cue:teacher_skm_p22-28",
+        "exercise-cue:teacher_skm_p29-34",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "compor",
+      "group": "-or",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "comprar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28",
+        "exercise-cue:teacher_skm_p29-34"
+      ]
+    },
+    {
+      "infinitive": "conduzir",
+      "group": "-ir",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "conhecer",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": true,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p08-14"
+      ]
+    },
+    {
+      "infinitive": "conversar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p08-14"
+      ]
+    },
+    {
+      "infinitive": "convidar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p08-14",
+        "exercise-cue:teacher_skm_p29-34"
+      ]
+    },
+    {
+      "infinitive": "correr",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "costumar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09"
+      ]
+    },
+    {
+      "infinitive": "cozinhar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:caderno_unit09-10",
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p08-14",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "crer",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "dançar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "dar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p29-34",
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "decidir",
+      "group": "-ir",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p29-34"
+      ]
+    },
+    {
+      "infinitive": "deitar-se",
+      "group": "-ar",
+      "reflexive": true,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p01-05",
+        "exercise-cue:teacher_cs1450_p06-09",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "demorar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "desaparecer",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": true,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "descansar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "desligar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "detestar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:livro_gramatica_09-12",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "divertir-se",
+      "group": "-ir",
+      "reflexive": true,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p29-34",
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "dividir",
+      "group": "-ir",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28",
+        "exercise-cue:teacher_verbosinfo"
+      ]
+    },
+    {
+      "infinitive": "dizer",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p29-34",
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "dormir",
+      "group": "-ir",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "grammar:conjugation",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "durar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "encontrar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09"
+      ]
+    },
+    {
+      "infinitive": "encontrar-se",
+      "group": "-ar",
+      "reflexive": true,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p08-14",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "entender",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_verbosinfo"
+      ]
+    },
+    {
+      "infinitive": "entrar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "escrever",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1603_p01-04",
+        "exercise-cue:teacher_skm_p08-14"
+      ]
+    },
+    {
+      "infinitive": "esquecer-se",
+      "group": "-er",
+      "reflexive": true,
+      "hasTable": true,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "grammar:conjugation",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "estacionar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:livro_gramatica_09-12",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "estar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p08-14",
+        "exercise-cue:teacher_skm_p22-28",
+        "exercise-cue:teacher_skm_p29-34",
+        "exercise-cue:teacher_skm_p35-38",
+        "grammar:conjugation",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "estudar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p08-14",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "falar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1603_p01-04",
+        "exercise-cue:teacher_skm_p22-28",
+        "grammar:conjugation",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "faltar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "fazer",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_cs1603_p01-04",
+        "exercise-cue:teacher_skm_p08-14",
+        "exercise-cue:teacher_skm_p29-34",
+        "grammar:conjugation",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "festejar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p29-34"
+      ]
+    },
+    {
+      "infinitive": "ficar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p02-07",
+        "exercise-cue:teacher_skm_p15-21",
+        "exercise-cue:teacher_skm_p22-28",
+        "exercise-cue:teacher_skm_p29-34",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "fumar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:caderno_unit09-10",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "ganhar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:livro_gramatica_05-08",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "gostar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p08-14",
+        "exercise-cue:teacher_skm_p22-28",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "haver",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": true,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p35-38"
+      ]
+    },
+    {
+      "infinitive": "interessar-se",
+      "group": "-ar",
+      "reflexive": true,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p08-14"
+      ]
+    },
+    {
+      "infinitive": "jantar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_verbosinfo",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "jogar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:livro_gramatica_09-12",
+        "exercise-cue:teacher_skm_p08-14",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "lavar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p29-34"
+      ]
+    },
+    {
+      "infinitive": "lavar-se",
+      "group": "-ar",
+      "reflexive": true,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p01-05",
+        "exercise-cue:teacher_cs1450_p06-09",
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "lembrar-se",
+      "group": "-ar",
+      "reflexive": true,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "ler",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:caderno_unit09-10",
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_cs1603_p01-04",
+        "exercise-cue:teacher_skm_p29-34",
+        "grammar:conjugation",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "levantar-se",
+      "group": "-ar",
+      "reflexive": true,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p01-05",
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p08-14",
+        "grammar:conjugation",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "levar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "ligar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "limpar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p29-34",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "morar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p02-07",
+        "exercise-cue:teacher_verbosinfo",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "mudar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "observar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "oferecer",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": true,
+      "sources": [
+        "exercise-cue:teacher_skm_p29-34"
+      ]
+    },
+    {
+      "infinitive": "ouvir",
+      "group": "-ir",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_cs1603_p01-04",
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "ouvir-se",
+      "group": "-ir",
+      "reflexive": true,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "pagar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "partir",
+      "group": "-ir",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28",
+        "exercise-cue:teacher_skm_p29-34",
+        "exercise-cue:teacher_verbosinfo",
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "passar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:livro_gramatica_09-12",
+        "exercise-cue:teacher_skm_p15-21",
+        "exercise-cue:teacher_skm_p29-34",
+        "exercise-cue:teacher_skm_p35-38",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "passear",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "pedir",
+      "group": "-ir",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28",
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "pintar-se",
+      "group": "-ar",
+      "reflexive": true,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p08-14"
+      ]
+    },
+    {
+      "infinitive": "poder",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28",
+        "exercise-cue:teacher_skm_p29-34",
+        "grammar:conjugation",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "pôr",
+      "group": "-or",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "grammar:conjugation"
+      ]
+    },
+    {
+      "infinitive": "praticar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p15-21",
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "preferir",
+      "group": "-ir",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1603_p05-07",
+        "exercise-cue:teacher_skm_p35-38",
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "preocupar-se",
+      "group": "-ar",
+      "reflexive": true,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p08-14"
+      ]
+    },
+    {
+      "infinitive": "preparar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p02-07"
+      ]
+    },
+    {
+      "infinitive": "procurar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "prometer",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "querer",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p29-34",
+        "grammar:conjugation",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "rasgar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "recomendar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "regressar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09"
+      ]
+    },
+    {
+      "infinitive": "saber",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p22-28",
+        "exercise-cue:teacher_skm_p29-34",
+        "grammar:conjugation",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "sair",
+      "group": "-ir",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "saltar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "sentar-se",
+      "group": "-ar",
+      "reflexive": true,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p08-14",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "sentir-se",
+      "group": "-ir",
+      "reflexive": true,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": true,
+      "sources": [
+        "exercise-cue:teacher_cs1603_p05-07"
+      ]
+    },
+    {
+      "infinitive": "ser",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p02-07",
+        "exercise-cue:teacher_skm_p08-14",
+        "exercise-cue:teacher_skm_p22-28",
+        "exercise-cue:teacher_skm_p29-34",
+        "exercise-cue:teacher_skm_p35-38",
+        "grammar:conjugation",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "tentar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "ter",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p02-07",
+        "exercise-cue:teacher_skm_p08-14",
+        "exercise-cue:teacher_skm_p22-28",
+        "exercise-cue:teacher_skm_p29-34",
+        "exercise-cue:teacher_skm_p35-38",
+        "grammar:conjugation",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "tirar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p15-21",
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "tomar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:livro_gramatica_09-12",
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_cs1603_p01-04",
+        "exercise-cue:teacher_skm_p08-14",
+        "exercise-cue:teacher_skm_p22-28",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "trabalhar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:livro_gramatica_05-08",
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p02-07",
+        "exercise-cue:teacher_skm_p22-28",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "trazer",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p29-34",
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "treinar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1603_p01-04"
+      ]
+    },
+    {
+      "infinitive": "trocar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28",
+        "exercise-cue:teacher_verbosinfo"
+      ]
+    },
+    {
+      "infinitive": "usar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": true,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:livro_gramatica_05-08",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "valer",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": true,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "ver",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:caderno_unit09-10",
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p29-34",
+        "grammar:conjugation",
+        "teacher:verb-table",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "ver-se",
+      "group": "-er",
+      "reflexive": true,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p22-28"
+      ]
+    },
+    {
+      "infinitive": "vestir",
+      "group": "-ir",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": true,
+      "sources": [
+        "exercise-cue:teacher_cs1603_p05-07"
+      ]
+    },
+    {
+      "infinitive": "viajar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p15-21",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "vir",
+      "group": "-ir",
+      "reflexive": false,
+      "hasTable": true,
+      "regular": false,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p29-34",
+        "teacher:verb-table"
+      ]
+    },
+    {
+      "infinitive": "visitar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p15-21",
+        "exercise-cue:teacher_skm_p22-28",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "viver",
+      "group": "-er",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_skm_p35-38",
+        "exercise-cue:teacher_verbosinfo",
+        "vocab:vocab_full"
+      ]
+    },
+    {
+      "infinitive": "voltar",
+      "group": "-ar",
+      "reflexive": false,
+      "hasTable": false,
+      "regular": null,
+      "needsTableReview": false,
+      "sources": [
+        "exercise-cue:teacher_cs1450_p06-09",
+        "exercise-cue:teacher_skm_p29-34",
+        "vocab:vocab_full"
+      ]
+    }
+  ]
+}

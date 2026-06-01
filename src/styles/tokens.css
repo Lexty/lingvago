@@ -1,0 +1,214 @@
+/* =====================================================================
+   Lingvago2 — Design Tokens · «Calm · pastel»  (light + dark)
+   Layered: (1) raw palette → (2) semantic → (3) component.
+   Use ONLY semantic/component tokens in components, never raw --c-*.
+   Theme: :root = light. Dark via [data-theme="dark"]. "Auto" = follow
+   system (the @media block) until JS sets an explicit data-theme.
+   Fonts: Fraunces (display, used italic for headings) + Hanken Grotesk (body).
+
+   NOTE: AA-corrected values vs designs/tokens.css (which holds OLD values):
+     --on-cta   = #0e1a13  (dark ink in BOTH themes; white gave only 3.02:1)
+     light --danger = #9e4b46  (AA 5.06:1 on blush-soft; old #c77b76 = 2.75:1)
+     light muted    = #6f6878  (AA 4.87:1 on paper; old #928c98 failed AA)
+   ===================================================================== */
+
+:root {
+  /* ---------- (1) RAW PALETTE — light ---------- */
+  --c-paper: #f7f4ef;
+  --c-mesh-blush: #fbe9eb;
+  --c-mesh-sage: #e6f0e8;
+  --c-mesh-lav: #efeafb;
+  --c-surface: #ffffff;
+  --c-ink: #3a3640;
+  --c-muted: #6f6878; /* AA-corrected (was #928c98) — 4.87:1 on paper */
+  --c-line: #efeaf2;
+  --c-line-strong: #e4dce6;
+  --c-sage: #9bbfa6;
+  --c-sage-bg: #e6f0e8;
+  --c-sage-ink: #23402c;
+  --c-blush: #f0c9cd;
+  --c-blush-bg: #fbe9eb;
+  --c-lav: #cfc8ee;
+  --c-lav-bg: #efeafb;
+  --c-lav-ink: #5b4f87;
+  --c-butter: #f6e4b8;
+  --c-butter-ink: #5b4a16;
+  --c-success: #5aa37a;
+  --c-on-success: #0e1a13; /* AA-corrected (was #ffffff) — dark ink, 5.91:1 */
+  --c-danger: #9e4b46; /* AA-corrected (was #c77b76) — 5.06:1 on blush-soft */
+  --c-phone: #ffffff;
+  --c-phone-shell: #ffffff;
+
+  /* ---------- (2) SEMANTIC ---------- */
+  --bg: var(--c-paper);
+  --surface: var(--c-surface);
+  --surface-2: #faf7f2; /* recessed / track */
+  --text: var(--c-ink);
+  --text-muted: var(--c-muted);
+  --border: var(--c-line);
+  --border-strong: var(--c-line-strong);
+
+  --primary: var(--c-sage); /* progress, selected level, positive */
+  --primary-soft: var(--c-sage-bg);
+  --primary-ink: var(--c-sage-ink);
+  --accent: var(--c-lav); /* interactive highlight: blanks, tags, selected segment */
+  --accent-soft: var(--c-lav-bg);
+  --accent-ink: var(--c-lav-ink);
+  --cta: var(--c-success); /* primary action button (Дальше / Выгрузить) */
+  --on-cta: var(--c-on-success);
+  --danger: var(--c-danger); /* error feedback text */
+  --danger-soft: var(--c-blush-bg); /* error feedback background */
+  --highlight: var(--c-butter); /* the «a» pill, emphasis */
+  --highlight-ink: var(--c-butter-ink);
+
+  /* gradient-mesh background (app shell / screen) */
+  --mesh:
+    radial-gradient(360px 280px at 8% 0%, var(--c-mesh-blush), transparent 60%),
+    radial-gradient(380px 300px at 98% 10%, var(--c-mesh-sage), transparent 60%),
+    radial-gradient(360px 360px at 60% 100%, var(--c-mesh-lav), transparent 60%),
+    var(--bg);
+
+  /* elevation */
+  --shadow-sm: 0 6px 18px -14px rgba(120, 90, 120, 0.5);
+  --shadow-md: 0 14px 34px -22px rgba(120, 90, 120, 0.55);
+  --shadow-lg: 0 30px 70px -34px rgba(120, 90, 120, 0.45);
+
+  /* ---------- typography ---------- */
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Hanken Grotesk", system-ui, -apple-system, sans-serif;
+  --fw-reg: 400;
+  --fw-med: 500;
+  --fw-semi: 600;
+  --fw-bold: 700;
+  --fw-x: 800;
+  /* sizes (mobile-first) */
+  --t-display: 33px; /* drill prompt (Fraunces) */
+  --t-title: 25px; /* screen title (Fraunces italic) */
+  --t-h2: 18px; /* section heading (Fraunces italic) */
+  --t-lg: 17px;
+  --t-body: 15px;
+  --t-sm: 13px;
+  --t-cap: 11.5px;
+  --lh-tight: 1.1;
+  --lh-body: 1.55;
+  --ls-cap: 0.14em; /* uppercase label tracking */
+
+  /* ---------- radii ---------- */
+  --r-phone: 44px;
+  --r-screen: 34px;
+  --r-card: 20px;
+  --r-card-lg: 22px;
+  --r-btn: 16px;
+  --r-input: 14px;
+  --r-seg: 14px;
+  --r-seg-item: 11px;
+  --r-chip: 12px;
+  --r-pill: 999px;
+
+  /* ---------- spacing scale ---------- */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 11px;
+  --s-4: 14px;
+  --s-5: 18px;
+  --s-6: 22px;
+  --s-7: 28px;
+  --s-8: 34px;
+
+  /* ---------- (3) COMPONENT ---------- */
+  --card-bg: var(--surface);
+  --card-radius: var(--r-card);
+  --card-shadow: var(--shadow-md);
+  --card-pad: 15px;
+  --btn-cta-bg: var(--cta);
+  --btn-cta-fg: var(--on-cta);
+  --btn-ghost-bg: var(--surface);
+  --btn-ghost-fg: var(--text);
+  --btn-ghost-shadow: var(--shadow-sm);
+  --seg-track: var(--surface-2);
+  --seg-on-bg: var(--accent);
+  --seg-on-fg: #26204a;
+  --level-bg: var(--surface-2);
+  --level-on-bg: var(--primary);
+  --level-on-fg: var(--primary-ink);
+  --input-bg: var(--surface);
+  --input-border: var(--border-strong);
+  --input-focus: var(--accent);
+  --blank-bg: var(--accent-soft);
+  --blank-fg: var(--accent-ink); /* the ___ in prompts */
+  --fb-error-bg: var(--danger-soft);
+  --fb-error-fg: var(--danger);
+  --check-off-bg: var(--c-blush-bg);
+  --check-off-border: var(--c-blush);
+  --check-on-bg: var(--primary);
+  --tag-bg: var(--accent-soft);
+  --tag-fg: var(--accent-ink);
+}
+
+/* ===== AUTO (follow system) — applies when no explicit data-theme is forced =====
+   Auto = no data-theme attribute, so the dark raw palette kicks in via @media.
+   Guarded with :not([data-theme="light"]) so an explicit light choice always wins. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --c-paper: #1a1822;
+    --c-mesh-blush: #2a2030;
+    --c-mesh-sage: #1d2723;
+    --c-mesh-lav: #221f33;
+    --c-surface: #262232;
+    --c-ink: #ece7f2;
+    --c-muted: #9b95a8;
+    --c-line: #332e40;
+    --c-line-strong: #3c3648;
+    --c-sage: #86b497;
+    --c-sage-bg: #28332d;
+    --c-sage-ink: #cfe6d6;
+    --c-blush: #c79aa0;
+    --c-blush-bg: #352830;
+    --c-lav: #9a8fd0;
+    --c-lav-bg: #2c2740;
+    --c-lav-ink: #c8bff0;
+    --c-butter: #cdb681;
+    --c-butter-ink: #3a2f10;
+    --c-success: #74b894;
+    --c-on-success: #0e1a13;
+    --c-danger: #e0a6a1;
+    --c-phone-shell: #0e0d13;
+    --surface-2: #2f2a3a;
+    --shadow-sm: 0 10px 24px -16px rgba(0, 0, 0, 0.55);
+    --shadow-md: 0 18px 40px -22px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 30px 70px -34px rgba(0, 0, 0, 0.55);
+    --seg-on-fg: #1a1626;
+  }
+}
+
+/* ===== EXPLICIT DARK (manual toggle) ===== */
+[data-theme="dark"] {
+  --c-paper: #1a1822;
+  --c-mesh-blush: #2a2030;
+  --c-mesh-sage: #1d2723;
+  --c-mesh-lav: #221f33;
+  --c-surface: #262232;
+  --c-ink: #ece7f2;
+  --c-muted: #9b95a8;
+  --c-line: #332e40;
+  --c-line-strong: #3c3648;
+  --c-sage: #86b497;
+  --c-sage-bg: #28332d;
+  --c-sage-ink: #cfe6d6;
+  --c-blush: #c79aa0;
+  --c-blush-bg: #352830;
+  --c-lav: #9a8fd0;
+  --c-lav-bg: #2c2740;
+  --c-lav-ink: #c8bff0;
+  --c-butter: #cdb681;
+  --c-butter-ink: #3a2f10;
+  --c-success: #74b894;
+  --c-on-success: #0e1a13;
+  --c-danger: #e0a6a1;
+  --c-phone-shell: #0e0d13;
+  --surface-2: #2f2a3a;
+  --shadow-sm: 0 10px 24px -16px rgba(0, 0, 0, 0.55);
+  --shadow-md: 0 18px 40px -22px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 30px 70px -34px rgba(0, 0, 0, 0.55);
+  --seg-on-fg: #1a1626;
+}

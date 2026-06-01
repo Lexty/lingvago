@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lingvago — направления дизайна (выбор)</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,900&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#13131a;--card:#1c1c25;--ink:#eceae4;--muted:#9a98a4;--line:#2c2c38;--accent:#ff7a59}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1280px;margin:0 auto;padding:48px 28px 90px}
+.k{color:var(--accent);font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:12px}
+h1{font-family:"Fraunces";font-weight:900;font-size:46px;margin:8px 0 6px;letter-spacing:-.01em}
+.lead{color:var(--muted);max-width:70ch;font-size:17px;margin:0 0 8px}
+.note{color:var(--muted);font-size:14px;margin:14px 0 30px;border-left:2px solid var(--accent);padding-left:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:26px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.thumb{position:relative;height:300px;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.thumb iframe{position:absolute;top:0;left:0;width:1180px;height:1071px;border:0;transform:scale(.305);transform-origin:top left;pointer-events:none}
+.thumb a.full{position:absolute;inset:0;z-index:3}
+.meta{padding:16px 18px 18px}
+.meta .num{font-family:"Fraunces";font-weight:900;color:var(--accent);font-size:13px;letter-spacing:.1em}
+.meta h2{font-family:"Fraunces";font-weight:500;font-size:24px;margin:2px 0 6px}
+.meta p{color:var(--muted);font-size:14px;line-height:1.5;margin:0 0 14px;min-height:62px}
+.meta .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.tag{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:3px 10px}
+.open{display:inline-block;text-decoration:none;background:var(--ink);color:var(--bg);font-weight:700;font-size:14px;border-radius:10px;padding:10px 16px}
+.open:hover{background:var(--accent);color:#13131a}
+footer{color:var(--muted);font-size:13px;margin-top:40px;border-top:1px solid var(--line);padding-top:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="k">Lingvago · A1 Português · выбор направления</div>
+  <h1>6 направлений дизайна</h1>
+  <p class="lead">Только светлые темы. Каждое направление — три реальных экрана: <b>Главная (Survival Kit)</b> с обратным отсчётом и планом дня, <b>Дрилл предлогов</b> с production-вводом и фидбэком, <b>Карточка справочника</b> «a casa / para casa». Контент настоящий (PT/RU).</p>
+  <div class="note">Открой нужное направление целиком, чтобы рассмотреть экраны в телефонных рамках. Цель — выбрать вектор вёрстки новой версии (можно смешивать: напр. шрифт из одного, палитру из другого).</div>
+  <div style="background:#1c2620;border:1px solid #2e3d33;border-radius:14px;padding:16px 18px;margin:14px 0 26px"><span style="color:#9bbfa6;font-weight:700">✓ Выбрано:</span> <b>05 · Calm · pastel</b> — расширенный набор (7 экранов × светлая/тёмная тема): <a class="open" style="padding:7px 13px;margin-left:6px" href="05-calm-expanded.html">Открыть расширенный →</a></div>
+
+  <div class="grid">
+    <div class="card"><div class="thumb"><iframe src="01-editorial.html" scrolling="no"></iframe><a class="full" href="01-editorial.html"></a></div>
+      <div class="meta"><div class="num">01</div><h2>Editorial · «Passaporte»</h2>
+        <p>Книжная, тёплая бумага, серифный Fraunces, глубокий красный из юнит-карточек учебника, золото, тонкие линейки. Авторитетно, «как учебник».</p>
+        <div class="tags"><span class="tag">serif</span><span class="tag">paper</span><span class="tag">красный/золото</span></div>
+        <a class="open" href="01-editorial.html">Открыть →</a></div></div>
+
+    <div class="card"><div class="thumb"><iframe src="02-ios.html" scrolling="no"></iframe><a class="full" href="02-ios.html"></a></div>
+      <div class="meta"><div class="num">02</div><h2>iOS-native</h2>
+        <p>Системная iOS-эстетика: серый сгруппированный фон, белые inset-карточки, сегментированные контролы, кольцо активности. Привычно и «родное» телефону.</p>
+        <div class="tags"><span class="tag">Figtree</span><span class="tag">grouped list</span><span class="tag">синий</span></div>
+        <a class="open" href="02-ios.html">Открыть →</a></div></div>
+
+    <div class="card"><div class="thumb"><iframe src="03-azulejo.html" scrolling="no"></iframe><a class="full" href="03-azulejo.html"></a></div>
+      <div class="meta"><div class="num">03</div><h2>Azulejo · Lisboa</h2>
+        <p>Португальская плитка: кобальт + крем, терракота, изразцовые узоры и рамки, серифный DM Serif Display. Культурно, с характером места.</p>
+        <div class="tags"><span class="tag">azulejo</span><span class="tag">кобальт/терракота</span><span class="tag">serif</span></div>
+        <a class="open" href="03-azulejo.html">Открыть →</a></div></div>
+
+    <div class="card"><div class="thumb"><iframe src="04-bold.html" scrolling="no"></iframe><a class="full" href="04-bold.html"></a></div>
+      <div class="meta"><div class="num">04</div><h2>Bold modern</h2>
+        <p>Громкая типографика (Anton), цветовые блоки, контраст, гигантский числовой герой, толстые рамки и оффсет-тени. Энергично, без детской геймификации.</p>
+        <div class="tags"><span class="tag">Anton</span><span class="tag">тангерин/лайм</span><span class="tag">high-contrast</span></div>
+        <a class="open" href="04-bold.html">Открыть →</a></div></div>
+
+    <div class="card"><div class="thumb"><iframe src="05-pastel.html" scrolling="no"></iframe><a class="full" href="05-pastel.html"></a></div>
+      <div class="meta"><div class="num">05</div><h2>Calm · pastel</h2>
+        <p>Мягкие пастельные тона (шалфей, пудра, лаванда), воздух, скруглённые карточки, нежный градиент, курсивный Fraunces. Спокойно, без стресса.</p>
+        <div class="tags"><span class="tag">пастель</span><span class="tag">воздух</span><span class="tag">soft</span></div>
+        <a class="open" href="05-pastel.html">Открыть →</a></div></div>
+
+    <div class="card"><div class="thumb"><iframe src="06-mono.html" scrolling="no"></iframe><a class="full" href="06-mono.html"></a></div>
+      <div class="meta"><div class="num">06</div><h2>Mono / utilitarian</h2>
+        <p>Швейцарский монохром: чернила на бумаге, один сигнальный цвет, Space Mono, линейки, табличность, плотность. «Инструмент, а не игрушка» — быстро.</p>
+        <div class="tags"><span class="tag">Space Mono</span><span class="tag">монохром</span><span class="tag">tabular</span></div>
+        <a class="open" href="06-mono.html">Открыть →</a></div></div>
+  </div>
+
+  <footer>Светлые темы только · телефонные макеты 344px · контент из <code>extraction/normalized</code> · после выбора — соберём дизайн-токены и сверстаем новую версию по нему.</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,311 @@
+{
+  "_meta": {
+    "title": "Preposições — A1 (teacher worksheets)",
+    "sources": [
+      "teacher:cs1450:p5 (Preposições de tempo: a+/de+/em+)",
+      "teacher:cs1450:p7 (Preposições de movimento: a/para/por/de)",
+      "teacher:cs1450:p8 (chegar a / sair para; prep + artigo)",
+      "teacher:cs1450:p9 (ir/vir/voltar + meio de transporte: de / em+artigo)",
+      "teacher:cs1603:p6 (locuções prepositivas de lugar)"
+    ],
+    "note": "All forms/examples copied verbatim from the PRINTED reference tables of the verified teacher worksheet transcriptions. Handwritten student answers (✍️ manuscrito) were NOT used. Confidence 'high' = taken directly from a printed reference table.",
+    "confidence": "high"
+  },
+  "tempo": [
+    {
+      "prep": "a",
+      "use": "horas",
+      "examples": [
+        "Eu começo as aulas às oito horas e acabo ao meio-dia."
+      ],
+      "source": "teacher:cs1450:p5",
+      "confidence": "high"
+    },
+    {
+      "prep": "a",
+      "use": "partes do dia",
+      "examples": [
+        "À tarde vou ao cinema e à noite vou jantar ao restaurante."
+      ],
+      "source": "teacher:cs1450:p5",
+      "confidence": "high"
+    },
+    {
+      "prep": "a",
+      "use": "dias da semana (tempo habitual)",
+      "examples": [
+        "À segunda-feira eu vou sempre ao cinema."
+      ],
+      "source": "teacher:cs1450:p5",
+      "confidence": "high"
+    },
+    {
+      "prep": "a",
+      "use": "horas / dias da semana (fim de período de tempo)",
+      "examples": [
+        "Eu tenho aulas das nove às treze.",
+        "Ela trabalha de segunda-feira a sexta-feira."
+      ],
+      "source": "teacher:cs1450:p5",
+      "confidence": "high"
+    },
+    {
+      "prep": "de",
+      "use": "parte do dia",
+      "examples": [
+        "De manhã apanho sempre o metro."
+      ],
+      "source": "teacher:cs1450:p5",
+      "confidence": "high"
+    },
+    {
+      "prep": "de",
+      "use": "datas",
+      "examples": [
+        "Hoje é dia 16 de março de 2005."
+      ],
+      "source": "teacher:cs1450:p5",
+      "confidence": "high"
+    },
+    {
+      "prep": "de",
+      "use": "horas / dias da semana (início de período de tempo)",
+      "examples": [
+        "Eu tenho aulas de segunda-feira a sexta-feira.",
+        "Eu tenho aulas das oito horas ao meio-dia."
+      ],
+      "source": "teacher:cs1450:p5",
+      "confidence": "high"
+    },
+    {
+      "prep": "de",
+      "use": "horas (localização da hora numa parte do dia)",
+      "examples": [
+        "Ele sai de casa às sete e meia da manhã.",
+        "Eu janto sempre às nove da noite."
+      ],
+      "source": "teacher:cs1450:p5",
+      "confidence": "high"
+    },
+    {
+      "prep": "em",
+      "use": "dia da semana (tempo pontual)",
+      "examples": [
+        "Eles chegam na terça-feira."
+      ],
+      "source": "teacher:cs1450:p5",
+      "confidence": "high"
+    },
+    {
+      "prep": "em",
+      "use": "tempo (indica frequência)",
+      "examples": [
+        "Este autocarro passa de 6 em 6 minutos.",
+        "Os testes são de 3 em 3 semanas."
+      ],
+      "source": "teacher:cs1450:p5",
+      "confidence": "high"
+    },
+    {
+      "prep": "em",
+      "use": "mês / ano / estações do ano",
+      "examples": [
+        "Estamos em maio.",
+        "A Ana nasceu em 1967.",
+        "Estamos no verão."
+      ],
+      "source": "teacher:cs1450:p5",
+      "confidence": "high"
+    }
+  ],
+  "movimento": [
+    {
+      "prep": "a",
+      "verbs": ["ir", "vir", "voltar"],
+      "use": "movimento de curta duração",
+      "examples": [
+        "Eu vou a Paris.",
+        "Eu venho sempre à Faculdade depois do almoço.",
+        "Eu vou a casa e volto para o trabalho."
+      ],
+      "source": "teacher:cs1450:p7",
+      "confidence": "high"
+    },
+    {
+      "prep": "para",
+      "verbs": ["ir", "vir", "voltar"],
+      "use": "movimento de longa duração ou destino (ir para lá ≠ vir para cá)",
+      "examples": [
+        "Eu vou para o Brasil.",
+        "Eu venho para Portugal.",
+        "Eu volto para a Suécia no próximo ano.",
+        "Eu vou lá amanhã.",
+        "Eles vêm para cá no próximo sábado."
+      ],
+      "source": "teacher:cs1450:p7",
+      "confidence": "high"
+    },
+    {
+      "prep": "por",
+      "verbs": ["ir", "vir", "voltar", "passar"],
+      "use": "percurso / itinerário; movimento rápido / perto de",
+      "examples": [
+        "Quando vou para o trabalho passo por Alcântara e por Belém.",
+        "Hoje de manhã, eu passei pela Ana e pelo Pedro."
+      ],
+      "source": "teacher:cs1450:p7",
+      "confidence": "high"
+    },
+    {
+      "prep": "de",
+      "verbs": ["sair"],
+      "use": "origem do movimento",
+      "examples": [
+        "Eu saio de casa às sete.",
+        "Elas saem do trabalho muito tarde."
+      ],
+      "source": "teacher:cs1450:p7",
+      "confidence": "high"
+    }
+  ],
+  "movimento_casos_especiais": {
+    "chegar": "chegar a",
+    "sair": "sair para",
+    "use": "chegar a = destino do movimento; sair para = destino do movimento",
+    "examples": [
+      "Ela chega a casa dela tarde.",
+      "Eu saio para a escola às nove horas."
+    ],
+    "note": "A tabela 'Casos especiais' impressa em cs1450:p8 indica 'Chegar a' (destino) e 'Sair para' (destino). Na tabela geral de movimento (p7), 'sair de' indica a ORIGEM do movimento (Eu saio de casa às sete). Ambas as formas impressas estão registadas.",
+    "source": "teacher:cs1450:p8",
+    "confidence": "high"
+  },
+  "transporte": {
+    "meio_nao_especifico": {
+      "prep": "de",
+      "verbs": ["ir", "vir", "voltar"],
+      "use": "preposição + meio de transporte não específico",
+      "examples": [
+        "Eu vou de metro para casa e venho de autocarro para a escola."
+      ],
+      "forms_printed_in_reference_table": ["de metro", "de autocarro"],
+      "source": "teacher:cs1450:p9",
+      "confidence": "high"
+    },
+    "meio_especifico": {
+      "prep": "em",
+      "verbs": ["ir", "vir", "voltar"],
+      "use": "preposição + artigo definido + meio de transporte específico",
+      "examples": [
+        "Eu vou no autocarro número 31 para casa, mas venho no carro do Pedro para a escola."
+      ],
+      "forms_printed_in_reference_table": ["no autocarro número 31", "no carro do Pedro"],
+      "source": "teacher:cs1450:p9",
+      "confidence": "high"
+    },
+    "note": "Os formulários '+meio de transporte' que aparecem nestas folhas estão apenas nos EXEMPLOS das tabelas de referência (não há uma lista de transportes impressa). 'a pé', 'de comboio', 'de avião', 'de barco' NÃO aparecem em nenhuma tabela/exercício impresso destas três folhas — só surgem 'de metro', 'de autocarro' (tabela ref.) e, em exercícios, 'de carro', 'de comboio', 'de elétrico', 'de táxi', 'de avião'. Listadas só as formas que estão impressas."
+  },
+  "lugar": [
+    {
+      "locucao": "em frente de",
+      "contracts_with_article": true,
+      "examples": [
+        "Onde fica o banco? Na Rua … em frente da Faculdade.",
+        "É mesmo em frente da estação."
+      ],
+      "source": "teacher:cs1603:p6",
+      "confidence": "high"
+    },
+    {
+      "locucao": "ao lado de",
+      "contracts_with_article": true,
+      "examples": [
+        "Onde é a estação? Na Avenida … ao lado da pastelaria."
+      ],
+      "source": "teacher:cs1603:p6",
+      "confidence": "high"
+    },
+    {
+      "locucao": "atrás de",
+      "contracts_with_article": true,
+      "examples": [
+        "atrás dos Correios."
+      ],
+      "source": "teacher:cs1603:p6",
+      "confidence": "high"
+    },
+    {
+      "locucao": "debaixo de",
+      "contracts_with_article": true,
+      "examples": [
+        "Onde está o cão? Está debaixo da mesa."
+      ],
+      "source": "teacher:cs1603:p6",
+      "confidence": "high"
+    },
+    {
+      "locucao": "em cima de",
+      "contracts_with_article": true,
+      "examples": [
+        "Onde está a caneta? A caneta está em cima da secretária."
+      ],
+      "source": "teacher:cs1603:p6",
+      "confidence": "high"
+    },
+    {
+      "locucao": "dentro de",
+      "contracts_with_article": true,
+      "examples": [
+        "Onde está o porta-moedas? Está dentro do bolso."
+      ],
+      "source": "teacher:cs1603:p6",
+      "confidence": "high"
+    },
+    {
+      "locucao": "perto de",
+      "contracts_with_article": true,
+      "examples": [
+        "Onde fica a Faculdade de Letras? Fica perto do Hospital de Santa Maria."
+      ],
+      "source": "teacher:cs1603:p6",
+      "confidence": "high"
+    },
+    {
+      "locucao": "longe de",
+      "contracts_with_article": true,
+      "examples": [
+        "Trabalhas em Lisboa? Não. Trabalho longe de Lisboa."
+      ],
+      "source": "teacher:cs1603:p6",
+      "confidence": "high"
+    },
+    {
+      "locucao": "entre",
+      "contracts_with_article": false,
+      "examples": [
+        "Onde fica o cinema? O cinema fica entre os Restauradores e o Marquês de Pombal."
+      ],
+      "source": "teacher:cs1603:p6",
+      "confidence": "high"
+    }
+  ],
+  "costumar_infinitivo": {
+    "title": "Verbo costumar + Infinitivo (ação habitual no presente)",
+    "conjugation": {
+      "eu": "costumo",
+      "tu": "costumas",
+      "voce_ele_ela": "costuma",
+      "nos": "costumamos",
+      "voces_eles_elas": "costumam"
+    },
+    "examples": [
+      "Eu costumo levantar-me às 8:00.",
+      "Tu costumas estudar muito.",
+      "Ele / Ela / Você costuma almoçar na cantina.",
+      "Nós costumamos jantar em casa.",
+      "Eles / Elas / Vocês costumam apanhar o autocarro número 39."
+    ],
+    "source": "teacher:cs1450:p5",
+    "confidence": "high"
+  }
+}

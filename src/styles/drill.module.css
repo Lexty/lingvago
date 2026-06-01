@@ -1,0 +1,192 @@
+/**
+ * Shared production-drill card chrome (the intro line + answer card + prompt +
+ * input/button + correct/wrong feedback) used by every production-input drill
+ * (NumbersMode, ConjugationMode, …). Consumed via CSS Modules `composes ... from`
+ * so the drill-card block lives in ONE place and cannot drift between drills —
+ * exactly like the screen shell in `screen.module.css`. Drill-specific layout
+ * (e.g. ConjugationMode's assemble-table grid) stays local to that screen.
+ */
+
+.intro {
+  margin: 0;
+  font-size: var(--t-sm);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  padding: var(--card-pad);
+}
+
+.label {
+  margin: 0;
+  font-size: var(--t-cap);
+  letter-spacing: var(--ls-cap);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.body {
+  margin: 0;
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--text);
+}
+
+.prompt {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--fw-med);
+  font-size: var(--t-display);
+  line-height: var(--lh-tight);
+  color: var(--text);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.inputLabel {
+  font-size: var(--t-sm);
+  color: var(--text);
+}
+
+.input {
+  inline-size: 100%;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-input);
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--input-focus);
+  outline-offset: 1px;
+}
+
+.primaryButton {
+  align-self: flex-start;
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  padding: var(--s-3) var(--s-5);
+  border-radius: var(--r-btn);
+  background: var(--btn-cta-bg);
+  color: var(--btn-cta-fg);
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  font-weight: var(--fw-semi);
+}
+
+.primaryButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.feedback {
+  margin: 0;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-card);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  font-weight: var(--fw-semi);
+}
+
+.correct {
+  background: var(--primary-soft);
+  color: var(--primary-ink);
+}
+
+.wrong {
+  background: var(--fb-error-bg);
+  color: var(--fb-error-fg);
+}
+
+/* Shared L1–L3 level indicator pill (GenderDrill / PrepositionDrill). */
+.level {
+  align-self: flex-start;
+  margin: 0;
+  padding: var(--s-1) var(--s-3);
+  border-radius: var(--r-card);
+  background: var(--primary-soft);
+  color: var(--primary-ink);
+  font-size: var(--t-cap);
+  letter-spacing: var(--ls-cap);
+  text-transform: uppercase;
+  font-weight: var(--fw-semi);
+}
+
+/* Multiple-choice option list (rendered only for `mode === 'mc'` items). */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.option {
+  appearance: none;
+  inline-size: 100%;
+  text-align: start;
+  cursor: pointer;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-input);
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+}
+
+.option:focus-visible {
+  outline: 2px solid var(--input-focus);
+  outline-offset: 1px;
+}
+
+.option:disabled {
+  cursor: default;
+}
+
+/* The chosen-correct and chosen-wrong option states (post-submission). */
+.optionCorrect {
+  border-color: var(--primary-ink);
+  background: var(--primary-soft);
+  color: var(--primary-ink);
+}
+
+.optionWrong {
+  border-color: var(--fb-error-fg);
+  background: var(--fb-error-bg);
+  color: var(--fb-error-fg);
+}
+
+/* Per-option explanation shown with feedback. */
+.optionExplanation {
+  display: block;
+  margin-block-start: var(--s-1);
+  font-size: var(--t-sm);
+  font-weight: var(--fw-reg);
+  color: var(--text-muted);
+}
+
+/* The reference deep-link rendered with feedback. */
+.refLink {
+  align-self: flex-start;
+  color: var(--accent);
+  font-size: var(--t-sm);
+  font-weight: var(--fw-semi);
+}

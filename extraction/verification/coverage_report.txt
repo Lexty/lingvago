@@ -1,0 +1,40 @@
+# Coverage check: OCR (B) tokens absent from verbatim (A)
+
+## livro_phys11 -> livro_unit01.md  [OK]  ocr_tokens=73 missing=2 coverage~97%
+   absent: aciinisitir, atteracoes
+
+## livro_phys12 -> livro_unit01.md  [OK]  ocr_tokens=8 missing=0 coverage~100%
+
+## livro_phys13 -> livro_unit01.md  [OK]  ocr_tokens=85 missing=5 coverage~94%
+   absent: coma, dlat, earita, elle, resnnand
+
+## livro_phys14 -> livro_unit01.md  [OK]  ocr_tokens=65 missing=1 coverage~98%
+   absent: asma
+
+## livro_phys15 -> livro_unit02.md  [OK]  ocr_tokens=62 missing=6 coverage~90%
+   absent: arussia, ateitimtsicer, djaindia, obrasil, pese, potonia
+
+## livro_phys16 -> livro_unit02.md  [OK]  ocr_tokens=48 missing=4 coverage~92%
+   absent: amititsitde, debbrasil, gado, paga
+
+## livro_phys17 -> livro_unit02.md  [OK]  ocr_tokens=64 missing=3 coverage~95%
+   absent: awetiisittn, laca, lorque
+
+## livro_phys18 -> livro_unit02.md  [OK]  ocr_tokens=85 missing=6 coverage~93%
+   absent: coma, eres, etante, import, oltenta, saopaulo
+
+## caderno_phys05 -> caderno_unit01.md  [OK]  ocr_tokens=74 missing=6 coverage~92%
+   absent: allisboal, bomdia, eele, morra, sema, sere
+
+## caderno_phys06 -> caderno_unit01.md  [OK]  ocr_tokens=82 missing=2 coverage~98%
+   absent: nsdomn, udomn
+
+## caderno_phys07 -> caderno_unit02.md  [OK]  ocr_tokens=78 missing=5 coverage~94%
+   absent: bulario, lorque, ltalia, nino, vocabula
+
+## caderno_phys08 -> caderno_unit02.md  [OK]  ocr_tokens=95 missing=1 coverage~99%
+   absent: rmatw
+
+
+TOTAL distinct-per-page OCR tokens absent from verbatim: 41
+Note: most 'absent' tokens are OCR noise/word-fragments, not true omissions; scan list for real content words.

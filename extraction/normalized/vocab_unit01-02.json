@@ -1,0 +1,59 @@
+{
+  "_meta": { "units": [1, 2], "source": ["livro:u1-2", "caderno:u1-2", "notebook:p3-4"] },
+  "numbers": [
+    {"n":0,"pt":"zero"},{"n":1,"pt":"um"},{"n":2,"pt":"dois"},{"n":3,"pt":"três"},{"n":4,"pt":"quatro"},
+    {"n":5,"pt":"cinco"},{"n":6,"pt":"seis"},{"n":7,"pt":"sete"},{"n":8,"pt":"oito"},{"n":9,"pt":"nove"},
+    {"n":10,"pt":"dez"},{"n":11,"pt":"onze"},{"n":12,"pt":"doze"},{"n":13,"pt":"treze"},{"n":14,"pt":"catorze"},
+    {"n":15,"pt":"quinze"},{"n":16,"pt":"dezasseis"},{"n":17,"pt":"dezassete"},{"n":18,"pt":"dezoito"},{"n":19,"pt":"dezanove"},
+    {"n":20,"pt":"vinte"},{"n":21,"pt":"vinte e um"},{"n":30,"pt":"trinta"},{"n":40,"pt":"quarenta"},{"n":50,"pt":"cinquenta"},
+    {"n":60,"pt":"sessenta"},{"n":70,"pt":"setenta"},{"n":80,"pt":"oitenta"},{"n":90,"pt":"noventa"},{"n":100,"pt":"cem"},
+    {"n":200,"pt":"duzentos"},{"n":300,"pt":"trezentos"},{"n":400,"pt":"quatrocentos"},{"n":500,"pt":"quinhentos"},
+    {"n":600,"pt":"seiscentos"},{"n":700,"pt":"setecentos"},{"n":800,"pt":"oitocentos"},{"n":900,"pt":"novecentos"},
+    {"n":1000,"pt":"mil"},{"n":1000000,"pt":"milhão"},
+    {"_examples":[
+      {"n":75,"pt":"setenta e cinco"},{"n":1789,"pt":"mil setecentos e oitenta e nove"},
+      {"n":2101,"pt":"dois mil cento e um"},{"n":1115115,"pt":"um milhão cento e quinze mil cento e quinze"}
+    ],"_note":"100=cem isolado; 101+=cento e um...; conjunção 'e' obrigatória entre dezenas e unidades (vinte e três).","source":"notebook:p4 (verificado contra livro u2)"}
+  ],
+  "weekdays": [
+    {"pt":"segunda-feira"},{"pt":"terça-feira"},{"pt":"quarta-feira"},{"pt":"quinta-feira"},
+    {"pt":"sexta-feira"},{"pt":"sábado","gender":"m","article":"o"},{"pt":"domingo","gender":"m","article":"o"}
+  ],
+  "greetings": [
+    {"pt":"Olá!","reg":"informal"},{"pt":"Bom dia!"},{"pt":"Boa tarde!"},{"pt":"Boa noite!"},
+    {"pt":"Tudo bem?","reg":"informal"},{"pt":"Como está?","reg":"formal"},
+    {"pt":"Muito prazer!"},{"pt":"Muito gosto!","note":"= Muito prazer!"},
+    {"pt":"Bem-vindo!","gender":"m"},{"pt":"Bem-vinda!","gender":"f"},
+    {"pt":"Obrigado!","gender":"m"},{"pt":"Obrigada!","gender":"f"}
+  ],
+  "farewells": [
+    {"pt":"Adeus!"},{"pt":"Até já!"},{"pt":"Até logo!"},{"pt":"Até amanhã!"},
+    {"pt":"Até à próxima!"},{"pt":"Até terça!"},{"pt":"Até sábado!"},{"pt":"Até quinta!"}
+  ],
+  "nouns_with_gender": {
+    "_note": "Da lista alfabética do notebook (p3); GÉNERO INFERIDO pela forma padrão do português, confidence=medium até confirmar.",
+    "items": [
+      {"pt":"árvore","gender":"f","article":"a","en":"tree","confidence":"medium"},
+      {"pt":"preço","gender":"m","article":"o","en":"price","confidence":"medium"},
+      {"pt":"dedo","gender":"m","article":"o","en":"finger","confidence":"medium"},
+      {"pt":"elefante","gender":"m","article":"o","en":"elephant","confidence":"medium"},
+      {"pt":"ideia","gender":"f","article":"a","en":"idea","confidence":"medium"},
+      {"pt":"fogo","gender":"m","article":"o","en":"fire","plural":"os fogos","confidence":"medium"},
+      {"pt":"gente","gender":"f","article":"a","en":"people","note":"a gente = 3.ª pess. sing.; ≠ agente","confidence":"medium"},
+      {"pt":"idade","gender":"f","article":"a","en":"age","confidence":"medium"},
+      {"pt":"jogo","gender":"m","article":"o","en":"game","plural":"os jogos","confidence":"medium"},
+      {"pt":"limão","gender":"m","article":"o","en":"lemon","confidence":"medium"},
+      {"pt":"filho","gender":"m","article":"o","en":"son","confidence":"medium"},
+      {"pt":"filha","gender":"f","article":"a","en":"daughter","confidence":"medium"},
+      {"pt":"mão","gender":"f","article":"a","en":"hand","note":"exceção: -ão feminino","confidence":"medium"},
+      {"pt":"perna","gender":"f","article":"a","en":"leg","confidence":"medium"},
+      {"pt":"rosto","gender":"m","article":"o","en":"face","confidence":"medium"},
+      {"pt":"porta","gender":"f","article":"a","en":"door","confidence":"medium"},
+      {"pt":"escola","gender":"f","article":"a","en":"school","confidence":"medium"},
+      {"pt":"universidade","gender":"f","article":"a","en":"university","confidence":"medium"},
+      {"pt":"táxi","gender":"m","article":"o","en":"taxi","confidence":"medium"},
+      {"pt":"exame","gender":"m","article":"o","en":"exam","confidence":"medium"},
+      {"pt":"xadrez","gender":"m","article":"o","en":"chess","confidence":"medium"}
+    ]
+  }
+}

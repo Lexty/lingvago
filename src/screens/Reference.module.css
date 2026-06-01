@@ -1,0 +1,114 @@
+.screen {
+  composes: screen from '../styles/screen.module.css';
+}
+
+.title {
+  composes: title from '../styles/screen.module.css';
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.navLink {
+  font-size: var(--t-sm);
+  font-weight: var(--fw-semi);
+  color: var(--accent-ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.navLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-chip);
+}
+
+.intro {
+  margin: 0;
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+}
+
+.state {
+  margin: 0;
+  padding: var(--s-4);
+  border-radius: var(--card-radius);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+}
+
+/* ---------- card list ---------- */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.item {
+  display: flex;
+}
+
+.cardLink {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  inline-size: 100%;
+  padding: var(--card-pad);
+  border-radius: var(--card-radius);
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  text-decoration: none;
+  color: var(--text);
+}
+
+.cardLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.cardTopic {
+  font-size: var(--t-cap);
+  letter-spacing: var(--ls-cap);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.cardTitle {
+  font-size: var(--t-body);
+  font-weight: var(--fw-semi);
+  color: var(--text);
+}
+
+/* ---------- single card view ---------- */
+.cardHeading {
+  composes: title from '../styles/screen.module.css';
+  font-size: var(--t-h2);
+}
+
+.cardTopicLabel {
+  margin: 0;
+  font-size: var(--t-cap);
+  letter-spacing: var(--ls-cap);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  padding: var(--card-pad);
+  border-radius: var(--card-radius);
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+}

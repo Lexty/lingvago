@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>04 · Bold modern</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fbfaf6; --ink:#15140f; --orange:#ff4d12; --lime:#c8f135; --blue:#2b50ff;
+  --muted:#6b6962; --line:#e7e4da;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Manrope",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 24px 80px}
+.head .k{font-family:"Anton";letter-spacing:.06em;color:var(--orange);font-size:15px}
+.head h1{font-family:"Anton";font-size:58px;line-height:.92;margin:4px 0 6px;letter-spacing:-.01em;text-transform:uppercase}
+.head p{color:#4f4d47;max-width:60ch;margin:0;font-size:16px;font-weight:500}
+.stage{display:flex;gap:34px;flex-wrap:wrap;justify-content:center;margin-top:34px}
+.cap{text-align:center;color:var(--muted);font-weight:700;font-size:13px;margin-top:13px;text-transform:uppercase;letter-spacing:.08em}
+
+.phone{width:346px;flex:0 0 auto;background:var(--ink);border-radius:40px;padding:10px;box-shadow:14px 18px 0 var(--lime),0 30px 60px -30px rgba(0,0,0,.5)}
+.bezel{border-radius:30px;overflow:hidden;background:var(--paper)}
+.status{display:flex;justify-content:space-between;padding:11px 20px 2px;font-size:12px;font-weight:800}
+.scr{height:660px;overflow:hidden;padding:0 0 18px}
+.pad{padding:0 18px}
+
+.hero{background:var(--ink);color:var(--paper);padding:20px 18px 22px;position:relative}
+.hero .k{font-family:"Anton";color:var(--lime);font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+.hero .num{font-family:"Anton";font-size:124px;line-height:.82;color:var(--orange);letter-spacing:-.02em;margin:2px 0}
+.hero .sub{font-weight:700;font-size:14px;color:#cfcdc4}
+.hero::after{content:"";position:absolute;right:0;bottom:0;width:0;height:0;border-style:solid;border-width:0 0 40px 40px;border-color:transparent transparent var(--lime) transparent}
+.ttl{font-family:"Anton";text-transform:uppercase;font-size:20px;letter-spacing:.02em;margin:20px 0 10px}
+.plan{display:flex;flex-direction:column;gap:8px}
+.pi{display:flex;align-items:center;gap:11px;border:2px solid var(--ink);border-radius:12px;padding:11px 13px;font-weight:700;font-size:15px}
+.pi.on{background:var(--lime)}
+.pi .b{margin-left:auto;width:20px;height:20px;border:2px solid var(--ink);border-radius:5px}
+.pi.on .b{background:var(--ink);position:relative}.pi.on .b::after{content:"✓";color:var(--lime);position:absolute;inset:-3px 0 0;text-align:center;font-size:14px;font-weight:800}
+.drill{border:2px solid var(--ink);border-radius:14px;overflow:hidden;margin-bottom:12px}
+.drill .h{background:var(--orange);color:#fff;font-family:"Anton";text-transform:uppercase;padding:9px 14px;font-size:18px;letter-spacing:.02em;display:flex;justify-content:space-between;align-items:center}
+.drill .h span{font-family:"Manrope";font-weight:700;font-size:12px;background:#fff;color:var(--orange);border-radius:20px;padding:2px 9px}
+.lvls{display:flex}
+.lvls a{flex:1;text-align:center;text-decoration:none;font-family:"Anton";font-size:17px;color:var(--ink);padding:11px 0;border-right:2px solid var(--ink)}
+.lvls a:last-child{border-right:none}.lvls a.on{background:var(--ink);color:var(--lime)}
+
+/* drill */
+.dtop{display:flex;justify-content:space-between;align-items:center;font-weight:800;margin:14px 0 0}
+.tag{font-family:"Anton";background:var(--ink);color:var(--lime);border-radius:6px;padding:4px 11px;font-size:12px;letter-spacing:.06em}
+.bar{height:8px;background:var(--line);margin:14px 0;border:2px solid var(--ink);border-radius:6px;overflow:hidden}.bar>span{display:block;height:100%;width:30%;background:var(--orange)}
+.q{font-family:"Anton";text-transform:uppercase;color:var(--muted);font-size:16px;text-align:center;margin-top:26px;letter-spacing:.04em}
+.prompt{font-family:"Anton";text-align:center;font-size:42px;text-transform:uppercase;margin:8px 0 24px;letter-spacing:-.01em}
+.prompt .bl{color:#fff;background:var(--orange);padding:0 12px}
+.fb{background:var(--ink);color:#fff;border-radius:12px;padding:14px 16px;font-weight:800;font-size:15px;display:flex;gap:10px;align-items:center}
+.fb b{color:var(--lime)}
+.actions{display:flex;gap:9px;margin-top:12px}
+.bt{flex:1;text-align:center;text-decoration:none;font-family:"Anton";font-size:15px;text-transform:uppercase;letter-spacing:.03em;padding:12px;border-radius:10px;border:2px solid var(--ink);color:var(--ink)}
+.bt.go{flex:1.4;background:var(--lime)}
+
+/* reference */
+.refk{font-family:"Anton";color:var(--orange);text-transform:uppercase;font-size:13px;letter-spacing:.08em;margin-top:14px}
+.refttl{font-family:"Anton";font-size:34px;text-transform:uppercase;line-height:.95;margin:4px 0 14px}
+.block{border:2px solid var(--ink);border-radius:12px;padding:14px;margin-bottom:11px;font-size:16px;font-weight:500;line-height:1.45}
+.block.fill{background:var(--blue);color:#fff}.block.fill b{color:var(--lime)}
+.block b{color:var(--orange)}
+.kw{font-family:"Anton";font-size:20px;text-transform:uppercase;margin-bottom:2px;display:block}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="k">Направление 04</div>
+    <h1>Bold<br>Modern</h1>
+    <p>Громкая типографика (Anton + Manrope), цветовые блоки, контраст, гигантский числовой герой обратного отсчёта, толстые рамки и «оффсет»-тени. Энергично, по-современному, не детская геймификация.</p>
+  </div>
+  <div class="stage">
+    <!-- A -->
+    <div>
+      <div class="phone"><div class="bezel">
+        <div class="status"><span>9:41</span><span>●●● ⌁ ▮</span></div>
+        <div class="scr">
+          <div class="hero"><div class="k">A1 · PLA · экзамен 11.06</div><div class="num">11</div><div class="sub">ДНЕЙ ДО ЭКЗАМЕНА</div></div>
+          <div class="pad">
+            <div class="ttl">План на сегодня</div>
+            <div class="plan">
+              <div class="pi on">🎧 Слушать живой EP · 30–45 мин<span class="b"></span></div>
+              <div class="pi">✍️ Письмо 70–90 слов<span class="b"></span></div>
+              <div class="pi">⏱️ Полный mock<span class="b"></span></div>
+            </div>
+            <div class="ttl">Дриллы</div>
+            <div class="drill"><div class="h">Род · артикль<span>o / a</span></div><div class="lvls"><a class="on">L1</a><a>L2</a><a>L3</a></div></div>
+            <div class="drill"><div class="h">Предлоги: откуда<span>de/da/do</span></div><div class="lvls"><a class="on">L1</a><a>L2</a><a>L3</a></div></div>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap">Главная · Survival Kit</div>
+    </div>
+    <!-- B -->
+    <div>
+      <div class="phone"><div class="bezel">
+        <div class="status"><span>9:41</span><span>●●● ⌁ ▮</span></div>
+        <div class="scr"><div class="pad">
+          <div class="dtop"><span>← ВЫЙТИ</span><span class="tag">Предлоги · L1</span></div>
+          <div class="bar"><span></span></div>
+          <div class="q">De onde és?</div>
+          <div class="prompt">Sou <span class="bl">da</span> Rússia</div>
+          <div class="fb">✗ ПРАВИЛЬНО: Sou <b>da</b> Rússia.</div>
+          <div class="actions"><a class="bt">Правило</a><a class="bt">Пометить</a><a class="bt go">Дальше</a></div>
+          <div class="block fill" style="margin-top:24px"><span class="kw">Почему da</span>Rússia = <b>feminino</b> → a → de+a=<b>da</b></div>
+        </div></div>
+      </div></div>
+      <div class="cap">Дрилл · фидбэк</div>
+    </div>
+    <!-- C -->
+    <div>
+      <div class="phone"><div class="bezel">
+        <div class="status"><span>9:41</span><span>●●● ⌁ ▮</span></div>
+        <div class="scr"><div class="pad">
+          <div class="refk">← Справочник · Предлоги</div>
+          <div class="refttl">Движение:<br>a vs para</div>
+          <div class="block"><span class="kw" style="color:var(--orange)">a</span>короткое / ненадолго: «Vou <b>a</b> Paris».</div>
+          <div class="block"><span class="kw" style="color:var(--orange)">para</span>длительное / пункт: «Vou <b>para</b> o Brasil».</div>
+          <div class="block fill"><b>ir a casa</b> — ненадолго · <b>ir para casa</b> — остаться</div>
+          <div class="block">chegar <b>a</b> casa · sair <b>de</b> casa · sair <b>para</b> a escola · <b>de</b> carro · <b>a</b> pé</div>
+        </div></div>
+      </div></div>
+      <div class="cap">Справочник · карточка</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

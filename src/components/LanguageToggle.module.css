@@ -1,0 +1,22 @@
+/* Segmented-control visuals live in the shared module; composed here so the
+   LanguageToggle and Settings theme switch cannot drift apart. */
+
+.section {
+  composes: section from '../styles/segmented.module.css';
+}
+
+.label {
+  composes: label from '../styles/segmented.module.css';
+}
+
+.segmented {
+  composes: segmented from '../styles/segmented.module.css';
+}
+
+.segment {
+  composes: segment from '../styles/segmented.module.css';
+}
+
+.segmentActive {
+  composes: segmentActive from '../styles/segmented.module.css';
+}

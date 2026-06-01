@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>06 · Mono / utilitarian</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f2f0e9; --panel:#fbfaf6; --ink:#17171b; --muted:#7c7a72; --line:#d8d5cb;
+  --sig:#e5482f; --ok:#1f7a4d;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",sans-serif;-webkit-font-smoothing:antialiased}
+.mono{font-family:"Space Mono",monospace}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 24px 80px}
+.head .k{font-family:"Space Mono";color:var(--sig);font-size:12px;letter-spacing:.05em}
+.head h1{font-family:"Space Mono";font-weight:700;font-size:40px;margin:6px 0 4px;letter-spacing:-.02em}
+.head p{color:#55534c;max-width:64ch;margin:0;font-size:16px}
+.stage{display:flex;gap:34px;flex-wrap:wrap;justify-content:center;margin-top:34px}
+.cap{text-align:center;color:var(--muted);font-family:"Space Mono";font-size:12px;margin-top:13px}
+
+.phone{width:344px;flex:0 0 auto;background:var(--ink);border-radius:8px;padding:9px;box-shadow:0 24px 50px -28px rgba(0,0,0,.55)}
+.bezel{border-radius:3px;overflow:hidden;background:var(--panel);border:1px solid #2a2a30}
+.status{display:flex;justify-content:space-between;padding:9px 16px 5px;font-family:"Space Mono";font-size:11px;color:var(--muted);border-bottom:1px solid var(--line)}
+.scr{height:660px;overflow:hidden;padding:0}
+.pad{padding:14px 16px}
+
+.kv{display:flex;justify-content:space-between;font-family:"Space Mono";font-size:11px;color:var(--muted);letter-spacing:.04em;border-bottom:1px solid var(--line);padding:9px 16px}
+.count{font-family:"Space Mono";font-weight:700;font-size:96px;line-height:.9;letter-spacing:-.04em;padding:14px 16px 2px}
+.count .u{font-size:14px;color:var(--muted);letter-spacing:0}
+.sub{font-family:"Space Mono";font-size:11px;color:var(--muted);padding:0 16px 14px;border-bottom:1px solid var(--line)}
+.lbl{font-family:"Space Mono";font-size:11px;color:var(--sig);letter-spacing:.12em;text-transform:uppercase;padding:14px 16px 7px}
+.li{display:flex;align-items:center;gap:11px;padding:11px 16px;border-top:1px solid var(--line);font-size:15px}
+.li .cb{font-family:"Space Mono";color:var(--ink)}
+.li .id{font-family:"Space Mono";font-size:11px;color:var(--muted);margin-left:auto}
+.li.done{color:var(--muted)}.li.done .cb{color:var(--ok)}
+.drow{display:flex;align-items:center;gap:10px;padding:12px 16px;border-top:1px solid var(--line)}
+.drow .nm{font-weight:600}.drow .sb{font-family:"Space Mono";font-size:11px;color:var(--muted)}
+.lvls{display:flex;margin-left:auto;border:1px solid var(--ink)}
+.lvls a{font-family:"Space Mono";font-size:13px;text-decoration:none;color:var(--ink);padding:5px 10px;border-right:1px solid var(--ink)}
+.lvls a:last-child{border-right:none}.lvls a.on{background:var(--ink);color:var(--panel)}
+
+/* drill */
+.dtop{display:flex;justify-content:space-between;font-family:"Space Mono";font-size:12px;color:var(--muted);padding:11px 16px;border-bottom:1px solid var(--line)}
+.dtop .tag{color:var(--sig)}
+.barwrap{padding:0 16px}.bar{height:4px;background:var(--line);margin:14px 0 0}.bar>span{display:block;height:100%;width:30%;background:var(--sig)}
+.q{font-family:"Space Mono";text-align:center;color:var(--muted);font-size:13px;margin-top:36px}
+.prompt{text-align:center;font-family:"Space Mono";font-weight:700;font-size:32px;margin:12px 0 26px}
+.prompt .bl{color:var(--sig);border-bottom:2px solid var(--sig);padding:0 12px}
+.fb{margin:0 16px;border:1px solid var(--sig);border-left-width:4px;padding:12px 14px;font-size:14px;color:#9b2e1c}
+.fb .mono{color:var(--sig)}
+.actions{display:flex;margin:12px 16px 0;border:1px solid var(--ink)}
+.bt{flex:1;text-align:center;text-decoration:none;font-family:"Space Mono";font-size:13px;padding:11px 0;color:var(--ink);border-right:1px solid var(--ink)}
+.bt:last-child{border-right:none}.bt.go{background:var(--ink);color:var(--panel);flex:1.3}
+
+/* reference */
+.refk{font-family:"Space Mono";color:var(--sig);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:14px 16px 2px}
+.refttl{font-family:"Space Mono";font-weight:700;font-size:24px;padding:0 16px 12px;border-bottom:1px solid var(--line)}
+.spec{padding:0}
+.spec .r{display:grid;grid-template-columns:64px 1fr;border-top:1px solid var(--line)}
+.spec .r .t{font-family:"Space Mono";font-size:13px;color:var(--sig);padding:12px 10px 12px 16px;border-right:1px solid var(--line)}
+.spec .r .d{padding:12px 16px;font-size:15px;line-height:1.45}
+.spec .r .d b{color:var(--ink);border-bottom:2px solid var(--sig)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="k">// НАПРАВЛЕНИЕ 06</div>
+    <h1>Mono / utilitarian</h1>
+    <p>Швейцарский монохром: чернила на тёплой бумаге, один сигнальный цвет, моноширинный шрифт (Space Mono) + Plex Sans, линейки, табличность, плотность. «Инструмент, а не игрушка» — быстро, чётко, по делу.</p>
+  </div>
+  <div class="stage">
+    <!-- A -->
+    <div>
+      <div class="phone"><div class="bezel">
+        <div class="status"><span>09:41</span><span>LTE ▮▮▮</span></div>
+        <div class="scr">
+          <div class="kv"><span>EXAM · A1 PLA</span><span>2026-06-11</span></div>
+          <div class="count">11<span class="u"> дн.</span></div>
+          <div class="sub">до экзамена · осталось дней</div>
+          <div class="lbl">// план на сегодня</div>
+          <div class="li done"><span class="cb">[x]</span><span>Слушать живой EP · 30–45 мин</span><span class="id">A</span></div>
+          <div class="li"><span class="cb">[ ]</span><span>Письмо 70–90 слов</span><span class="id">B</span></div>
+          <div class="li"><span class="cb">[ ]</span><span>Полный mock с таймером</span><span class="id">C</span></div>
+          <div class="lbl">// дриллы</div>
+          <div class="drow"><div><div class="nm">Род и артикль</div><div class="sb">o / a</div></div><div class="lvls"><a class="on">L1</a><a>L2</a><a>L3</a></div></div>
+          <div class="drow" style="border-bottom:1px solid var(--line)"><div><div class="nm">Предлоги: откуда</div><div class="sb">de / da / do</div></div><div class="lvls"><a class="on">L1</a><a>L2</a><a>L3</a></div></div>
+        </div>
+      </div></div>
+      <div class="cap">главная · survival kit</div>
+    </div>
+    <!-- B -->
+    <div>
+      <div class="phone"><div class="bezel">
+        <div class="status"><span>09:41</span><span>LTE ▮▮▮</span></div>
+        <div class="scr">
+          <div class="dtop"><span>‹ exit</span><span class="tag">PREP · L1 · 03/10</span></div>
+          <div class="barwrap"><div class="bar"><span></span></div></div>
+          <div class="q">De onde és?</div>
+          <div class="prompt">Sou <span class="bl">da</span> Rússia.</div>
+          <div class="fb">✗ FALSO — правильно: <span class="mono">Sou da Rússia.</span></div>
+          <div class="actions"><a class="bt">[ правило ]</a><a class="bt">[ ⚑ ]</a><a class="bt go">[ next › ]</a></div>
+          <div class="lbl" style="margin-top:24px">// почему</div>
+          <div class="drow" style="border-bottom:1px solid var(--line)"><span class="sb" style="font-size:14px">Rússia = feminino → a → de+a=<b style="color:var(--sig)">da</b></span></div>
+        </div>
+      </div></div>
+      <div class="cap">дрилл · фидбэк</div>
+    </div>
+    <!-- C -->
+    <div>
+      <div class="phone"><div class="bezel">
+        <div class="status"><span>09:41</span><span>LTE ▮▮▮</span></div>
+        <div class="scr">
+          <div class="refk">‹ ref / предлоги</div>
+          <div class="refttl">a vs para — движение</div>
+          <div class="spec">
+            <div class="r"><div class="t">a</div><div class="d">короткое / ненадолго: «Vou <b>a</b> Paris».</div></div>
+            <div class="r"><div class="t">para</div><div class="d">длительное / пункт: «Vou <b>para</b> o Brasil».</div></div>
+            <div class="r"><div class="t">casa</div><div class="d"><b>ir a casa</b> ненадолго · <b>ir para casa</b> остаться.</div></div>
+            <div class="r"><div class="t">±</div><div class="d">chegar <b>a</b> · sair <b>de</b> · sair <b>para</b>.</div></div>
+            <div class="r" style="border-bottom:1px solid var(--line)"><div class="t">tpt</div><div class="d"><b>de</b> carro / comboio · <b>a</b> pé.</div></div>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap">справочник · спецификация</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+You are a European Portuguese (PT-PT) validator. Two normalized JSON datasets were auto-generated for an A1 learning app and MUST be linguistically flawless. Review ONLY the Portuguese correctness.
+
+Read:
+- normalized/grammar_full.json
+- normalized/vocab_full.json
+
+Check:
+1. VOCAB gender/article: for every noun, gender ("m"/"f") must match article ("o"/"a") and match real PT-PT (e.g. a mão/a viagem/a tarde are fem; o problema/o dia/o mapa are masc; -agem/-dade/-ção are fem; Portugal/Marrocos/Angola no article). Flag any noun whose gender/article is WRONG or mismatched.
+2. GRAMMAR verb tables: every conjugation form must be a real correct PT form (ser sou/és/é/somos/são; ter tenho/tens/tem/temos/têm; ir vou/vais/vai/vamos/vão; fazer faço/fazes/faz/fazemos/fazem; pôr ponho/pões/põe/pomos/põem; etc.). Flag wrong forms.
+3. CONTRACTIONS: de+o=do, de+a=da, em+o=no, em+a=na, a+o=ao, a+a=à — flag wrong.
+4. Spelling/diacritics that make a word wrong.
+
+Output each finding: [SEVERITY high|med|low] file | entry/word | what is wrong | correct form.
+Be precise and conservative. Items already marked confidence "medium"/inferred may be noted but tag them [INFERRED]. End with: VERDICT: CLEAN or N ISSUES.

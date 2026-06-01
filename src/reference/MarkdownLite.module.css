@@ -1,0 +1,36 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.paragraph {
+  margin: 0;
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--text);
+}
+
+.callout {
+  margin: 0;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--card-radius);
+  background: var(--highlight);
+  color: var(--highlight-ink);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+}
+
+.list {
+  margin: 0;
+  padding-inline-start: var(--s-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.listItem {
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--text);
+}

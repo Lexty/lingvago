@@ -1,7 +1,40 @@
-node_modules/
-dist/
-dev-dist/
-.idea/
-.claude/
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build output
+dist
+dist-ssr
 *.local
+
+# Test / coverage
+coverage
+
+# Playwright E2E
+playwright-report
+test-results
+/playwright/.cache
+
+# TS build info
+*.tsbuildinfo
+
+# Editor / OS
 .DS_Store
+.idea
+.vscode/*
+!.vscode/extensions.json
+
+# Project data (large/derived — keep out of git)
+extraction/renders
+extraction/ocr
+extraction/tessdata
+extraction/_tmp
+# Derived content bundle (built by scripts/build-content.ts; SPEC §10.3)
+public/content.v*.json
+.local/resources/*.pdf

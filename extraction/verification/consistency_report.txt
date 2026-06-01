@@ -1,0 +1,38 @@
+# Internal consistency check — diacritic/spelling variants
+
+8 word(s) appear with >1 spelling across files — REVIEW each:
+
+## 'antonio': 2 forms
+   - 'antónio'          (1x)  caderno_unit01.md:65
+   - 'antonio'          (1x)  livro_unit01.md:79
+
+## 'audio': 2 forms
+   - 'áudio'            (19x)  livro_unit01.md:34, livro_unit01.md:61, livro_unit01.md:133, livro_unit01.md:154, livro_unit01.md:164, livro_unit01.md:180 ...
+   - 'audio'            (19x)  exercise_templates.json:3, exercise_templates.json:3, exercise_templates.json:11, exercise_templates.json:19, exercise_templates.json:27, exercise_templates.json:35 ...
+
+## 'esta': 2 forms
+   - 'está'             (14x)  caderno_unit01.md:22, caderno_unit01.md:31, livro_unit01.md:31, livro_unit01.md:100, livro_unit01.md:109, livro_unit02.md:179 ...
+   - 'esta'             (3x)  livro_unit02.md:61, notebook_p01-04.md:94, notebook_p01-04.md:94
+
+## 'estas': 2 forms
+   - 'estas'            (1x)  livro_unit02.md:123
+   - 'estás'            (1x)  livro_unit02.md:179
+
+## 'exercicio': 2 forms
+   - 'exercício'        (4x)  livro_unit02.md:55, livro_unit02.md:77, livro_unit02.md:121, exercise_templates.json:127
+   - 'exercicio'        (2x)  caderno_unit01.md:2, caderno_unit02.md:2
+
+## 'taxi': 2 forms
+   - 'táxi'             (2x)  notebook_p01-04.md:124, vocab_unit01-02.json:54
+   - 'taxi'             (1x)  vocab_unit01-02.json:54
+
+## 'voce': 2 forms
+   - 'você'             (10x)  caderno_unit01.md:51, caderno_unit02.md:62, livro_unit01.md:200, notebook_p01-04.md:28, notebook_p01-04.md:70, notebook_p01-04.md:80 ...
+   - 'voce'             (2x)  grammar_unit01-02.json:23, grammar_unit01-02.json:35
+
+## 'voces': 2 forms
+   - 'vocês'            (3x)  livro_unit02.md:97, notebook_p01-04.md:80, grammar_unit01-02.json:48
+   - 'voces'            (2x)  grammar_unit01-02.json:24, grammar_unit01-02.json:36
+
+
+Distinct deburr-keys: 783 | total surface forms: 791

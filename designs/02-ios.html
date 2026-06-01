@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>02 · iOS-native</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef0f4; --group:#f2f3f7; --card:#ffffff; --ink:#0b0b0f; --muted:#8a8a92;
+  --sep:#e5e5ea; --blue:#0a74ff; --blue2:#3b9bff; --red:#ff3b30; --green:#22b46b; --teal:#0aa;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#f4f5f8,#e7e9ef);min-height:100vh;color:var(--ink);
+  font-family:"Figtree",-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 24px 80px}
+.head h1{font-size:34px;font-weight:800;letter-spacing:-.02em;margin:0 0 4px}
+.head .k{font-weight:700;color:var(--blue);letter-spacing:.02em;font-size:13px;text-transform:uppercase}
+.head p{color:#5b5b63;max-width:62ch;margin:6px 0 0;font-size:16px}
+.stage{display:flex;gap:34px;flex-wrap:wrap;justify-content:center;margin-top:34px}
+.cap{text-align:center;color:var(--muted);font-weight:600;font-size:13px;margin-top:13px}
+
+.phone{width:344px;flex:0 0 auto;background:#0b0b0f;border-radius:46px;padding:11px;
+  box-shadow:0 34px 70px -30px rgba(20,30,60,.5)}
+.bezel{border-radius:38px;overflow:hidden;background:var(--bg);position:relative}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:26px;background:#0b0b0f;border-radius:0 0 16px 16px;z-index:5}
+.status{display:flex;justify-content:space-between;padding:12px 24px 2px;font-size:13px;font-weight:700}
+.scr{height:660px;overflow:hidden;padding:4px 16px 18px}
+
+.lgtitle{font-size:30px;font-weight:800;letter-spacing:-.02em;margin:6px 4px 2px}
+.ringrow{display:flex;align-items:center;gap:16px;background:var(--card);border-radius:20px;padding:16px;margin:10px 0 4px;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+.ring{width:84px;height:84px;flex:0 0 auto}
+.ring text{font-family:"Figtree";font-weight:800}
+.ringrow .info b{display:block;font-size:15px}
+.ringrow .info span{color:var(--muted);font-size:14px;font-weight:500}
+.ghdr{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin:20px 8px 7px}
+.inset{background:var(--card);border-radius:16px;overflow:hidden}
+.cell{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--sep);font-size:16px}
+.cell:last-child{border-bottom:none}
+.cell .em{width:26px;text-align:center;font-size:18px}
+.cell .chev{margin-left:auto;color:#c4c4cc;font-weight:700}
+.chk{width:22px;height:22px;border-radius:50%;border:2px solid #d0d0d8;flex:0 0 auto}
+.chk.on{background:var(--green);border-color:var(--green);position:relative}
+.chk.on::after{content:"✓";color:#fff;position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800}
+.cell .tt b{display:block;font-weight:600}
+.cell .tt span{font-size:13px;color:var(--muted);font-weight:500}
+.seg{display:flex;background:#e9e9ef;border-radius:11px;padding:3px;margin-left:auto;gap:2px}
+.seg a{font-size:14px;font-weight:700;color:var(--ink);text-decoration:none;padding:5px 12px;border-radius:9px}
+.seg a.on{background:#fff;color:var(--blue);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+
+/* drill */
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:6px 4px 0;color:var(--blue);font-weight:600}
+.navbar .pill{color:var(--muted);font-weight:700;font-size:13px;background:#e9e9ef;border-radius:20px;padding:4px 11px}
+.pbar{height:5px;background:#e3e3ea;border-radius:3px;margin:14px 4px}.pbar>span{display:block;height:100%;width:30%;background:var(--blue);border-radius:3px}
+.qlab{text-align:center;color:var(--muted);font-weight:600;margin-top:34px}
+.big{text-align:center;font-size:33px;font-weight:800;letter-spacing:-.02em;margin:8px 0 26px}
+.big .bl{color:var(--blue);border-bottom:3px solid var(--blue);padding:0 14px}
+.fbbar{display:flex;gap:10px;align-items:center;background:#ffe9e7;color:#c52b22;border-radius:16px;padding:14px 16px;font-weight:700;font-size:15px}
+.actions{display:flex;gap:10px;margin-top:14px}
+.bt{flex:1;text-align:center;text-decoration:none;font-weight:700;font-size:15px;padding:13px;border-radius:14px;background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.bt.go{flex:1.4;background:var(--green);color:#fff}
+
+/* reference */
+.refback{color:var(--blue);font-weight:600;padding:6px 4px}
+.refk{color:var(--blue);font-weight:800;text-transform:uppercase;font-size:12px;letter-spacing:.04em;margin:8px 4px 2px}
+.refttl{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:0 4px 14px}
+.refcard{background:var(--card);border-radius:18px;padding:18px;font-size:16px;line-height:1.5}
+.refcard p{margin:9px 0}.refcard b{color:var(--blue)}
+.refcard .div{height:1px;background:var(--sep);margin:12px -4px}
+.refcard .badge{display:inline-block;background:#eaf3ff;color:var(--blue);border-radius:8px;padding:2px 9px;font-weight:700;font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="k">Направление 02</div>
+    <h1>iOS-native</h1>
+    <p>Системная iOS-эстетика: серый сгруппированный фон, белые inset-карточки, скруглённые сегментированные контролы, кольцо активности для обратного отсчёта. Чисто, привычно, «родное» для телефона.</p>
+  </div>
+  <div class="stage">
+    <!-- A -->
+    <div>
+      <div class="phone"><div class="bezel"><div class="notch"></div>
+        <div class="status"><span>9:41</span><span>􀙇 􀛨 􀢍</span></div>
+        <div class="scr">
+          <div class="lgtitle">До экзамена</div>
+          <div class="ringrow">
+            <svg class="ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="#e6e6ee" stroke-width="11"/><circle cx="50" cy="50" r="42" fill="none" stroke="url(#g)" stroke-width="11" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="150" transform="rotate(-90 50 50)"/><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a74ff"/><stop offset="1" stop-color="#3b9bff"/></linearGradient></defs><text x="50" y="56" text-anchor="middle" font-size="30" fill="#0b0b0f">11</text></svg>
+            <div class="info"><b>11 дней до экзамена</b><span>A1 · PLA · 11.06.2026</span></div>
+          </div>
+          <div class="ghdr">План на сегодня</div>
+          <div class="inset">
+            <div class="cell"><span class="em">🎧</span><div class="tt"><b>Слушать живой EP</b><span>30–45 мин</span></div><div class="chk on"></div></div>
+            <div class="cell"><span class="em">✍️</span><div class="tt"><b>Письмо 70–90 слов</b></div><div class="chk"></div></div>
+            <div class="cell"><span class="em">⏱️</span><div class="tt"><b>Полный mock</b><span>каждые 2–3 дня</span></div><div class="chk"></div></div>
+          </div>
+          <div class="ghdr">Дриллы</div>
+          <div class="inset">
+            <div class="cell"><div class="tt"><b>Род и артикль</b><span>o / a</span></div><div class="seg"><a class="on">L1</a><a>L2</a><a>L3</a></div></div>
+            <div class="cell"><div class="tt"><b>Предлоги: откуда</b><span>de / da / do</span></div><div class="seg"><a class="on">L1</a><a>L2</a><a>L3</a></div></div>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap">Главная · Survival Kit</div>
+    </div>
+    <!-- B -->
+    <div>
+      <div class="phone"><div class="bezel"><div class="notch"></div>
+        <div class="status"><span>9:41</span><span>􀙇 􀛨 􀢍</span></div>
+        <div class="scr">
+          <div class="navbar"><span>‹ Выйти</span><span class="pill">Предлоги · L1</span></div>
+          <div class="pbar"><span></span></div>
+          <div class="qlab">De onde és?</div>
+          <div class="big">Sou <span class="bl">da</span> Rússia.</div>
+          <div class="fbbar">✗ Неверно — правильно: Sou da Rússia.</div>
+          <div class="actions"><a class="bt">📖 Правило</a><a class="bt">⚑ Пометить</a><a class="bt go">Дальше</a></div>
+          <div class="inset" style="margin-top:24px"><div class="cell"><div class="tt"><b>Почему da?</b><span>Rússia — feminino → a → de+a=da</span></div></div></div>
+        </div>
+      </div></div>
+      <div class="cap">Дрилл · фидбэк</div>
+    </div>
+    <!-- C -->
+    <div>
+      <div class="phone"><div class="bezel"><div class="notch"></div>
+        <div class="status"><span>9:41</span><span>􀙇 􀛨 􀢍</span></div>
+        <div class="scr">
+          <div class="refback">‹ Справочник</div>
+          <div class="refk">Предлоги</div>
+          <div class="refttl">Движение: a vs para</div>
+          <div class="refcard">
+            <p><span class="badge">a</span> короткое / ненадолго: «Vou <b>a</b> Paris».</p>
+            <p><span class="badge">para</span> длительное / пункт назначения: «Vou <b>para</b> o Brasil».</p>
+            <div class="div"></div>
+            <p><b>ir a casa</b> — домой ненадолго.</p>
+            <p><b>ir para casa</b> — домой, остаться.</p>
+            <div class="div"></div>
+            <p><b>chegar a</b> casa · <b>sair de</b> casa · <b>sair para</b> a escola.</p>
+            <p>Транспорт: <b>de</b> carro / comboio; <b>a</b> pé.</p>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap">Справочник · карточка</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

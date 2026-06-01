@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>05 · Calm pastel</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f4ef; --card:#ffffff; --ink:#3a3640; --muted:#928c98;
+  --sage:#9bbfa6; --sage-soft:#e6f0e8; --blush:#f0c9cd; --blush-soft:#fbe9eb;
+  --lav:#cfc8ee; --butter:#f6e4b8; --ok:#5aa37a; --warn:#d98a86;
+}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font-family:"Hanken Grotesk",sans-serif;-webkit-font-smoothing:antialiased;
+  background:
+   radial-gradient(420px 320px at 8% 0%, var(--blush-soft), transparent 60%),
+   radial-gradient(460px 360px at 98% 12%, var(--sage-soft), transparent 60%),
+   radial-gradient(420px 420px at 60% 100%, #efeafb, transparent 60%),
+   var(--bg);background-attachment:fixed}
+.wrap{max-width:1180px;margin:0 auto;padding:42px 24px 80px}
+.head .k{color:var(--warn);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:12px}
+.head h1{font-family:"Fraunces";font-style:italic;font-weight:500;font-size:44px;margin:6px 0 4px}
+.head p{color:#6b6671;max-width:62ch;margin:0;font-size:16px}
+.stage{display:flex;gap:34px;flex-wrap:wrap;justify-content:center;margin-top:34px}
+.cap{text-align:center;color:var(--muted);font-weight:700;font-size:13px;margin-top:13px}
+
+.phone{width:344px;flex:0 0 auto;background:#fff;border-radius:46px;padding:12px;box-shadow:0 30px 70px -34px rgba(120,90,120,.45)}
+.bezel{border-radius:36px;overflow:hidden;background:linear-gradient(180deg,#fffefb,#faf7f2)}
+.status{display:flex;justify-content:space-between;padding:13px 22px 4px;font-size:12px;color:var(--muted);font-weight:700}
+.scr{height:660px;overflow:hidden;padding:6px 18px 20px}
+
+.hi{display:flex;align-items:center;gap:16px;margin:8px 2px 0}
+.circle{width:96px;height:96px;border-radius:50%;flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 30% 25%,#fff,var(--sage-soft));border:6px solid var(--sage)}
+.circle b{font-family:"Fraunces";font-size:38px;line-height:1}.circle span{font-size:11px;color:var(--muted);font-weight:700}
+.hi .t b{font-family:"Fraunces";font-style:italic;font-size:21px;display:block}
+.hi .t span{color:var(--muted);font-size:14px;font-weight:600}
+.sec{font-family:"Fraunces";font-style:italic;font-size:19px;color:var(--ink);margin:22px 4px 11px}
+.plan{display:flex;flex-direction:column;gap:9px}
+.row{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:18px;padding:13px 15px;font-size:15px;font-weight:600;box-shadow:0 6px 18px -14px rgba(120,90,120,.5)}
+.dot{width:24px;height:24px;border-radius:50%;background:var(--blush-soft);border:2px solid var(--blush);flex:0 0 auto}
+.row.on .dot{background:var(--sage);border-color:var(--sage);position:relative}.row.on .dot::after{content:"✓";color:#fff;position:absolute;inset:0;text-align:center;font-size:13px;font-weight:800}
+.row.on{opacity:.7}
+.drill{background:var(--card);border-radius:20px;padding:15px 16px;margin-bottom:11px;box-shadow:0 8px 22px -16px rgba(120,90,120,.5)}
+.drill h3{font-family:"Fraunces";font-style:italic;font-size:19px;margin:0 0 1px}
+.drill .sub{color:var(--muted);font-size:14px;font-weight:600}
+.lvls{display:flex;gap:8px;margin-top:11px}
+.lvls a{flex:1;text-align:center;text-decoration:none;font-weight:700;font-size:14px;color:var(--ink);background:var(--bg);border-radius:14px;padding:9px 0}
+.lvls a.on{background:var(--sage);color:#fff}
+
+/* drill */
+.dtop{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-weight:700;margin-top:6px}
+.tag{background:var(--lav);color:#5b4f87;border-radius:20px;padding:5px 13px;font-size:12px;font-weight:700}
+.bar{height:8px;background:#efeaf6;border-radius:10px;margin:16px 0}.bar>span{display:block;height:100%;width:30%;background:var(--sage);border-radius:10px}
+.q{text-align:center;font-family:"Fraunces";font-style:italic;color:var(--muted);font-size:19px;margin-top:30px}
+.prompt{text-align:center;font-family:"Fraunces";font-size:34px;margin:12px 0 26px}
+.prompt .bl{color:#5b4f87;background:var(--lav);border-radius:14px;padding:2px 16px}
+.fb{background:var(--blush-soft);border-radius:18px;padding:15px 17px;color:#a8504c;font-weight:700}
+.fb b{font-family:"Fraunces";font-style:italic;font-weight:500}
+.actions{display:flex;gap:9px;margin-top:13px}
+.bt{flex:1;text-align:center;text-decoration:none;font-weight:700;font-size:14px;padding:13px;border-radius:16px;background:var(--card);color:var(--ink);box-shadow:0 6px 16px -14px rgba(120,90,120,.6)}
+.bt.go{flex:1.4;background:var(--ok);color:#fff}
+
+/* reference */
+.refk{color:var(--warn);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:11px;margin-top:8px}
+.refttl{font-family:"Fraunces";font-style:italic;font-size:28px;margin:5px 0 14px}
+.refcard{background:var(--card);border-radius:22px;padding:18px 19px;font-size:16px;line-height:1.55;box-shadow:0 14px 34px -22px rgba(120,90,120,.55)}
+.refcard p{margin:9px 0}.refcard b{color:#5b4f87}
+.refcard .div{height:1px;background:#efeaf2;margin:13px 0}
+.pill{display:inline-block;border-radius:12px;padding:2px 11px;font-family:"Fraunces";font-style:italic;font-size:16px}
+.pill.a{background:var(--butter)}.pill.p{background:var(--sage-soft)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="k">Направление 05</div>
+    <h1>Calm · pastel</h1>
+    <p>Мягкие пастельные тона (шалфей, пудра, лаванда), много воздуха, скруглённые карточки и пилюли, нежный градиентный фон, курсивный серив (Fraunces) + дружелюбный гротеск. Спокойно, без стресса — важно перед экзаменом.</p>
+  </div>
+  <div class="stage">
+    <!-- A -->
+    <div>
+      <div class="phone"><div class="bezel">
+        <div class="status"><span>9:41</span><span>●●● ⌁ ▮</span></div>
+        <div class="scr">
+          <div class="hi"><div class="circle"><b>11</b><span>дней</span></div><div class="t"><b>До экзамена</b><span>A1 · PLA · 11.06.2026</span></div></div>
+          <div class="sec">План на сегодня</div>
+          <div class="plan">
+            <div class="row on"><span class="dot"></span>🎧 Слушать живой EP · 30–45 мин</div>
+            <div class="row"><span class="dot"></span>✍️ Письмо 70–90 слов</div>
+            <div class="row"><span class="dot"></span>⏱️ Полный mock с таймером</div>
+          </div>
+          <div class="sec">Дриллы</div>
+          <div class="drill"><h3>Род и артикль</h3><div class="sub">o / a · género</div><div class="lvls"><a class="on">L1</a><a>L2</a><a>L3</a></div></div>
+          <div class="drill"><h3>Предлоги: откуда</h3><div class="sub">de / da / do</div><div class="lvls"><a class="on">L1</a><a>L2</a><a>L3</a></div></div>
+        </div>
+      </div></div>
+      <div class="cap">Главная · Survival Kit</div>
+    </div>
+    <!-- B -->
+    <div>
+      <div class="phone"><div class="bezel">
+        <div class="status"><span>9:41</span><span>●●● ⌁ ▮</span></div>
+        <div class="scr">
+          <div class="dtop"><span>← Выйти</span><span class="tag">Предлоги · L1</span></div>
+          <div class="bar"><span></span></div>
+          <div class="q">De onde és?</div>
+          <div class="prompt">Sou <span class="bl">da</span> Rússia.</div>
+          <div class="fb">✗ Неверно — правильно: <b>Sou da Rússia.</b></div>
+          <div class="actions"><a class="bt">📖 Правило</a><a class="bt">⚑ Пометить</a><a class="bt go">Дальше</a></div>
+          <div class="refcard" style="margin-top:24px;padding:14px 16px"><p style="margin:0">Rússia — <b>feminino</b> → <b>a</b> → de + a = <b>da</b>.</p></div>
+        </div>
+      </div></div>
+      <div class="cap">Дрилл · фидбэк</div>
+    </div>
+    <!-- C -->
+    <div>
+      <div class="phone"><div class="bezel">
+        <div class="status"><span>9:41</span><span>●●● ⌁ ▮</span></div>
+        <div class="scr">
+          <span style="color:var(--muted);font-weight:700">← Справочник</span>
+          <div class="refk">Предлоги</div>
+          <div class="refttl">Движение: a vs para</div>
+          <div class="refcard">
+            <p><span class="pill a">a</span> короткое / ненадолго: «Vou <b>a</b> Paris».</p>
+            <p><span class="pill p">para</span> длительное / пункт: «Vou <b>para</b> o Brasil».</p>
+            <div class="div"></div>
+            <p><b>ir a casa</b> — домой ненадолго.<br><b>ir para casa</b> — домой, остаться.</p>
+            <div class="div"></div>
+            <p><b>chegar a</b> casa · <b>sair de</b> casa · <b>sair para</b> a escola.<br>Транспорт: <b>de</b> carro; <b>a</b> pé.</p>
+          </div>
+        </div>
+      </div></div>
+      <div class="cap">Справочник · карточка</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

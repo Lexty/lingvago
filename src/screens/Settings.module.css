@@ -1,0 +1,29 @@
+.screen {
+  composes: screen from '../styles/screen.module.css';
+}
+
+.title {
+  composes: title from '../styles/screen.module.css';
+}
+
+/* Segmented-control visuals are shared with LanguageToggle (composed, not duplicated). */
+
+.section {
+  composes: section from '../styles/segmented.module.css';
+}
+
+.label {
+  composes: label from '../styles/segmented.module.css';
+}
+
+.segmented {
+  composes: segmented from '../styles/segmented.module.css';
+}
+
+.segment {
+  composes: segment from '../styles/segmented.module.css';
+}
+
+.segmentActive {
+  composes: segmentActive from '../styles/segmented.module.css';
+}

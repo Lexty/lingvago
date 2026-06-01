@@ -1,0 +1,32 @@
+{
+  "_meta": {
+    "description": "Countries from livro/caderno unit 2 with gender, article and origin/location prepositions. Drives gender->article->preposition drills.",
+    "source": ["livro:u2:p14-17", "caderno:u2:p6-7"],
+    "rules": {
+      "prep_origin": "de + article -> de/da/do/dos (De onde é? Sou ___)",
+      "prep_location": "em + article -> em/na/no/nos (Onde fica? Fica ___)"
+    }
+  },
+  "countries": [
+    { "name": "Portugal",       "gender": "none",     "article": "none",     "prep_origin": "de", "prep_location": "em", "note": "sem artigo", "confidence": "high" },
+    { "name": "Espanha",        "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "livro imprime '(a) Espanha'; em origem/local normalmente sem artigo: de Espanha, em Espanha", "confidence": "high" },
+    { "name": "Itália",         "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "'(a) Itália'; de Itália, em Itália", "confidence": "high" },
+    { "name": "França",         "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "'(a) França'; também ocorre da França/na França", "confidence": "medium" },
+    { "name": "Inglaterra",     "gender": "f",        "article": "optional", "prep_origin": "de", "prep_location": "em", "note": "'(a) Inglaterra'; de Inglaterra, em Inglaterra", "confidence": "high" },
+    { "name": "Suécia",         "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    { "name": "Alemanha",       "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    { "name": "Polónia",        "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    { "name": "Rússia",         "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    { "name": "Ucrânia",        "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    { "name": "Grécia",         "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    { "name": "Estados Unidos", "gender": "plural",   "article": "os",       "prep_origin": "dos","prep_location": "nos","confidence": "high" },
+    { "name": "Brasil",         "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "confidence": "high" },
+    { "name": "México",         "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "confidence": "high" },
+    { "name": "Marrocos",       "gender": "none",     "article": "none",     "prep_origin": "de", "prep_location": "em", "note": "sem artigo", "confidence": "high" },
+    { "name": "Angola",         "gender": "none",     "article": "none",     "prep_origin": "de", "prep_location": "em", "note": "sem artigo", "confidence": "high" },
+    { "name": "China",          "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    { "name": "Japão",          "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "confidence": "high" },
+    { "name": "Índia",          "gender": "f",        "article": "a",        "prep_origin": "da", "prep_location": "na", "confidence": "high" },
+    { "name": "Canadá",         "gender": "m",        "article": "o",        "prep_origin": "do", "prep_location": "no", "note": "aparece em caderno u2 C (correções)", "confidence": "high" }
+  ]
+}

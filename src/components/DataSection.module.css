@@ -1,0 +1,96 @@
+/**
+ * Data (Export/Import) section in Settings. Reuses the shared section/label
+ * chrome (composed, not duplicated) and the drill CTA / error-feedback tokens —
+ * token-only, no bare hex.
+ */
+
+.section {
+  composes: section from '../styles/segmented.module.css';
+}
+
+.label {
+  composes: label from '../styles/segmented.module.css';
+}
+
+.hint {
+  margin: 0;
+  font-size: var(--t-sm);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+.button {
+  appearance: none;
+  cursor: pointer;
+  padding: var(--s-3) var(--s-5);
+  border-radius: var(--r-btn);
+  background: var(--btn-ghost-bg);
+  color: var(--btn-ghost-fg);
+  border: 1px solid var(--border-strong);
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  font-weight: var(--fw-semi);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+/* Confirmation panel shown before an OVERWRITING restore (AC6). */
+.confirm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: var(--s-4);
+  border-radius: var(--r-card);
+  background: var(--danger-soft);
+  color: var(--text);
+}
+
+.confirmText {
+  margin: 0;
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  font-weight: var(--fw-semi);
+}
+
+.confirmActions {
+  display: flex;
+  gap: var(--s-3);
+}
+
+.confirmButton {
+  composes: button;
+  background: var(--cta);
+  color: var(--on-cta);
+  border-color: transparent;
+}
+
+/* Status / error line (role=status), reuses the drill error-feedback tokens. */
+.status {
+  margin: 0;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-card);
+  font-size: var(--t-sm);
+  line-height: var(--lh-body);
+  font-weight: var(--fw-semi);
+  background: var(--primary-soft);
+  color: var(--primary-ink);
+}
+
+.error {
+  composes: status;
+  background: var(--fb-error-bg);
+  color: var(--fb-error-fg);
+}

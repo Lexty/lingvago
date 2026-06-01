@@ -1,0 +1,340 @@
+{
+  "_meta": {
+    "description": "Exercise-type taxonomy. Originally harvested from units 1-2 (livro + caderno); extended with a survey of caderno u5,u7,u11,u13,u14 and livro u9,u14. Each type = a generator the app can use to produce many items. 'needs_audio' marks the open audio question; 'listen-and-do' keeps needs_audio:true.",
+    "units_surveyed": [1, 2, 5, 7, 9, 11, 13, 14]
+  },
+  "types": [
+    {
+      "id": "match",
+      "label": "Correspondência (colunas)",
+      "type": "matching",
+      "skill": ["recognition"],
+      "generatable": true, "needs_audio": false,
+      "example": { "left": ["Quem é ela?", "Como se chama?"], "right": ["É a Rita.", "Chamo-me Nuno."] },
+      "origins": ["livro:u1:E", "caderno:u1:A", "caderno:u14:A", "livro:u14:E,L"],
+      "unit-range": "1-14"
+    },
+    {
+      "id": "gap-wordbank",
+      "label": "Completar com palavras da caixa",
+      "type": "fill-blank",
+      "skill": ["vocab", "syntax"],
+      "generatable": true, "needs_audio": false,
+      "example": { "bank": ["como","sim","é","está","tu","te","bem"], "item": "Olá! Como ___?", "answer": "está" },
+      "origins": ["livro:u1:F", "livro:u2:C,D", "caderno:u1:C,D", "caderno:u11:B,C", "caderno:u14:B", "livro:u9:E"],
+      "unit-range": "1-14"
+    },
+    {
+      "id": "complete-verb",
+      "label": "Completar com a forma verbal correta",
+      "type": "fill-blank",
+      "skill": ["conjugation"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "Ela ___ Teresa.", "verb": "chamar-se", "person": "ela", "answer": "chama-se" },
+      "origins": ["caderno:u1:C", "caderno:u2:F"],
+      "unit-range": "1-14"
+    },
+    {
+      "id": "complete-article",
+      "label": "Completar com o / a (onde necessário)",
+      "type": "fill-blank",
+      "skill": ["article", "gender"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "Ele é ___ Jorge Viegas.", "answer": "o" },
+      "note": "Inclui casos de artigo-zero (Marrocos, Angola, nomes sem artigo).",
+      "origins": ["caderno:u1:F"],
+      "unit-range": "1-14"
+    },
+    {
+      "id": "complete-prep",
+      "label": "Completar com de/da/do/dos ou em/na/no/nos (e outras preposições)",
+      "type": "fill-blank",
+      "skill": ["preposition", "article", "gender"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "Tóquio é ___ Japão.", "answer": "no" },
+      "note": "CHAVE: requer conhecer género+artigo do país. Gerar a partir de countries.json. Estende-se a prep. de tempo/movimento (a/para, à/de, em/no/na) em u13-14.",
+      "origins": ["caderno:u2:H", "caderno:u5:F", "caderno:u13:B", "caderno:u14:H", "caderno:u7:D"],
+      "unit-range": "1-14"
+    },
+    {
+      "id": "complete-me-te-se",
+      "label": "Completar com me / te / se (pronome reflexo)",
+      "type": "fill-blank",
+      "skill": ["pronoun", "conjugation"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "Ele chama-___ Rafael.", "answer": "se" },
+      "origins": ["caderno:u1:E"],
+      "unit-range": "1-14"
+    },
+    {
+      "id": "transform",
+      "label": "Reescrever (ser -> ficar, singular -> plural, possessivo)",
+      "type": "transformation",
+      "skill": ["transformation"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "Berlim é na Alemanha.", "op": "ser->ficar", "answer": "Berlim fica na Alemanha." },
+      "note": "Inclui reformular com possessivo (caderno:u5:G): 'Tenho uma caneta preta.' -> 'A minha caneta é preta.'",
+      "origins": ["livro:u2:I", "caderno:u2:G", "caderno:u5:G"],
+      "unit-range": "1-14"
+    },
+    {
+      "id": "correct-sentence",
+      "label": "Corrigir a frase (com pista)",
+      "type": "transformation",
+      "skill": ["preposition", "knowledge"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "Madonna é de Itália.", "hint": "Estados Unidos", "answer": "Madonna não é de Itália. É dos Estados Unidos." },
+      "note": "Também corrigir factos de um texto/ilustração lido (livro:u9:B).",
+      "origins": ["caderno:u2:C", "livro:u9:B"],
+      "unit-range": "1-14"
+    },
+    {
+      "id": "order-words",
+      "label": "Ordenar palavras para formar a frase",
+      "type": "ordering",
+      "skill": ["syntax"],
+      "generatable": true, "needs_audio": false,
+      "example": { "tokens": ["do","Janeiro","de","somos","Rio"], "answer": "Somos do Rio de Janeiro." },
+      "origins": ["caderno:u1:G", "caderno:u2:I", "caderno:u5:I", "caderno:u7:H", "caderno:u11:H", "caderno:u14:D"],
+      "unit-range": "1-14"
+    },
+    {
+      "id": "order-time",
+      "label": "Ordenar expressões por critério (tempo)",
+      "type": "ordering",
+      "skill": ["vocab"],
+      "generatable": true, "needs_audio": false,
+      "example": { "items": ["Até já!","Até amanhã!","Até sábado!"], "criterion": "menos -> mais tempo" },
+      "origins": ["livro:u1:K"],
+      "unit-range": "1-14"
+    },
+    {
+      "id": "number-spell",
+      "label": "Escrever números por extenso / fazer contas",
+      "type": "free-text",
+      "skill": ["numbers"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "23 + 52 = ?", "answer": "setenta e cinco", "full": "vinte e três mais cinquenta e dois são setenta e cinco" },
+      "origins": ["livro:u1:H", "livro:u2:L", "caderno:u1:J", "caderno:u2:J"],
+      "unit-range": "1-14"
+    },
+    {
+      "id": "spelling-fill",
+      "label": "Completar as letras que faltam",
+      "type": "fill-blank",
+      "skill": ["spelling"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "S _ B _ _ _", "answer": "sábado" },
+      "note": "Aplica-se a vocabulário fechado (dias, meses). caderno:u13:E = meses com letras em falta.",
+      "origins": ["caderno:u1:H", "caderno:u2:B", "caderno:u13:E"],
+      "unit-range": "1-14"
+    },
+    {
+      "id": "sequence-fill",
+      "label": "Escrever o termo que falta na sequência",
+      "type": "fill-blank",
+      "skill": ["vocab", "numbers"],
+      "generatable": true, "needs_audio": false,
+      "example": { "seq": ["trinta e três","___","noventa e nove"], "answer": "sessenta e seis" },
+      "origins": ["caderno:u1:I", "caderno:u2:J"],
+      "unit-range": "1-14"
+    },
+    {
+      "id": "true-false",
+      "label": "Verdadeiro ou falso (factual + gramática)",
+      "type": "boolean",
+      "skill": ["preposition", "knowledge"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "Miami é nos Estados Unidos.", "answer": true },
+      "note": "Quando ligado a um texto fonte, ver 'reading-comprehension'.",
+      "origins": ["livro:u2:G"],
+      "unit-range": "1-14"
+    },
+    {
+      "id": "pron-underline",
+      "label": "Sublinhar sílaba tónica / som específico",
+      "type": "underline",
+      "skill": ["pronunciation"],
+      "generatable": true, "needs_audio": "optional",
+      "example": { "item": "domingo", "task": "[u]?", "answer": "doming[u]" },
+      "note": "Funciona sem áudio como exercício visual; áudio só reforça. Inclui 'sublinhe a palavra diferente das outras' (odd-one-out fonético).",
+      "origins": ["livro:u1:PronB,C,D,E", "livro:u2:PronA-D", "caderno:u1:L,M,N", "caderno:u2:K,L", "caderno:u5:J", "caderno:u7:I", "caderno:u11:J", "caderno:u13:J", "caderno:u14:I", "livro:u14:PronC"],
+      "unit-range": "1-14"
+    },
+    {
+      "id": "listen-and-do",
+      "label": "Ouça e ... (repetir / numerar / completar / confirmar)",
+      "type": "listening",
+      "skill": ["listening"],
+      "generatable": false, "needs_audio": true,
+      "note": "OPEN QUESTION: itens atrás do ícone audio. Opções: (a) substituir por TTS pt-PT, (b) converter em leitura/escrita sem áudio, (c) omitir. A maioria tem variante não-áudio equivalente no caderno.",
+      "origins": ["livro:u1:A1-A5", "livro:u2:A6-A9", "livro:u9:A,I,J,PronA-F", "livro:u14:A,H,PronA,B,D,E"],
+      "unit-range": "1-14"
+    },
+    {
+      "id": "plural-form",
+      "label": "Escrever o artigo definido e o nome no plural",
+      "type": "transformation",
+      "skill": ["article", "gender", "plural", "morphology"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "___ garrafa", "answer_article": "a", "answer_plural": "as garrafas" },
+      "note": "NOVO. Gerar a partir de um lexicon de nomes com género; cobre plurais regulares e irregulares (-l -> -is, -ão, lápis invariável).",
+      "origins": ["caderno:u5:A", "caderno:u7:C", "caderno:u11:A"],
+      "unit-range": "5-14"
+    },
+    {
+      "id": "conjugation-table",
+      "label": "Tabela de conjugação a completar (pronome OU forma verbal)",
+      "type": "fill-blank",
+      "skill": ["conjugation", "pronoun"],
+      "generatable": true, "needs_audio": false,
+      "example": { "verb": "ter", "rows": [{"cue":"você","answer":"tem"},{"cue":"___","given":"temos","answer":"nós"},{"cue":"eu","answer":"tenho"}] },
+      "note": "NOVO. Cada linha dá ou o pronome (pede a forma) ou a forma (pede o pronome). Gerar a partir de verbs.json para qualquer verbo.",
+      "origins": ["caderno:u5:B", "caderno:u11:F", "caderno:u13:F"],
+      "unit-range": "5-14"
+    },
+    {
+      "id": "short-answer",
+      "label": "Responder às perguntas (resposta curta +/-)",
+      "type": "free-text",
+      "skill": ["conjugation", "syntax"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "Tem uma caneta vermelha?", "polarity": "-", "answer": "Não, não tenho." },
+      "note": "NOVO. Resposta curta afirmativa/negativa que ecoa o verbo da pergunta; inclui respostas de posse 'De quem é?' -> 'É do José.' (caderno:u5:H).",
+      "origins": ["caderno:u5:C", "caderno:u5:H", "caderno:u7:G"],
+      "unit-range": "5-14"
+    },
+    {
+      "id": "picture-complete",
+      "label": "Olhe para as imagens e complete as frases",
+      "type": "fill-blank",
+      "skill": ["vocab", "context"],
+      "generatable": true, "needs_audio": false,
+      "example": { "image": "caneta na secretária", "item": "A minha caneta está ___ na tua secretária.", "options": ["aqui","aí","ali"], "answer": "aí" },
+      "note": "NOVO. Precisa de asset visual (imagem/ícone) por item; a imagem fornece a pista (proximidade, quantidade, intensidade muito/bastante).",
+      "origins": ["caderno:u5:D", "caderno:u7:B"],
+      "unit-range": "5-14"
+    },
+    {
+      "id": "build-sentence-from-cues",
+      "label": "Fazer frases a partir de palavras-pista (conjugar + acrescentar artigos/preposições)",
+      "type": "free-text",
+      "skill": ["syntax", "conjugation", "preposition", "article"],
+      "generatable": true, "needs_audio": false,
+      "example": { "cues": ["João","Ana","ir","teatro"], "constraint": "não mudar a ordem", "answer": "O João e a Ana vão ao teatro." },
+      "note": "NOVO. Distinto de 'order-words': aqui o aluno NÃO reordena, mas flexiona o verbo e insere artigos/conjunções/preposições em falta. Avaliação por frase-alvo.",
+      "origins": ["caderno:u5:E", "caderno:u11:G", "caderno:u13:H", "caderno:u14:E"],
+      "unit-range": "5-14"
+    },
+    {
+      "id": "choose-option",
+      "label": "Escolher / sublinhar a opção correta",
+      "type": "multiple-choice",
+      "skill": ["grammar", "vocab"],
+      "generatable": true, "needs_audio": false,
+      "example": { "item": "Vou ___ casa buscar o meu passaporte.", "options": ["a","para"], "answer": "para" },
+      "note": "NOVO. Duas (ou mais) variantes inline; cobre a/para, bom/boa, mau/má, é/não é, habitual(H)/pontual(P).",
+      "origins": ["caderno:u7:F", "caderno:u14:G", "livro:u9:J", "livro:u14:N"],
+      "unit-range": "7-14"
+    },
+    {
+      "id": "complete-question",
+      "label": "Ler a resposta e escrever / completar a pergunta",
+      "type": "free-text",
+      "skill": ["interrogatives", "syntax"],
+      "generatable": true, "needs_audio": false,
+      "example": { "answer_given": "São duas e vinte.", "answer": "Que horas são?" },
+      "note": "NOVO. Inclui completar com a interrogativa (Qual/Quanto/Onde/Como/Porque/De quem...). Inverso de 'short-answer'.",
+      "origins": ["caderno:u7:E", "caderno:u11:D", "caderno:u13:D"],
+      "unit-range": "7-14"
+    },
+    {
+      "id": "dialogue-complete",
+      "label": "Completar o diálogo (com frases da caixa ou perguntas em falta)",
+      "type": "fill-blank",
+      "skill": ["pragmatics", "syntax", "interrogatives"],
+      "generatable": true, "needs_audio": false,
+      "example": { "turn_a": "A minha mãe faz anos hoje.", "bank": ["Ainda bem!","Que pena!","Pois é.","Parabéns!"], "answer": "Parabéns!" },
+      "note": "NOVO. Diálogo de múltiplos turnos; lacunas preenchidas por reações fixas (Parabéns!/Que pena!) ou por perguntas inferidas das respostas.",
+      "origins": ["caderno:u11:D", "caderno:u13:I"],
+      "unit-range": "11-14"
+    },
+    {
+      "id": "table-interpret",
+      "label": "Interpretar uma tabela e escrever frases",
+      "type": "free-text",
+      "skill": ["vocab", "conjugation", "comparison"],
+      "generatable": true, "needs_audio": false,
+      "example": { "legend": {"00":"detestar","0":"não gostar","+":"gostar","++":"adorar"}, "fact": "Raul/Sofia + sushi = ++", "answer": "O Raul e a Sofia adoram sushi." },
+      "note": "NOVO. Lê uma grelha de preferências/dados e produz frases (adorar/detestar/gostar, nem...nem). Gerável a partir de uma matriz de dados.",
+      "origins": ["caderno:u11:E"],
+      "unit-range": "11-14"
+    },
+    {
+      "id": "reading-comprehension",
+      "label": "Ler um texto e responder (V/F ou perguntas)",
+      "type": "boolean",
+      "skill": ["reading", "comprehension"],
+      "generatable": true, "needs_audio": false,
+      "example": { "text": "A Gisela mora no Porto. ... Na hora do almoço vai a casa e almoça com o Jorge.", "item": "A Gisela almoça fora.", "answer": false },
+      "note": "NOVO. Compreensão ancorada num texto-fonte (não num facto geral como 'true-false'). Inclui itens V/F e perguntas abertas sobre o texto.",
+      "origins": ["caderno:u14:F", "livro:u14:F,I", "livro:u9:A"],
+      "unit-range": "9-14"
+    },
+    {
+      "id": "order-first",
+      "label": "O que faz primeiro? (sublinhar a ação anterior)",
+      "type": "multiple-choice",
+      "skill": ["sequencing", "vocab"],
+      "generatable": true, "needs_audio": false,
+      "example": { "pair": ["levantar-se","acordar"], "answer": "acordar" },
+      "note": "NOVO. Conhecimento de ordem cronológica de rotinas; par de ações, escolher a que vem primeiro.",
+      "origins": ["caderno:u14:C"],
+      "unit-range": "13-14"
+    },
+    {
+      "id": "time-tell",
+      "label": "Que horas são? (dizer as horas a partir do relógio/dígitos)",
+      "type": "free-text",
+      "skill": ["time", "numbers"],
+      "generatable": true, "needs_audio": false,
+      "example": { "clock": "02h15", "answer": "São duas e um quarto." },
+      "note": "NOVO. Converter hora digital em expressão por extenso (e meia / um quarto / menos um quarto / em ponto; É uma vs São). Totalmente gerável.",
+      "origins": ["caderno:u13:C"],
+      "unit-range": "13-14"
+    },
+    {
+      "id": "label-image",
+      "label": "Etiquetar imagens (escrever os nomes nas imagens)",
+      "type": "labeling",
+      "skill": ["vocab", "reading"],
+      "generatable": true, "needs_audio": false,
+      "example": { "clue": "Este é o meu avô. Chama-se João. Tem 78 anos.", "image_slots": 6, "answer": "João (avô)" },
+      "note": "NOVO. Precisa de assets visuais; o aluno associa descrições a imagens numeradas e escreve o nome. Variante visual de 'match'.",
+      "origins": ["livro:u9:D"],
+      "unit-range": "9-14"
+    },
+    {
+      "id": "crossword",
+      "label": "Palavras cruzadas (preencher a grelha a partir de pistas)",
+      "type": "crossword",
+      "skill": ["vocab", "spelling"],
+      "generatable": true, "needs_audio": false,
+      "example": { "grid": "12 entradas H/V", "clue_h4": "O oposto de grande.", "answer_h4": "pequeno" },
+      "note": "NOVO. Grelha com pistas horizontais/verticais; pistas tipo 'o oposto de X', definição, ou frase-lacuna. Gerável a partir de um banco de pistas+respostas (gerador de grelha).",
+      "origins": ["caderno:u7:A"],
+      "unit-range": "7-14"
+    },
+    {
+      "id": "open-production",
+      "label": "Produção livre (opinião / descrição / fala com o colega / lista pessoal)",
+      "type": "open-ended",
+      "skill": ["writing", "speaking", "production"],
+      "generatable": false, "needs_audio": false,
+      "example": { "prompt": "Em que parte do dia faz as suas rotinas? Complete: Tomo duche ___.", "answer": "resposta pessoal (de manhã / à noite ...)" },
+      "note": "NOVO. Tarefas abertas sem resposta única: opinião ('Eu acho que...'), descrição de fotografia, diálogo a pares, lista de rotinas. Não auto-avaliável; candidato a prompt aberto/role-play.",
+      "origins": ["livro:u9:C,H,K", "livro:u14:D,G,K,M,O,P"],
+      "unit-range": "9-14"
+    }
+  ]
+}

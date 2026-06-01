@@ -1,6 +1,0 @@
-export { default as MultipleChoice } from './MultipleChoice'
-export { default as TextInput } from './TextInput'
-export { default as WordOrder } from './WordOrder'
-export { getTranslationText } from './translationHelper'
-export type { MultipleChoiceProps } from './MultipleChoice'
-export type { TextInputProps } from './TextInput'

@@ -1,0 +1,21 @@
+/*
+ * Base styles — built on top of the three-layer token system (tokens.css).
+ * Components must not use bare hex; reference semantic/component variables.
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  background: var(--mesh);
+  color: var(--text);
+}
+
+#root {
+  min-height: 100vh;
+}

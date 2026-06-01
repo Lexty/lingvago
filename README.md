@@ -1,40 +1,32 @@
-# Lingvago
+# Lingvago2 — помощник подготовки к A1 (Português Língua de Acolhimento)
 
-Offline-first PWA for learning European Portuguese. All data stays on your device in IndexedDB — no backend, no account needed.
+Local-first, mobile-first PWA. Без бэкенда — всё в браузере. Экзамен: 11.06.2026.
 
-## Features
-
-- **Vocabulary** — spaced repetition (FSRS) flashcards with learning ladder: multiple-choice → text input → flip card
-- **Grammar** — conjugation, gender, articles, plurals, prepositions, word order exercises
-- **Numbers** — practice Portuguese numerals (0–1,000,000)
-- **Decks** — organize vocabulary into decks, import from CSV
-- **Offline** — works without internet after first load (PWA with Service Worker)
-- **Dark/light theme**, Russian/English UI
-
-## Tech stack
-
-React 19, TypeScript, Vite, CSS Modules, Dexie.js (IndexedDB), ts-fsrs, i18next, vite-plugin-pwa
-
-## Getting started
-
+## Запуск
 ```bash
 pnpm install
-pnpm dev        # dev server at localhost:5173
+pnpm dev        # http://localhost:5173  (пересобирает контент + vite)
+# или прод-сборка:
+pnpm build && pnpm preview
 ```
+`pnpm content` — пересобрать `public/content.v2.json` (gitignored производный бандл) из `extraction/normalized/*`.
 
-## Scripts
+## Что внутри (Фаза 1, exam-survival)
+- **Exam Survival Kit** (посадочная страница `/`) — чек-лист 4 групп экзамена, ссылки на материалы, ежедневное напоминание «фокус на сегодня» (БЕЗ обратного отсчёта дней, §16), ручная mock-таблица по группам (0–50/группа, сохраняется в IndexedDB), опц. пороги сдачи + баннер вердикта (сдаёт / риск).
+- **Справочник** (7 карточек) — род/артикль, предлоги (de/em, a/para, a casa/para casa, время, место), ser/estar, глаголы.
+- **Дриллы** (production-first, L1–L3): род/артикль (o/a, `/drill/gender`), предлоги откуда/где (de/da/do, em/na/no, `/drill/preposition`), числительные EP (кардинальные/порядковые, обе стороны, production-ввод, `/drill/numbers`), спряжение глаголов present (`/drill/conjugation`: лицо+инфинитив → форма и «собрать таблицу», production-ввод). Фидбэк → правило.
+- **Mock-прогон** (`/mock`, PaperSimulation §9.1) — таймированная оболочка экзамена (90-мин таймер, переживает перезагрузку; БЕЗ подсказок и мгновенного фидбека — приложение НЕ оценивает), затем ручной ввод баллов по 4 группам (0–50/группа), разбор: счёт по группам + total/200 + вердикт (WP-A) + предупреждение «не обнули группу», сохранение в mock-таблицу Survival Kit.
+- **Телеметрия** — лог попыток/сессий/пометок в localStorage + выгрузка одним JSON (для анализа эффективности).
+- **Данные** (Настройки → «Данные») — резервная копия и восстановление СВОЕГО прогресса: экспорт прогресса в JSON-бандл (share/скачивание) и импорт/restore своего состояния на этом устройстве (перезапись, с подтверждением). Всё локально, без аккаунта и сети; слияние нескольких пользователей — вне MVP.
 
-```bash
-pnpm dev        # development server
-pnpm build      # typecheck + production build
-pnpm preview    # preview production build
-pnpm typecheck  # type check only
-pnpm lint       # ESLint
-pnpm test       # tests (watch mode)
-pnpm test:run   # tests (single run)
-pnpm check      # full CI: typecheck + lint + test + build
-```
+## Документы
+`docs/SPEC.md` (полное ТЗ) · `docs/MVP_PLAN.md` (план Фазы 1) · `docs/EXAM_RESEARCH.md` · `docs/LEARNING_SCIENCE.md`.
 
-## License
+## Структура
+- `extraction/` — извлечённые из PDF данные (verbatim + normalized JSON), верификация.
+- `scripts/build-content.ts` — контент-пайплайн.
+- `src/` — приложение (content, lib, screens, components).
 
-MIT
+## Дальше (по телеметрии)
+Stretch Фазы 1: больше дриллов Grupo III (ser/estar), Listening (HVPT). См. `docs/MVP_PLAN.md`.
+Контур улучшения: учусь → выгружаю телеметрию → анализирую слабые места/угадывания → правлю контент и дриллы.

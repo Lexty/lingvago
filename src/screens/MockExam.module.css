@@ -1,0 +1,138 @@
+.screen {
+  composes: screen from '../styles/screen.module.css';
+
+  /* Width of a single 0–50 manual-entry cell — mirrors the SurvivalKit table. */
+  --score-input-w: 4.5rem;
+}
+
+.header {
+  composes: header from '../styles/screen.module.css';
+}
+
+.title {
+  composes: title from '../styles/screen.module.css';
+}
+
+.nav {
+  composes: nav from '../styles/screen.module.css';
+}
+
+.navLink {
+  composes: navLink from '../styles/screen.module.css';
+}
+
+/* Phase card chrome — shared drill-card block (background/radius/shadow/pad). */
+.card {
+  composes: card from '../styles/drill.module.css';
+}
+
+.label {
+  composes: label from '../styles/drill.module.css';
+}
+
+.body {
+  composes: body from '../styles/drill.module.css';
+}
+
+.hint {
+  composes: intro from '../styles/drill.module.css';
+}
+
+.primaryButton {
+  composes: primaryButton from '../styles/drill.module.css';
+}
+
+/* ---------- running phase: countdown + controls ---------- */
+.clock {
+  margin: 0;
+  align-self: center;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--fw-bold);
+  font-size: var(--t-display);
+  line-height: var(--lh-tight);
+  color: var(--text);
+}
+
+.controls {
+  display: flex;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
+
+.secondaryButton {
+  align-self: flex-start;
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  padding: var(--s-3) var(--s-5);
+  border-radius: var(--r-btn);
+  background: var(--btn-ghost-bg);
+  color: var(--btn-ghost-fg);
+  box-shadow: var(--btn-ghost-shadow);
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  font-weight: var(--fw-semi);
+}
+
+.secondaryButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- entry / review table + verdict + warning ----------
+   Shared with SurvivalKit's mock table via the scoreTable partial (one source
+   of truth; `--score-input-w` is set on `.screen` above). */
+.table {
+  composes: table from '../styles/scoreTable.module.css';
+}
+
+.th {
+  composes: th from '../styles/scoreTable.module.css';
+}
+
+.td {
+  composes: td from '../styles/scoreTable.module.css';
+}
+
+.totalRow {
+  composes: totalRow from '../styles/scoreTable.module.css';
+}
+
+.scoreInput {
+  composes: scoreInput from '../styles/scoreTable.module.css';
+}
+
+.warning {
+  composes: warning from '../styles/scoreTable.module.css';
+}
+
+.verdict {
+  composes: verdict from '../styles/scoreTable.module.css';
+}
+
+.verdictPass {
+  composes: verdictPass from '../styles/scoreTable.module.css';
+}
+
+.verdictRisk {
+  composes: verdictRisk from '../styles/scoreTable.module.css';
+}
+
+.verdictNone {
+  composes: verdictNone from '../styles/scoreTable.module.css';
+}
+
+.verdictHeadline {
+  composes: verdictHeadline from '../styles/scoreTable.module.css';
+}
+
+.saved {
+  margin: 0;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-card);
+  background: var(--primary-soft);
+  color: var(--primary-ink);
+  font-size: var(--t-body);
+  font-weight: var(--fw-semi);
+}
