@@ -167,7 +167,8 @@
     "feedback": {
       "correct": "Верно",
       "wrong": "Не совсем — ответ: {{answer}}"
-    }
+    },
+    "closeReference": "Закрыть"
   },
   "preposition": {
     "title": "Предлоги",
@@ -184,7 +185,8 @@
     "feedback": {
       "correct": "Верно",
       "wrong": "Не совсем — ответ: {{answer}}"
-    }
+    },
+    "closeReference": "Закрыть"
   },
   "mock": {
     "title": "Mock-прогон",

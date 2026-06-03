@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router';
 import { checkAnswer } from '../modes/shared/index.ts';
 import type { DrillItem } from '../modes/shared/index.ts';
+import { db } from '../db/index.ts';
+import { getReferenceCard, type ReferenceCard } from '../reference/selectors.ts';
+import MarkdownLite from '../reference/MarkdownLite.tsx';
 
 /**
  * Shared production-first grammar-drill screen body (WP-C Task 4), used by BOTH
@@ -74,6 +76,17 @@ type Feedback =
   | { kind: 'correct' }
   | { kind: 'wrong'; expected: string };
 
+/**
+ * The reference card is shown as an in-drill OVERLAY (not a route navigation), so
+ * reading the rule never unmounts the drill or loses the seeded-session position —
+ * closing the overlay returns the user to exactly the item they were on.
+ */
+type RuleOverlay =
+  | { open: false }
+  | { open: true; status: 'loading' }
+  | { open: true; status: 'found'; card: ReferenceCard }
+  | { open: true; status: 'missing' };
+
 export default function GrammarDrill<TItem>({
   i18nKey,
   testIdBase,
@@ -88,7 +101,24 @@ export default function GrammarDrill<TItem>({
   const [answer, setAnswer] = useState('');
   const [picked, setPicked] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<Feedback>({ kind: 'none' });
+  const [rule, setRule] = useState<RuleOverlay>({ open: false });
   const startRef = useRef<number>(Date.now());
+
+  const openRule = useCallback((referenceId: string) => {
+    setRule({ open: true, status: 'loading' });
+    void getReferenceCard(db, referenceId)
+      .then((card) => {
+        setRule(card ? { open: true, status: 'found', card } : { open: true, status: 'missing' });
+      })
+      .catch((err: unknown) => {
+        console.error('reference card load failed', err);
+        setRule({ open: true, status: 'missing' });
+      });
+  }, []);
+
+  const closeRule = useCallback(() => {
+    setRule({ open: false });
+  }, []);
 
   // Reset the per-item clock whenever a new item is shown.
   useEffect(() => {
@@ -139,6 +169,7 @@ export default function GrammarDrill<TItem>({
 
   const next = useCallback(() => {
     setFeedback({ kind: 'none' });
+    setRule({ open: false });
     setAnswer('');
     setPicked(null);
     if (index + 1 < entries.length) {
@@ -284,15 +315,54 @@ export default function GrammarDrill<TItem>({
           )}
 
           {feedback.kind !== 'none' && (
-            <Link
-              to={`/reference/${encodeURIComponent(entry.referenceId)}`}
+            <button
+              type="button"
               className={styles.refLink}
               data-testid={`${testIdBase}-ref-link`}
+              onClick={() => {
+                openRule(entry.referenceId);
+              }}
             >
               {t(`${i18nKey}.reference`)}
-            </Link>
+            </button>
           )}
         </section>
+      )}
+
+      {rule.open && (
+        <div
+          className={styles.ruleOverlay}
+          role="dialog"
+          aria-modal="true"
+          aria-label={t(`${i18nKey}.reference`)}
+          data-testid={`${testIdBase}-rule-overlay`}
+          onClick={(event) => {
+            // Click on the backdrop (not the dialog) closes the overlay.
+            if (event.target === event.currentTarget) closeRule();
+          }}
+        >
+          <div className={styles.ruleDialog}>
+            <button
+              type="button"
+              className={styles.ruleClose}
+              onClick={closeRule}
+              autoFocus
+              data-testid={`${testIdBase}-rule-close`}
+            >
+              {t(`${i18nKey}.closeReference`)}
+            </button>
+            {rule.status === 'loading' && <p className={styles.body}>…</p>}
+            {rule.status === 'missing' && (
+              <p className={styles.body}>{t(`${i18nKey}.reference`)}</p>
+            )}
+            {rule.status === 'found' && (
+              <article data-content-id={rule.card.contentId}>
+                <h2 className={styles.ruleTitle}>{rule.card.title}</h2>
+                <MarkdownLite body={rule.card.body} />
+              </article>
+            )}
+          </div>
+        </div>
       )}
     </>
   );

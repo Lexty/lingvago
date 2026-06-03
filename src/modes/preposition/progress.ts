@@ -47,8 +47,19 @@ export function subskillFor(item: PrepositionItem): string {
  * The §AC6 feedback deep-link target for a Preposition item: the reference card
  * for its category. Returns the bare WP-B route id; the screen wraps it as
  * `/reference/:id`.
+ *
+ * Special case — the **casa** idiom (`de casa`, `a casa`, `para casa`): casa is
+ * used WITHOUT an article, so the answer is the bare preposition (`de`, not the
+ * `da` contraction a learner expects). That exception is only explained on the
+ * `ref-prep-a-para` card («sair de casa»), so ANY item whose example involves
+ * `casa` deep-links there regardless of its category — otherwise a casa item that
+ * happened to land in the `tempo`/`lugar` bucket would open a card that never
+ * explains why `de casa` ≠ `da casa`.
  */
 export function referenceIdFor(item: PrepositionItem): string {
+  if (/\bcasa\b/i.test(item.example)) {
+    return 'ref-prep-a-para';
+  }
   return REFERENCE_BY_CATEGORY[item.category];
 }
 

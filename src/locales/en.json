@@ -167,7 +167,8 @@
     "feedback": {
       "correct": "Correct",
       "wrong": "Not quite — answer: {{answer}}"
-    }
+    },
+    "closeReference": "Close"
   },
   "preposition": {
     "title": "Prepositions",
@@ -184,7 +185,8 @@
     "feedback": {
       "correct": "Correct",
       "wrong": "Not quite — answer: {{answer}}"
-    }
+    },
+    "closeReference": "Close"
   },
   "mock": {
     "title": "Mock run",

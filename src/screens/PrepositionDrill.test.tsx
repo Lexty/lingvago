@@ -111,14 +111,28 @@ describe('PrepositionDrill screen', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Check' }));
     expect(screen.getByTestId('preposition-drill-feedback')).toHaveTextContent('Correct');
 
-    // The deep-link maps the item's category to its existing reference card.
-    const expectedRef = { tempo: 'ref-prep-tempo', lugar: 'ref-prep-lugar', movimento: 'ref-prep-a-para' }[
-      prod.item.category
-    ];
-    expect(screen.getByTestId('preposition-drill-ref-link')).toHaveAttribute(
-      'href',
-      `/reference/${expectedRef}`,
-    );
+    // Opening the rule shows the reference card as an IN-DRILL overlay (no route
+    // navigation); the target id is whatever referenceIdFor computed for the item
+    // (category mapping, or ref-prep-a-para for a casa idiom). Closing returns to
+    // the same drill item.
+    const expectedRef = prod.referenceId;
+    await db.referenceCards.put({
+      contentId: expectedRef,
+      topic: 'prep',
+      title: 'Rule card',
+      body: 'The rule.',
+    });
+    fireEvent.click(screen.getByTestId('preposition-drill-ref-link'));
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('preposition-drill-rule-overlay').querySelector('[data-content-id]'),
+      ).toHaveAttribute('data-content-id', expectedRef);
+    });
+    fireEvent.click(screen.getByTestId('preposition-drill-rule-close'));
+    await waitFor(() => {
+      expect(screen.queryByTestId('preposition-drill-rule-overlay')).not.toBeInTheDocument();
+    });
+    expect(screen.getByTestId('preposition-drill-prompt')).toHaveTextContent(prod.drill.prompt);
 
     await waitFor(async () => {
       expect(await db.attempts.count()).toBe(before + 1);

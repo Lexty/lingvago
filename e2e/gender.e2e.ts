@@ -115,11 +115,17 @@ test('E-Gender: plays a deterministic L1–L3 session with production + MC and d
   await page.locator('[data-testid="gender-drill-option"][data-correct="true"]').click();
   await expect(page.getByTestId('gender-drill-feedback')).toContainText('Correct');
 
-  // The feedback deep-link points at the gender reference card; follow it.
-  const refLink = page.getByTestId('gender-drill-ref-link');
-  await expect(refLink).toHaveAttribute('href', `/reference/${mc.referenceId}`);
-  await refLink.click();
-  await expect(page.locator(`[data-content-id="${mc.referenceId}"]`)).toBeVisible();
+  // The feedback opens the gender reference card as an IN-DRILL overlay (no
+  // navigation); closing it returns to the same drill item.
+  await page.getByTestId('gender-drill-ref-link').click();
+  await expect(
+    page.locator(
+      `[data-testid="gender-drill-rule-overlay"] [data-content-id="${mc.referenceId}"]`,
+    ),
+  ).toBeVisible();
+  await page.getByTestId('gender-drill-rule-close').click();
+  await expect(page.getByTestId('gender-drill-rule-overlay')).toHaveCount(0);
+  await expect(prompt).toHaveText(mc.prompt);
 
   // Back to the drill at the SAME seed to exercise a PRODUCTION item + wrong-reveal.
   await page.goto(`/drill/gender?seed=${SEED}`);
@@ -132,11 +138,13 @@ test('E-Gender: plays a deterministic L1–L3 session with production + MC and d
   await page.getByTestId('gender-drill-answer').fill('definitely-not-right');
   await page.getByRole('button', { name: 'Check' }).click();
   await expect(page.getByTestId('gender-drill-feedback')).toContainText(prod.answer);
-  // The deep-link is offered on a wrong answer too.
-  await expect(page.getByTestId('gender-drill-ref-link')).toHaveAttribute(
-    'href',
-    `/reference/${prod.referenceId}`,
-  );
+  // The rule overlay is offered on a wrong answer too.
+  await page.getByTestId('gender-drill-ref-link').click();
+  await expect(
+    page.locator(
+      `[data-testid="gender-drill-rule-overlay"] [data-content-id="${prod.referenceId}"]`,
+    ),
+  ).toBeVisible();
 });
 
 test('E-Gender-b: the survival-kit nav links to the gender drill', async ({ page }) => {

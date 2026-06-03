@@ -107,11 +107,25 @@ describe('GenderDrill screen', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Check' }));
     expect(screen.getByTestId('gender-drill-feedback')).toHaveTextContent('Correct');
 
-    // The feedback deep-link points at the gender reference card.
-    expect(screen.getByTestId('gender-drill-ref-link')).toHaveAttribute(
-      'href',
-      '/reference/ref-genero-artigo',
-    );
+    // Opening the rule shows the reference card as an IN-DRILL overlay (no route
+    // navigation), so closing it returns to the exact same drill item.
+    await db.referenceCards.put({
+      contentId: 'ref-genero-artigo',
+      topic: 'gender',
+      title: 'Gender rule',
+      body: 'The rule.',
+    });
+    fireEvent.click(screen.getByTestId('gender-drill-ref-link'));
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('gender-drill-rule-overlay').querySelector('[data-content-id]'),
+      ).toHaveAttribute('data-content-id', 'ref-genero-artigo');
+    });
+    fireEvent.click(screen.getByTestId('gender-drill-rule-close'));
+    await waitFor(() => {
+      expect(screen.queryByTestId('gender-drill-rule-overlay')).not.toBeInTheDocument();
+    });
+    expect(screen.getByTestId('gender-drill-prompt')).toHaveTextContent(prod.drill.prompt);
 
     await waitFor(async () => {
       expect(await db.attempts.count()).toBe(before + 1);

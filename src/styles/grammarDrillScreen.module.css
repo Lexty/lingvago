@@ -100,3 +100,38 @@
 .refLink {
   composes: refLink from './drill.module.css';
 }
+
+/* In-drill reference-card overlay: reading the rule never leaves the drill, so
+   closing it returns to the exact same item (no lost session). */
+.ruleOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: var(--s-4);
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.ruleDialog {
+  width: 100%;
+  max-width: 34rem;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  padding: var(--s-5);
+  box-shadow: var(--shadow-lg);
+}
+
+.ruleClose {
+  composes: primaryButton from './drill.module.css';
+  margin-bottom: var(--s-4);
+}
+
+.ruleTitle {
+  composes: title from './screen.module.css';
+  margin: 0 0 var(--s-3);
+  font-size: var(--t-h2);
+}

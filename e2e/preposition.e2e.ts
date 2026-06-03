@@ -113,10 +113,17 @@ test('E-Preposition: plays a deterministic L1–L3 session with production + MC 
   await page.getByRole('button', { name: 'Check' }).click();
   await expect(page.getByTestId('preposition-drill-feedback')).toContainText('Correct');
 
-  const refLink = page.getByTestId('preposition-drill-ref-link');
-  await expect(refLink).toHaveAttribute('href', `/reference/${prod.referenceId}`);
-  await refLink.click();
-  await expect(page.locator(`[data-content-id="${prod.referenceId}"]`)).toBeVisible();
+  // The feedback opens the reference rule as an IN-DRILL overlay (no navigation),
+  // so closing it returns to the SAME drill item (the seeded session is kept).
+  await page.getByTestId('preposition-drill-ref-link').click();
+  await expect(
+    page.locator(
+      `[data-testid="preposition-drill-rule-overlay"] [data-content-id="${prod.referenceId}"]`,
+    ),
+  ).toBeVisible();
+  await page.getByTestId('preposition-drill-rule-close').click();
+  await expect(page.getByTestId('preposition-drill-rule-overlay')).toHaveCount(0);
+  await expect(prompt).toHaveText(prod.prompt);
 
   // Back to the SAME seed to exercise an MC item + a wrong-reveal.
   await page.goto(`/drill/preposition?seed=${SEED}`);
@@ -131,10 +138,12 @@ test('E-Preposition: plays a deterministic L1–L3 session with production + MC 
     .first()
     .click();
   await expect(page.getByTestId('preposition-drill-feedback')).toContainText(mc.answer);
-  await expect(page.getByTestId('preposition-drill-ref-link')).toHaveAttribute(
-    'href',
-    `/reference/${mc.referenceId}`,
-  );
+  await page.getByTestId('preposition-drill-ref-link').click();
+  await expect(
+    page.locator(
+      `[data-testid="preposition-drill-rule-overlay"] [data-content-id="${mc.referenceId}"]`,
+    ),
+  ).toBeVisible();
 });
 
 test('E-Preposition-b: the survival-kit nav links to the preposition drill', async ({

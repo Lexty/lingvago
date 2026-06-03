@@ -69,6 +69,27 @@ describe('referenceIdFor — feedback deep-link by category (AC6)', () => {
       new Set(['ref-prep-tempo', 'ref-prep-lugar', 'ref-prep-a-para']),
     );
   });
+
+  it('routes a casa-idiom item to ref-prep-a-para regardless of its category', () => {
+    // "de casa" (casa without an article) is only explained on ref-prep-a-para,
+    // so a casa item that landed in the tempo bucket must still deep-link there.
+    const casaRecord: PrepositionRecord[] = [
+      {
+        contentId: 'prep:tempo:casa',
+        category: 'tempo',
+        prep: 'de',
+        use: 'casa',
+        examples: ['Ele sai de casa às sete.'],
+      },
+    ];
+    const items = generateSession('casa', casaRecord, { count: 6, level: 'L1' });
+    expect(items.length).toBeGreaterThan(0);
+    for (const item of items) {
+      expect(item.category).toBe('tempo');
+      expect(item.example).toMatch(/casa/i);
+      expect(referenceIdFor(item)).toBe('ref-prep-a-para');
+    }
+  });
 });
 
 describe('recordPrepositionAttempt — additive §7.2 progress write', () => {
