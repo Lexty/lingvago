@@ -1,0 +1,1246 @@
+{
+  "_meta": {
+    "topic": "interrogative",
+    "sourceLayer": "extraction/verbatim",
+    "source_pdf": "Scan 10 Jun 2026 conspectus",
+    "count": 90,
+    "note": "EP interrogative cloze items; blank replaces the interrogative; category+gloss canonicalised by form; agreement derived from form. int:0055 re-blanked; table agreement normalised to m/f/sg/pl."
+  },
+  "table": [
+    {
+      "form": "quem",
+      "category": "who",
+      "gloss_ru": "кто",
+      "gloss_en": "who",
+      "agreement": null,
+      "note": "Invariable; refers only to people. E.g. Quem é ele?"
+    },
+    {
+      "form": "que",
+      "category": "what",
+      "gloss_ru": "что / какой (перед существительным)",
+      "gloss_en": "what / which (before a noun)",
+      "agreement": null,
+      "note": "Used directly before a noun: Que instrumento toca? Que horas são? Contrast with standalone o que."
+    },
+    {
+      "form": "o que",
+      "category": "what",
+      "gloss_ru": "что",
+      "gloss_en": "what",
+      "agreement": null,
+      "note": "Standalone 'what', not followed by a noun; often with é que: O que é que ele toca?"
+    },
+    {
+      "form": "onde",
+      "category": "where",
+      "gloss_ru": "где",
+      "gloss_en": "where",
+      "agreement": null,
+      "note": "Static location ('where'): Onde é que ele mora? Used with ser/ficar/estar."
+    },
+    {
+      "form": "aonde",
+      "category": "where_to",
+      "gloss_ru": "куда",
+      "gloss_en": "where to",
+      "agreement": null,
+      "note": "Direction ('where to'), = a + onde; used with movement verbs (ir): Aonde vais?"
+    },
+    {
+      "form": "para onde",
+      "category": "where_to",
+      "gloss_ru": "куда",
+      "gloss_en": "where to",
+      "agreement": null,
+      "note": "Direction ('where to'), longer-stay/destination sense: Para onde vais? (cf. ir para)."
+    },
+    {
+      "form": "de onde",
+      "category": "where_from",
+      "gloss_ru": "откуда",
+      "gloss_en": "where from",
+      "agreement": null,
+      "note": "Origin ('where from'), = de + onde: De onde és?"
+    },
+    {
+      "form": "quando",
+      "category": "when",
+      "gloss_ru": "когда",
+      "gloss_en": "when",
+      "agreement": null,
+      "note": "Invariable; time: Quando é que ele trabalha?"
+    },
+    {
+      "form": "como",
+      "category": "how",
+      "gloss_ru": "как",
+      "gloss_en": "how",
+      "agreement": null,
+      "note": "Invariable; manner: Como te chamas? Como estás?"
+    },
+    {
+      "form": "porque",
+      "category": "why",
+      "gloss_ru": "почему",
+      "gloss_en": "why",
+      "agreement": null,
+      "note": "Question 'why' in non-final position: Porque é que não vais? As an answer it means 'because' (Porque tenho de trabalhar)."
+    },
+    {
+      "form": "porquê",
+      "category": "why",
+      "gloss_ru": "почему",
+      "gloss_en": "why",
+      "agreement": null,
+      "note": "Stressed form 'why' used standalone or sentence-final: Porquê? / Não vais porquê?"
+    },
+    {
+      "form": "qual",
+      "category": "which",
+      "gloss_ru": "какой / который",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "note": "Agrees in NUMBER only (singular). Used to identify one of a set: Qual é a sua morada?"
+    },
+    {
+      "form": "quais",
+      "category": "which",
+      "gloss_ru": "какие / которые",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "pl"
+      },
+      "note": "Plural of qual; agrees in NUMBER only: Quais são os seus filhos?"
+    },
+    {
+      "form": "quanto",
+      "category": "how_much",
+      "gloss_ru": "сколько",
+      "gloss_en": "how much",
+      "agreement": {
+        "gender": "m",
+        "number": "sg"
+      },
+      "note": "Agrees in GENDER+NUMBER with the counted noun (masc. sing.): Quanto dinheiro tens?"
+    },
+    {
+      "form": "quanta",
+      "category": "how_much",
+      "gloss_ru": "сколько",
+      "gloss_en": "how much",
+      "agreement": {
+        "gender": "f",
+        "number": "sg"
+      },
+      "note": "Agrees in GENDER+NUMBER (fem. sing.): Quanta água há?"
+    },
+    {
+      "form": "quantos",
+      "category": "how_much",
+      "gloss_ru": "сколько",
+      "gloss_en": "how many",
+      "agreement": {
+        "gender": "m",
+        "number": "pl"
+      },
+      "note": "Agrees in GENDER+NUMBER (masc. pl.): Quantos anos tens?"
+    },
+    {
+      "form": "quantas",
+      "category": "how_much",
+      "gloss_ru": "сколько",
+      "gloss_en": "how many",
+      "agreement": {
+        "gender": "f",
+        "number": "pl"
+      },
+      "note": "Agrees in GENDER+NUMBER (fem. pl.): Quantas línguas falas?"
+    }
+  ],
+  "notes": [
+    "que vs o que: use 'que' immediately before a noun (Que instrumento toca? Que horas são?); use standalone 'o que' when no noun follows (O que é que ele toca? O que é isto?).",
+    "onde (static location, 'where', with ser/ficar/estar) vs aonde / para onde (direction, 'where to', with movement verbs) vs de onde (origin, 'where from'): Onde moras? / Aonde vais? / De onde és?",
+    "qual/quais agree in NUMBER only (qual = sing., quais = pl.); the quanto-family (quanto/quanta/quantos/quantas) agrees in BOTH GENDER and NUMBER with the counted noun.",
+    "porquê (stressed, standalone or sentence-final question: Porquê?) vs porque (unstressed: the 'why' that opens a question — Porque é que...? — and also the answer 'because') vs por que (preposition por + que, e.g. 'por que razão', mostly avoided in A1).",
+    "é que is an optional emphatic filler inserted after the interrogative in EP questions and does not change the answer: Onde (é que) fica Siena? / Como (é que) se chama?",
+    "Pronouns/clitics move before the verb after an interrogative word: Como te chamas? Onde te encontras com a Ana?"
+  ],
+  "items": [
+    {
+      "blankSentence": "Olá! ___ te chamas?",
+      "answer": "como",
+      "category": "how",
+      "gloss_ru": "как",
+      "gloss_en": "how",
+      "agreement": null,
+      "source": "livro_unit01",
+      "sourceLine": 39,
+      "id": "int:0001"
+    },
+    {
+      "blankSentence": "___ está?",
+      "answer": "como",
+      "category": "how",
+      "gloss_ru": "как",
+      "gloss_en": "how",
+      "agreement": null,
+      "source": "livro_unit01",
+      "sourceLine": 31,
+      "id": "int:0002"
+    },
+    {
+      "blankSentence": "___ se chama?",
+      "answer": "como",
+      "category": "how",
+      "gloss_ru": "как",
+      "gloss_en": "how",
+      "agreement": null,
+      "source": "livro_unit01",
+      "sourceLine": 99,
+      "id": "int:0003"
+    },
+    {
+      "blankSentence": "___ se escreve o teu nome?",
+      "answer": "como",
+      "category": "how",
+      "gloss_ru": "как",
+      "gloss_en": "how",
+      "agreement": null,
+      "source": "livro_unit06",
+      "sourceLine": 74,
+      "id": "int:0004"
+    },
+    {
+      "blankSentence": "___ é o quarto do Luís?",
+      "answer": "como",
+      "category": "how",
+      "gloss_ru": "как",
+      "gloss_en": "how",
+      "agreement": null,
+      "source": "livro_unit07",
+      "sourceLine": 112,
+      "id": "int:0005"
+    },
+    {
+      "blankSentence": "___ é o seu chefe?",
+      "answer": "como",
+      "category": "how",
+      "gloss_ru": "как",
+      "gloss_en": "how",
+      "agreement": null,
+      "source": "caderno_unit08.md",
+      "sourceLine": 133,
+      "id": "int:0006"
+    },
+    {
+      "blankSentence": "___ é que tu és, Sara?",
+      "answer": "como",
+      "category": "how",
+      "gloss_ru": "как",
+      "gloss_en": "how",
+      "agreement": null,
+      "source": "livro_unit10",
+      "sourceLine": 139,
+      "id": "int:0007"
+    },
+    {
+      "blankSentence": "____ se chama a mulher do Fernando?",
+      "answer": "como",
+      "category": "how",
+      "gloss_ru": "как",
+      "gloss_en": "how",
+      "agreement": null,
+      "source": "teacher_skm_p02-07.md",
+      "sourceLine": 200,
+      "id": "int:0008"
+    },
+    {
+      "blankSentence": "____ é que se chama a vossa professora?",
+      "answer": "como",
+      "category": "how",
+      "gloss_ru": "как",
+      "gloss_en": "how",
+      "agreement": null,
+      "source": "teacher_cs1603_p01-04.md",
+      "sourceLine": 62,
+      "id": "int:0009"
+    },
+    {
+      "blankSentence": "___ horas trabalha por dia?",
+      "answer": "quantas",
+      "category": "how_much",
+      "gloss_ru": "сколько",
+      "gloss_en": "how many",
+      "agreement": {
+        "gender": "f",
+        "number": "pl",
+        "noun": "horas"
+      },
+      "source": "livro_unit08",
+      "sourceLine": 83,
+      "id": "int:0010"
+    },
+    {
+      "blankSentence": "___ vezes por semana vais ao cinema?",
+      "answer": "quantas",
+      "category": "how_much",
+      "gloss_ru": "сколько",
+      "gloss_en": "how many",
+      "agreement": {
+        "gender": "f",
+        "number": "pl",
+        "noun": "vezes"
+      },
+      "source": "livro_unit14",
+      "sourceLine": 175,
+      "id": "int:0011"
+    },
+    {
+      "blankSentence": "____ línguas falas?",
+      "answer": "quantas",
+      "category": "how_much",
+      "gloss_ru": "сколько",
+      "gloss_en": "how many",
+      "agreement": {
+        "gender": "f",
+        "number": "pl",
+        "noun": "línguas"
+      },
+      "source": "livro_gramatica_05-08.md",
+      "sourceLine": 195,
+      "id": "int:0012"
+    },
+    {
+      "blankSentence": "____ malas tem a Ana?",
+      "answer": "quantas",
+      "category": "how_much",
+      "gloss_ru": "сколько",
+      "gloss_en": "how many",
+      "agreement": {
+        "gender": "f",
+        "number": "pl",
+        "noun": "malas"
+      },
+      "source": "livro_gramatica_05-08.md",
+      "sourceLine": 196,
+      "id": "int:0013"
+    },
+    {
+      "blankSentence": "___ tempo dura um jogo de futebol?",
+      "answer": "quanto",
+      "category": "how_much",
+      "gloss_ru": "сколько",
+      "gloss_en": "how much",
+      "agreement": {
+        "gender": "m",
+        "number": "sg",
+        "noun": "tempo"
+      },
+      "source": "livro_unit13",
+      "sourceLine": 49,
+      "id": "int:0014"
+    },
+    {
+      "blankSentence": "____ custa um quilo de maçãs?",
+      "answer": "quanto",
+      "category": "how_much",
+      "gloss_ru": "сколько",
+      "gloss_en": "how much",
+      "agreement": {
+        "gender": "m",
+        "number": "sg"
+      },
+      "source": "teacher_skm_p15-21.md",
+      "sourceLine": 77,
+      "id": "int:0015"
+    },
+    {
+      "blankSentence": "____ dinheiro tens?",
+      "answer": "quanto",
+      "category": "how_much",
+      "gloss_ru": "сколько",
+      "gloss_en": "how much",
+      "agreement": {
+        "gender": "m",
+        "number": "sg",
+        "noun": "dinheiro"
+      },
+      "source": "livro_gramatica_05-08.md",
+      "sourceLine": 194,
+      "id": "int:0016"
+    },
+    {
+      "blankSentence": "___ anos tem?",
+      "answer": "quantos",
+      "category": "how_much",
+      "gloss_ru": "сколько",
+      "gloss_en": "how many",
+      "agreement": {
+        "gender": "m",
+        "number": "pl",
+        "noun": "anos"
+      },
+      "source": "livro_unit06",
+      "sourceLine": 195,
+      "id": "int:0017"
+    },
+    {
+      "blankSentence": "___ dias trabalha por semana?",
+      "answer": "quantos",
+      "category": "how_much",
+      "gloss_ru": "сколько",
+      "gloss_en": "how many",
+      "agreement": {
+        "gender": "m",
+        "number": "pl",
+        "noun": "dias"
+      },
+      "source": "livro_unit08",
+      "sourceLine": 86,
+      "id": "int:0018"
+    },
+    {
+      "blankSentence": "___ irmãos tens?",
+      "answer": "quantos",
+      "category": "how_much",
+      "gloss_ru": "сколько",
+      "gloss_en": "how many",
+      "agreement": {
+        "gender": "m",
+        "number": "pl",
+        "noun": "irmãos"
+      },
+      "source": "livro_unit09",
+      "sourceLine": 22,
+      "id": "int:0019"
+    },
+    {
+      "blankSentence": "____ anos tem?",
+      "answer": "quantos",
+      "category": "how_much",
+      "gloss_ru": "сколько",
+      "gloss_en": "how many",
+      "agreement": {
+        "gender": "m",
+        "number": "pl",
+        "noun": "anos"
+      },
+      "source": "teacher_cs1450_p01-05.md",
+      "sourceLine": 25,
+      "id": "int:0020"
+    },
+    {
+      "blankSentence": "____ anos tens?",
+      "answer": "quantos",
+      "category": "how_much",
+      "gloss_ru": "сколько",
+      "gloss_en": "how many",
+      "agreement": {
+        "gender": "m",
+        "number": "pl",
+        "noun": "anos"
+      },
+      "source": "livro_gramatica_05-08.md",
+      "sourceLine": 192,
+      "id": "int:0021"
+    },
+    {
+      "blankSentence": "____ é que ele toca?",
+      "answer": "o que",
+      "category": "what",
+      "gloss_ru": "что",
+      "gloss_en": "what",
+      "agreement": null,
+      "source": "teacher_cs1450_p01-05.md",
+      "sourceLine": 24,
+      "id": "int:0022"
+    },
+    {
+      "blankSentence": "A ___ horas acordas (normalmente)?",
+      "answer": "que",
+      "category": "what",
+      "gloss_ru": "что (перед сущ.)",
+      "gloss_en": "what (+noun)",
+      "agreement": null,
+      "source": "livro_unit14",
+      "sourceLine": 61,
+      "id": "int:0023"
+    },
+    {
+      "blankSentence": "A ___ horas começa a aula de português?",
+      "answer": "que",
+      "category": "what",
+      "gloss_ru": "что (перед сущ.)",
+      "gloss_en": "what (+noun)",
+      "agreement": null,
+      "source": "livro_unit13",
+      "sourceLine": 70,
+      "id": "int:0024"
+    },
+    {
+      "blankSentence": "A ___ horas te levantas?",
+      "answer": "que",
+      "category": "what",
+      "gloss_ru": "что (перед сущ.)",
+      "gloss_en": "what (+noun)",
+      "agreement": null,
+      "source": "caderno_unit13-14.md",
+      "sourceLine": 183,
+      "id": "int:0025"
+    },
+    {
+      "blankSentence": "Em ___ andar mora a Mafalda?",
+      "answer": "que",
+      "category": "what",
+      "gloss_ru": "что (перед сущ.)",
+      "gloss_en": "what (+noun)",
+      "agreement": null,
+      "source": "livro_unit06",
+      "sourceLine": 114,
+      "id": "int:0026"
+    },
+    {
+      "blankSentence": "Em ___ andar moras?",
+      "answer": "que",
+      "category": "what",
+      "gloss_ru": "что (перед сущ.)",
+      "gloss_en": "what (+noun)",
+      "agreement": null,
+      "source": "livro_unit06",
+      "sourceLine": 126,
+      "id": "int:0027"
+    },
+    {
+      "blankSentence": "Em ___ dias?",
+      "answer": "que",
+      "category": "what",
+      "gloss_ru": "что (перед сущ.)",
+      "gloss_en": "what (+noun)",
+      "agreement": null,
+      "source": "livro_unit14",
+      "sourceLine": 177,
+      "id": "int:0028"
+    },
+    {
+      "blankSentence": "Em ___ mês estamos?",
+      "answer": "que",
+      "category": "what",
+      "gloss_ru": "что (перед сущ.)",
+      "gloss_en": "what (+noun)",
+      "agreement": null,
+      "source": "livro_unit13",
+      "sourceLine": 134,
+      "id": "int:0029"
+    },
+    {
+      "blankSentence": "___ dia é hoje?",
+      "answer": "que",
+      "category": "what",
+      "gloss_ru": "что (перед сущ.)",
+      "gloss_en": "what (+noun)",
+      "agreement": null,
+      "source": "livro_unit13",
+      "sourceLine": 137,
+      "id": "int:0030"
+    },
+    {
+      "blankSentence": "___ horas são?",
+      "answer": "que",
+      "category": "what",
+      "gloss_ru": "что (перед сущ.)",
+      "gloss_en": "what (+noun)",
+      "agreement": null,
+      "source": "livro_unit13",
+      "sourceLine": 22,
+      "id": "int:0031"
+    },
+    {
+      "blankSentence": "___ idade tem?",
+      "answer": "que",
+      "category": "what",
+      "gloss_ru": "что (перед сущ.)",
+      "gloss_en": "what (+noun)",
+      "agreement": null,
+      "source": "livro_unit06",
+      "sourceLine": 205,
+      "id": "int:0032"
+    },
+    {
+      "blankSentence": "___ língua falam os americanos?",
+      "answer": "que",
+      "category": "what",
+      "gloss_ru": "что (перед сущ.)",
+      "gloss_en": "what (+noun)",
+      "agreement": null,
+      "source": "livro_unit03",
+      "sourceLine": 77,
+      "id": "int:0033"
+    },
+    {
+      "blankSentence": "___ línguas fala?",
+      "answer": "que",
+      "category": "what",
+      "gloss_ru": "что (перед сущ.)",
+      "gloss_en": "what (+noun)",
+      "agreement": null,
+      "source": "caderno_unit03.md",
+      "sourceLine": 107,
+      "id": "int:0034"
+    },
+    {
+      "blankSentence": "___ línguas falas?",
+      "answer": "que",
+      "category": "what",
+      "gloss_ru": "что (перед сущ.)",
+      "gloss_en": "what (+noun)",
+      "agreement": null,
+      "source": "livro_unit03",
+      "sourceLine": 87,
+      "id": "int:0035"
+    },
+    {
+      "blankSentence": "____ horas são?",
+      "answer": "que",
+      "category": "what",
+      "gloss_ru": "что (перед сущ.)",
+      "gloss_en": "what (+noun)",
+      "agreement": null,
+      "source": "livro_gramatica_13-16.md",
+      "sourceLine": 26,
+      "id": "int:0036"
+    },
+    {
+      "blankSentence": "____ instrumento toca?",
+      "answer": "que",
+      "category": "what",
+      "gloss_ru": "что (перед сущ.)",
+      "gloss_en": "what (+noun)",
+      "agreement": null,
+      "source": "teacher_cs1450_p01-05.md",
+      "sourceLine": 23,
+      "id": "int:0037"
+    },
+    {
+      "blankSentence": "____ transporte apanha ele?",
+      "answer": "que",
+      "category": "what",
+      "gloss_ru": "что (перед сущ.)",
+      "gloss_en": "what (+noun)",
+      "agreement": null,
+      "source": "teacher_skm_p02-07.md",
+      "sourceLine": 202,
+      "id": "int:0038"
+    },
+    {
+      "blankSentence": "___ é que fazes anos?",
+      "answer": "quando",
+      "category": "when",
+      "gloss_ru": "когда",
+      "gloss_en": "when",
+      "agreement": null,
+      "source": "livro_unit13",
+      "sourceLine": 158,
+      "id": "int:0039"
+    },
+    {
+      "blankSentence": "____ é que ele saiu de casa?",
+      "answer": "quando",
+      "category": "when",
+      "gloss_ru": "когда",
+      "gloss_en": "when",
+      "agreement": null,
+      "source": "teacher_skm_p35-38.md",
+      "sourceLine": 68,
+      "id": "int:0040"
+    },
+    {
+      "blankSentence": "____ é que ele trabalha?",
+      "answer": "quando",
+      "category": "when",
+      "gloss_ru": "когда",
+      "gloss_en": "when",
+      "agreement": null,
+      "source": "teacher_cs1450_p01-05.md",
+      "sourceLine": 27,
+      "id": "int:0041"
+    },
+    {
+      "blankSentence": "___ está a Francesca?",
+      "answer": "onde",
+      "category": "where",
+      "gloss_ru": "где",
+      "gloss_en": "where",
+      "agreement": null,
+      "source": "livro_unit03",
+      "sourceLine": 132,
+      "id": "int:0042"
+    },
+    {
+      "blankSentence": "___ está agora?",
+      "answer": "onde",
+      "category": "where",
+      "gloss_ru": "где",
+      "gloss_en": "where",
+      "agreement": null,
+      "source": "caderno_unit03.md",
+      "sourceLine": 109,
+      "id": "int:0043"
+    },
+    {
+      "blankSentence": "___ fica Veneza?",
+      "answer": "onde",
+      "category": "where",
+      "gloss_ru": "где",
+      "gloss_en": "where",
+      "agreement": null,
+      "source": "livro_unit02",
+      "sourceLine": 147,
+      "id": "int:0044"
+    },
+    {
+      "blankSentence": "___ mora o Ryan?",
+      "answer": "onde",
+      "category": "where",
+      "gloss_ru": "где",
+      "gloss_en": "where",
+      "agreement": null,
+      "source": "livro_unit03",
+      "sourceLine": 106,
+      "id": "int:0045"
+    },
+    {
+      "blankSentence": "___ mora?",
+      "answer": "onde",
+      "category": "where",
+      "gloss_ru": "где",
+      "gloss_en": "where",
+      "agreement": null,
+      "source": "caderno_unit03.md",
+      "sourceLine": 106,
+      "id": "int:0046"
+    },
+    {
+      "blankSentence": "___ moras?",
+      "answer": "onde",
+      "category": "where",
+      "gloss_ru": "где",
+      "gloss_en": "where",
+      "agreement": null,
+      "source": "livro_unit03",
+      "sourceLine": 128,
+      "id": "int:0047"
+    },
+    {
+      "blankSentence": "___ trabalha um professor?",
+      "answer": "onde",
+      "category": "where",
+      "gloss_ru": "где",
+      "gloss_en": "where",
+      "agreement": null,
+      "source": "livro_unit08",
+      "sourceLine": 30,
+      "id": "int:0048"
+    },
+    {
+      "blankSentence": "___ é Boston?",
+      "answer": "onde",
+      "category": "where",
+      "gloss_ru": "где",
+      "gloss_en": "where",
+      "agreement": null,
+      "source": "caderno_unit02.md",
+      "sourceLine": 48,
+      "id": "int:0049"
+    },
+    {
+      "blankSentence": "___ é Lisboa?",
+      "answer": "onde",
+      "category": "where",
+      "gloss_ru": "где",
+      "gloss_en": "where",
+      "agreement": null,
+      "source": "livro_unit02",
+      "sourceLine": 136,
+      "id": "int:0050"
+    },
+    {
+      "blankSentence": "___ é que mora?",
+      "answer": "onde",
+      "category": "where",
+      "gloss_ru": "где",
+      "gloss_en": "where",
+      "agreement": null,
+      "source": "caderno_unit05.md",
+      "sourceLine": 97,
+      "id": "int:0051"
+    },
+    {
+      "blankSentence": "___ é que os teus pais passam férias?",
+      "answer": "onde",
+      "category": "where",
+      "gloss_ru": "где",
+      "gloss_en": "where",
+      "agreement": null,
+      "source": "caderno_unit11.md",
+      "sourceLine": 115,
+      "id": "int:0052"
+    },
+    {
+      "blankSentence": "___ é que trabalha?",
+      "answer": "onde",
+      "category": "where",
+      "gloss_ru": "где",
+      "gloss_en": "where",
+      "agreement": null,
+      "source": "caderno_unit08.md",
+      "sourceLine": 131,
+      "id": "int:0053"
+    },
+    {
+      "blankSentence": "____ é que ele mora?",
+      "answer": "onde",
+      "category": "where",
+      "gloss_ru": "где",
+      "gloss_en": "where",
+      "agreement": null,
+      "source": "teacher_cs1450_p01-05.md",
+      "sourceLine": 26,
+      "id": "int:0054"
+    },
+    {
+      "blankSentence": "___ és?",
+      "answer": "de onde",
+      "category": "where_from",
+      "gloss_ru": "откуда",
+      "gloss_en": "where from",
+      "agreement": null,
+      "source": "livro_gramatica_05-08.md",
+      "sourceLine": 86,
+      "id": "int:0055"
+    },
+    {
+      "blankSentence": "___ são eles?",
+      "answer": "de onde",
+      "category": "where_from",
+      "gloss_ru": "откуда",
+      "gloss_en": "where from",
+      "agreement": null,
+      "source": "livro_unit02",
+      "sourceLine": 93,
+      "id": "int:0056"
+    },
+    {
+      "blankSentence": "___ é esta música?",
+      "answer": "de onde",
+      "category": "where_from",
+      "gloss_ru": "откуда",
+      "gloss_en": "where from",
+      "agreement": null,
+      "source": "livro_unit02",
+      "sourceLine": 61,
+      "id": "int:0057"
+    },
+    {
+      "blankSentence": "___ é isto?",
+      "answer": "de onde",
+      "category": "where_from",
+      "gloss_ru": "откуда",
+      "gloss_en": "where from",
+      "agreement": null,
+      "source": "livro_unit02",
+      "sourceLine": 81,
+      "id": "int:0058"
+    },
+    {
+      "blankSentence": "___ é?",
+      "answer": "de onde",
+      "category": "where_from",
+      "gloss_ru": "откуда",
+      "gloss_en": "where from",
+      "agreement": null,
+      "source": "livro_unit02",
+      "sourceLine": 101,
+      "id": "int:0059"
+    },
+    {
+      "blankSentence": "____ é que o João saiu?",
+      "answer": "de onde",
+      "category": "where_from",
+      "gloss_ru": "откуда",
+      "gloss_en": "where from",
+      "agreement": null,
+      "source": "teacher_skm_p35-38.md",
+      "sourceLine": 67,
+      "id": "int:0060"
+    },
+    {
+      "blankSentence": "____ são os livros da Susana?",
+      "answer": "quais",
+      "category": "which",
+      "gloss_ru": "какие",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "pl"
+      },
+      "source": "livro_gramatica_09-12.md",
+      "sourceLine": 130,
+      "id": "int:0061"
+    },
+    {
+      "blankSentence": "____ são os seus filhos?",
+      "answer": "quais",
+      "category": "which",
+      "gloss_ru": "какие",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "pl"
+      },
+      "source": "livro_gramatica_09-12.md",
+      "sourceLine": 127,
+      "id": "int:0062"
+    },
+    {
+      "blankSentence": "___ é a profissão da Núria?",
+      "answer": "qual",
+      "category": "which",
+      "gloss_ru": "какой",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "source": "livro_unit08",
+      "sourceLine": 67,
+      "id": "int:0063"
+    },
+    {
+      "blankSentence": "___ é a profissão da Sara?",
+      "answer": "qual",
+      "category": "which",
+      "gloss_ru": "какой",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "source": "livro_unit08",
+      "sourceLine": 150,
+      "id": "int:0064"
+    },
+    {
+      "blankSentence": "___ é a sua morada?",
+      "answer": "qual",
+      "category": "which",
+      "gloss_ru": "какой",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "source": "livro_acao_revisao_05-08",
+      "sourceLine": 202,
+      "id": "int:0065"
+    },
+    {
+      "blankSentence": "___ é a tua comida preferida?",
+      "answer": "qual",
+      "category": "which",
+      "gloss_ru": "какой",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "source": "livro_unit12",
+      "sourceLine": 144,
+      "id": "int:0066"
+    },
+    {
+      "blankSentence": "___ é a tua profissão?",
+      "answer": "qual",
+      "category": "which",
+      "gloss_ru": "какой",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "source": "livro_unit06",
+      "sourceLine": 49,
+      "id": "int:0067"
+    },
+    {
+      "blankSentence": "___ é o diálogo formal?",
+      "answer": "qual",
+      "category": "which",
+      "gloss_ru": "какой",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "source": "livro_unit01",
+      "sourceLine": 26,
+      "id": "int:0068"
+    },
+    {
+      "blankSentence": "___ é o motivo da sua visita?",
+      "answer": "qual",
+      "category": "which",
+      "gloss_ru": "какой",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "source": "livro_acao_revisao_05-08",
+      "sourceLine": 39,
+      "id": "int:0069"
+    },
+    {
+      "blankSentence": "___ é o oposto de feio?",
+      "answer": "qual",
+      "category": "which",
+      "gloss_ru": "какой",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "source": "livro_unit07",
+      "sourceLine": 59,
+      "id": "int:0070"
+    },
+    {
+      "blankSentence": "____ de vocês é o Rui?",
+      "answer": "qual",
+      "category": "which",
+      "gloss_ru": "какой",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "source": "livro_gramatica_09-12.md",
+      "sourceLine": 129,
+      "id": "int:0071"
+    },
+    {
+      "blankSentence": "____ é a nacionalidade do Paul?",
+      "answer": "qual",
+      "category": "which",
+      "gloss_ru": "какой",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "source": "teacher_skm_p02-07.md",
+      "sourceLine": 108,
+      "id": "int:0072"
+    },
+    {
+      "blankSentence": "____ é a profissão do Fernando?",
+      "answer": "qual",
+      "category": "which",
+      "gloss_ru": "какой",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "source": "teacher_skm_p02-07.md",
+      "sourceLine": 122,
+      "id": "int:0073"
+    },
+    {
+      "blankSentence": "____ é a profissão do Peter?",
+      "answer": "qual",
+      "category": "which",
+      "gloss_ru": "какой",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "source": "teacher_cs1450_p01-05.md",
+      "sourceLine": 22,
+      "id": "int:0074"
+    },
+    {
+      "blankSentence": "____ é a sua morada?",
+      "answer": "qual",
+      "category": "which",
+      "gloss_ru": "какой",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "source": "livro_gramatica_09-12.md",
+      "sourceLine": 126,
+      "id": "int:0075"
+    },
+    {
+      "blankSentence": "____ é o estado civil dele?",
+      "answer": "qual",
+      "category": "which",
+      "gloss_ru": "какой",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "source": "teacher_skm_p02-07.md",
+      "sourceLine": 201,
+      "id": "int:0076"
+    },
+    {
+      "blankSentence": "____ é o seu nome completo?",
+      "answer": "qual",
+      "category": "which",
+      "gloss_ru": "какой",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "source": "livro_gramatica_05-08.md",
+      "sourceLine": 183,
+      "id": "int:0077"
+    },
+    {
+      "blankSentence": "____ é o teu carro?",
+      "answer": "qual",
+      "category": "which",
+      "gloss_ru": "какой",
+      "gloss_en": "which",
+      "agreement": {
+        "number": "sg"
+      },
+      "source": "livro_gramatica_09-12.md",
+      "sourceLine": 128,
+      "id": "int:0078"
+    },
+    {
+      "blankSentence": "Com ___ trabalha?",
+      "answer": "quem",
+      "category": "who",
+      "gloss_ru": "кто",
+      "gloss_en": "who",
+      "agreement": null,
+      "source": "caderno_unit08.md",
+      "sourceLine": 134,
+      "id": "int:0079"
+    },
+    {
+      "blankSentence": "De ___ é o carro branco?",
+      "answer": "quem",
+      "category": "who",
+      "gloss_ru": "кто",
+      "gloss_en": "who",
+      "agreement": null,
+      "source": "livro_unit05",
+      "sourceLine": 147,
+      "id": "int:0080"
+    },
+    {
+      "blankSentence": "___ é ela?",
+      "answer": "quem",
+      "category": "who",
+      "gloss_ru": "кто",
+      "gloss_en": "who",
+      "agreement": null,
+      "source": "livro_unit01",
+      "sourceLine": 98,
+      "id": "int:0081"
+    },
+    {
+      "blankSentence": "___ é ele?",
+      "answer": "quem",
+      "category": "who",
+      "gloss_ru": "кто",
+      "gloss_en": "who",
+      "agreement": null,
+      "source": "livro_unit01",
+      "sourceLine": 44,
+      "id": "int:0082"
+    },
+    {
+      "blankSentence": "___ é este rapaz?",
+      "answer": "quem",
+      "category": "who",
+      "gloss_ru": "кто",
+      "gloss_en": "who",
+      "agreement": null,
+      "source": "livro_acao_revisao_09-12",
+      "sourceLine": 93,
+      "id": "int:0083"
+    },
+    {
+      "blankSentence": "___ é o João?",
+      "answer": "quem",
+      "category": "who",
+      "gloss_ru": "кто",
+      "gloss_en": "who",
+      "agreement": null,
+      "source": "livro_unit09",
+      "sourceLine": 126,
+      "id": "int:0084"
+    },
+    {
+      "blankSentence": "____ fica em casa com os filhos?",
+      "answer": "quem",
+      "category": "who",
+      "gloss_ru": "кто",
+      "gloss_en": "who",
+      "agreement": null,
+      "source": "teacher_skm_p02-07.md",
+      "sourceLine": 203,
+      "id": "int:0085"
+    },
+    {
+      "blankSentence": "____ é a senhora?",
+      "answer": "quem",
+      "category": "who",
+      "gloss_ru": "кто",
+      "gloss_en": "who",
+      "agreement": null,
+      "source": "teacher_cs1450_p01-05.md",
+      "sourceLine": 59,
+      "id": "int:0086"
+    },
+    {
+      "blankSentence": "____ é ele?",
+      "answer": "quem",
+      "category": "who",
+      "gloss_ru": "кто",
+      "gloss_en": "who",
+      "agreement": null,
+      "source": "livro_gramatica_01-04.md",
+      "sourceLine": 70,
+      "id": "int:0087"
+    },
+    {
+      "blankSentence": "____ é este senhor?",
+      "answer": "quem",
+      "category": "who",
+      "gloss_ru": "кто",
+      "gloss_en": "who",
+      "agreement": null,
+      "source": "teacher_cs1450_p01-05.md",
+      "sourceLine": 20,
+      "id": "int:0088"
+    },
+    {
+      "blankSentence": "____ é que saiu de casa?",
+      "answer": "quem",
+      "category": "who",
+      "gloss_ru": "кто",
+      "gloss_en": "who",
+      "agreement": null,
+      "source": "teacher_skm_p35-38.md",
+      "sourceLine": 66,
+      "id": "int:0089"
+    },
+    {
+      "blankSentence": "___ é que gostas do Luís?",
+      "answer": "porque",
+      "category": "why",
+      "gloss_ru": "почему",
+      "gloss_en": "why",
+      "agreement": null,
+      "source": "livro_unit07",
+      "sourceLine": 174,
+      "id": "int:0090"
+    }
+  ]
+}

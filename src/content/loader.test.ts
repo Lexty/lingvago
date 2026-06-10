@@ -56,6 +56,18 @@ function bundle(version: number): ContentBundle {
         hasArticle: true,
       },
     ],
+    interrogatives: [
+      {
+        contentId: 'int:0001',
+        blankSentence: 'Olá! ___ te chamas?',
+        answer: 'como',
+        category: 'how',
+        gloss_ru: 'как',
+        gloss_en: 'how',
+        source: 'livro_unit01',
+        sourceLine: 39,
+      },
+    ],
   };
 }
 
@@ -110,6 +122,14 @@ describe('content loader — version-gated load (AC3, AC6 b/c)', () => {
       person: 'eu',
       possessedGender: 'f',
       possessedNumber: 'sg',
+    });
+    // Interrogatives content store loads (read-only, contract Task 1 / AC1).
+    expect(await db.interrogatives.count()).toBe(1);
+    expect(await db.interrogatives.get('int:0001')).toMatchObject({
+      answer: 'como',
+      category: 'how',
+      gloss_ru: 'как',
+      gloss_en: 'how',
     });
     expect(await getLoadedContentVersion(db)).toBe(1);
   });

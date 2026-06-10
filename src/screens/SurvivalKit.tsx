@@ -154,6 +154,9 @@ export default function SurvivalKit() {
           <Link to="/drill/possessive" className={styles.navLink}>
             {t('survivalKit.nav.possessive')}
           </Link>
+          <Link to="/drill/interrogative" className={styles.navLink}>
+            {t('survivalKit.nav.interrogative')}
+          </Link>
           <Link to="/mock" className={styles.navLink}>
             {t('survivalKit.nav.mock')}
           </Link>

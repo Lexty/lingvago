@@ -12,6 +12,7 @@ import type {
   CardStateRecord,
   ConjugationTableRecord,
   ContentMetaRecord,
+  InterrogativeRecord,
   NounRecord,
   OrphanedProgressRecord,
   PossessiveRecord,
@@ -43,6 +44,10 @@ export const DB_NAME = 'lingvago2';
  *  - v4: ADD the read-only `possessives` content store (verified EP possessive
  *    cloze items). Additive — earlier versions/stores are untouched. NOTE the
  *    Dexie version (4) is independent of the bundle CONTENT_VERSION (3).
+ *  - v5: ADD the read-only `interrogatives` content store (verified EP
+ *    interrogative cloze items). Additive — earlier versions/stores are
+ *    untouched. NOTE the Dexie version (5) is independent of the bundle
+ *    CONTENT_VERSION (4).
  */
 export class Lingvago2Db extends Dexie {
   cardStates!: Table<CardStateRecord, string>;
@@ -58,6 +63,7 @@ export class Lingvago2Db extends Dexie {
   prepositions!: Table<PrepositionRecord, string>;
   conjugationTables!: Table<ConjugationTableRecord, string>;
   possessives!: Table<PossessiveRecord, string>;
+  interrogatives!: Table<InterrogativeRecord, string>;
   // §7.3 content-version meta + orphaned-progress archive.
   contentMeta!: Table<ContentMetaRecord, string>;
   orphanedProgress!: Table<OrphanedProgressRecord, number>;
@@ -109,6 +115,14 @@ export class Lingvago2Db extends Dexie {
     this.version(4).stores({
       possessives: 'contentId',
     });
+
+    // v5 ADDS the interrogatives content store ONLY. Keyed by `contentId`
+    // (`int:NNNN`); the loader does keyed ops (bulkPut/clear) exclusively.
+    // Earlier versions are not redeclared, so Dexie carries their stores (and
+    // data) over unchanged — no destructive migration.
+    this.version(5).stores({
+      interrogatives: 'contentId',
+    });
   }
 }
 
@@ -128,6 +142,7 @@ export type {
   ConjugationTableRecord,
   ContentMetaRecord,
   FsrsCard,
+  InterrogativeRecord,
   NounRecord,
   OrphanedProgressRecord,
   PossessiveRecord,

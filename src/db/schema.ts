@@ -260,6 +260,46 @@ export interface PossessiveRecord {
   hasArticle: boolean;
 }
 
+/** Possessed-noun / counted-noun agreement features carried by an interrogative. */
+export interface InterrogativeAgreement {
+  /** Counted/agreeing noun gender (`m` / `f`); present for the quanto-family. */
+  gender?: string;
+  /** Number (`sg` / `pl`); present for qual/quais and the quanto-family. */
+  number?: string;
+  /** The counted noun, informational only (may be absent, e.g. int:0015). */
+  noun?: string;
+}
+
+/**
+ * Verified EP interrogative cloze item (from interrogatives.json), carrying the
+ * gloss-cue/grading fields the interrogative drill mode needs. The blank
+ * replaces the interrogative; `answer` is the canonical question word. The
+ * gloss (`gloss_ru` / `gloss_en`) is the language-aware meaning cue that makes
+ * the production answer well-determined (a bare cloze is under-determined). The
+ * optional `agreement` carries the qual/quais NUMBER and quanto-family
+ * GENDER+NUMBER features.
+ */
+export interface InterrogativeRecord {
+  /** Stable content id (`int:NNNN`, the dataset id); primary key. */
+  contentId: string;
+  /** Cloze sentence with the interrogative blanked as `___`. */
+  blankSentence: string;
+  /** Canonical answer (the interrogative form; may be multi-word, e.g. `o que`). */
+  answer: string;
+  /** Semantic category (`who` / `what` / `where` / `how_much` / …). */
+  category: string;
+  /** Russian meaning cue (gloss). */
+  gloss_ru: string;
+  /** English meaning cue (gloss). */
+  gloss_en: string;
+  /** Optional agreement features (qual/quais number; quanto-family gender+number). */
+  agreement?: InterrogativeAgreement;
+  /** Provenance source tag (e.g. `livro_unit01`). */
+  source: string;
+  /** Source line in the provenance artifact. */
+  sourceLine: number;
+}
+
 /**
  * Singleton meta row tracking the loaded content version (SPEC §7.3).
  *

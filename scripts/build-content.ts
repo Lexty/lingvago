@@ -1,7 +1,7 @@
 // Build the app content bundle (SPEC §7.3 pipeline) from
 // extraction/normalized/*.json + authored reference cards.
 //
-// Output: public/content.v<CONTENT_VERSION>.json (currently content.v2.json) —
+// Output: public/content.v<CONTENT_VERSION>.json (currently content.v4.json) —
 // a versioned, READ-ONLY artifact loaded into IndexedDB content stores
 // (SPEC §7.1) at first run / on contentVersion change.
 //
@@ -27,7 +27,11 @@ import { dirname, join } from 'node:path';
 // v3 ADDS the `possessives` content store + the authored `ref-possessive`
 // reference card (EP possessive drill) — another additive bump so any install
 // reloads and materializes the new possessives store.
-export const CONTENT_VERSION = 3;
+// v4 ADDS the `interrogatives` content store + the authored `ref-interrogative`
+// reference card (EP interrogative drill: the 17-row table + 6 rules) — another
+// additive bump so any install reloads and materializes the new interrogatives
+// store. The bundle remains additive (no existing field removed/renamed).
+export const CONTENT_VERSION = 4;
 
 /** Output artifact name — `content.v<CONTENT_VERSION>.json` (SPEC §10.3). */
 export const CONTENT_FILENAME = `content.v${CONTENT_VERSION}.json`;
@@ -136,6 +140,33 @@ export interface PossessiveRecord {
   hasArticle: boolean;
 }
 
+/** Agreement features carried by an interrogative (mirror src/db/schema.ts). */
+export interface InterrogativeAgreement {
+  gender?: string;
+  number?: string;
+  noun?: string;
+}
+
+/**
+ * A single verified EP interrogative cloze item (from interrogatives.json).
+ * Carries the gloss-cue/grading fields the interrogative drill mode needs: the
+ * cloze sentence, the canonical answer (possibly multi-word, e.g. `o que`), the
+ * semantic category, both gloss languages (the language-aware meaning cue), the
+ * optional agreement features (qual/quais NUMBER; quanto-family GENDER+NUMBER),
+ * and provenance (source/sourceLine).
+ */
+export interface InterrogativeRecord {
+  contentId: string;
+  blankSentence: string;
+  answer: string;
+  category: string;
+  gloss_ru: string;
+  gloss_en: string;
+  agreement?: InterrogativeAgreement;
+  source: string;
+  sourceLine: number;
+}
+
 export interface ContentBundle {
   contentVersion: number;
   referenceCards: ReferenceCard[];
@@ -144,6 +175,7 @@ export interface ContentBundle {
   prepositions: PrepositionRecord[];
   conjugationTables: ConjugationTableRecord[];
   possessives: PossessiveRecord[];
+  interrogatives: InterrogativeRecord[];
 }
 
 /** Read + parse a normalized input file, failing loudly with file context. */
@@ -398,6 +430,69 @@ function buildPossessives(): PossessiveRecord[] {
   return [...seen.values()].sort((a, b) => a.contentId.localeCompare(b.contentId, 'en'));
 }
 
+// ---- interrogatives (from interrogatives.json) ------------------------------
+// Each verified cloze item is emitted as an InterrogativeRecord keyed by its
+// stable dataset `id` (`int:NNNN`). The gloss-cue/grading fields (category, both
+// glosses, the optional agreement features, source/sourceLine) are carried
+// verbatim so the interrogative mode can compute the language-aware cue + grade
+// exactly. Fails loudly on a missing/empty array or a duplicate id (no silent
+// empty store).
+function asAgreement(value: unknown): InterrogativeAgreement | undefined {
+  if (value === null || value === undefined) return undefined;
+  if (typeof value !== 'object' || Array.isArray(value)) {
+    throw new Error('build-content: interrogatives.json item "agreement" must be an object or null');
+  }
+  const a = value as Record<string, unknown>;
+  const out: InterrogativeAgreement = {};
+  if (typeof a.gender === 'string') out.gender = a.gender;
+  if (typeof a.number === 'string') out.number = a.number;
+  if (typeof a.noun === 'string') out.noun = a.noun;
+  return out;
+}
+
+function buildInterrogatives(): InterrogativeRecord[] {
+  const data = asRecord(readNormalized('interrogatives.json'), 'interrogatives.json');
+  const items = asArray(data.items, 'interrogatives.json', 'items');
+  if (items.length === 0) {
+    throw new Error('build-content: interrogatives.json field "items" must not be empty');
+  }
+
+  const seen = new Map<string, InterrogativeRecord>();
+  for (const item of items) {
+    if (typeof item !== 'object' || item === null || Array.isArray(item)) {
+      throw new Error('build-content: interrogatives.json item must be a JSON object');
+    }
+    const it = item as Record<string, unknown>;
+    const contentId = asString(it.id, 'interrogatives.json', 'item "id"');
+    if (seen.has(contentId)) {
+      throw new Error(`build-content: interrogatives.json has duplicate item id "${contentId}"`);
+    }
+    if (typeof it.sourceLine !== 'number') {
+      throw new Error(
+        `build-content: interrogatives.json item ${contentId} "sourceLine" must be a number`,
+      );
+    }
+    const record: InterrogativeRecord = {
+      contentId,
+      blankSentence: asString(
+        it.blankSentence,
+        'interrogatives.json',
+        `item ${contentId} "blankSentence"`,
+      ),
+      answer: asString(it.answer, 'interrogatives.json', `item ${contentId} "answer"`),
+      category: asString(it.category, 'interrogatives.json', `item ${contentId} "category"`),
+      gloss_ru: asString(it.gloss_ru, 'interrogatives.json', `item ${contentId} "gloss_ru"`),
+      gloss_en: asString(it.gloss_en, 'interrogatives.json', `item ${contentId} "gloss_en"`),
+      source: asString(it.source, 'interrogatives.json', `item ${contentId} "source"`),
+      sourceLine: it.sourceLine,
+    };
+    const agreement = asAgreement(it.agreement);
+    if (agreement) record.agreement = agreement;
+    seen.set(contentId, record);
+  }
+  return [...seen.values()].sort((a, b) => a.contentId.localeCompare(b.contentId, 'en'));
+}
+
 // ---- authored reference cards (verified didactic material, WP-B) ------------
 // Stable, hand-authored; `contentId` is the authored id.
 const referenceCards: ReferenceCard[] = [
@@ -605,6 +700,65 @@ function buildPossessiveCard(): ReferenceCard {
   };
 }
 
+// ---- authored interrogative reference card (table + rules, data-derived) ----
+// The `ref-interrogative` card body is RENDERED from interrogatives.json's
+// `table` (the 17 interrogative forms with category/gloss/agreement) and `notes`
+// (the 6 core EP rules) so the human-facing card stays in lock-step with the
+// verified dataset. (The machine-readable distractor table for the mode is a
+// separate static const in src/modes/interrogative/intData.ts — not parsed from
+// here.)
+function agreementLabel(agreement: unknown): string {
+  if (agreement === null || agreement === undefined) return '—';
+  if (typeof agreement !== 'object' || Array.isArray(agreement)) return '—';
+  const a = agreement as Record<string, unknown>;
+  const parts: string[] = [];
+  if (typeof a.gender === 'string') parts.push(a.gender);
+  if (typeof a.number === 'string') parts.push(a.number);
+  return parts.length ? parts.join(' ') : '—';
+}
+
+function buildInterrogativeCard(): ReferenceCard {
+  const data = asRecord(readNormalized('interrogatives.json'), 'interrogatives.json');
+  const table = asArray(data.table, 'interrogatives.json', 'table');
+  const notes = asArray(data.notes, 'interrogatives.json', 'notes');
+
+  const tableRows: string[] = [
+    '| Form | Meaning | RU | Agreement |',
+    '| --- | --- | --- | --- |',
+  ];
+  for (const entry of table) {
+    if (typeof entry !== 'object' || entry === null) continue;
+    const e = entry as Record<string, unknown>;
+    const form = typeof e.form === 'string' ? e.form : '';
+    if (!form) continue;
+    const category = typeof e.category === 'string' ? e.category : '';
+    const glossEn = typeof e.gloss_en === 'string' ? e.gloss_en : '';
+    const glossRu = typeof e.gloss_ru === 'string' ? e.gloss_ru : '';
+    const meaning = glossEn || category;
+    tableRows.push(`| ${form} | ${meaning} | ${glossRu} | ${agreementLabel(e.agreement)} |`);
+  }
+
+  const ruleLines = notes
+    .filter((n): n is string => typeof n === 'string')
+    .map((n, idx) => `${idx + 1}. ${n}`);
+
+  const body = [
+    '**Interrogativos** — EP question words (the blank replaces the interrogative):',
+    '',
+    ...tableRows,
+    '',
+    '**Core rules:**',
+    ...ruleLines,
+  ].join('\n');
+
+  return {
+    contentId: 'ref-interrogative',
+    topic: 'Interrogativos',
+    title: 'Interrogativos: tabela (17 formas) + regras',
+    body,
+  };
+}
+
 /**
  * Pure builder: assemble the full content bundle from disk inputs.
  *
@@ -614,12 +768,17 @@ function buildPossessiveCard(): ReferenceCard {
 export function buildContent(): ContentBundle {
   return {
     contentVersion: CONTENT_VERSION,
-    referenceCards: [...referenceCards.map((c) => ({ ...c })), buildPossessiveCard()],
+    referenceCards: [
+      ...referenceCards.map((c) => ({ ...c })),
+      buildPossessiveCard(),
+      buildInterrogativeCard(),
+    ],
     verbs: buildVerbs(),
     nouns: buildNouns(),
     prepositions: buildPrepositions(),
     conjugationTables: buildConjugationTables(),
     possessives: buildPossessives(),
+    interrogatives: buildInterrogatives(),
   };
 }
 
@@ -635,7 +794,7 @@ function main(): void {
   writeFileSync(join(outDir, CONTENT_FILENAME), json);
   // Stderr is fine for a build log; output file content stays deterministic.
   process.stderr.write(
-    `${CONTENT_FILENAME}: ${bundle.referenceCards.length} cards · ${bundle.verbs.length} verbs · ${bundle.nouns.length} nouns · ${bundle.prepositions.length} prepositions · ${bundle.conjugationTables.length} conj-tables · ${bundle.possessives.length} possessives\n`,
+    `${CONTENT_FILENAME}: ${bundle.referenceCards.length} cards · ${bundle.verbs.length} verbs · ${bundle.nouns.length} nouns · ${bundle.prepositions.length} prepositions · ${bundle.conjugationTables.length} conj-tables · ${bundle.possessives.length} possessives · ${bundle.interrogatives.length} interrogatives\n`,
   );
 }
 

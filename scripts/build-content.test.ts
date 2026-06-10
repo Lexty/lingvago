@@ -212,6 +212,60 @@ describe('build-content — possessives store + ref-possessive card (AC1)', () =
   });
 });
 
+describe('build-content — interrogatives store + ref-interrogative card (AC1)', () => {
+  it('emits the 90 interrogative cloze items with the gloss-cue/grading fields', () => {
+    const bundle = buildContent();
+    // interrogatives.json ships 90 verified items.
+    expect(bundle.interrogatives.length).toBe(90);
+
+    for (const rec of bundle.interrogatives) {
+      // Stable `int:NNNN` contentId carried from the dataset id.
+      expect(rec.contentId).toMatch(/^int:\d{4}$/);
+      expect(typeof rec.blankSentence).toBe('string');
+      expect(rec.blankSentence.length).toBeGreaterThan(0);
+      expect(typeof rec.answer).toBe('string');
+      expect(rec.answer.length).toBeGreaterThan(0);
+      expect(rec.category.length).toBeGreaterThan(0);
+      // Both language glosses (the language-aware meaning cue) are carried.
+      expect(rec.gloss_ru.length).toBeGreaterThan(0);
+      expect(rec.gloss_en.length).toBeGreaterThan(0);
+      expect(rec.source.length).toBeGreaterThan(0);
+      expect(typeof rec.sourceLine).toBe('number');
+      // Agreement, when present, carries only string fields.
+      if (rec.agreement) {
+        for (const v of Object.values(rec.agreement)) {
+          expect(typeof v).toBe('string');
+        }
+      }
+    }
+
+    // At least one quanto-family item carries gender+number agreement.
+    const agreeing = bundle.interrogatives.filter(
+      (r) => r.agreement?.gender && r.agreement?.number,
+    );
+    expect(agreeing.length).toBeGreaterThan(0);
+
+    // Emitted in stable contentId order.
+    const ids = bundle.interrogatives.map((r) => r.contentId);
+    expect(ids).toEqual([...ids].sort((x, y) => x.localeCompare(y, 'en')));
+  });
+
+  it('authors the ref-interrogative card with the 17-row table + 6 rules', () => {
+    const bundle = buildContent();
+    const card = bundle.referenceCards.find((c) => c.contentId === 'ref-interrogative');
+    expect(card).toBeDefined();
+    const body = card?.body ?? '';
+    // A sample of the 17 interrogative forms across the families.
+    for (const form of ['quem', 'o que', 'onde', 'de onde', 'qual', 'quais', 'quanto', 'quantas']) {
+      expect(body).toContain(form);
+    }
+    // The 6 core EP rules are numbered into the body.
+    for (let n = 1; n <= 6; n += 1) {
+      expect(body).toMatch(new RegExp(`${n}\\. `));
+    }
+  });
+});
+
 describe('build-content — fails loudly on bad input (AC6 error case)', () => {
   // Drive the REAL CLI against a poisoned copy of the normalized inputs; it must
   // exit non-zero with a meaningful message (never emit empty content silently).
@@ -296,5 +350,52 @@ describe('build-content — fails loudly on bad input (AC6 error case)', () => {
     rmSync(bad, { recursive: true, force: true });
     expect(code).not.toBe(0);
     expect(stderr).toMatch(/possessives\.json field "items" must not be empty/);
+  });
+
+  it('exits non-zero on a MISSING interrogatives.json (no silent empty store)', () => {
+    const bad = mkdtempSync(join(tmpdir(), 'bc-int-missing-'));
+    cpSync(normalizedInputDir(), bad, { recursive: true });
+    rmSync(join(bad, 'interrogatives.json'));
+    const { code, stderr } = runWithInput(bad);
+    rmSync(bad, { recursive: true, force: true });
+    expect(code).not.toBe(0);
+    expect(stderr).toMatch(/missing input file interrogatives\.json/);
+  });
+
+  it('exits non-zero on an EMPTY interrogatives items array (no silent empty store)', () => {
+    const bad = mkdtempSync(join(tmpdir(), 'bc-int-empty-'));
+    cpSync(normalizedInputDir(), bad, { recursive: true });
+    writeFileSync(
+      join(bad, 'interrogatives.json'),
+      JSON.stringify({ table: [], notes: [], items: [] }),
+    );
+    const { code, stderr } = runWithInput(bad);
+    rmSync(bad, { recursive: true, force: true });
+    expect(code).not.toBe(0);
+    expect(stderr).toMatch(/interrogatives\.json field "items" must not be empty/);
+  });
+
+  it('exits non-zero on a DUPLICATE interrogatives item id (no silent overwrite)', () => {
+    const bad = mkdtempSync(join(tmpdir(), 'bc-int-dup-'));
+    cpSync(normalizedInputDir(), bad, { recursive: true });
+    const dup = {
+      id: 'int:0001',
+      blankSentence: 'Olá! ___ te chamas?',
+      answer: 'como',
+      category: 'how',
+      gloss_ru: 'как',
+      gloss_en: 'how',
+      agreement: null,
+      source: 'livro_unit01',
+      sourceLine: 39,
+    };
+    writeFileSync(
+      join(bad, 'interrogatives.json'),
+      JSON.stringify({ table: [], notes: [], items: [dup, { ...dup }] }),
+    );
+    const { code, stderr } = runWithInput(bad);
+    rmSync(bad, { recursive: true, force: true });
+    expect(code).not.toBe(0);
+    expect(stderr).toMatch(/interrogatives\.json has duplicate item id "int:0001"/);
   });
 });

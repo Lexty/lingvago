@@ -53,6 +53,7 @@
       "gender": "Gender & articles",
       "preposition": "Prepositions",
       "possessive": "Possessives",
+      "interrogative": "Question words",
       "mock": "Mock",
       "reference": "Reference",
       "settings": "Settings"
@@ -195,6 +196,24 @@
       "home": "Back"
     },
     "intro": "Read the person cue, then type the agreeing possessive — meu/minha, teu/tua, dele/dela. Production-first cloze over verified examples only. Not gamified.",
+    "empty": "No items in this session.",
+    "level": "Level {{level}}",
+    "answerLabel": "Your answer",
+    "check": "Check",
+    "next": "Next",
+    "reference": "Open the reference card",
+    "feedback": {
+      "correct": "Correct",
+      "wrong": "Not quite — answer: {{answer}}"
+    },
+    "closeReference": "Close"
+  },
+  "interrogative": {
+    "title": "Question words",
+    "nav": {
+      "home": "Back"
+    },
+    "intro": "Read the meaning cue, then type the matching European-Portuguese question word — quem, onde, como, quando, porquê. Production-first cloze over verified examples only. Not gamified.",
     "empty": "No items in this session.",
     "level": "Level {{level}}",
     "answerLabel": "Your answer",
