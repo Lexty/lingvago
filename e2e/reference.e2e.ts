@@ -5,7 +5,7 @@ import { waitForServiceWorkerActive } from './helpers';
  * E5 — Reference card offline (SPEC §10.5, WP-B).
  *
  * After a first online load the SW precaches the app-shell AND the versioned
- * content bundle (content.v2.json — see src/pwa-config.ts), and the content
+ * content bundle (content.v3.json — see src/pwa-config.ts), and the content
  * loader materializes the reference cards into IndexedDB. A subsequent OFFLINE
  * visit must still open ≥1 referenceCard and render its content — served from
  * the SW precache + IndexedDB, never the network.

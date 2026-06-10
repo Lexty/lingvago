@@ -71,12 +71,12 @@ describe('lingvago2 progress database', () => {
     expect(db.name).toBe('lingvago2');
   });
 
-  it('declares EXACTLY the 13 expected stores — no stray/duplicate/typo store', () => {
+  it('declares EXACTLY the 14 expected stores — no stray/duplicate/typo store', () => {
     // Exact-set guard over ALL stores (restores the strength of the pre-v2
     // `toEqual` check): an accidental extra store, a duplicate, or a misspelled
     // name (e.g. `verb` vs `verbs`) fails here. 6 §7.2 progress stores +
-    // 5 §7.1 content stores (incl. v3 conjugationTables) + contentMeta +
-    // orphanedProgress = 13.
+    // 6 §7.1 content stores (incl. v3 conjugationTables + v4 possessives) +
+    // contentMeta + orphanedProgress = 14.
     const names = db.tables.map((t) => t.name).sort();
     expect(names).toEqual(
       [
@@ -87,6 +87,7 @@ describe('lingvago2 progress database', () => {
         'contentMeta',
         'nouns',
         'orphanedProgress',
+        'possessives',
         'prepositions',
         'referenceCards',
         'sessions',

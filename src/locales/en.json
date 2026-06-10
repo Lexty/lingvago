@@ -52,6 +52,7 @@
       "conjugation": "Conjugation",
       "gender": "Gender & articles",
       "preposition": "Prepositions",
+      "possessive": "Possessives",
       "mock": "Mock",
       "reference": "Reference",
       "settings": "Settings"
@@ -176,6 +177,24 @@
       "home": "Back"
     },
     "intro": "Fill the blank with the right preposition — time, place, and movement. Production-first cloze over verified examples only. Not gamified.",
+    "empty": "No items in this session.",
+    "level": "Level {{level}}",
+    "answerLabel": "Your answer",
+    "check": "Check",
+    "next": "Next",
+    "reference": "Open the reference card",
+    "feedback": {
+      "correct": "Correct",
+      "wrong": "Not quite — answer: {{answer}}"
+    },
+    "closeReference": "Close"
+  },
+  "possessive": {
+    "title": "Possessives",
+    "nav": {
+      "home": "Back"
+    },
+    "intro": "Read the person cue, then type the agreeing possessive — meu/minha, teu/tua, dele/dela. Production-first cloze over verified examples only. Not gamified.",
     "empty": "No items in this session.",
     "level": "Level {{level}}",
     "answerLabel": "Your answer",

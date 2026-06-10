@@ -151,6 +151,9 @@ export default function SurvivalKit() {
           <Link to="/drill/preposition" className={styles.navLink}>
             {t('survivalKit.nav.preposition')}
           </Link>
+          <Link to="/drill/possessive" className={styles.navLink}>
+            {t('survivalKit.nav.possessive')}
+          </Link>
           <Link to="/mock" className={styles.navLink}>
             {t('survivalKit.nav.mock')}
           </Link>

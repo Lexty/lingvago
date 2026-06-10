@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { db } from '../db/index.ts';
 import type { ReferenceCardRecord } from '../db/schema.ts';
 // Drive the "real bundle" assertions off buildContent() output (the authored
-// source of truth) rather than the generated, non-committed public/content.v2.json.
+// source of truth) rather than the generated, non-committed public/content.v3.json.
 import { buildContent } from '../../scripts/build-content.ts';
 import {
   getReferenceCard,

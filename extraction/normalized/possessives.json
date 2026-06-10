@@ -1,0 +1,913 @@
+{
+  "_meta": {
+    "topic": "possessive",
+    "sourceLayer": "extraction/verbatim",
+    "count": 59,
+    "note": "EP possessive cloze items extracted from scanned A1 textbooks/workbooks; labels validated against the determiner paradigm."
+  },
+  "paradigm": [
+    {
+      "person": "eu",
+      "gender": "m",
+      "number": "sg",
+      "form": "meu",
+      "withArticle": "o meu"
+    },
+    {
+      "person": "eu",
+      "gender": "m",
+      "number": "pl",
+      "form": "meus",
+      "withArticle": "os meus"
+    },
+    {
+      "person": "eu",
+      "gender": "f",
+      "number": "sg",
+      "form": "minha",
+      "withArticle": "a minha"
+    },
+    {
+      "person": "eu",
+      "gender": "f",
+      "number": "pl",
+      "form": "minhas",
+      "withArticle": "as minhas"
+    },
+    {
+      "person": "tu",
+      "gender": "m",
+      "number": "sg",
+      "form": "teu",
+      "withArticle": "o teu"
+    },
+    {
+      "person": "tu",
+      "gender": "m",
+      "number": "pl",
+      "form": "teus",
+      "withArticle": "os teus"
+    },
+    {
+      "person": "tu",
+      "gender": "f",
+      "number": "sg",
+      "form": "tua",
+      "withArticle": "a tua"
+    },
+    {
+      "person": "tu",
+      "gender": "f",
+      "number": "pl",
+      "form": "tuas",
+      "withArticle": "as tuas"
+    },
+    {
+      "person": "ele_ela_voce",
+      "gender": "m",
+      "number": "sg",
+      "form": "seu",
+      "withArticle": "o seu"
+    },
+    {
+      "person": "ele_ela_voce",
+      "gender": "m",
+      "number": "pl",
+      "form": "seus",
+      "withArticle": "os seus"
+    },
+    {
+      "person": "ele_ela_voce",
+      "gender": "f",
+      "number": "sg",
+      "form": "sua",
+      "withArticle": "a sua"
+    },
+    {
+      "person": "ele_ela_voce",
+      "gender": "f",
+      "number": "pl",
+      "form": "suas",
+      "withArticle": "as suas"
+    },
+    {
+      "person": "nos",
+      "gender": "m",
+      "number": "sg",
+      "form": "nosso",
+      "withArticle": "o nosso"
+    },
+    {
+      "person": "nos",
+      "gender": "m",
+      "number": "pl",
+      "form": "nossos",
+      "withArticle": "os nossos"
+    },
+    {
+      "person": "nos",
+      "gender": "f",
+      "number": "sg",
+      "form": "nossa",
+      "withArticle": "a nossa"
+    },
+    {
+      "person": "nos",
+      "gender": "f",
+      "number": "pl",
+      "form": "nossas",
+      "withArticle": "as nossas"
+    },
+    {
+      "person": "vos",
+      "gender": "m",
+      "number": "sg",
+      "form": "vosso",
+      "withArticle": "o vosso"
+    },
+    {
+      "person": "vos",
+      "gender": "m",
+      "number": "pl",
+      "form": "vossos",
+      "withArticle": "os vossos"
+    },
+    {
+      "person": "vos",
+      "gender": "f",
+      "number": "sg",
+      "form": "vossa",
+      "withArticle": "a vossa"
+    },
+    {
+      "person": "vos",
+      "gender": "f",
+      "number": "pl",
+      "form": "vossas",
+      "withArticle": "as vossas"
+    },
+    {
+      "person": "eles_elas",
+      "gender": "m",
+      "number": "sg",
+      "form": "seu",
+      "withArticle": "o seu"
+    },
+    {
+      "person": "eles_elas",
+      "gender": "m",
+      "number": "pl",
+      "form": "seus",
+      "withArticle": "os seus"
+    },
+    {
+      "person": "eles_elas",
+      "gender": "f",
+      "number": "sg",
+      "form": "sua",
+      "withArticle": "a sua"
+    },
+    {
+      "person": "eles_elas",
+      "gender": "f",
+      "number": "pl",
+      "form": "suas",
+      "withArticle": "as suas"
+    },
+    {
+      "person": "ele_ela_voce",
+      "form": "dele",
+      "note": "invariable, follows the noun, disambiguates his (e.g. o carro dele)"
+    },
+    {
+      "person": "ele_ela_voce",
+      "form": "dela",
+      "note": "invariable, follows the noun, disambiguates her (e.g. o carro dela)"
+    },
+    {
+      "person": "eles_elas",
+      "form": "deles",
+      "note": "invariable, follows the noun, disambiguates their (masc./mixed owners, e.g. a casa deles)"
+    },
+    {
+      "person": "eles_elas",
+      "form": "delas",
+      "note": "invariable, follows the noun, disambiguates their (fem. owners, e.g. a casa delas)"
+    }
+  ],
+  "notes": [
+    "The possessive determiner agrees in gender and number with the POSSESSED noun, not with the owner (a minha mãe, o meu pai — same owner 'eu', form follows mãe/pai).",
+    "EP normally uses the definite article before the possessive: a minha mãe, o nosso carro, os teus livros.",
+    "For the 3rd person EP prefers dele/dela/deles/delas placed AFTER the noun (o carro dele) over seu/sua, because seu/sua is read as the formal 'your (você)' and is ambiguous."
+  ],
+  "items": [
+    {
+      "blankSentence": "A Fátima não gosta da rua ___.",
+      "answer": "dela",
+      "person": "ele_ela_voce",
+      "kind": "dele",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit07",
+      "sourceLine": 91,
+      "id": "poss:0001"
+    },
+    {
+      "blankSentence": "A Odete limpa a casa ___ à noite.",
+      "answer": "dela",
+      "person": "ele_ela_voce",
+      "kind": "dele",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": false,
+      "source": "livro_unit14",
+      "sourceLine": 117,
+      "id": "poss:0002"
+    },
+    {
+      "blankSentence": "Ela mostra a fotografia da família ___ a uma amiga.",
+      "answer": "dela",
+      "person": "ele_ela_voce",
+      "kind": "dele",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": false,
+      "source": "livro_acao_revisao_09-12",
+      "sourceLine": 167,
+      "id": "poss:0003"
+    },
+    {
+      "blankSentence": "Este é o dicionário ___.",
+      "answer": "dela",
+      "person": "ele_ela_voce",
+      "kind": "dele",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit09-10",
+      "sourceLine": 74,
+      "id": "poss:0004"
+    },
+    {
+      "blankSentence": "O ateliê ___ é em casa.",
+      "answer": "dela",
+      "person": "ele_ela_voce",
+      "kind": "dele",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": false,
+      "source": "livro_unit14",
+      "sourceLine": 78,
+      "id": "poss:0005"
+    },
+    {
+      "blankSentence": "A empresa ___ chama-se Ominex.",
+      "answer": "dele",
+      "person": "ele_ela_voce",
+      "kind": "dele",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": false,
+      "source": "livro_acao_revisao_05-08",
+      "sourceLine": 179,
+      "id": "poss:0006"
+    },
+    {
+      "blankSentence": "Aquela é a tia ___.",
+      "answer": "dele",
+      "person": "ele_ela_voce",
+      "kind": "dele",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit09-10",
+      "sourceLine": 72,
+      "id": "poss:0007"
+    },
+    {
+      "blankSentence": "E a rapariga de cabelo curto é a Paola, a filha ___.",
+      "answer": "dele",
+      "person": "ele_ela_voce",
+      "kind": "dele",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": false,
+      "source": "livro_acao_revisao_09-12",
+      "sourceLine": 169,
+      "id": "poss:0008"
+    },
+    {
+      "blankSentence": "O Pedro gosta do carro ___?",
+      "answer": "dele",
+      "person": "ele_ela_voce",
+      "kind": "dele",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": false,
+      "source": "livro_unit07",
+      "sourceLine": 160,
+      "id": "poss:0009"
+    },
+    {
+      "blankSentence": "O apelido ___ é Ciancio.",
+      "answer": "dele",
+      "person": "ele_ela_voce",
+      "kind": "dele",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit06",
+      "sourceLine": 100,
+      "id": "poss:0010"
+    },
+    {
+      "blankSentence": "Porque a irmã ___ mora em Toronto.",
+      "answer": "dele",
+      "person": "ele_ela_voce",
+      "kind": "dele",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": false,
+      "source": "livro_unit11",
+      "sourceLine": 106,
+      "id": "poss:0011"
+    },
+    {
+      "blankSentence": "Aquele é o ___ livro.",
+      "answer": "seu",
+      "person": "ele_ela_voce",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit09-10",
+      "sourceLine": 66,
+      "id": "poss:0012"
+    },
+    {
+      "blankSentence": "Esse é o ___ pai.",
+      "answer": "seu",
+      "person": "ele_ela_voce",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit09-10",
+      "sourceLine": 76,
+      "id": "poss:0013"
+    },
+    {
+      "blankSentence": "O Luís gosta do ___ carro?",
+      "answer": "seu",
+      "person": "ele_ela_voce",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit07",
+      "sourceLine": 156,
+      "id": "poss:0014"
+    },
+    {
+      "blankSentence": "Adoro o ___ Micas!",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit11",
+      "sourceLine": 48,
+      "id": "poss:0015"
+    },
+    {
+      "blankSentence": "Depois, janto fora com o ___ namorado.",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit14",
+      "sourceLine": 96,
+      "id": "poss:0016"
+    },
+    {
+      "blankSentence": "E este é o Giovanni, o ___ segundo marido.",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_acao_revisao_09-12",
+      "sourceLine": 169,
+      "id": "poss:0017"
+    },
+    {
+      "blankSentence": "Este rapaz é o ___ amigo Afonso.",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit09",
+      "sourceLine": 59,
+      "id": "poss:0018"
+    },
+    {
+      "blankSentence": "Este é o ___ avô.",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit09",
+      "sourceLine": 56,
+      "id": "poss:0019"
+    },
+    {
+      "blankSentence": "Este é o ___ filho.",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit09-10",
+      "sourceLine": 62,
+      "id": "poss:0020"
+    },
+    {
+      "blankSentence": "Gosto muito do ___ hotel.",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit07",
+      "sourceLine": 82,
+      "id": "poss:0021"
+    },
+    {
+      "blankSentence": "Não estaciono o ___ carro no passeio.",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit12",
+      "sourceLine": 29,
+      "id": "poss:0022"
+    },
+    {
+      "blankSentence": "O ___ filho chama-se Luís.",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit09-10",
+      "sourceLine": 43,
+      "id": "poss:0023"
+    },
+    {
+      "blankSentence": "O ___ irmão tem barba.",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit09-10",
+      "sourceLine": 130,
+      "id": "poss:0024"
+    },
+    {
+      "blankSentence": "O ___ marido chama-se Fernando.",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit09",
+      "sourceLine": 28,
+      "id": "poss:0025"
+    },
+    {
+      "blankSentence": "O ___ neto chama-se Rui.",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit09-10",
+      "sourceLine": 39,
+      "id": "poss:0026"
+    },
+    {
+      "blankSentence": "O ___ pai chama-se António.",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit09-10",
+      "sourceLine": 45,
+      "id": "poss:0027"
+    },
+    {
+      "blankSentence": "O ___ primo chama-se Pedro.",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit09-10",
+      "sourceLine": 37,
+      "id": "poss:0028"
+    },
+    {
+      "blankSentence": "Sábado é o ___ dia da semana preferido.",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit11",
+      "sourceLine": 32,
+      "id": "poss:0029"
+    },
+    {
+      "blankSentence": "É ___.",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": false,
+      "source": "caderno_unit05",
+      "sourceLine": 87,
+      "id": "poss:0030"
+    },
+    {
+      "blankSentence": "É o ___ carro.",
+      "answer": "meu",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit05",
+      "sourceLine": 150,
+      "id": "poss:0031"
+    },
+    {
+      "blankSentence": "Acabo às 17h30 e vou buscar os ___ filhos à escola.",
+      "answer": "meus",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "pl",
+      "hasArticle": true,
+      "source": "livro_unit14",
+      "sourceLine": 106,
+      "id": "poss:0032"
+    },
+    {
+      "blankSentence": "E também gosto dos ___ colegas de trabalho.",
+      "answer": "meus",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "pl",
+      "hasArticle": true,
+      "source": "livro_unit08",
+      "sourceLine": 93,
+      "id": "poss:0033"
+    },
+    {
+      "blankSentence": "Estes são os ___ filhos.",
+      "answer": "meus",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "pl",
+      "hasArticle": true,
+      "source": "livro_acao_revisao_09-12",
+      "sourceLine": 169,
+      "id": "poss:0034"
+    },
+    {
+      "blankSentence": "Gosto muito dos ___ avós.",
+      "answer": "meus",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "pl",
+      "hasArticle": true,
+      "source": "livro_unit09",
+      "sourceLine": 57,
+      "id": "poss:0035"
+    },
+    {
+      "blankSentence": "Os ___ artistas preferidos são os U2 e a Adele.",
+      "answer": "meus",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "pl",
+      "hasArticle": true,
+      "source": "livro_unit12",
+      "sourceLine": 139,
+      "id": "poss:0036"
+    },
+    {
+      "blankSentence": "Os ___ pais moram em Galway.",
+      "answer": "meus",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "pl",
+      "hasArticle": true,
+      "source": "livro_unit12",
+      "sourceLine": 135,
+      "id": "poss:0037"
+    },
+    {
+      "blankSentence": "Os ___ pais têm uma casa no Algarve.",
+      "answer": "meus",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "pl",
+      "hasArticle": true,
+      "source": "caderno_unit11",
+      "sourceLine": 67,
+      "id": "poss:0038"
+    },
+    {
+      "blankSentence": "Tenho tempo para os ___ amigos.",
+      "answer": "meus",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "pl",
+      "hasArticle": true,
+      "source": "livro_unit15",
+      "sourceLine": 130,
+      "id": "poss:0039"
+    },
+    {
+      "blankSentence": "A ___ avó chama-se Leonilde.",
+      "answer": "minha",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit09-10",
+      "sourceLine": 47,
+      "id": "poss:0040"
+    },
+    {
+      "blankSentence": "A ___ caneta é preta.",
+      "answer": "minha",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit05",
+      "sourceLine": 70,
+      "id": "poss:0041"
+    },
+    {
+      "blankSentence": "A ___ irmã chama-se Susana.",
+      "answer": "minha",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit09-10",
+      "sourceLine": 41,
+      "id": "poss:0042"
+    },
+    {
+      "blankSentence": "A ___ irmã chama-se Verónica.",
+      "answer": "minha",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit09",
+      "sourceLine": 30,
+      "id": "poss:0043"
+    },
+    {
+      "blankSentence": "A ___ namorada chama-se Ana.",
+      "answer": "minha",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit09-10",
+      "sourceLine": 49,
+      "id": "poss:0044"
+    },
+    {
+      "blankSentence": "Depois do jantar vou a casa da ___ mãe, que mora sozinha.",
+      "answer": "minha",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit14",
+      "sourceLine": 106,
+      "id": "poss:0045"
+    },
+    {
+      "blankSentence": "E esta é a ___ avó.",
+      "answer": "minha",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit09",
+      "sourceLine": 57,
+      "id": "poss:0046"
+    },
+    {
+      "blankSentence": "Esta é a ___ tia.",
+      "answer": "minha",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit09",
+      "sourceLine": 60,
+      "id": "poss:0047"
+    },
+    {
+      "blankSentence": "Esta é a fotografia da ___ família.",
+      "answer": "minha",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_acao_revisao_09-12",
+      "sourceLine": 169,
+      "id": "poss:0048"
+    },
+    {
+      "blankSentence": "Está na ___ turma.",
+      "answer": "minha",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit09",
+      "sourceLine": 59,
+      "id": "poss:0049"
+    },
+    {
+      "blankSentence": "É a ___ prima.",
+      "answer": "minha",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit09",
+      "sourceLine": 58,
+      "id": "poss:0050"
+    },
+    {
+      "blankSentence": "É a irmã da ___ mãe.",
+      "answer": "minha",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit09",
+      "sourceLine": 60,
+      "id": "poss:0051"
+    },
+    {
+      "blankSentence": "Passo as ___ férias no Algarve ou em Espanha.",
+      "answer": "minhas",
+      "person": "eu",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "pl",
+      "hasArticle": true,
+      "source": "livro_unit11",
+      "sourceLine": 48,
+      "id": "poss:0052"
+    },
+    {
+      "blankSentence": "Já fala a ___ língua bastante bem.",
+      "answer": "nossa",
+      "person": "nos",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_acao_revisao_09-12",
+      "sourceLine": 169,
+      "id": "poss:0053"
+    },
+    {
+      "blankSentence": "Esse é o ___ chefe.",
+      "answer": "nosso",
+      "person": "nos",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit09-10",
+      "sourceLine": 68,
+      "id": "poss:0054"
+    },
+    {
+      "blankSentence": "O ___ hotel é velho e bastante feio, mas também muito barato.",
+      "answer": "nosso",
+      "person": "nos",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit07",
+      "sourceLine": 99,
+      "id": "poss:0055"
+    },
+    {
+      "blankSentence": "A ___ chave está aqui.",
+      "answer": "tua",
+      "person": "tu",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit05",
+      "sourceLine": 154,
+      "id": "poss:0056"
+    },
+    {
+      "blankSentence": "Onde está a ___ carta de condução?",
+      "answer": "tua",
+      "person": "tu",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit05",
+      "sourceLine": 167,
+      "id": "poss:0057"
+    },
+    {
+      "blankSentence": "Essa é a ___ casa.",
+      "answer": "vossa",
+      "person": "vos",
+      "kind": "determiner",
+      "possessedGender": "f",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "caderno_unit09-10",
+      "sourceLine": 70,
+      "id": "poss:0058"
+    },
+    {
+      "blankSentence": "Onde fica o ___ hotel?",
+      "answer": "vosso",
+      "person": "vos",
+      "kind": "determiner",
+      "possessedGender": "m",
+      "possessedNumber": "sg",
+      "hasArticle": true,
+      "source": "livro_unit07",
+      "sourceLine": 104,
+      "id": "poss:0059"
+    }
+  ]
+}

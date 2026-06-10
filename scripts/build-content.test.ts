@@ -166,6 +166,52 @@ describe('build-content — verified conjugation tables + needsTableReview (T8 T
   });
 });
 
+describe('build-content — possessives store + ref-possessive card (AC1)', () => {
+  it('emits the 59 possessive cloze items with the cue/grading fields', () => {
+    const bundle = buildContent();
+    // possessives.json ships 59 verified items.
+    expect(bundle.possessives.length).toBe(59);
+
+    for (const rec of bundle.possessives) {
+      // Stable `poss:NNNN` contentId carried from the dataset id.
+      expect(rec.contentId).toMatch(/^poss:\d{4}$/);
+      expect(typeof rec.blankSentence).toBe('string');
+      expect(rec.blankSentence.length).toBeGreaterThan(0);
+      expect(typeof rec.answer).toBe('string');
+      expect(rec.answer.length).toBeGreaterThan(0);
+      // kind is one of the two families; person/gender/number carried verbatim.
+      expect(['determiner', 'dele']).toContain(rec.kind);
+      expect(rec.person.length).toBeGreaterThan(0);
+      expect(['m', 'f']).toContain(rec.possessedGender);
+      expect(['sg', 'pl']).toContain(rec.possessedNumber);
+      expect(typeof rec.hasArticle).toBe('boolean');
+    }
+
+    // Emitted in stable contentId order.
+    const ids = bundle.possessives.map((r) => r.contentId);
+    expect(ids).toEqual([...ids].sort((x, y) => x.localeCompare(y, 'en')));
+  });
+
+  it('authors the ref-possessive card with the 28-cell paradigm + 3 rules', () => {
+    const bundle = buildContent();
+    const card = bundle.referenceCards.find((c) => c.contentId === 'ref-possessive');
+    expect(card).toBeDefined();
+    const body = card?.body ?? '';
+    // Determiner paradigm forms (a sample across persons/genders/numbers).
+    for (const form of ['meu', 'minha', 'teus', 'nossa', 'vossos', 'suas']) {
+      expect(body).toContain(form);
+    }
+    // The invariable dele-family row.
+    for (const form of ['dele', 'dela', 'deles', 'delas']) {
+      expect(body).toContain(form);
+    }
+    // The 3 core EP rules are numbered into the body.
+    expect(body).toMatch(/1\. /);
+    expect(body).toMatch(/2\. /);
+    expect(body).toMatch(/3\. /);
+  });
+});
+
 describe('build-content — fails loudly on bad input (AC6 error case)', () => {
   // Drive the REAL CLI against a poisoned copy of the normalized inputs; it must
   // exit non-zero with a meaningful message (never emit empty content silently).
@@ -227,5 +273,28 @@ describe('build-content — fails loudly on bad input (AC6 error case)', () => {
     rmSync(bad, { recursive: true, force: true });
     expect(code).not.toBe(0);
     expect(stderr).toMatch(/invalid JSON in input file verbs_teacher\.json/);
+  });
+
+  it('exits non-zero on a MISSING possessives.json (no silent empty store)', () => {
+    const bad = mkdtempSync(join(tmpdir(), 'bc-poss-missing-'));
+    cpSync(normalizedInputDir(), bad, { recursive: true });
+    rmSync(join(bad, 'possessives.json'));
+    const { code, stderr } = runWithInput(bad);
+    rmSync(bad, { recursive: true, force: true });
+    expect(code).not.toBe(0);
+    expect(stderr).toMatch(/missing input file possessives\.json/);
+  });
+
+  it('exits non-zero on an EMPTY possessives items array (no silent empty store)', () => {
+    const bad = mkdtempSync(join(tmpdir(), 'bc-poss-empty-'));
+    cpSync(normalizedInputDir(), bad, { recursive: true });
+    writeFileSync(
+      join(bad, 'possessives.json'),
+      JSON.stringify({ paradigm: [], notes: [], items: [] }),
+    );
+    const { code, stderr } = runWithInput(bad);
+    rmSync(bad, { recursive: true, force: true });
+    expect(code).not.toBe(0);
+    expect(stderr).toMatch(/possessives\.json field "items" must not be empty/);
   });
 });

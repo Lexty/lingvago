@@ -24,7 +24,10 @@ import { dirname, join } from 'node:path';
 // `needsTableReview` verb flag (contract T8 Task 1) — a bump so any install
 // already at content v1 reloads and materializes the new conjugationTables
 // store. The bundle remains additive (no existing field removed/renamed).
-export const CONTENT_VERSION = 2;
+// v3 ADDS the `possessives` content store + the authored `ref-possessive`
+// reference card (EP possessive drill) — another additive bump so any install
+// reloads and materializes the new possessives store.
+export const CONTENT_VERSION = 3;
 
 /** Output artifact name — `content.v<CONTENT_VERSION>.json` (SPEC §10.3). */
 export const CONTENT_FILENAME = `content.v${CONTENT_VERSION}.json`;
@@ -115,6 +118,24 @@ export interface PrepositionRecord {
   examples: string[];
 }
 
+/**
+ * A single verified EP possessive cloze item (from possessives.json). Carries
+ * the cue/grading fields the possessive drill mode needs: the cloze sentence,
+ * the canonical answer, the grammatical person, the item `kind`
+ * (`determiner` agrees with the possessed noun, `dele` is the invariable
+ * dele/dela/deles/delas family), and the possessed noun's gender/number.
+ */
+export interface PossessiveRecord {
+  contentId: string;
+  blankSentence: string;
+  answer: string;
+  person: string;
+  kind: string;
+  possessedGender: string;
+  possessedNumber: string;
+  hasArticle: boolean;
+}
+
 export interface ContentBundle {
   contentVersion: number;
   referenceCards: ReferenceCard[];
@@ -122,6 +143,7 @@ export interface ContentBundle {
   nouns: NounRecord[];
   prepositions: PrepositionRecord[];
   conjugationTables: ConjugationTableRecord[];
+  possessives: PossessiveRecord[];
 }
 
 /** Read + parse a normalized input file, failing loudly with file context. */
@@ -324,6 +346,58 @@ function buildPrepositions(): PrepositionRecord[] {
   return out.sort((a, b) => a.contentId.localeCompare(b.contentId, 'en'));
 }
 
+// ---- possessives (from possessives.json) ------------------------------------
+// Each verified cloze item is emitted as a PossessiveRecord keyed by its stable
+// dataset `id` (`poss:NNNN`). The cue/grading fields (person, kind, possessed
+// gender/number) are carried verbatim so the possessive mode can compute the
+// per-kind cue + grade exactly. Fails loudly on a missing/empty array or a
+// malformed item (no silent empty store).
+function asString(value: unknown, file: string, ctx: string): string {
+  if (typeof value !== 'string' || value.length === 0) {
+    throw new Error(`build-content: ${file} ${ctx} must be a non-empty string`);
+  }
+  return value;
+}
+
+function buildPossessives(): PossessiveRecord[] {
+  const data = asRecord(readNormalized('possessives.json'), 'possessives.json');
+  const items = asArray(data.items, 'possessives.json', 'items');
+  if (items.length === 0) {
+    throw new Error('build-content: possessives.json field "items" must not be empty');
+  }
+
+  const seen = new Map<string, PossessiveRecord>();
+  for (const item of items) {
+    if (typeof item !== 'object' || item === null || Array.isArray(item)) {
+      throw new Error('build-content: possessives.json item must be a JSON object');
+    }
+    const it = item as Record<string, unknown>;
+    const contentId = asString(it.id, 'possessives.json', 'item "id"');
+    if (seen.has(contentId)) {
+      throw new Error(`build-content: possessives.json has duplicate item id "${contentId}"`);
+    }
+    seen.set(contentId, {
+      contentId,
+      blankSentence: asString(it.blankSentence, 'possessives.json', `item ${contentId} "blankSentence"`),
+      answer: asString(it.answer, 'possessives.json', `item ${contentId} "answer"`),
+      person: asString(it.person, 'possessives.json', `item ${contentId} "person"`),
+      kind: asString(it.kind, 'possessives.json', `item ${contentId} "kind"`),
+      possessedGender: asString(
+        it.possessedGender,
+        'possessives.json',
+        `item ${contentId} "possessedGender"`,
+      ),
+      possessedNumber: asString(
+        it.possessedNumber,
+        'possessives.json',
+        `item ${contentId} "possessedNumber"`,
+      ),
+      hasArticle: it.hasArticle === true,
+    });
+  }
+  return [...seen.values()].sort((a, b) => a.contentId.localeCompare(b.contentId, 'en'));
+}
+
 // ---- authored reference cards (verified didactic material, WP-B) ------------
 // Stable, hand-authored; `contentId` is the authored id.
 const referenceCards: ReferenceCard[] = [
@@ -446,6 +520,91 @@ const referenceCards: ReferenceCard[] = [
   },
 ];
 
+// ---- authored possessive reference card (paradigm + rules, data-derived) ----
+// The `ref-possessive` card body is RENDERED from possessives.json's `paradigm`
+// (the 28-cell determiner+dele/dela table) and `notes` (the 3 core EP rules) so
+// the human-facing card stays in lock-step with the verified dataset. (The
+// machine-readable distractor paradigm for the mode is a separate static const
+// in src/modes/possessive/possData.ts — contract AC4 — not parsed from here.)
+const POSS_PERSON_LABELS: Record<string, string> = {
+  eu: 'eu',
+  tu: 'tu',
+  ele_ela_voce: 'ele · ela · você',
+  nos: 'nós',
+  vos: 'vós',
+  eles_elas: 'eles · elas',
+};
+
+function buildPossessiveCard(): ReferenceCard {
+  const data = asRecord(readNormalized('possessives.json'), 'possessives.json');
+  const paradigm = asArray(data.paradigm, 'possessives.json', 'paradigm');
+  const notes = asArray(data.notes, 'possessives.json', 'notes');
+
+  // Split the paradigm into the agreeing determiner cells (gender+number) and
+  // the invariable dele-family cells (no gender/number).
+  const determinerRows: string[] = [
+    '| Pessoa | m. sg. | m. pl. | f. sg. | f. pl. |',
+    '| --- | --- | --- | --- | --- |',
+  ];
+  const cellByPerson = new Map<string, Record<string, string>>();
+  const deleForms: string[] = [];
+  for (const entry of paradigm) {
+    if (typeof entry !== 'object' || entry === null) continue;
+    const e = entry as Record<string, unknown>;
+    const person = typeof e.person === 'string' ? e.person : '';
+    const form = typeof e.form === 'string' ? e.form : '';
+    if (!person || !form) continue;
+    const gender = typeof e.gender === 'string' ? e.gender : '';
+    const number = typeof e.number === 'string' ? e.number : '';
+    if (!gender || !number) {
+      // dele/dela/deles/delas — invariable, listed separately.
+      deleForms.push(form);
+      continue;
+    }
+    const row = cellByPerson.get(person) ?? {};
+    row[`${gender}${number}`] = form;
+    cellByPerson.set(person, row);
+  }
+  // Preserve the paradigm's person order for the table rows.
+  const personOrder: string[] = [];
+  for (const entry of paradigm) {
+    if (typeof entry !== 'object' || entry === null) continue;
+    const person = (entry as Record<string, unknown>).person;
+    if (typeof person === 'string' && cellByPerson.has(person) && !personOrder.includes(person)) {
+      personOrder.push(person);
+    }
+  }
+  for (const person of personOrder) {
+    const row = cellByPerson.get(person) ?? {};
+    const label = POSS_PERSON_LABELS[person] ?? person;
+    determinerRows.push(
+      `| ${label} | ${row.msg ?? '—'} | ${row.mpl ?? '—'} | ${row.fsg ?? '—'} | ${row.fpl ?? '—'} |`,
+    );
+  }
+
+  const ruleLines = notes
+    .filter((n): n is string => typeof n === 'string')
+    .map((n, idx) => `${idx + 1}. ${n}`);
+
+  const body = [
+    '**Possessive determiners** — agree with the POSSESSED noun (gender + number):',
+    '',
+    ...determinerRows,
+    '',
+    `**3rd person (after the noun, invariable):** ${[...new Set(deleForms)].join(' · ')}`,
+    '',
+    '**Core rules:**',
+    ...ruleLines,
+  ].join('\n');
+
+  return {
+    contentId: 'ref-possessive',
+    topic: 'Possessivos',
+    title: 'Possessivos: paradigma (28 formas) + regras',
+    body,
+  };
+}
+
 /**
  * Pure builder: assemble the full content bundle from disk inputs.
  *
@@ -455,11 +614,12 @@ const referenceCards: ReferenceCard[] = [
 export function buildContent(): ContentBundle {
   return {
     contentVersion: CONTENT_VERSION,
-    referenceCards: referenceCards.map((c) => ({ ...c })),
+    referenceCards: [...referenceCards.map((c) => ({ ...c })), buildPossessiveCard()],
     verbs: buildVerbs(),
     nouns: buildNouns(),
     prepositions: buildPrepositions(),
     conjugationTables: buildConjugationTables(),
+    possessives: buildPossessives(),
   };
 }
 
@@ -475,7 +635,7 @@ function main(): void {
   writeFileSync(join(outDir, CONTENT_FILENAME), json);
   // Stderr is fine for a build log; output file content stays deterministic.
   process.stderr.write(
-    `${CONTENT_FILENAME}: ${bundle.referenceCards.length} cards · ${bundle.verbs.length} verbs · ${bundle.nouns.length} nouns · ${bundle.prepositions.length} prepositions · ${bundle.conjugationTables.length} conj-tables\n`,
+    `${CONTENT_FILENAME}: ${bundle.referenceCards.length} cards · ${bundle.verbs.length} verbs · ${bundle.nouns.length} nouns · ${bundle.prepositions.length} prepositions · ${bundle.conjugationTables.length} conj-tables · ${bundle.possessives.length} possessives\n`,
   );
 }
 

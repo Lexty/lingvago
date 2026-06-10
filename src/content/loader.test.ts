@@ -44,6 +44,18 @@ function bundle(version: number): ContentBundle {
         },
       },
     ],
+    possessives: [
+      {
+        contentId: 'poss:0001',
+        blankSentence: 'A ___ caneta é preta.',
+        answer: 'minha',
+        person: 'eu',
+        kind: 'determiner',
+        possessedGender: 'f',
+        possessedNumber: 'sg',
+        hasArticle: true,
+      },
+    ],
   };
 }
 
@@ -89,6 +101,15 @@ describe('content loader — version-gated load (AC3, AC6 b/c)', () => {
       infinitive: 'ser',
       tense: 'presente',
       forms: { eu: 'sou', voces_eles_elas: 'são' },
+    });
+    // Possessives content store loads (read-only, contract Task 1 / AC1).
+    expect(await db.possessives.count()).toBe(1);
+    expect(await db.possessives.get('poss:0001')).toMatchObject({
+      answer: 'minha',
+      kind: 'determiner',
+      person: 'eu',
+      possessedGender: 'f',
+      possessedNumber: 'sg',
     });
     expect(await getLoadedContentVersion(db)).toBe(1);
   });

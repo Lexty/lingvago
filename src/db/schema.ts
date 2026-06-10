@@ -236,6 +236,31 @@ export interface PrepositionRecord {
 }
 
 /**
+ * Verified EP possessive cloze item (from possessives.json), carrying the
+ * cue/grading fields the possessive drill mode needs. The determiner family
+ * agrees with the possessed noun (gender + number); the `dele` family
+ * (dele/dela/deles/delas) is invariable and follows the noun.
+ */
+export interface PossessiveRecord {
+  /** Stable content id (`poss:NNNN`, the dataset id); primary key. */
+  contentId: string;
+  /** Cloze sentence with the possessive blanked as `___`. */
+  blankSentence: string;
+  /** Canonical answer (the possessive form). */
+  answer: string;
+  /** Grammatical person (`eu` / `tu` / `ele_ela_voce` / `nos` / `vos` / `eles_elas`). */
+  person: string;
+  /** `determiner` (agrees with the possessed noun) or `dele` (invariable family). */
+  kind: string;
+  /** Possessed noun's gender (`m` / `f`). */
+  possessedGender: string;
+  /** Possessed noun's number (`sg` / `pl`). */
+  possessedNumber: string;
+  /** Whether the cloze keeps a definite article before the blank. */
+  hasArticle: boolean;
+}
+
+/**
  * Singleton meta row tracking the loaded content version (SPEC §7.3).
  *
  * Compared at startup to decide first-load vs. version-bump vs. skip.

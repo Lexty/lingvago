@@ -28,7 +28,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 
 /** Recompute the exact session the app generates from the shipped bundle. */
 function expectedItems(): ConjugationItem[] {
-  const bundlePath = resolve(here, '../public/content.v2.json');
+  const bundlePath = resolve(here, '../public/content.v3.json');
   const bundle = JSON.parse(readFileSync(bundlePath, 'utf8')) as ContentBundle;
   const verbs = projectVerbData(bundle.verbs, bundle.conjugationTables);
   return generateSession(SEED, verbs, { count: SESSION_COUNT });

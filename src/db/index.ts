@@ -14,6 +14,7 @@ import type {
   ContentMetaRecord,
   NounRecord,
   OrphanedProgressRecord,
+  PossessiveRecord,
   PrepositionRecord,
   ReferenceCardRecord,
   SessionRecord,
@@ -39,6 +40,9 @@ export const DB_NAME = 'lingvago2';
  *  - v3: ADD the read-only `conjugationTables` content store (verified
  *    present-tense tables, contract T8). Additive — earlier versions/stores are
  *    untouched (Dexie carries them over).
+ *  - v4: ADD the read-only `possessives` content store (verified EP possessive
+ *    cloze items). Additive — earlier versions/stores are untouched. NOTE the
+ *    Dexie version (4) is independent of the bundle CONTENT_VERSION (3).
  */
 export class Lingvago2Db extends Dexie {
   cardStates!: Table<CardStateRecord, string>;
@@ -53,6 +57,7 @@ export class Lingvago2Db extends Dexie {
   nouns!: Table<NounRecord, string>;
   prepositions!: Table<PrepositionRecord, string>;
   conjugationTables!: Table<ConjugationTableRecord, string>;
+  possessives!: Table<PossessiveRecord, string>;
   // §7.3 content-version meta + orphaned-progress archive.
   contentMeta!: Table<ContentMetaRecord, string>;
   orphanedProgress!: Table<OrphanedProgressRecord, number>;
@@ -96,6 +101,14 @@ export class Lingvago2Db extends Dexie {
     this.version(3).stores({
       conjugationTables: 'contentId',
     });
+
+    // v4 ADDS the possessives content store ONLY. Keyed by `contentId`
+    // (`poss:NNNN`); the loader does keyed ops (bulkPut/clear) exclusively.
+    // Earlier versions are not redeclared, so Dexie carries their stores (and
+    // data) over unchanged — no destructive migration.
+    this.version(4).stores({
+      possessives: 'contentId',
+    });
   }
 }
 
@@ -117,6 +130,7 @@ export type {
   FsrsCard,
   NounRecord,
   OrphanedProgressRecord,
+  PossessiveRecord,
   PrepositionRecord,
   ReferenceCardRecord,
   SessionRecord,

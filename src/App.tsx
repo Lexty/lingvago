@@ -3,6 +3,7 @@ import ConjugationMode from './screens/ConjugationMode.tsx';
 import GenderDrill from './screens/GenderDrill.tsx';
 import MockExam from './screens/MockExam.tsx';
 import NumbersMode from './screens/NumbersMode.tsx';
+import PossessiveDrill from './screens/PossessiveDrill.tsx';
 import PrepositionDrill from './screens/PrepositionDrill.tsx';
 import Reference from './screens/Reference.tsx';
 import ReferenceCardView from './screens/ReferenceCardView.tsx';
@@ -54,6 +55,17 @@ function PrepositionRoute() {
 }
 
 /**
+ * Route element for the possessive drill. A `?seed=` query param pins a
+ * deterministic session (used by the deterministic e2e); without it the screen
+ * rolls a fresh seed per visit.
+ */
+function PossessiveRoute() {
+  const [params] = useSearchParams();
+  const seed = params.get('seed') ?? undefined;
+  return <PossessiveDrill seed={seed} />;
+}
+
+/**
  * Route element for the timed mock (PaperSimulation). A `?duration=` query param
  * (milliseconds) injects a SHORT run length so the deterministic e2e reaches the
  * entry phase without a real 90-minute wait; without it the real 90-min length
@@ -100,6 +112,10 @@ const router = createBrowserRouter([
   {
     path: '/drill/preposition',
     element: <PrepositionRoute />,
+  },
+  {
+    path: '/drill/possessive',
+    element: <PossessiveRoute />,
   },
   {
     path: '/mock',
