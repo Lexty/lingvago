@@ -193,6 +193,7 @@ async function replaceContentStores(db: Lingvago2Db, bundle: ContentBundle): Pro
     db.prepositions.clear(),
     db.conjugationTables.clear(),
     db.possessives.clear(),
+    db.possessiveContext.clear(),
     db.interrogatives.clear(),
   ]);
   await Promise.all([
@@ -202,6 +203,7 @@ async function replaceContentStores(db: Lingvago2Db, bundle: ContentBundle): Pro
     db.prepositions.bulkPut(bundle.prepositions),
     db.conjugationTables.bulkPut(bundle.conjugationTables),
     db.possessives.bulkPut(bundle.possessives),
+    db.possessiveContext.bulkPut(bundle.possessiveContext),
     db.interrogatives.bulkPut(bundle.interrogatives),
   ]);
 }
@@ -273,6 +275,7 @@ export async function loadContentIntoDb(
       db.prepositions,
       db.conjugationTables,
       db.possessives,
+      db.possessiveContext,
       db.interrogatives,
       db.contentMeta,
     ],
@@ -344,7 +347,7 @@ export async function loadContentIntoDb(
  * tests (this app bundle never imports the node build script). The `content.v*`
  * precache glob (src/pwa-config.ts) covers every version offline.
  */
-export const CONTENT_BUNDLE_FILENAME = 'content.v4.json';
+export const CONTENT_BUNDLE_FILENAME = 'content.v5.json';
 
 /**
  * Fetch the versioned content bundle from the app origin (precached by the SW,

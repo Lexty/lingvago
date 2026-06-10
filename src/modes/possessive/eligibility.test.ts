@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import type { PossessiveRecord } from '../../db/schema.ts';
+import type { PossessiveContextRecord, PossessiveRecord } from '../../db/schema.ts';
 import {
+  filterContextEligible,
   filterPossessiveEligible,
+  isContextEligible,
   isPossessiveEligible,
   isPossPerson,
   reconstructAnswer,
@@ -141,6 +143,70 @@ describe('isPossessiveEligible — the verified-key gate (AC5)', () => {
     expect(isPossessiveEligible(null)).toBe(false);
     expect(isPossessiveEligible(undefined)).toBe(false);
     expect(isPossessiveEligible(rec({ kind: 'bogus' as unknown as string }))).toBe(false);
+  });
+});
+
+function ctx(over: Partial<PossessiveContextRecord>): PossessiveContextRecord {
+  return {
+    contentId: 'ctx0001',
+    dialogue: '— Comprei este casaco. — Que bonito! Então é ___?',
+    answer: 'teu',
+    person: 'tu',
+    kind: 'determiner',
+    ownerCue: 'tu',
+    possessedGender: 'm',
+    possessedNumber: 'sg',
+    possessedNoun: 'casaco',
+    ...over,
+  };
+}
+
+describe('isContextEligible — the SEPARATE L3 context gate (AC4)', () => {
+  it('accepts a valid context record (one ___ blank, answer in the inventory)', () => {
+    expect(isContextEligible(ctx({}))).toBe(true);
+    // a context-decided dele answer is also a valid inventory surface
+    expect(isContextEligible(ctx({ answer: 'dela', kind: 'dele' }))).toBe(true);
+    // vosso/seu are dialogue-decided (NOT reconstructible) but ARE in the inventory
+    expect(isContextEligible(ctx({ answer: 'vosso' }))).toBe(true);
+    expect(isContextEligible(ctx({ answer: 'seu' }))).toBe(true);
+  });
+
+  it('EXCLUDES a record with NO ___ blank', () => {
+    expect(isContextEligible(ctx({ dialogue: '— Olá. — É bonito!' }))).toBe(false);
+  });
+
+  it('EXCLUDES a record with MORE THAN ONE ___ blank', () => {
+    expect(isContextEligible(ctx({ dialogue: '— É ___ ou ___?' }))).toBe(false);
+  });
+
+  it('EXCLUDES a record with an empty answer', () => {
+    expect(isContextEligible(ctx({ answer: '' }))).toBe(false);
+    expect(isContextEligible(ctx({ answer: '   ' }))).toBe(false);
+  });
+
+  it('EXCLUDES a record whose answer is NOT in the possessive inventory', () => {
+    expect(isContextEligible(ctx({ answer: 'xyz' }))).toBe(false);
+    expect(isContextEligible(ctx({ answer: 'gato' }))).toBe(false);
+  });
+
+  it('EXCLUDES null/undefined/malformed rather than throwing', () => {
+    expect(isContextEligible(null)).toBe(false);
+    expect(isContextEligible(undefined)).toBe(false);
+    expect(isContextEligible({} as Partial<PossessiveContextRecord>)).toBe(false);
+  });
+});
+
+describe('filterContextEligible (the context gate, applied)', () => {
+  it('keeps only the valid context rows and drops the malformed ones', () => {
+    const rows: PossessiveContextRecord[] = [
+      ctx({ contentId: 'ctx-keep1', answer: 'teu' }),
+      ctx({ contentId: 'ctx-keep2', answer: 'dela', kind: 'dele' }),
+      ctx({ contentId: 'ctx-drop-noblank', dialogue: 'no slot here' }),
+      ctx({ contentId: 'ctx-drop-empty', answer: '' }),
+      ctx({ contentId: 'ctx-drop-bogus', answer: 'xyz' }),
+    ];
+    const kept = filterContextEligible(rows).map((r) => r.contentId);
+    expect(kept).toEqual(['ctx-keep1', 'ctx-keep2']);
   });
 });
 

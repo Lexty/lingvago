@@ -17,10 +17,11 @@
 // missing item. The gate accepts loosely-typed input and returns `false` rather
 // than throwing, so a malformed content row is simply dropped.
 
-import type { PossessiveRecord } from '../../db/schema.ts';
+import type { PossessiveContextRecord, PossessiveRecord } from '../../db/schema.ts';
 import { canonicalize } from '../shared/check.ts';
 import {
   determinerForm,
+  isInPossessiveInventory,
   isPossKind,
   ownerForDele,
   POSS_PERSONS,
@@ -101,4 +102,62 @@ export function filterPossessiveEligible(
   records: readonly PossessiveRecord[],
 ): PossessiveRecord[] {
   return records.filter((r) => isPossessiveEligible(r));
+}
+
+// ── CONTEXT (L3) eligibility — a SEPARATE path (AC4) ─────────────────────────
+//
+// A {@link PossessiveContextRecord} is the HARD L3 tier: the owner is inferred
+// from a two-turn `dialogue`, NOT from a person cue. Its answer is AUTHORED and
+// context-decided (e.g. `vosso`/`seu` are chosen BY the dialogue), so it is
+// CRUCIALLY NOT routed through `reconstructAnswer`/`filterPossessiveEligible`:
+// those PROVE the answer from person+gender+number against the closed paradigm,
+// which is correct for cue-based L1/L2 but WRONG here (it would reject or
+// mis-key a context answer the labels can't derive).
+//
+// HONESTY STORY (must be documented): for a context item the "objectively
+// gradeable" guarantee rests on the OFFLINE codex uniqueness verification of the
+// dataset (the answer is the UNIQUE natural EP form for that dialogue) — NOT on
+// runtime reconstruction. The only runtime guard is structural: exactly one
+// `___` blank + a non-empty `answer` that is a real possessive surface (in the
+// {@link POSSESSIVE_INVENTORY}). A learner who types a linguistically-defensible
+// alternative is graded (exact-match) against the one authored answer. To keep a
+// bad authored row from ever shipping, the Task-1 build-time `buildContext`
+// builder ALSO fail-loud-asserts the same structural invariants; this runtime
+// gate is the defensive twin that simply SKIPS a malformed row, never shows it.
+
+/** Count of `___` blank slots in a string (the context gate needs EXACTLY one). */
+function blankCount(text: string): number {
+  return text.split('___').length - 1;
+}
+
+/**
+ * Is `record` eligible for a CONTEXT (L3) drill item (AC4)?
+ *
+ * Eligible ⇔ the `dialogue` has EXACTLY one `___` blank AND `answer` is a
+ * non-empty possessive surface in the closed-class inventory (determiner + dele
+ * forms). This is exact-match graded against that single authored answer — there
+ * is NO paradigm reconstruction (see the honesty story above). Accepts loosely-
+ * typed input and returns `false` (never throws) so a malformed row is dropped.
+ */
+export function isContextEligible(
+  record: Partial<PossessiveContextRecord> | null | undefined,
+): boolean {
+  if (record == null) {
+    return false;
+  }
+  const { dialogue, answer } = record;
+  if (typeof dialogue !== 'string' || blankCount(dialogue) !== 1) {
+    return false;
+  }
+  if (typeof answer !== 'string' || answer.trim() === '') {
+    return false;
+  }
+  return isInPossessiveInventory(answer);
+}
+
+/** Keep only the context-eligible records (the §6.5 context gate, applied). */
+export function filterContextEligible(
+  records: readonly PossessiveContextRecord[],
+): PossessiveContextRecord[] {
+  return records.filter((r) => isContextEligible(r));
 }

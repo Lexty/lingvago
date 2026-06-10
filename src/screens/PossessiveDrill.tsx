@@ -9,6 +9,7 @@ import {
   generateSession,
   POSS_LEVELS,
   type PossLevel,
+  type PossessiveContextRecord,
   type PossessiveItem,
 } from '../modes/possessive/index.ts';
 import {
@@ -16,6 +17,7 @@ import {
   recordPossessiveAttempt,
   referenceIdFor,
 } from '../modes/possessive/progress.ts';
+import { db } from '../db/index.ts';
 import styles from '../styles/grammarDrillScreen.module.css';
 
 /** Items generated per §4.8 level (the session walks L1→L2→L3, then re-rolls). */
@@ -39,12 +41,16 @@ function freshSeed(): string {
 export function buildPossessiveEntries(
   seed: string,
   records: Parameters<typeof generateSession>[1],
+  context: readonly PossessiveContextRecord[] = [],
 ): GrammarDrillEntry<PossessiveItem>[] {
   const entries: GrammarDrillEntry<PossessiveItem>[] = [];
   for (const level of POSS_LEVELS) {
     const items = generateSession(`${seed}-${level}`, records, {
       count: PER_LEVEL,
       level: level as PossLevel,
+      // The HARD L3 CONTEXT pool (AC5): consulted ONLY at L3 by the generator;
+      // an empty pool (or L1/L2) falls back to the cue-based path unchanged.
+      context,
     });
     for (const item of items) {
       entries.push({
@@ -84,11 +90,15 @@ export default function PossessiveDrill({ seed }: PossessiveDrillProps) {
   // `useLiveQuery` re-resolves once content has loaded, so a pre-load render
   // shows the graceful empty state instead of crashing.
   const records = useLiveQuery(() => loadPossessivesFromDb(), []);
+  // The HARD L3 CONTEXT dialogues come from the additive `possessiveContext`
+  // store (AC5). Fed to the generator so the L1→L3 walk reaches the L3 tier; an
+  // empty/unloaded pool simply leaves L3 on its cue-based fallback (no change).
+  const context = useLiveQuery(() => db.possessiveContext.toArray(), []);
 
   const [sessionId, setSessionId] = useState<string>(() => seed ?? freshSeed());
   const entries = useMemo<GrammarDrillEntry<PossessiveItem>[]>(
-    () => (records ? buildPossessiveEntries(sessionId, records) : []),
-    [sessionId, records],
+    () => (records ? buildPossessiveEntries(sessionId, records, context ?? []) : []),
+    [sessionId, records, context],
   );
 
   return (

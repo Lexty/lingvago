@@ -212,6 +212,44 @@ describe('build-content — possessives store + ref-possessive card (AC1)', () =
   });
 });
 
+describe('build-content — possessiveContext store (Task 1 / AC1)', () => {
+  it('emits the 24 possessive-context dialogue items with the grading fields', () => {
+    const bundle = buildContent();
+    // possessives_context.json ships 24 verified dialogue items.
+    expect(bundle.possessiveContext.length).toBe(24);
+
+    const inventory = new Set([
+      'meu', 'minha', 'meus', 'minhas',
+      'teu', 'tua', 'teus', 'tuas',
+      'seu', 'sua', 'seus', 'suas',
+      'nosso', 'nossa', 'nossos', 'nossas',
+      'vosso', 'vossa', 'vossos', 'vossas',
+      'dele', 'dela', 'deles', 'delas',
+    ]);
+
+    for (const rec of bundle.possessiveContext) {
+      // Stable `ctxNNNN` contentId carried from the dataset id.
+      expect(rec.contentId).toMatch(/^ctx\d{4}$/);
+      // The dialogue carries EXACTLY one `___` blank (no cue — the hard tier).
+      expect(typeof rec.dialogue).toBe('string');
+      expect(rec.dialogue.split('___').length - 1).toBe(1);
+      // The authored answer is in the closed possessive inventory.
+      expect(inventory.has(rec.answer)).toBe(true);
+      // kind/person/gender/number carried verbatim.
+      expect(['determiner', 'dele']).toContain(rec.kind);
+      expect(rec.person.length).toBeGreaterThan(0);
+      expect(rec.ownerCue.length).toBeGreaterThan(0);
+      expect(['m', 'f']).toContain(rec.possessedGender);
+      expect(['sg', 'pl']).toContain(rec.possessedNumber);
+      expect(rec.possessedNoun.length).toBeGreaterThan(0);
+    }
+
+    // Emitted in stable contentId order.
+    const ids = bundle.possessiveContext.map((r) => r.contentId);
+    expect(ids).toEqual([...ids].sort((x, y) => x.localeCompare(y, 'en')));
+  });
+});
+
 describe('build-content — interrogatives store + ref-interrogative card (AC1)', () => {
   it('emits the 90 interrogative cloze items with the gloss-cue/grading fields', () => {
     const bundle = buildContent();
@@ -397,5 +435,103 @@ describe('build-content — fails loudly on bad input (AC6 error case)', () => {
     rmSync(bad, { recursive: true, force: true });
     expect(code).not.toBe(0);
     expect(stderr).toMatch(/interrogatives\.json has duplicate item id "int:0001"/);
+  });
+
+  it('exits non-zero on a MISSING possessives_context.json (no silent empty store)', () => {
+    const bad = mkdtempSync(join(tmpdir(), 'bc-ctx-missing-'));
+    cpSync(normalizedInputDir(), bad, { recursive: true });
+    rmSync(join(bad, 'possessives_context.json'));
+    const { code, stderr } = runWithInput(bad);
+    rmSync(bad, { recursive: true, force: true });
+    expect(code).not.toBe(0);
+    expect(stderr).toMatch(/missing input file possessives_context\.json/);
+  });
+
+  it('exits non-zero on an EMPTY possessives_context items array', () => {
+    const bad = mkdtempSync(join(tmpdir(), 'bc-ctx-empty-'));
+    cpSync(normalizedInputDir(), bad, { recursive: true });
+    writeFileSync(join(bad, 'possessives_context.json'), JSON.stringify({ items: [] }));
+    const { code, stderr } = runWithInput(bad);
+    rmSync(bad, { recursive: true, force: true });
+    expect(code).not.toBe(0);
+    expect(stderr).toMatch(/possessives_context\.json field "items" must not be empty/);
+  });
+
+  it('exits non-zero on a DUPLICATE possessives_context item id (no silent overwrite)', () => {
+    const bad = mkdtempSync(join(tmpdir(), 'bc-ctx-dup-'));
+    cpSync(normalizedInputDir(), bad, { recursive: true });
+    const dup = {
+      id: 'ctx0001',
+      dialogue: '— Comprei este casaco ontem.\n— Que bonito! Então é ___?',
+      answer: 'teu',
+      person: 'tu',
+      kind: 'determiner',
+      ownerCue: 'tu',
+      possessedGender: 'm',
+      possessedNumber: 'sg',
+      possessedNoun: 'casaco',
+    };
+    writeFileSync(
+      join(bad, 'possessives_context.json'),
+      JSON.stringify({ items: [dup, { ...dup }] }),
+    );
+    const { code, stderr } = runWithInput(bad);
+    rmSync(bad, { recursive: true, force: true });
+    expect(code).not.toBe(0);
+    expect(stderr).toMatch(/possessives_context\.json has duplicate item id "ctx0001"/);
+  });
+
+  it('exits non-zero on a context item with NO ___ blank (bad authored row)', () => {
+    const bad = mkdtempSync(join(tmpdir(), 'bc-ctx-noblank-'));
+    cpSync(normalizedInputDir(), bad, { recursive: true });
+    writeFileSync(
+      join(bad, 'possessives_context.json'),
+      JSON.stringify({
+        items: [
+          {
+            id: 'ctx0001',
+            dialogue: '— Comprei este casaco ontem.\n— Que bonito! Então é teu?',
+            answer: 'teu',
+            person: 'tu',
+            kind: 'determiner',
+            ownerCue: 'tu',
+            possessedGender: 'm',
+            possessedNumber: 'sg',
+            possessedNoun: 'casaco',
+          },
+        ],
+      }),
+    );
+    const { code, stderr } = runWithInput(bad);
+    rmSync(bad, { recursive: true, force: true });
+    expect(code).not.toBe(0);
+    expect(stderr).toMatch(/must contain exactly one "___" blank/);
+  });
+
+  it('exits non-zero on a context item whose answer is OUTSIDE the inventory', () => {
+    const bad = mkdtempSync(join(tmpdir(), 'bc-ctx-badans-'));
+    cpSync(normalizedInputDir(), bad, { recursive: true });
+    writeFileSync(
+      join(bad, 'possessives_context.json'),
+      JSON.stringify({
+        items: [
+          {
+            id: 'ctx0001',
+            dialogue: '— Comprei este casaco ontem.\n— Que bonito! Então é ___?',
+            answer: 'mine',
+            person: 'tu',
+            kind: 'determiner',
+            ownerCue: 'tu',
+            possessedGender: 'm',
+            possessedNumber: 'sg',
+            possessedNoun: 'casaco',
+          },
+        ],
+      }),
+    );
+    const { code, stderr } = runWithInput(bad);
+    rmSync(bad, { recursive: true, force: true });
+    expect(code).not.toBe(0);
+    expect(stderr).toMatch(/is not in the possessive inventory/);
   });
 });

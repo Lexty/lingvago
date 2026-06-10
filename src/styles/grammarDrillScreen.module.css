@@ -43,6 +43,10 @@
 
 .prompt {
   composes: prompt from './drill.module.css';
+  /* Render the `\n` line breaks of a multi-line possessive CONTEXT dialogue (AC5)
+     so the two dialogue turns appear on separate lines. A no-op for the
+     single-line, newline-free gender/preposition/cue prompts (safe shared rule). */
+  white-space: pre-line;
 }
 
 .form {

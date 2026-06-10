@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { db } from '../../db/index.ts';
-import type { PossessiveRecord } from '../../db/schema.ts';
+import type { PossessiveContextRecord, PossessiveRecord } from '../../db/schema.ts';
 import {
   POSS_REFERENCE_ID,
   POSS_SKILL,
@@ -57,6 +57,21 @@ function dele(contentId: string, blankSentence: string, answer: string): Possess
   };
 }
 
+// A HARD L3 context fixture (dialogue prompt, no cue) for the keying assertions.
+const CONTEXT: PossessiveContextRecord[] = [
+  {
+    contentId: 'ctx0001',
+    dialogue: '— Comprei este casaco. — Que bonito! Então é ___?',
+    answer: 'teu',
+    person: 'tu',
+    kind: 'determiner',
+    ownerCue: 'tu',
+    possessedGender: 'm',
+    possessedNumber: 'sg',
+    possessedNoun: 'casaco',
+  },
+];
+
 describe('subskillFor — mastery sub-axis by kind + person + level (AC7)', () => {
   it('keys each item by skill + kind + person + level', () => {
     for (const level of ['L1', 'L2', 'L3'] as const) {
@@ -74,6 +89,18 @@ describe('subskillFor — mastery sub-axis by kind + person + level (AC7)', () =
     const items = generateSession('fam', RECORDS, { count: 60, level: 'L1' });
     const kinds = new Set(items.map((i) => i.kind));
     expect(kinds).toEqual(new Set(['determiner', 'dele']));
+  });
+
+  it('keys an L3 CONTEXT item by kind+person+L3 — the -L3 suffix isolates context attempts', () => {
+    const items = generateSession('ctx', RECORDS, { count: 8, level: 'L3', context: CONTEXT });
+    expect(items.length).toBeGreaterThan(0);
+    for (const item of items) {
+      expect(item.isContext).toBe(true);
+      expect(item.level).toBe('L3');
+      // L3 is context-only, so the existing -L3 suffix IS the tier marker (AC5):
+      // no extra `context` segment is needed in the key.
+      expect(subskillFor(item)).toBe(`${POSS_SKILL}-${item.kind}-${item.person}-L3`);
+    }
   });
 });
 

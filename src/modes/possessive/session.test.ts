@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { PossessiveRecord } from '../../db/schema.ts';
+import type { PossessiveContextRecord, PossessiveRecord } from '../../db/schema.ts';
 import { checkAnswer } from '../shared/check.ts';
 import { reconstructAnswer } from './eligibility.ts';
 import { DELE_FORMS } from './possData.ts';
@@ -99,6 +99,37 @@ const MISLABELED: PossessiveRecord = {
   possessedNumber: 'sg',
   hasArticle: true,
 };
+
+/**
+ * A small HARD L3 context fixture: a two-turn dialogue with a single `___`
+ * blank whose owner is inferred from the conversation (NOT a cue). One
+ * determiner answer (`teu`) and one dele answer (`dela`) so both families are
+ * exercised. The multi-line `\n` is part of the prompt the screen renders.
+ */
+const CONTEXT: PossessiveContextRecord[] = [
+  {
+    contentId: 'ctx0001',
+    dialogue: '— Comprei este casaco ontem, custou pouco.\n— Que bonito! Então é ___?',
+    answer: 'teu',
+    person: 'tu',
+    kind: 'determiner',
+    ownerCue: 'tu',
+    possessedGender: 'm',
+    possessedNumber: 'sg',
+    possessedNoun: 'casaco',
+  },
+  {
+    contentId: 'ctx0002',
+    dialogue: '— A irmã do João mora longe?\n— A casa ___ é em Faro.',
+    answer: 'dela',
+    person: 'ele_ela_voce',
+    kind: 'dele',
+    ownerCue: 'ela',
+    possessedGender: 'f',
+    possessedNumber: 'sg',
+    possessedNoun: 'casa',
+  },
+];
 
 function byAnswer(items: PossessiveItem[], answer: string): PossessiveItem[] {
   return items.filter((i) => i.answer === answer);
@@ -314,6 +345,116 @@ describe('AC4 dele MC — the owner contrast dele↔dela (4=4)', () => {
     expect(item.drill.mode).toBe('mc');
     if (item.drill.mode !== 'mc') throw new Error('expected mc');
     expect(item.drill.options).toHaveLength(2);
+  });
+});
+
+describe('AC2/AC3 — HARD L3 context tier (dialogue prompt, no cue, production-only)', () => {
+  it('L3 with a context pool yields context items: prompt === dialogue, NO cue prefix, production', () => {
+    const items = generateSession('ctx-l3', RECORDS, {
+      count: 20,
+      level: 'L3',
+      context: CONTEXT,
+    });
+    expect(items.length).toBe(20);
+    const byId = new Map(CONTEXT.map((r) => [r.contentId, r]));
+    for (const item of items) {
+      // drawn from the context store, flagged as context
+      expect(item.isContext).toBe(true);
+      expect(item.drill.sourceRef.store).toBe('possessiveContext');
+      const src = byId.get(item.drill.sourceRef.id);
+      expect(src).toBeDefined();
+      // AC3: the prompt is the multi-line dialogue EXACTLY — no cue token, no `(`.
+      expect(item.drill.prompt).toBe(src!.dialogue);
+      expect(item.cue).toBe('');
+      expect(item.drill.prompt.startsWith('(')).toBe(false);
+      expect(item.drill.prompt).not.toMatch(/^\([^)]*\)/);
+      expect(item.drill.prompt).toContain('___');
+      expect(item.drill.prompt).toContain('\n'); // multi-line dialogue
+      // AC3: context items are production-only (never MC).
+      expect(item.drill.mode).toBe('production');
+      // exact-match grading against the authored answer (shared normalization).
+      expect(item.drill.answer).toBe(src!.answer);
+      expect(checkAnswer(item.drill.answer, src!.answer)).toBe(true);
+    }
+    // both authored answers reachable across the session
+    expect(byAnswer(items, 'teu').length).toBeGreaterThan(0);
+    expect(byAnswer(items, 'dela').length).toBeGreaterThan(0);
+  });
+
+  it('the SAME seed at L3 with context ⇒ byte-identical session (determinism)', () => {
+    const a = generateSession('ctx-det', RECORDS, { count: 12, level: 'L3', context: CONTEXT });
+    const b = generateSession('ctx-det', RECORDS, { count: 12, level: 'L3', context: CONTEXT });
+    expect(a).toEqual(b);
+    expect(JSON.stringify(a)).toBe(JSON.stringify(b));
+  });
+
+  it('L1 and L2 still yield CUE-BASED items even when a context pool is present', () => {
+    for (const level of ['L1', 'L2'] as const) {
+      const items = generateSession('ctx-lower', RECORDS, { count: 30, level, context: CONTEXT });
+      expect(items.length).toBeGreaterThan(0);
+      for (const item of items) {
+        expect(item.isContext).toBe(false);
+        expect(item.drill.sourceRef.store).toBe('possessives');
+        // cue is prefixed — the lower tiers are cue-based, unchanged.
+        expect(item.cue).not.toBe('');
+        expect(item.drill.prompt.startsWith(`(${item.cue})`)).toBe(true);
+      }
+    }
+  });
+
+  it('REGRESSION: a 3-arg L3 call (no context input) behaves exactly as before — cue-based', () => {
+    // Backward-compatibility (AC2): an existing 3-arg call site (or empty context)
+    // must keep producing cue-based items, never context items.
+    const threeArg = generateSession('compat', RECORDS, { count: 20, level: 'L3' });
+    const emptyCtx = generateSession('compat', RECORDS, { count: 20, level: 'L3', context: [] });
+    expect(threeArg.every((i) => i.isContext === false)).toBe(true);
+    expect(threeArg.every((i) => i.drill.sourceRef.store === 'possessives')).toBe(true);
+    // empty context input ⇒ identical to the 3-arg call (L3 falls back to cue-based).
+    expect(JSON.stringify(emptyCtx)).toBe(JSON.stringify(threeArg));
+  });
+
+  it('a malformed context record is SKIPPED — never produced as a prompt', () => {
+    const malformed: PossessiveContextRecord[] = [
+      // no ___ blank
+      { ...CONTEXT[0], contentId: 'ctx-noblank', dialogue: '— Olá. — É bonito!' },
+      // two blanks
+      { ...CONTEXT[0], contentId: 'ctx-twoblank', dialogue: '— ___ ou ___?' },
+      // empty answer
+      { ...CONTEXT[0], contentId: 'ctx-empty', answer: '' },
+      // answer outside the possessive inventory
+      { ...CONTEXT[0], contentId: 'ctx-bogus', answer: 'xyz' },
+    ];
+    const items = generateSession('ctx-bad', RECORDS, {
+      count: 40,
+      level: 'L3',
+      context: [...malformed, CONTEXT[0]],
+    });
+    const ids = new Set(items.map((i) => i.drill.sourceRef.id));
+    expect(ids.has('ctx-noblank')).toBe(false);
+    expect(ids.has('ctx-twoblank')).toBe(false);
+    expect(ids.has('ctx-empty')).toBe(false);
+    expect(ids.has('ctx-bogus')).toBe(false);
+    // the single valid record is the only one shown
+    expect([...ids]).toEqual(['ctx0001']);
+  });
+
+  it('EXPLICITLY-supplied all-malformed context pool ⇒ L3 returns [] — it does NOT silently degrade to cue-based', () => {
+    // A NON-EMPTY context pool means the caller asked for the HARD tier. If every
+    // supplied row is malformed (the context data is corrupt / failed to load),
+    // L3 must NOT silently fall through to the easy cue-based tier — that would
+    // hide the data-integrity failure behind a happy-looking session. The honest
+    // behavior is a graceful empty state, distinguishing this from the AC2
+    // OMITTED/empty backward-compat fallback (covered by the REGRESSION test above).
+    const allBad: PossessiveContextRecord[] = [
+      { ...CONTEXT[0], contentId: 'ctx-bad1', answer: '' },
+      { ...CONTEXT[0], contentId: 'ctx-bad2', dialogue: 'no blank here' },
+    ];
+    const items = generateSession('ctx-allbad', RECORDS, {
+      count: 15,
+      level: 'L3',
+      context: allBad,
+    });
+    expect(items).toEqual([]);
   });
 });
 

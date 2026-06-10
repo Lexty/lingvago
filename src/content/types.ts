@@ -7,6 +7,7 @@ import type {
   ConjugationTableRecord,
   InterrogativeRecord,
   NounRecord,
+  PossessiveContextRecord,
   PossessiveRecord,
   PrepositionRecord,
   ReferenceCardRecord,
@@ -22,6 +23,7 @@ export interface ContentBundle {
   prepositions: PrepositionRecord[];
   conjugationTables: ConjugationTableRecord[];
   possessives: PossessiveRecord[];
+  possessiveContext: PossessiveContextRecord[];
   interrogatives: InterrogativeRecord[];
 }
 

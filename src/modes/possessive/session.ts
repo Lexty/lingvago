@@ -1,6 +1,19 @@
 // Possessive cue-production session generator (SPEC §1.2 production-first, §4.8
 // L1→L3 curve, §6.1 seeded determinism, §6.3 parity-or-production, AC2–AC5).
 //
+// HARD L3 CONTEXT TIER (AC2/AC3/AC4): when the caller supplies CONTEXT records
+// (`config.context`) AND the requested level is L3, the session is generated
+// from those `PossessiveContextRecord`s instead of the cue-based paradigm rows.
+// A context item shows the multi-line `dialogue` (with the single `___`) as its
+// `drill.prompt` with NO `(eu)`/`(tu)`/owner cue prefixed — the whole point of
+// the hard tier — and is ALWAYS `production` (typed answer; no MC, since
+// recognition options would trivialize the inference). The answer is the
+// AUTHORED form, graded exact-match by the SAME shared check; it travels a
+// SEPARATE eligibility path (`filterContextEligible`) that does NOT reconstruct
+// from the labels (see `eligibility.ts` for the honesty story). L1/L2 — and an
+// L3 with NO context input — keep generating from the cue-based records, exactly
+// as before (backward-compatible: `config.context` DEFAULTS to empty).
+//
 // A seed → a reproducible sequence of cue-prefixed cloze DrillItems over the
 // VERIFIED-eligible possessive items only (the §6.5 verified-key gate is applied
 // up front, so a row whose answer is not reconstructible from its cue can NEVER
@@ -33,7 +46,7 @@
 // traps are offered; parity then decides the channel from the answer's shape. The
 // deterministic path uses ONLY the seeded PRNG.
 
-import type { PossessiveRecord } from '../../db/schema.ts';
+import type { PossessiveContextRecord, PossessiveRecord } from '../../db/schema.ts';
 import { createPrng } from '../numbers/prng.ts';
 import {
   assembleMcOrProduction,
@@ -41,7 +54,11 @@ import {
   type DrillItem,
   type DrillSourceRef,
 } from '../shared/index.ts';
-import { filterPossessiveEligible, reconstructAnswer } from './eligibility.ts';
+import {
+  filterContextEligible,
+  filterPossessiveEligible,
+  reconstructAnswer,
+} from './eligibility.ts';
 import {
   DELE_FAMILY,
   DETERMINER_PARADIGM,
@@ -78,11 +95,19 @@ export interface PossessiveItem {
   person: PossPerson;
   /**
    * The structured cue (AC3): the displayed Portuguese cue token. For a
-   * determiner this is the PERSON cue; for a dele item it is the OWNER cue.
+   * determiner this is the PERSON cue; for a dele item it is the OWNER cue. For
+   * a CONTEXT (L3) item there is NO cue (the owner is inferred from the
+   * dialogue), so this is the empty string `''`.
    */
   cue: string;
   /** The verified possessive form being drilled (the answer key). */
   answer: string;
+  /**
+   * True for a HARD L3 CONTEXT item (prompt = the dialogue, no cue, always
+   * `production`); false for a cue-based L1/L2/L3 item. Lets the screen / tests
+   * distinguish the tier without re-parsing the prompt.
+   */
+  isContext: boolean;
   /** The shared drill item (production-first; MC only when parity assembled). */
   drill: DrillItem;
 }
@@ -93,6 +118,22 @@ export interface PossSessionConfig {
   count: number;
   /** The §4.8 level to generate at. */
   level: PossLevel;
+  /**
+   * The HARD L3 context pool (AC2/AC4). OPTIONAL and DEFAULTS to empty so every
+   * existing 3-arg `generateSession(seed, records, config)` call site keeps
+   * compiling and behaving identically. Consulted ONLY at level L3, where it has
+   * THREE distinct outcomes:
+   *   - OMITTED (`undefined`) or EMPTY (`[]`) ⇒ the AC2 backward-compat fallback:
+   *     L3 stays on the cue-based path, exactly as before (no regression).
+   *   - SUPPLIED + at least one CONTEXT-eligible record ⇒ the L3 session is drawn
+   *     from the dialogues (the HARD tier).
+   *   - SUPPLIED but NON-EMPTY with ZERO eligible records (all rows malformed —
+   *     corrupt/failed-to-load context data) ⇒ L3 returns `[]` (graceful empty
+   *     state). It does NOT silently degrade to the easy cue-based tier, which
+   *     would hide the data-integrity failure behind a happy-looking session.
+   * Ignored at L1/L2.
+   */
+  context?: readonly PossessiveContextRecord[];
 }
 
 /** Default session: a short L1 (production recall) drill. */
@@ -103,6 +144,49 @@ export const DEFAULT_POSS_SESSION_CONFIG: PossSessionConfig = {
 
 function sourceOf(record: PossessiveRecord): DrillSourceRef {
   return { store: 'possessives', id: record.contentId };
+}
+
+function contextSourceOf(record: PossessiveContextRecord): DrillSourceRef {
+  return { store: 'possessiveContext', id: record.contentId };
+}
+
+/**
+ * Build one HARD L3 CONTEXT item from a context-eligible record (AC3/AC4).
+ *
+ * The prompt is the multi-line `dialogue` EXACTLY (with the single `___`),
+ * with NO cue prefixed — the owner is inferred from the conversation, which is
+ * the whole point of the hard tier. The item is ALWAYS `production` (no
+ * candidates ⇒ `assembleMcOrProduction` returns a production item): recognition
+ * MC options would trivialize the inference. The answer is the AUTHORED form,
+ * graded exact-match by the same shared check; its gradeability rests on the
+ * OFFLINE codex uniqueness verification of the dataset, not on reconstruction
+ * (see `eligibility.ts`). Callers pass only context-eligible records, so this
+ * never sees a malformed row.
+ */
+function buildContextItem(
+  itemSeed: string,
+  record: PossessiveContextRecord,
+): PossessiveItem {
+  const answer = record.answer.trim().toLowerCase();
+  return {
+    id: itemSeed,
+    level: 'L3',
+    kind: record.kind as PossKind,
+    person: record.person as PossPerson,
+    cue: '',
+    answer,
+    isContext: true,
+    drill: assembleMcOrProduction({
+      seed: itemSeed,
+      prompt: record.dialogue,
+      answer,
+      answerExplanation: `«${answer}» — inferred from the dialogue (the owner is decided by the conversation, not a person cue)`,
+      parityClass: 'possessive-context',
+      // No candidates ⇒ production-only (AC3): an L3 context item is typed, never MC.
+      candidates: [],
+      sourceRef: contextSourceOf(record),
+    }),
+  };
 }
 
 /**
@@ -207,6 +291,7 @@ function buildItem(
     person: record.person as PossPerson,
     cue,
     answer,
+    isContext: false,
     drill: assembleMcOrProduction({
       seed: itemSeed,
       prompt,
@@ -223,14 +308,23 @@ function buildItem(
 }
 
 /**
- * Generate a deterministic Possessive session for `seed` over the
- * verified-eligible subset of `records`, at the requested §4.8 level.
+ * Generate a deterministic Possessive session for `seed` at the requested §4.8
+ * level.
  *
- * Same `seed` + same `records` + same `config` ⇒ byte-identical item list (no
- * `Math.random()`). The §6.5 verified-key gate is applied here: ineligible /
- * non-reconstructible records are dropped before any item is built, so they can
- * never appear as an ungradeable production prompt. Returns `[]` when no record
- * is eligible, so the caller renders a graceful empty state (error path).
+ * L1/L2 (and L3 with NO/empty context input) draw from the cue-based `records`,
+ * applying the §6.5 verified-key gate. At L3, if `config.context` is SUPPLIED and
+ * non-empty, the session is drawn from those dialogues (the HARD tier: prompt =
+ * the dialogue, no cue, production-only) via the SEPARATE context eligibility
+ * path — and if every supplied row is ineligible (corrupt context data) L3
+ * returns `[]` rather than silently degrading to the easy cue-based tier.
+ * `config.context` is OPTIONAL and defaults to empty, so every existing 3-arg
+ * call site behaves identically (L3 stays cue-based, backward-compatible).
+ *
+ * Same `seed` + same inputs + same `config` ⇒ byte-identical item list (no
+ * `Math.random()`). Ineligible records (non-reconstructible cue rows; malformed
+ * context rows) are dropped before any item is built, so an ungradeable prompt
+ * can never appear. Returns `[]` when no record is eligible, so the caller
+ * renders a graceful empty state (error path).
  */
 export function generateSession(
   seed: string | number,
@@ -239,6 +333,39 @@ export function generateSession(
 ): PossessiveItem[] {
   const cfg: PossSessionConfig = { ...DEFAULT_POSS_SESSION_CONFIG, ...config };
   const count = Math.max(1, Math.floor(cfg.count));
+
+  // HARD L3 CONTEXT tier (AC2/AC3/AC4). Two distinct cases must NOT be conflated:
+  //
+  //  1. context OMITTED or EMPTY (`undefined` / `[]`) — the AC2 backward-compat
+  //     case: every existing 3-arg call site (and an explicit empty pool) keeps
+  //     L3 on the cue-based path, exactly as before. This is the blessed
+  //     no-regression fallback, so we fall through to the cue-based path below.
+  //  2. context EXPLICITLY SUPPLIED and NON-EMPTY — the caller is asking for the
+  //     HARD tier. We DRAW from the context-eligible dialogues. If filtering
+  //     yields zero eligible records (every supplied row is malformed — i.e. the
+  //     context data failed to load or is corrupt), we DO NOT silently degrade to
+  //     an easy cue-based L3 (that would hide a data-integrity bug behind a
+  //     happy-looking session). Instead we return `[]`, so the screen renders its
+  //     graceful empty state and the failure is visible rather than masked.
+  if (cfg.level === 'L3' && cfg.context !== undefined && cfg.context.length > 0) {
+    const contextEligible = filterContextEligible([...cfg.context]).sort((a, b) =>
+      a.contentId < b.contentId ? -1 : a.contentId > b.contentId ? 1 : 0,
+    );
+    if (contextEligible.length === 0) {
+      // Explicitly-supplied pool, all rows ineligible ⇒ surface the failure (do
+      // NOT fall through to cue-based, which would silently hide corrupt data).
+      return [];
+    }
+    const ctxPrng = createPrng(seed);
+    const ctxItems: PossessiveItem[] = [];
+    for (let i = 0; i < count; i++) {
+      const record =
+        contextEligible[ctxPrng.intBetween(0, contextEligible.length - 1)];
+      ctxItems.push(buildContextItem(`${String(seed)}-${i}`, record));
+    }
+    return ctxItems;
+  }
+
   const eligible = filterPossessiveEligible([...records]).sort((a, b) =>
     a.contentId < b.contentId ? -1 : a.contentId > b.contentId ? 1 : 0,
   );

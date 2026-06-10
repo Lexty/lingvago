@@ -44,6 +44,11 @@ export async function loadPossessivesFromDb(): Promise<PossessiveRecord[]> {
  *   `possessive-determiner-eu-L1`
  *   `possessive-dele-ele_ela_voce-L2`
  *   `possessive-determiner-nos-L3`
+ *
+ * Per AC5, L3 is the CONTEXT-ONLY tier (the hard dialogue items): so the trailing
+ * `-L3` suffix is itself the context-attempt marker — no separate `context`
+ * key segment is needed, and any subskill ending in `-L3` isolates context
+ * attempts.
  */
 export function subskillFor(item: PossessiveItem): string {
   return `${POSS_SKILL}-${item.kind}-${item.person}-${item.level}`;

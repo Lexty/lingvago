@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { MemoryRouter } from 'react-router';
 import i18n from '../i18n/config.ts';
 import { db } from '../db/index.ts';
-import type { PossessiveRecord } from '../db/schema.ts';
+import type { PossessiveContextRecord, PossessiveRecord } from '../db/schema.ts';
 import PossessiveDrill, { buildPossessiveEntries } from './PossessiveDrill.tsx';
 
 // A verified-eligible fixture spanning both families (determiner + dele) and
@@ -53,16 +53,59 @@ function dele(contentId: string, blankSentence: string, answer: string): Possess
   };
 }
 
+// HARD L3 CONTEXT fixture (AC5/AC6): each dialogue is multi-line (`\n`), carries
+// exactly one `___` blank, and its AUTHORED answer is a real possessive surface,
+// so all are context-eligible. At L3 the generator draws ONLY from these (NO cue
+// prefix; `production` mode). The pinned `SEED` makes the L3 walk deterministic.
+const CONTEXT: PossessiveContextRecord[] = [
+  ctx('ctx:0001', '— Este casaco é teu?\n— Sim, é ___.', 'meu', 'eu', 'determiner', 'eu', 'm', 'sg', 'casaco'),
+  ctx('ctx:0002', '— De quem é esta mala?\n— A azul é ___, comprei-a no Porto.', 'minha', 'eu', 'determiner', 'eu', 'f', 'sg', 'mala'),
+  ctx('ctx:0003', '— A irmã do João mora longe?\n— A casa ___ é em Faro.', 'dela', 'ele_ela_voce', 'dele', 'ela', 'f', 'sg', 'casa'),
+];
+
+function ctx(
+  contentId: string,
+  dialogue: string,
+  answer: string,
+  person: string,
+  kind: string,
+  ownerCue: string,
+  possessedGender: string,
+  possessedNumber: string,
+  possessedNoun: string,
+): PossessiveContextRecord {
+  return {
+    contentId,
+    dialogue,
+    answer,
+    person,
+    kind,
+    ownerCue,
+    possessedGender,
+    possessedNumber,
+    possessedNoun,
+  };
+}
+
 const SEED = 'unit-poss-seed';
 
 function entries() {
-  return buildPossessiveEntries(SEED, RECORDS);
+  return buildPossessiveEntries(SEED, RECORDS, CONTEXT);
 }
 
 function indexOfMode(mode: 'production' | 'mc') {
   const idx = entries().findIndex((e) => e.drill.mode === mode);
   if (idx < 0) {
     throw new Error(`fixture seed "${SEED}" produced no ${mode} item`);
+  }
+  return idx;
+}
+
+/** The first HARD L3 CONTEXT item (multi-line dialogue, no cue, production). */
+function indexOfContext() {
+  const idx = entries().findIndex((e) => e.item.isContext);
+  if (idx < 0) {
+    throw new Error(`fixture seed "${SEED}" produced no L3 context item`);
   }
   return idx;
 }
@@ -80,6 +123,7 @@ beforeEach(async () => {
   await db.open();
   await Promise.all(db.tables.map((tb) => tb.clear()));
   await db.possessives.bulkPut(RECORDS);
+  await db.possessiveContext.bulkPut(CONTEXT);
 });
 
 afterEach(async () => {
@@ -222,6 +266,101 @@ describe('PossessiveDrill screen', () => {
       expect(await db.attempts.count()).toBe(before + 1);
     });
     expect((await db.attempts.toArray())[before].correct).toBe(false);
+  });
+
+  it('drives the L1→L3 walk to a HARD L3 CONTEXT item: renders the multi-line dialogue (no cue), grades it correct → attempt + mastery, and opens/closes the rule overlay to the same prompt', async () => {
+    const idx = indexOfContext();
+    const ctxEntry = entries()[idx];
+    // The context item is a multi-line dialogue (carries `\n`) with NO cue prefix.
+    expect(ctxEntry.item.isContext).toBe(true);
+    expect(ctxEntry.level).toBe('L3');
+    expect(ctxEntry.drill.mode).toBe('production');
+    expect(ctxEntry.drill.prompt).toContain('\n');
+    expect(ctxEntry.drill.prompt).not.toMatch(/^\(/); // no `(eu)`/`(tu)`/owner cue
+
+    renderMode();
+    await waitFor(() => {
+      expect(screen.getByTestId('possessive-drill-prompt')).toHaveTextContent(
+        entries()[0].drill.prompt,
+      );
+    });
+    await advanceBy(idx);
+
+    const promptEl = screen.getByTestId('possessive-drill-prompt');
+    // Both dialogue turns are present (the multi-line dialogue rendered).
+    const [turnA, turnB] = ctxEntry.drill.prompt.split('\n');
+    expect(promptEl.textContent).toContain(turnA);
+    expect(promptEl.textContent).toContain(turnB);
+    expect(screen.getByTestId('possessive-drill-level')).toHaveTextContent('Level L3');
+
+    fireEvent.change(screen.getByTestId('possessive-drill-answer'), {
+      target: { value: ctxEntry.drill.answer },
+    });
+    const before = await db.attempts.count();
+    fireEvent.click(screen.getByRole('button', { name: 'Check' }));
+    expect(screen.getByTestId('possessive-drill-feedback')).toHaveTextContent('Correct');
+
+    // Rule overlay opens to ref-possessive and closing returns to the same prompt.
+    const expectedRef = ctxEntry.referenceId;
+    expect(expectedRef).toBe('ref-possessive');
+    await db.referenceCards.put({
+      contentId: expectedRef,
+      topic: 'poss',
+      title: 'Possessives rule card',
+      body: 'The paradigm + rules.',
+    });
+    fireEvent.click(screen.getByTestId('possessive-drill-ref-link'));
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('possessive-drill-rule-overlay').querySelector('[data-content-id]'),
+      ).toHaveAttribute('data-content-id', expectedRef);
+    });
+    fireEvent.click(screen.getByTestId('possessive-drill-rule-close'));
+    await waitFor(() => {
+      expect(screen.queryByTestId('possessive-drill-rule-overlay')).not.toBeInTheDocument();
+    });
+    // Closing returns to the SAME context item (both dialogue turns still shown).
+    const afterClose = screen.getByTestId('possessive-drill-prompt');
+    expect(afterClose.textContent).toContain(turnA);
+    expect(afterClose.textContent).toContain(turnB);
+
+    await waitFor(async () => {
+      expect(await db.attempts.count()).toBe(before + 1);
+    });
+    const row = (await db.attempts.toArray())[before];
+    expect(row.correct).toBe(true);
+    expect(row.skill).toBe('possessive');
+    expect(row.channel).toBe('production');
+    expect(row.level).toBe('L3');
+    expect(await db.skillMastery.count()).toBeGreaterThanOrEqual(1);
+  });
+
+  it('rejects a WRONG answer on an L3 context item and reveals the canonical answer (error path)', async () => {
+    const idx = indexOfContext();
+    const ctxEntry = entries()[idx];
+    renderMode();
+    await waitFor(() => {
+      expect(screen.getByTestId('possessive-drill-prompt')).toHaveTextContent(
+        entries()[0].drill.prompt,
+      );
+    });
+    await advanceBy(idx);
+
+    fireEvent.change(screen.getByTestId('possessive-drill-answer'), {
+      target: { value: 'definitely-wrong' },
+    });
+    const before = await db.attempts.count();
+    fireEvent.click(screen.getByRole('button', { name: 'Check' }));
+    expect(screen.getByTestId('possessive-drill-feedback')).toHaveTextContent(
+      ctxEntry.drill.answer,
+    );
+
+    await waitFor(async () => {
+      expect(await db.attempts.count()).toBe(before + 1);
+    });
+    const row = (await db.attempts.toArray())[before];
+    expect(row.correct).toBe(false);
+    expect(row.level).toBe('L3');
   });
 
   it('renders a graceful empty state when no content is loaded (error path)', async () => {

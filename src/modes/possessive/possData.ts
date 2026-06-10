@@ -13,7 +13,7 @@
 // is a single import site (mirrors how preposition re-exports its record type
 // via the shared modules), while keeping db as the single schema owner.
 
-export type { PossessiveRecord } from '../../db/schema.ts';
+export type { PossessiveContextRecord, PossessiveRecord } from '../../db/schema.ts';
 
 /** The six grammatical persons of the EP possessive system (closed class). */
 export const POSS_PERSONS = ['eu', 'tu', 'ele_ela_voce', 'nos', 'vos', 'eles_elas'] as const;
@@ -90,6 +90,28 @@ export type DeleOwner = (typeof DELE_FAMILY)[number]['owner'];
 
 /** All dele surfaces, for membership checks against arbitrary strings. */
 export const DELE_FORMS: readonly string[] = DELE_FAMILY.map((d) => d.form);
+
+/**
+ * The full closed-class possessive INVENTORY: every determiner surface (the 24
+ * paradigm cells, de-duped — `seu/sua/…` collapse) PLUS the four dele forms.
+ *
+ * This is the membership set the §6.5 CONTEXT eligibility path checks against
+ * (AC4): a context record's AUTHORED answer must be one of these forms to be
+ * shown. Unlike the cue-based gate, context answers are NOT reconstructed from
+ * person+gender+number (vosso/seu etc. are dialogue-decided), so the only
+ * runtime guard is that the answer is a real possessive surface — the deeper
+ * "this is the UNIQUE answer" guarantee rests on the OFFLINE codex verification
+ * of the dataset, not on runtime reconstruction.
+ */
+export const POSSESSIVE_INVENTORY: ReadonlySet<string> = new Set<string>([
+  ...DETERMINER_PARADIGM.map((c) => c.form),
+  ...DELE_FORMS,
+]);
+
+/** Is `form` a recognized possessive surface (determiner or dele)? */
+export function isInPossessiveInventory(form: unknown): boolean {
+  return typeof form === 'string' && POSSESSIVE_INVENTORY.has(form.trim().toLowerCase());
+}
 
 /**
  * The Portuguese person CUE displayed in the prompt for a DETERMINER item

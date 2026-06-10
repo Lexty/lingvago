@@ -13,16 +13,19 @@ import type { ContentBundle } from '../src/content/types.ts';
  *
  * Plays a DETERMINISTIC seeded session end-to-end across the §4.8 L1→L3 curve,
  * exercising BOTH a typed PRODUCTION item and a parity MC item (a same-gender/
- * number person variant AND the dele↔dela owner contrast), asserting the correct
- * + wrong-reveal feedback AND that the feedback opens the single `ref-possessive`
- * rule card as an IN-DRILL overlay (open → visible → close → SAME prompt). The
- * expected items are recomputed from the SAME pure generator the screen uses, fed
- * by the SHIPPED bundle — no duplicated answer table to drift. Per AC4 the test
+ * number person variant AND the dele↔dela owner contrast), AND reaching the HARD
+ * L3 CONTEXT tier — a multi-line dialogue prompt with NO cue, graded by typed
+ * production — asserting the correct + wrong-reveal feedback AND that the feedback
+ * opens the single `ref-possessive` rule card as an IN-DRILL overlay (open →
+ * visible → close → SAME prompt). The expected items are recomputed from the SAME
+ * pure generator the screen uses, fed by the SHIPPED bundle (both the cue-based
+ * `possessives` AND the L3 `possessiveContext` dialogues) — no duplicated answer
+ * table to drift. Per AC4 the test
  * only asserts MC contrasts that are actually assemblable from the fixture; it
  * never asserts a `minha`↔`meu` (cross-gender) or `seu`↔`dele` (cross-family)
  * pair.
  */
-const SEED = 'e2e-poss-0';
+const SEED = 'e2e-poss-3';
 const PER_LEVEL = 4;
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -32,21 +35,28 @@ interface Entry {
   level: string;
   mode: 'production' | 'mc';
   kind: string;
+  isContext: boolean;
   prompt: string;
   answer: string;
   options: string[] | null;
   referenceId: string;
 }
 
-/** Recompute the exact L1→L3 session the app generates from the shipped bundle. */
+/**
+ * Recompute the exact L1→L3 session the app generates from the shipped bundle —
+ * fed BOTH the cue-based `possessives` AND the L3 `possessiveContext` dialogues,
+ * exactly as `PossessiveDrill.buildPossessiveEntries` feeds the generator (so the
+ * L3 walk reaches the HARD context tier here too).
+ */
 function expectedEntries(): Entry[] {
-  const bundlePath = resolve(here, '../public/content.v4.json');
+  const bundlePath = resolve(here, '../public/content.v5.json');
   const bundle = JSON.parse(readFileSync(bundlePath, 'utf8')) as ContentBundle;
   const entries: Entry[] = [];
   for (const level of POSS_LEVELS) {
     const items = generateSession(`${SEED}-${level}`, bundle.possessives, {
       count: PER_LEVEL,
       level,
+      context: bundle.possessiveContext,
     });
     for (const item of items) {
       entries.push({
@@ -54,6 +64,7 @@ function expectedEntries(): Entry[] {
         level: item.level,
         mode: item.drill.mode,
         kind: item.kind,
+        isContext: item.isContext,
         prompt: item.drill.prompt,
         answer: item.drill.answer,
         options:
@@ -95,6 +106,18 @@ test('E-Possessive: plays a deterministic L1–L3 session with production + MC a
   expect(entries.map((e) => e.mode)).toContain('mc');
   expect(new Set(entries.map((e) => e.level))).toEqual(new Set(['L1', 'L2', 'L3']));
 
+  // Coverage guard: the L3 tier is the HARD CONTEXT tier — every L3 item is a
+  // multi-line dialogue (carries `\n`), graded by typed PRODUCTION, with NO cue
+  // prefix (the owner is inferred from the conversation).
+  const l3 = entries.filter((e) => e.level === 'L3');
+  expect(l3.length).toBeGreaterThan(0);
+  for (const e of l3) {
+    expect(e.isContext).toBe(true);
+    expect(e.mode).toBe('production');
+    expect(e.prompt).toContain('\n');
+    expect(e.prompt.startsWith('(')).toBe(false);
+  }
+
   // The seed exercises BOTH a determiner MC (same gender+number, different
   // person) and a dele MC (the dele↔dela owner contrast) — the only contrasts the
   // shared parity module can assemble from this fixture.
@@ -112,6 +135,8 @@ test('E-Possessive: plays a deterministic L1–L3 session with production + MC a
 
   const prodIdx = entries.findIndex((e) => e.mode === 'production');
   const mcIdx = entries.findIndex((e) => e.mode === 'mc');
+  const ctxIdx = entries.findIndex((e) => e.isContext);
+  expect(ctxIdx).toBeGreaterThanOrEqual(0);
 
   await page.goto(`/drill/possessive?seed=${SEED}`);
   await expect(
@@ -164,6 +189,24 @@ test('E-Possessive: plays a deterministic L1–L3 session with production + MC a
       `[data-testid="possessive-drill-rule-overlay"] [data-content-id="${mc.referenceId}"]`,
     ),
   ).toBeVisible();
+
+  // Back to the SAME seed and walk the curve to the HARD L3 CONTEXT tier: a
+  // multi-line dialogue prompt (NO cue), graded by typed production. The screen
+  // fed the generator the shipped `possessiveContext`, so the L1→L3 walk REACHES
+  // this item exactly as recomputed here.
+  await page.goto(`/drill/possessive?seed=${SEED}`);
+  await expect(prompt).toHaveText(entries[0].prompt);
+  await advanceBy(page, entries, ctxIdx);
+  const ctx = entries[ctxIdx];
+  await expect(page.getByTestId('possessive-drill-level')).toHaveText('Level L3');
+  // Both dialogue turns render (the multi-line `\n` dialogue is shown in full).
+  for (const turn of ctx.prompt.split('\n')) {
+    await expect(prompt).toContainText(turn);
+  }
+  // Typed production grades correct against the single authored answer.
+  await page.getByTestId('possessive-drill-answer').fill(ctx.answer);
+  await page.getByRole('button', { name: 'Check' }).click();
+  await expect(page.getByTestId('possessive-drill-feedback')).toContainText('Correct');
 });
 
 test('E-Possessive-b: the survival-kit nav links to the possessive drill', async ({

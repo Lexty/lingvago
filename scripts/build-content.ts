@@ -1,7 +1,7 @@
 // Build the app content bundle (SPEC §7.3 pipeline) from
 // extraction/normalized/*.json + authored reference cards.
 //
-// Output: public/content.v<CONTENT_VERSION>.json (currently content.v4.json) —
+// Output: public/content.v<CONTENT_VERSION>.json (currently content.v5.json) —
 // a versioned, READ-ONLY artifact loaded into IndexedDB content stores
 // (SPEC §7.1) at first run / on contentVersion change.
 //
@@ -31,7 +31,12 @@ import { dirname, join } from 'node:path';
 // reference card (EP interrogative drill: the 17-row table + 6 rules) — another
 // additive bump so any install reloads and materializes the new interrogatives
 // store. The bundle remains additive (no existing field removed/renamed).
-export const CONTENT_VERSION = 4;
+// v5 ADDS the `possessiveContext` content store (the HARDER L3 tier of the
+// possessive drill: 24 verified dialogue cloze items where the owner is inferred
+// from the conversation, NOT a person cue) — another additive bump so any
+// install reloads and materializes the new possessiveContext store. The bundle
+// remains additive (no existing field removed/renamed).
+export const CONTENT_VERSION = 5;
 
 /** Output artifact name — `content.v<CONTENT_VERSION>.json` (SPEC §10.3). */
 export const CONTENT_FILENAME = `content.v${CONTENT_VERSION}.json`;
@@ -140,6 +145,28 @@ export interface PossessiveRecord {
   hasArticle: boolean;
 }
 
+/**
+ * A single verified EP possessive CONTEXT cloze item (from
+ * possessives_context.json). The HARDER L3 tier: the owner is inferred from a
+ * short two-turn `dialogue` (carrying exactly one `___` blank), NOT a person
+ * cue. Carries the same grading fields as a PossessiveRecord plus the
+ * multi-line `dialogue`, the (informational-only) `ownerCue`, and the
+ * `possessedNoun`. The `answer` is AUTHORED + adversarially verified for
+ * uniqueness (it is NOT derivable from person+gender+number — e.g. vosso/seu
+ * are context-decided), so it is graded exact-match against this single string.
+ */
+export interface PossessiveContextRecord {
+  contentId: string;
+  dialogue: string;
+  answer: string;
+  person: string;
+  kind: string;
+  ownerCue: string;
+  possessedGender: string;
+  possessedNumber: string;
+  possessedNoun: string;
+}
+
 /** Agreement features carried by an interrogative (mirror src/db/schema.ts). */
 export interface InterrogativeAgreement {
   gender?: string;
@@ -175,6 +202,7 @@ export interface ContentBundle {
   prepositions: PrepositionRecord[];
   conjugationTables: ConjugationTableRecord[];
   possessives: PossessiveRecord[];
+  possessiveContext: PossessiveContextRecord[];
   interrogatives: InterrogativeRecord[];
 }
 
@@ -425,6 +453,101 @@ function buildPossessives(): PossessiveRecord[] {
         `item ${contentId} "possessedNumber"`,
       ),
       hasArticle: it.hasArticle === true,
+    });
+  }
+  return [...seen.values()].sort((a, b) => a.contentId.localeCompare(b.contentId, 'en'));
+}
+
+// ---- possessive context (from possessives_context.json) ---------------------
+// The HARDER L3 tier: each verified DIALOGUE cloze item is emitted as a
+// PossessiveContextRecord keyed by its stable dataset `id` (`ctxNNNN`). Unlike
+// the cue-based possessives, the answer is AUTHORED + adversarially verified
+// (NOT reconstructable from person+gender+number — vosso/seu are context-decided)
+// so the runtime grades it exact-match. To keep a bad authored row from ever
+// shipping, the builder ALSO asserts (fail-loud) that every record has EXACTLY
+// one `___` blank in its dialogue AND an `answer` inside the closed possessive
+// inventory (the determiner + dele/dela family). Fails loudly on a
+// missing/empty array or a duplicate id (no silent empty store).
+//
+// The closed EP possessive inventory (determiner forms + the invariable
+// dele/dela/deles/delas family). Mirrors the paradigm the cue-based mode uses;
+// declared inline here so this node-run build script never imports the app.
+const POSSESSIVE_INVENTORY: ReadonlySet<string> = new Set([
+  'meu', 'minha', 'meus', 'minhas',
+  'teu', 'tua', 'teus', 'tuas',
+  'seu', 'sua', 'seus', 'suas',
+  'nosso', 'nossa', 'nossos', 'nossas',
+  'vosso', 'vossa', 'vossos', 'vossas',
+  'dele', 'dela', 'deles', 'delas',
+]);
+
+function countBlanks(s: string): number {
+  // Count occurrences of the literal `___` blank marker.
+  return s.split('___').length - 1;
+}
+
+function buildPossessiveContext(): PossessiveContextRecord[] {
+  const data = asRecord(readNormalized('possessives_context.json'), 'possessives_context.json');
+  const items = asArray(data.items, 'possessives_context.json', 'items');
+  if (items.length === 0) {
+    throw new Error('build-content: possessives_context.json field "items" must not be empty');
+  }
+
+  const seen = new Map<string, PossessiveContextRecord>();
+  for (const item of items) {
+    if (typeof item !== 'object' || item === null || Array.isArray(item)) {
+      throw new Error('build-content: possessives_context.json item must be a JSON object');
+    }
+    const it = item as Record<string, unknown>;
+    const contentId = asString(it.id, 'possessives_context.json', 'item "id"');
+    if (seen.has(contentId)) {
+      throw new Error(
+        `build-content: possessives_context.json has duplicate item id "${contentId}"`,
+      );
+    }
+    const dialogue = asString(
+      it.dialogue,
+      'possessives_context.json',
+      `item ${contentId} "dialogue"`,
+    );
+    // Fail-loud: exactly one `___` blank (a bad authored row never ships).
+    const blanks = countBlanks(dialogue);
+    if (blanks !== 1) {
+      throw new Error(
+        `build-content: possessives_context.json item ${contentId} "dialogue" must contain exactly one "___" blank (found ${blanks})`,
+      );
+    }
+    const answer = asString(it.answer, 'possessives_context.json', `item ${contentId} "answer"`);
+    // Fail-loud: the authored answer must be inside the closed possessive
+    // inventory (determiner + dele family) — a typo'd/out-of-paradigm answer
+    // would be ungradeable, so it never ships.
+    if (!POSSESSIVE_INVENTORY.has(answer)) {
+      throw new Error(
+        `build-content: possessives_context.json item ${contentId} "answer" ("${answer}") is not in the possessive inventory`,
+      );
+    }
+    seen.set(contentId, {
+      contentId,
+      dialogue,
+      answer,
+      person: asString(it.person, 'possessives_context.json', `item ${contentId} "person"`),
+      kind: asString(it.kind, 'possessives_context.json', `item ${contentId} "kind"`),
+      ownerCue: asString(it.ownerCue, 'possessives_context.json', `item ${contentId} "ownerCue"`),
+      possessedGender: asString(
+        it.possessedGender,
+        'possessives_context.json',
+        `item ${contentId} "possessedGender"`,
+      ),
+      possessedNumber: asString(
+        it.possessedNumber,
+        'possessives_context.json',
+        `item ${contentId} "possessedNumber"`,
+      ),
+      possessedNoun: asString(
+        it.possessedNoun,
+        'possessives_context.json',
+        `item ${contentId} "possessedNoun"`,
+      ),
     });
   }
   return [...seen.values()].sort((a, b) => a.contentId.localeCompare(b.contentId, 'en'));
@@ -778,6 +901,7 @@ export function buildContent(): ContentBundle {
     prepositions: buildPrepositions(),
     conjugationTables: buildConjugationTables(),
     possessives: buildPossessives(),
+    possessiveContext: buildPossessiveContext(),
     interrogatives: buildInterrogatives(),
   };
 }
@@ -794,7 +918,7 @@ function main(): void {
   writeFileSync(join(outDir, CONTENT_FILENAME), json);
   // Stderr is fine for a build log; output file content stays deterministic.
   process.stderr.write(
-    `${CONTENT_FILENAME}: ${bundle.referenceCards.length} cards · ${bundle.verbs.length} verbs · ${bundle.nouns.length} nouns · ${bundle.prepositions.length} prepositions · ${bundle.conjugationTables.length} conj-tables · ${bundle.possessives.length} possessives · ${bundle.interrogatives.length} interrogatives\n`,
+    `${CONTENT_FILENAME}: ${bundle.referenceCards.length} cards · ${bundle.verbs.length} verbs · ${bundle.nouns.length} nouns · ${bundle.prepositions.length} prepositions · ${bundle.conjugationTables.length} conj-tables · ${bundle.possessives.length} possessives · ${bundle.possessiveContext.length} possessive-context · ${bundle.interrogatives.length} interrogatives\n`,
   );
 }
 

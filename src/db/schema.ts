@@ -260,6 +260,38 @@ export interface PossessiveRecord {
   hasArticle: boolean;
 }
 
+/**
+ * Verified EP possessive CONTEXT cloze item (from possessives_context.json) —
+ * the HARDER L3 tier of the possessive drill. Unlike {@link PossessiveRecord}
+ * (whose answer is reconstructable from person+gender+number against the closed
+ * paradigm), the owner here is inferred from a short two-turn `dialogue` that
+ * carries exactly one `___` blank, and the `answer` is AUTHORED + adversarially
+ * verified for uniqueness (e.g. vosso/seu are context-decided, NOT derivable
+ * from the labels). It is therefore graded EXACT-MATCH against the single
+ * authored answer; the "objectively gradeable" guarantee rests on the OFFLINE
+ * codex uniqueness verification of the dataset, not on runtime reconstruction.
+ */
+export interface PossessiveContextRecord {
+  /** Stable content id (`ctxNNNN`, the dataset id); primary key. */
+  contentId: string;
+  /** Two-turn dialogue (multi-line, `\n`-separated) with the possessive blanked as `___`. */
+  dialogue: string;
+  /** Canonical authored answer (the possessive form; graded exact-match). */
+  answer: string;
+  /** Grammatical person (`eu` / `tu` / `ele_ela_voce` / `nos` / `vos` / `eles_elas`). */
+  person: string;
+  /** `determiner` (agrees with the possessed noun) or `dele` (invariable family). */
+  kind: string;
+  /** Informational owner cue (`tu` / `eu` / `ele` / …); the dialogue, not this, is shown. */
+  ownerCue: string;
+  /** Possessed noun's gender (`m` / `f`). */
+  possessedGender: string;
+  /** Possessed noun's number (`sg` / `pl`). */
+  possessedNumber: string;
+  /** The possessed noun (informational, e.g. `casaco`). */
+  possessedNoun: string;
+}
+
 /** Possessed-noun / counted-noun agreement features carried by an interrogative. */
 export interface InterrogativeAgreement {
   /** Counted/agreeing noun gender (`m` / `f`); present for the quanto-family. */

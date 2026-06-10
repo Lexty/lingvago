@@ -56,6 +56,19 @@ function bundle(version: number): ContentBundle {
         hasArticle: true,
       },
     ],
+    possessiveContext: [
+      {
+        contentId: 'ctx0001',
+        dialogue: '— Comprei este casaco ontem.\n— Que bonito! Então é ___?',
+        answer: 'teu',
+        person: 'tu',
+        kind: 'determiner',
+        ownerCue: 'tu',
+        possessedGender: 'm',
+        possessedNumber: 'sg',
+        possessedNoun: 'casaco',
+      },
+    ],
     interrogatives: [
       {
         contentId: 'int:0001',
@@ -130,6 +143,16 @@ describe('content loader — version-gated load (AC3, AC6 b/c)', () => {
       category: 'how',
       gloss_ru: 'как',
       gloss_en: 'how',
+    });
+    // PossessiveContext content store loads (read-only, contract Task 1 / AC1).
+    expect(await db.possessiveContext.count()).toBe(1);
+    expect(await db.possessiveContext.get('ctx0001')).toMatchObject({
+      answer: 'teu',
+      kind: 'determiner',
+      person: 'tu',
+      possessedGender: 'm',
+      possessedNumber: 'sg',
+      possessedNoun: 'casaco',
     });
     expect(await getLoadedContentVersion(db)).toBe(1);
   });
