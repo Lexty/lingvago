@@ -40,7 +40,7 @@ interface Entry {
 
 /** Recompute the exact L1→L3 session the app generates from the shipped bundle. */
 function expectedEntries(): Entry[] {
-  const bundlePath = resolve(here, '../public/content.v5.json');
+  const bundlePath = resolve(here, '../public/content.v6.json');
   const bundle = JSON.parse(readFileSync(bundlePath, 'utf8')) as ContentBundle;
   const entries: Entry[] = [];
   for (const level of GENDER_LEVELS) {

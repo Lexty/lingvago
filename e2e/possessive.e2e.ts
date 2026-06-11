@@ -49,7 +49,7 @@ interface Entry {
  * L3 walk reaches the HARD context tier here too).
  */
 function expectedEntries(): Entry[] {
-  const bundlePath = resolve(here, '../public/content.v5.json');
+  const bundlePath = resolve(here, '../public/content.v6.json');
   const bundle = JSON.parse(readFileSync(bundlePath, 'utf8')) as ContentBundle;
   const entries: Entry[] = [];
   for (const level of POSS_LEVELS) {
@@ -207,6 +207,65 @@ test('E-Possessive: plays a deterministic L1–L3 session with production + MC a
   await page.getByTestId('possessive-drill-answer').fill(ctx.answer);
   await page.getByRole('button', { name: 'Check' }).click();
   await expect(page.getByTestId('possessive-drill-feedback')).toContainText('Correct');
+});
+
+test('E-Possessive-c: no horizontal overflow on the drill at a 390px phone width (AC1)', async ({
+  page,
+}) => {
+  // Reproduces the live iPhone bug: the large display-font prompt — the `____`
+  // cloze blank, long Portuguese words, and especially the multi-line L3 dialogue
+  // — used to push the layout past a narrow viewport, forcing the user to zoom
+  // out. With `overflow-wrap`/`word-break` on `.prompt` (+ the defensive
+  // `overflow-x: clip` on the screen frame), the document must not be
+  // horizontally scrollable at a ~390px phone width.
+  await page.setViewportSize({ width: 390, height: 844 });
+
+  const entries = expectedEntries();
+  const ctxIdx = entries.findIndex((e) => e.isContext);
+  expect(ctxIdx).toBeGreaterThanOrEqual(0);
+
+  await page.goto(`/drill/possessive?seed=${SEED}`);
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'Possessives' }),
+  ).toBeVisible();
+  await waitForServiceWorkerActive(page);
+
+  const prompt = page.getByTestId('possessive-drill-prompt');
+  await expect(prompt).toHaveText(entries[0].prompt);
+
+  async function assertNoHorizontalScroll() {
+    const overflow = await page.evaluate(() => {
+      const doc = document.documentElement;
+      return doc.scrollWidth - doc.clientWidth;
+    });
+    // No horizontal scroll: scrollWidth must not exceed clientWidth.
+    expect(overflow).toBeLessThanOrEqual(0);
+  }
+
+  // Worst case at the entry item (carries the `____` cloze blank).
+  await assertNoHorizontalScroll();
+
+  // Walk to the HARD L3 CONTEXT tier — the multi-line dialogue prompt — which is
+  // the longest, most overflow-prone content the drill renders.
+  await advanceBy(page, entries, ctxIdx);
+  await expect(page.getByTestId('possessive-drill-level')).toHaveText('Level L3');
+  await assertNoHorizontalScroll();
+
+  // Stress the worst case directly: force the prompt to hold a pathologically
+  // long UNBREAKABLE token (a very wide `____` cloze blank / a runaway Portuguese
+  // compound). This is exactly what triggered the live sideways scroll. The
+  // `.prompt` `overflow-wrap: break-word` + `word-break: break-word` must wrap it
+  // so the document is still not horizontally scrollable; without that rule this
+  // token would force `scrollWidth > clientWidth` and this assertion would fail.
+  await prompt.evaluate((el) => {
+    el.textContent = '_'.repeat(120) + ' ' + 'a'.repeat(120);
+  });
+  await assertNoHorizontalScroll();
+  // And the prompt box itself stays within its container (no element-level spill).
+  const promptOverflow = await prompt.evaluate(
+    (el) => el.scrollWidth - el.clientWidth,
+  );
+  expect(promptOverflow).toBeLessThanOrEqual(0);
 });
 
 test('E-Possessive-b: the survival-kit nav links to the possessive drill', async ({

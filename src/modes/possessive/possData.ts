@@ -124,7 +124,10 @@ export const PERSON_CUE: Readonly<Record<PossPerson, string>> = {
   tu: 'tu',
   ele_ela_voce: 'ele·ela·você',
   nos: 'nós',
-  vos: 'vós',
+  // `vós` (the subject pronoun) is archaic in modern continental EP, but the
+  // possessive `vosso/vossa` is the LIVING possessive of `vocês` ("you, plural"),
+  // so the learner-facing person LABEL is `vocês` (the data `person` key stays `vos`).
+  vos: 'vocês',
   eles_elas: 'eles·elas',
 };
 

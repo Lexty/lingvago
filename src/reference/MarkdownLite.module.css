@@ -34,3 +34,32 @@
   line-height: var(--lh-body);
   color: var(--text);
 }
+
+/* A wide paradigm/interrogative table scrolls inside its own box so it can
+ * never push a sideways scroll onto the page on a ~390px phone. */
+.tableScroll {
+  max-inline-size: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  border-collapse: collapse;
+  inline-size: 100%;
+  font-size: var(--t-sm);
+  line-height: var(--lh-body);
+}
+
+.th,
+.td {
+  text-align: start;
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+
+.th {
+  background: var(--surface-2);
+  font-weight: var(--fw-semi);
+}

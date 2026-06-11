@@ -1,7 +1,7 @@
 // Build the app content bundle (SPEC §7.3 pipeline) from
 // extraction/normalized/*.json + authored reference cards.
 //
-// Output: public/content.v<CONTENT_VERSION>.json (currently content.v5.json) —
+// Output: public/content.v<CONTENT_VERSION>.json (currently content.v6.json) —
 // a versioned, READ-ONLY artifact loaded into IndexedDB content stores
 // (SPEC §7.1) at first run / on contentVersion change.
 //
@@ -36,7 +36,13 @@ import { dirname, join } from 'node:path';
 // from the conversation, NOT a person cue) — another additive bump so any
 // install reloads and materializes the new possessiveContext store. The bundle
 // remains additive (no existing field removed/renamed).
-export const CONTENT_VERSION = 5;
+// v6 RELABELS the `vos` possessive person on the `ref-possessive` card row from
+// `vós` to `vocês` (the living possessive of `vocês`; `vós` the subject pronoun
+// is archaic in modern continental EP) and adds a short note explaining that
+// `vós` is the archaic equivalent of `vocês`. The possessive FORMS are unchanged
+// (vosso/vossa/…) — only the human-facing person LABEL + a note change. Body-only
+// edit, so installed PWAs reload the updated card on the version bump.
+export const CONTENT_VERSION = 6;
 
 /** Output artifact name — `content.v<CONTENT_VERSION>.json` (SPEC §10.3). */
 export const CONTENT_FILENAME = `content.v${CONTENT_VERSION}.json`;
@@ -749,7 +755,11 @@ const POSS_PERSON_LABELS: Record<string, string> = {
   tu: 'tu',
   ele_ela_voce: 'ele · ela · você',
   nos: 'nós',
-  vos: 'vós',
+  // `vós` (subject pronoun) is archaic in modern continental EP, but the
+  // possessive `vosso/vossa` is the LIVING possessive of `vocês`, so the row
+  // LABEL is `vocês` (the dataset's `person` key stays `vos`). See the
+  // vós-archaic note appended to the card body below.
+  vos: 'vocês',
   eles_elas: 'eles · elas',
 };
 
@@ -813,6 +823,8 @@ function buildPossessiveCard(): ReferenceCard {
     '',
     '**Core rules:**',
     ...ruleLines,
+    '',
+    '**Nota:** `vocês` é o "you, plural" do dia-a-dia; o possessivo `vosso/vossa` é o seu possessivo vivo. `vós` (o pronome sujeito) é o equivalente arcaico de `vocês`.',
   ].join('\n');
 
   return {

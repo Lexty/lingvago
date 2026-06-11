@@ -86,7 +86,26 @@ const RECORDS: PossessiveRecord[] = [
     possessedNumber: 'sg',
     hasArticle: false,
   },
+  {
+    // The `vos` person (appended last so existing index-based RECORDS[n]
+    // references are unaffected): the FORM is `vossa` (alive), but the
+    // learner-facing person LABEL is `vocês` (`vós` the subject pronoun is
+    // archaic in modern continental EP). f/sg so it is parity-feasible against
+    // the other length-5 f/sg forms (minha/tua/nossa/…), giving us an MC item
+    // whose explanations we can assert show «vocês», never «vos»/«vós».
+    contentId: 'poss:0008',
+    blankSentence: 'A ___ casa fica perto.',
+    answer: 'vossa',
+    person: 'vos',
+    kind: 'determiner',
+    possessedGender: 'f',
+    possessedNumber: 'sg',
+    hasArticle: true,
+  },
 ];
+
+/** The single appended `vos` record, addressed by content id (not index). */
+const VOS_RECORD = RECORDS.find((r) => r.person === 'vos')!;
 
 /** A mislabeled (non-reconstructible) row — must never seed an item (§6.5). */
 const MISLABELED: PossessiveRecord = {
@@ -195,6 +214,70 @@ describe('AC3 cue — well-determined prompt for every item', () => {
     for (const item of byAnswer(items, 'dela')) {
       expect(item.cue).toBe('ela');
       expect(item.drill.prompt.startsWith('(ela) ')).toBe(true);
+    }
+  });
+});
+
+describe('AC3 vós→vocês — the `vos` person is LABELLED `vocês` for the learner', () => {
+  it('the `vos` cue renders `(vocês)`, never `(vós)`/`(vos)`; the FORM stays `vosso/vossa`', () => {
+    const items = generateSession('vos-cue', [VOS_RECORD], { count: 1, level: 'L1' });
+    const item = items[0];
+    expect(item.person).toBe('vos'); // the DATA key is unchanged
+    expect(item.cue).toBe('vocês'); // the LABEL the learner sees
+    expect(item.answer).toBe('vossa'); // the FORM is unchanged
+    expect(item.drill.prompt).toBe('(vocês) A ___ casa fica perto.');
+    expect(item.drill.prompt).not.toContain('vós');
+    expect(item.drill.prompt).not.toContain('(vos)');
+  });
+
+  it('the right-answer feedback for a `vos` item says «vocês», never «vos»/«vós»', () => {
+    // L3 ⇒ MC item, so the correct option carries the answerExplanation text.
+    const items = generateSession('vos-right', RECORDS, { count: 60, level: 'L3' });
+    const mc = byAnswer(items, 'vossa').filter((i) => i.drill.mode === 'mc');
+    expect(mc.length).toBeGreaterThan(0);
+    for (const item of mc) {
+      if (item.drill.mode !== 'mc') throw new Error('expected mc');
+      const correct = item.drill.options.find((o) => o.correct)!;
+      expect(correct.explanation).toContain('«vocês»');
+      expect(correct.explanation).not.toContain('«vos»');
+      expect(correct.explanation).not.toContain('«vós»');
+    }
+  });
+
+  it('the wrong-person feedback that points AT a `vos` peer says «vocês», never «vos»/«vós»', () => {
+    // A non-vos f/sg item (e.g. `minha`) at L3 offers `vossa` as a distractor;
+    // its explanation names the `vos` person — assert it reads «vocês».
+    const items = generateSession('vos-wrong', RECORDS, { count: 120, level: 'L3' });
+    let sawVossaDistractor = false;
+    for (const item of items) {
+      if (item.drill.mode !== 'mc') continue;
+      for (const opt of item.drill.options) {
+        if (opt.correct) continue;
+        if (opt.surface === 'vossa') {
+          sawVossaDistractor = true;
+          expect(opt.explanation).toContain('«vocês»');
+          expect(opt.explanation).not.toContain('«vos»');
+          expect(opt.explanation).not.toContain('«vós»');
+        }
+      }
+    }
+    expect(sawVossaDistractor).toBe(true);
+  });
+
+  it('REGRESSION: the OTHER persons keep their cue/feedback labels (ele·ela·você, nós)', () => {
+    const items = generateSession('others', RECORDS, { count: 120, level: 'L3' });
+    // `nossa` (nos) item ⇒ cue `nós`.
+    for (const item of byAnswer(items, 'nossa')) {
+      expect(item.cue).toBe('nós');
+    }
+    // wherever a 3rd-person determiner is named in feedback it stays `ele·ela·você`.
+    for (const item of items) {
+      if (item.drill.mode !== 'mc') continue;
+      for (const opt of item.drill.options) {
+        // the underscore key must never leak into any explanation.
+        expect(opt.explanation).not.toContain('ele_ela_voce');
+        expect(opt.explanation).not.toContain('«vos»');
+      }
     }
   });
 });

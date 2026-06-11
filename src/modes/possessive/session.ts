@@ -20,7 +20,7 @@
 // appear). Each item:
 //
 //  - carries a structured `cue` (AC3): for a `determiner` item the grammatical
-//    PERSON (`eu` / `tu` / `ele·ela·você` / `nós` / `vós` / `eles·elas`); for a
+//    PERSON (`eu` / `tu` / `ele·ela·você` / `nós` / `vocês` / `eles·elas`); for a
 //    `dele` item the OWNER (`ele`/`ela`/`eles`/`elas`) derived from the answer.
 //    The cue is what makes the production answer well-determined.
 //  - prefixes that cue into the visible `drill.prompt`, e.g.
@@ -190,6 +190,16 @@ function buildContextItem(
 }
 
 /**
+ * The human-facing LABEL for a grammatical person (AC3): the same cue token the
+ * prompt shows (`ele·ela·você`, `nós`, `vocês`, …), so feedback never leaks the
+ * raw `person` KEY (`vos`, `ele_ela_voce`). Falls back to the key with `_`→`·`
+ * for any unmapped value (defensive — all closed-class persons are in the map).
+ */
+function personLabel(person: string): string {
+  return PERSON_CUE[person as PossPerson] ?? person.replace(/_/g, '·');
+}
+
+/**
  * The cue token for a record (AC3). Determiner → the person cue; dele → the
  * owner derived from the (already reconstructed) answer. Returns `null` only for
  * a non-reconstructible dele surface (caller has already gated eligibility, so
@@ -239,7 +249,7 @@ function candidatesFor(
       seen.add(cell.form);
       pool.push({
         surface: cell.form,
-        explanation: `wrong person — «${cell.form}» is the «${cell.person.replace(/_/g, '·')}» form; here the «${record.person.replace(/_/g, '·')}» form «${answer}» is required (it agrees with the possessed noun's ${record.possessedGender}/${record.possessedNumber})`,
+        explanation: `wrong person — «${cell.form}» is the «${personLabel(cell.person)}» form; here the «${personLabel(record.person)}» form «${answer}» is required (it agrees with the possessed noun's ${record.possessedGender}/${record.possessedNumber})`,
       });
     }
   } else {
@@ -299,7 +309,7 @@ function buildItem(
       answerExplanation:
         record.kind === 'dele'
           ? `«${answer}» — invariable, follows the noun and names the owner «${cue}»`
-          : `«${answer}» — the «${record.person.replace(/_/g, '·')}» possessive agreeing with the possessed noun (${record.possessedGender}/${record.possessedNumber})`,
+          : `«${answer}» — the «${personLabel(record.person)}» possessive agreeing with the possessed noun (${record.possessedGender}/${record.possessedNumber})`,
       parityClass,
       candidates,
       sourceRef: sourceOf(record),

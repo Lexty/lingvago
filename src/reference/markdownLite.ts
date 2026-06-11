@@ -8,6 +8,8 @@
 //   • **bold**     → strong spans (inline)
 //   • `•` bullets  → a line beginning with "• " is a list item
 //   • `⚠️` lines   → a line beginning with "⚠️" is a callout (warning) block
+//   • `| … |` rows → a run of consecutive pipe lines is one table; a `|---|`
+//                    separator row marks the preceding row as the header
 //   • newlines     → blank line separates blocks; single newline ends a block
 //
 // The output is a plain data model (blocks → inline spans). The React renderer
@@ -38,10 +40,76 @@ export interface ListBlock {
   items: InlineSpan[][];
 }
 
-export type MarkdownBlock = ParagraphBlock | CalloutBlock | ListBlock;
+/** A single table cell: a run of inline spans. */
+export type TableCell = InlineSpan[];
+
+/**
+ * A pipe-table. `header` is the (optional) header row — present only when a
+ * `|---|` separator row followed the first row; otherwise the table is all body
+ * rows (graceful fallback for tables authored without a separator).
+ */
+export interface TableBlock {
+  type: 'table';
+  header: TableCell[] | null;
+  rows: TableCell[][];
+}
+
+export type MarkdownBlock = ParagraphBlock | CalloutBlock | ListBlock | TableBlock;
 
 const BULLET = '•';
 const WARNING = '⚠️';
+
+/** A line is a table row if it starts with `|` and contains another `|`. */
+function isTableLine(line: string): boolean {
+  return line.startsWith('|') && line.indexOf('|', 1) !== -1;
+}
+
+/** A `|---|`-style separator: only `|`, `-`, `:` and spaces (and at least one `-`). */
+function isSeparatorLine(line: string): boolean {
+  return /-/.test(line) && /^[|\-:\s]+$/.test(line);
+}
+
+/**
+ * Split one `| a | b |` row into trimmed cell strings, dropping the empty edge
+ * cells produced by the leading/trailing `|`. A row with no `|` yields one cell.
+ */
+function splitRowCells(line: string): string[] {
+  const cells = line.split('|').map((c) => c.trim());
+  if (cells.length > 0 && cells[0] === '') cells.shift();
+  if (cells.length > 0 && cells[cells.length - 1] === '') cells.pop();
+  return cells;
+}
+
+/**
+ * Build a `TableBlock` from a run of consecutive pipe lines. A separator row
+ * (`|---|`) is dropped and marks the PRECEDING row as the header. Never throws
+ * and never drops text: ragged rows keep all their cells, and a run that is
+ * nothing but separators degrades to a single-row table of the raw lines.
+ */
+function buildTable(tableLines: string[]): TableBlock {
+  let header: TableCell[] | null = null;
+  const rows: TableCell[][] = [];
+  for (const line of tableLines) {
+    if (isSeparatorLine(line)) {
+      // Promote the immediately-preceding row to the header (once).
+      if (header === null && rows.length > 0) {
+        header = rows.pop() ?? null;
+      }
+      continue;
+    }
+    rows.push(splitRowCells(line).map((cell) => parseInline(cell)));
+  }
+  // Degenerate run: every line was a separator, so the header promotion above
+  // never fired and no body row was emitted — the authored text would be lost.
+  // Preserve it (never-drops-text invariant) by keeping the raw separator lines
+  // as body rows. The well-formed path (header and/or body present) is untouched.
+  if (header === null && rows.length === 0) {
+    for (const line of tableLines) {
+      rows.push(splitRowCells(line).map((cell) => parseInline(cell)));
+    }
+  }
+  return { type: 'table', header, rows };
+}
 
 /**
  * Parse inline `**bold**` runs in a single line into spans.
@@ -78,6 +146,7 @@ export function parseMarkdownLite(body: string): MarkdownBlock[] {
   const lines = body.split('\n');
   let listItems: InlineSpan[][] | null = null;
   let paragraphLines: string[] | null = null;
+  let tableLines: string[] | null = null;
 
   const flushList = (): void => {
     if (listItems && listItems.length > 0) {
@@ -92,14 +161,32 @@ export function parseMarkdownLite(body: string): MarkdownBlock[] {
     }
     paragraphLines = null;
   };
+  const flushTable = (): void => {
+    if (tableLines && tableLines.length > 0) {
+      blocks.push(buildTable(tableLines));
+    }
+    tableLines = null;
+  };
 
   for (const rawLine of lines) {
     const line = rawLine.trimEnd();
     if (line.length === 0) {
       flushList();
       flushParagraph();
+      flushTable();
       continue;
     }
+    if (isTableLine(line)) {
+      // A run of consecutive pipe lines forms ONE table — flush the other
+      // pending blocks first (same flush model as list/callout below).
+      flushList();
+      flushParagraph();
+      tableLines ??= [];
+      tableLines.push(line);
+      continue;
+    }
+    // A non-pipe line ends any open table run.
+    flushTable();
     if (line.startsWith(`${BULLET} `) || line === BULLET) {
       flushParagraph();
       const itemText = line.slice(BULLET.length).trimStart();
@@ -121,5 +208,6 @@ export function parseMarkdownLite(body: string): MarkdownBlock[] {
 
   flushList();
   flushParagraph();
+  flushTable();
   return blocks;
 }

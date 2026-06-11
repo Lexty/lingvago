@@ -47,6 +47,15 @@
   font-size: var(--t-display);
   line-height: var(--lh-tight);
   color: var(--text);
+  /* Long unbreakable tokens at the large display size — the `____` cloze blank,
+     long Portuguese words, the multi-line L3 dialogue — must wrap instead of
+     pushing past a narrow (phone) viewport. `overflow-wrap` breaks at word
+     boundaries first; `word-break: break-word` lets a single over-long token
+     (e.g. a wide `________`) break too. This coexists with the `white-space:
+     pre-line` that `grammarDrillScreen.module.css .prompt` composes on top
+     (authored `\n` line breaks still render; wrapping handles the rest). */
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .form {
@@ -102,6 +111,10 @@
   font-size: var(--t-body);
   line-height: var(--lh-body);
   font-weight: var(--fw-semi);
+  /* Feedback echoes the answer/cue (e.g. "the «vocês» possessive …") which can be
+     long — wrap inside the card instead of overflowing the viewport. */
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .correct {
@@ -150,6 +163,9 @@
   color: var(--text);
   font-family: var(--font-body);
   font-size: var(--t-body);
+  /* MC option labels can carry long Portuguese surfaces — wrap, don't overflow. */
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .option:focus-visible {

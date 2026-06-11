@@ -11,6 +11,15 @@
   display: flex;
   flex-direction: column;
   gap: var(--s-6);
+  /* Defensive clamp against residual sideways scroll on phones: bound the
+     per-screen page frame, NOT `body`/`#root` globally. `clip` (not `hidden`)
+     keeps the box from becoming a scroll container and does not create a new
+     scroll port, so a genuine desktop layout bug still surfaces during dev
+     rather than being silently swallowed — it only trims a sub-pixel/token
+     overhang that would otherwise force the viewport to zoom out. The real fix
+     is the `.prompt`/`.option`/`.feedback` wrapping above; this is belt-and-
+     braces for any other long inline token a screen might render. */
+  overflow-x: clip;
 }
 
 .title {

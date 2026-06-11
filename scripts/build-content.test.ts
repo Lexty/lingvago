@@ -210,6 +210,25 @@ describe('build-content — possessives store + ref-possessive card (AC1)', () =
     expect(body).toMatch(/2\. /);
     expect(body).toMatch(/3\. /);
   });
+
+  it('AC3: labels the `vos` paradigm row `vocês` (not `vós`) and notes vós is archaic', () => {
+    const bundle = buildContent();
+    const card = bundle.referenceCards.find((c) => c.contentId === 'ref-possessive');
+    const body = card?.body ?? '';
+    // The person-column LABEL for the vos row is `vocês`, shown in a table row.
+    expect(body).toMatch(/\|\s*vocês\s*\|/);
+    // The vós-archaic note answers the learner's question in-app.
+    expect(body).toContain('vocês');
+    expect(body).toContain('vós');
+    expect(body.toLowerCase()).toContain('arcaic');
+    // The FORMS are unchanged (still vosso/vossa/vossos/vossas).
+    for (const form of ['vosso', 'vossa', 'vossos', 'vossas']) {
+      expect(body).toContain(form);
+    }
+    // The vos row is NOT labelled `vós` in the person column (only the note may
+    // mention `vós`); assert no table row uses `| vós |` as a label cell.
+    expect(body).not.toMatch(/\|\s*vós\s*\|/);
+  });
 });
 
 describe('build-content — possessiveContext store (Task 1 / AC1)', () => {

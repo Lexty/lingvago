@@ -52,6 +52,37 @@ function Block({ block }: { block: MarkdownBlock }) {
           ))}
         </ul>
       );
+    case 'table':
+      return (
+        // Wrapped in a horizontally-scrollable container so a wide table never
+        // pushes a sideways scroll onto the page itself (phone-safe).
+        <div className={styles.tableScroll}>
+          <table className={styles.table}>
+            {block.header && (
+              <thead>
+                <tr>
+                  {block.header.map((cell, idx) => (
+                    <th key={idx} className={styles.th} scope="col">
+                      <Inline spans={cell} />
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+            )}
+            <tbody>
+              {block.rows.map((row, rowIdx) => (
+                <tr key={rowIdx}>
+                  {row.map((cell, cellIdx) => (
+                    <td key={cellIdx} className={styles.td}>
+                      <Inline spans={cell} />
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
   }
 }
 
