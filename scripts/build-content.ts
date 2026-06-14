@@ -1,7 +1,7 @@
 // Build the app content bundle (SPEC §7.3 pipeline) from
 // extraction/normalized/*.json + authored reference cards.
 //
-// Output: public/content.v<CONTENT_VERSION>.json (currently content.v6.json) —
+// Output: public/content.v<CONTENT_VERSION>.json (currently content.v7.json) —
 // a versioned, READ-ONLY artifact loaded into IndexedDB content stores
 // (SPEC §7.1) at first run / on contentVersion change.
 //
@@ -42,7 +42,15 @@ import { dirname, join } from 'node:path';
 // `vós` is the archaic equivalent of `vocês`. The possessive FORMS are unchanged
 // (vosso/vossa/…) — only the human-facing person LABEL + a note change. Body-only
 // edit, so installed PWAs reload the updated card on the version bump.
-export const CONTENT_VERSION = 6;
+// v7 REALIGNS the `ref-possessive` card's 3rd-person framing to the VERIFIED
+// canon (`gram:possessivos-singular` + `gram:possessivos-plural` in
+// grammar_full.json). The card paradigm is now SOURCED FROM that canon (not
+// re-derived): the determiner agreement table lists only the persons that truly
+// agree in gender+number (`eu/tu/você/nós/vocês`, with `seu/sua` belonging to
+// `você`), and a separate 3rd-person block lists the invariable owner-forms
+// `ele→dele / ela→dela / eles→deles / elas→delas`. The old `ele·ela·você → seu`
+// lump is gone. Body-only edit, so installed PWAs reload the card on the bump.
+export const CONTENT_VERSION = 7;
 
 /** Output artifact name — `content.v<CONTENT_VERSION>.json` (SPEC §10.3). */
 export const CONTENT_FILENAME = `content.v${CONTENT_VERSION}.json`;
@@ -744,82 +752,99 @@ const referenceCards: ReferenceCard[] = [
   },
 ];
 
-// ---- authored possessive reference card (paradigm + rules, data-derived) ----
-// The `ref-possessive` card body is RENDERED from possessives.json's `paradigm`
-// (the 28-cell determiner+dele/dela table) and `notes` (the 3 core EP rules) so
-// the human-facing card stays in lock-step with the verified dataset. (The
-// machine-readable distractor paradigm for the mode is a separate static const
-// in src/modes/possessive/possData.ts — contract AC4 — not parsed from here.)
-const POSS_PERSON_LABELS: Record<string, string> = {
-  eu: 'eu',
-  tu: 'tu',
-  ele_ela_voce: 'ele · ela · você',
-  nos: 'nós',
-  // `vós` (subject pronoun) is archaic in modern continental EP, but the
-  // possessive `vosso/vossa` is the LIVING possessive of `vocês`, so the row
-  // LABEL is `vocês` (the dataset's `person` key stays `vos`). See the
-  // vós-archaic note appended to the card body below.
-  vos: 'vocês',
-  eles_elas: 'eles · elas',
-};
+// ---- authored possessive reference card (paradigm + rules, canon-sourced) ----
+// The `ref-possessive` card body is SOURCED FROM the VERIFIED canon in
+// grammar_full.json (`gram:possessivos-singular` + `gram:possessivos-plural`),
+// NOT re-derived. The canon frames modern EP accurately: `seu/sua` is the formal
+// possessive of `você`; `ele/ela/eles/elas` use the invariable
+// `dele/dela/deles/delas`. So the card shows (a) a determiner AGREEMENT table for
+// the persons that truly agree in gender+number (`eu/tu/você/nós/vocês`) and (b)
+// a separate 3rd-person possession block for the invariable owner-forms.
+// (The machine-readable distractor paradigm for the drill mode is a separate
+// static const in src/modes/possessive/possData.ts — contract AC4 — not parsed
+// from here.)
+
+// The persons whose possessive truly AGREES in gender+number, in canon order.
+// `você` carries `seu/sua` (formal "your"); `ele/ela/…` are handled by the
+// invariable dele-block, NOT this table.
+const POSS_AGREEING_PERSONS: readonly string[] = ['eu', 'tu', 'você', 'nós', 'vocês'];
+
+// The invariable 3rd-person owner→form mapping, in canon order.
+const POSS_DELE_OWNERS: readonly string[] = ['ele', 'ela', 'eles', 'elas'];
+
+/** Read a canon entry's `data.table` rows ({pessoa, masculino, feminino}). */
+function readPossCanonTable(grammar: Record<string, unknown>, id: string): Record<string, string>[] {
+  const entries = asArray(grammar.grammar, 'grammar_full.json', 'grammar');
+  for (const entry of entries) {
+    if (typeof entry !== 'object' || entry === null) continue;
+    const e = entry as Record<string, unknown>;
+    if (e.id !== id) continue;
+    const data = asRecord(e.data, 'grammar_full.json');
+    const table = asArray(data.table, 'grammar_full.json', `${id}.data.table`);
+    const rows: Record<string, string>[] = [];
+    for (const r of table) {
+      if (typeof r !== 'object' || r === null) continue;
+      const rr = r as Record<string, unknown>;
+      rows.push({
+        pessoa: typeof rr.pessoa === 'string' ? rr.pessoa : '',
+        masculino: typeof rr.masculino === 'string' ? rr.masculino : '',
+        feminino: typeof rr.feminino === 'string' ? rr.feminino : '',
+      });
+    }
+    return rows;
+  }
+  throw new Error(`build-content: grammar_full.json missing canon entry "${id}"`);
+}
+
+/** Find a canon row by its `pessoa` label (the plural canon may suffix it). */
+function findCanonRow(rows: Record<string, string>[], pessoa: string): Record<string, string> | undefined {
+  return rows.find((r) => r.pessoa === pessoa || r.pessoa.split('/')[0].trim() === pessoa);
+}
 
 function buildPossessiveCard(): ReferenceCard {
-  const data = asRecord(readNormalized('possessives.json'), 'possessives.json');
-  const paradigm = asArray(data.paradigm, 'possessives.json', 'paradigm');
-  const notes = asArray(data.notes, 'possessives.json', 'notes');
+  const grammar = asRecord(readNormalized('grammar_full.json'), 'grammar_full.json');
+  const singular = readPossCanonTable(grammar, 'gram:possessivos-singular');
+  const plural = readPossCanonTable(grammar, 'gram:possessivos-plural');
 
-  // Split the paradigm into the agreeing determiner cells (gender+number) and
-  // the invariable dele-family cells (no gender/number).
+  // (a) Determiner AGREEMENT table — join the singular table (sg columns) with
+  // the plural table (pl columns) per agreeing person, sourced from the canon.
   const determinerRows: string[] = [
     '| Pessoa | m. sg. | m. pl. | f. sg. | f. pl. |',
     '| --- | --- | --- | --- | --- |',
   ];
-  const cellByPerson = new Map<string, Record<string, string>>();
-  const deleForms: string[] = [];
-  for (const entry of paradigm) {
-    if (typeof entry !== 'object' || entry === null) continue;
-    const e = entry as Record<string, unknown>;
-    const person = typeof e.person === 'string' ? e.person : '';
-    const form = typeof e.form === 'string' ? e.form : '';
-    if (!person || !form) continue;
-    const gender = typeof e.gender === 'string' ? e.gender : '';
-    const number = typeof e.number === 'string' ? e.number : '';
-    if (!gender || !number) {
-      // dele/dela/deles/delas — invariable, listed separately.
-      deleForms.push(form);
-      continue;
-    }
-    const row = cellByPerson.get(person) ?? {};
-    row[`${gender}${number}`] = form;
-    cellByPerson.set(person, row);
-  }
-  // Preserve the paradigm's person order for the table rows.
-  const personOrder: string[] = [];
-  for (const entry of paradigm) {
-    if (typeof entry !== 'object' || entry === null) continue;
-    const person = (entry as Record<string, unknown>).person;
-    if (typeof person === 'string' && cellByPerson.has(person) && !personOrder.includes(person)) {
-      personOrder.push(person);
-    }
-  }
-  for (const person of personOrder) {
-    const row = cellByPerson.get(person) ?? {};
-    const label = POSS_PERSON_LABELS[person] ?? person;
+  for (const pessoa of POSS_AGREEING_PERSONS) {
+    const sg = findCanonRow(singular, pessoa);
+    const pl = findCanonRow(plural, pessoa);
     determinerRows.push(
-      `| ${label} | ${row.msg ?? '—'} | ${row.mpl ?? '—'} | ${row.fsg ?? '—'} | ${row.fpl ?? '—'} |`,
+      `| ${pessoa} | ${sg?.masculino ?? '—'} | ${pl?.masculino ?? '—'} | ${sg?.feminino ?? '—'} | ${pl?.feminino ?? '—'} |`,
     );
   }
 
-  const ruleLines = notes
-    .filter((n): n is string => typeof n === 'string')
-    .map((n, idx) => `${idx + 1}. ${n}`);
+  // (b) 3rd-person possession block — the invariable owner→form mapping, sourced
+  // from the canon (singular table gives the sg owner-forms; plural the pl).
+  const deleLines: string[] = [];
+  for (const owner of POSS_DELE_OWNERS) {
+    const isPlural = owner === 'eles' || owner === 'elas';
+    const row = findCanonRow(isPlural ? plural : singular, owner);
+    const form = row?.masculino ?? '—';
+    deleLines.push(`${owner} → ${form}`);
+  }
+
+  // Core rules — phrasing kept from the prior card, with the canon's own notes
+  // (article + dele-after-the-noun) as their grammatical source.
+  const ruleLines = [
+    '1. O possessivo concorda com o NOME possuído (género + número), não com o dono.',
+    '2. Usa-se o artigo definido antes do possessivo: `o meu relógio`, `a minha caneta`.',
+    '3. Em EP prefere-se `dele/dela/deles/delas` (depois do nome) a `seu/sua` para "his/her/their": `o relógio dele`.',
+  ];
 
   const body = [
     '**Possessive determiners** — agree with the POSSESSED noun (gender + number):',
     '',
     ...determinerRows,
     '',
-    `**3rd person (after the noun, invariable):** ${[...new Set(deleForms)].join(' · ')}`,
+    '**3rd person (after the noun, invariable owner-forms):**',
+    ...deleLines.map((l) => `• ${l}`),
     '',
     '**Core rules:**',
     ...ruleLines,
@@ -830,7 +855,7 @@ function buildPossessiveCard(): ReferenceCard {
   return {
     contentId: 'ref-possessive',
     topic: 'Possessivos',
-    title: 'Possessivos: paradigma (28 formas) + regras',
+    title: 'Possessivos: paradigma + regras',
     body,
   };
 }

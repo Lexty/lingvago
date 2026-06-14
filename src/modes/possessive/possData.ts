@@ -115,14 +115,17 @@ export function isInPossessiveInventory(form: unknown): boolean {
 
 /**
  * The Portuguese person CUE displayed in the prompt for a DETERMINER item
- * (AC3). 3rd person collapses `ele·ela·você` because the agreeing determiner is
- * the same for all of them — the gender/number of the POSSESSED noun (not the
- * owner) decides the form, so no owner disambiguation is needed.
+ * (AC3). The `ele_ela_voce` determiner cue is LABELLED `você`, matching the
+ * VERIFIED canon (`gram:possessivos-singular/-plural`): `seu/sua` is the formal
+ * possessive of `você`, while `ele/ela` use the invariable `dele/dela` (those
+ * dele-family items cue the OWNER `ele`/`ela` separately). The agreeing
+ * determiner depends on the POSSESSED noun's gender/number, so `você` alone is a
+ * well-determined cue for a `seu/sua` item.
  */
 export const PERSON_CUE: Readonly<Record<PossPerson, string>> = {
   eu: 'eu',
   tu: 'tu',
-  ele_ela_voce: 'ele·ela·você',
+  ele_ela_voce: 'você',
   nos: 'nós',
   // `vós` (the subject pronoun) is archaic in modern continental EP, but the
   // possessive `vosso/vossa` is the LIVING possessive of `vocês` ("you, plural"),

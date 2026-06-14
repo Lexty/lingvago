@@ -264,18 +264,25 @@ describe('AC3 vós→vocês — the `vos` person is LABELLED `vocês` for the le
     expect(sawVossaDistractor).toBe(true);
   });
 
-  it('REGRESSION: the OTHER persons keep their cue/feedback labels (ele·ela·você, nós)', () => {
+  it('REGRESSION: the OTHER persons keep their cue/feedback labels (você, nós)', () => {
     const items = generateSession('others', RECORDS, { count: 120, level: 'L3' });
     // `nossa` (nos) item ⇒ cue `nós`.
     for (const item of byAnswer(items, 'nossa')) {
       expect(item.cue).toBe('nós');
     }
-    // wherever a 3rd-person determiner is named in feedback it stays `ele·ela·você`.
+    // A `seu`/`sua` determiner item (the `ele_ela_voce` person) now cues `você`,
+    // matching the canon (você → seu/sua); the `ele·ela·você` lump is gone.
+    for (const item of [...byAnswer(items, 'seu'), ...byAnswer(items, 'sua')]) {
+      expect(item.kind).toBe('determiner');
+      expect(item.cue).toBe('você');
+    }
+    // wherever a 3rd-person determiner is named in feedback it reads `você`.
     for (const item of items) {
       if (item.drill.mode !== 'mc') continue;
       for (const opt of item.drill.options) {
         // the underscore key must never leak into any explanation.
         expect(opt.explanation).not.toContain('ele_ela_voce');
+        expect(opt.explanation).not.toContain('ele·ela·você');
         expect(opt.explanation).not.toContain('«vos»');
       }
     }

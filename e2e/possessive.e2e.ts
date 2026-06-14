@@ -49,7 +49,7 @@ interface Entry {
  * L3 walk reaches the HARD context tier here too).
  */
 function expectedEntries(): Entry[] {
-  const bundlePath = resolve(here, '../public/content.v6.json');
+  const bundlePath = resolve(here, '../public/content.v7.json');
   const bundle = JSON.parse(readFileSync(bundlePath, 'utf8')) as ContentBundle;
   const entries: Entry[] = [];
   for (const level of POSS_LEVELS) {

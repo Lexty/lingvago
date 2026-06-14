@@ -347,7 +347,7 @@ export async function loadContentIntoDb(
  * tests (this app bundle never imports the node build script). The `content.v*`
  * precache glob (src/pwa-config.ts) covers every version offline.
  */
-export const CONTENT_BUNDLE_FILENAME = 'content.v6.json';
+export const CONTENT_BUNDLE_FILENAME = 'content.v7.json';
 
 /**
  * Fetch the versioned content bundle from the app origin (precached by the SW,

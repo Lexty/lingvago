@@ -10,6 +10,7 @@ import {
   CONTENT_FILENAME,
   type ContentBundle,
 } from './build-content.ts';
+import { parseMarkdownLite, type MarkdownBlock } from '../src/reference/markdownLite.ts';
 
 // Vitest runs with cwd = worktree root; resolve fixture/script paths from there
 // (import.meta.url is not a usable file:// URL under the vitest module wrapper).
@@ -192,16 +193,16 @@ describe('build-content — possessives store + ref-possessive card (AC1)', () =
     expect(ids).toEqual([...ids].sort((x, y) => x.localeCompare(y, 'en')));
   });
 
-  it('authors the ref-possessive card with the 28-cell paradigm + 3 rules', () => {
+  it('authors the ref-possessive card with the canon paradigm + 3 rules', () => {
     const bundle = buildContent();
     const card = bundle.referenceCards.find((c) => c.contentId === 'ref-possessive');
     expect(card).toBeDefined();
     const body = card?.body ?? '';
-    // Determiner paradigm forms (a sample across persons/genders/numbers).
+    // Determiner agreement-table forms (a sample across persons/genders/numbers).
     for (const form of ['meu', 'minha', 'teus', 'nossa', 'vossos', 'suas']) {
       expect(body).toContain(form);
     }
-    // The invariable dele-family row.
+    // The invariable 3rd-person owner-forms.
     for (const form of ['dele', 'dela', 'deles', 'delas']) {
       expect(body).toContain(form);
     }
@@ -209,6 +210,53 @@ describe('build-content — possessives store + ref-possessive card (AC1)', () =
     expect(body).toMatch(/1\. /);
     expect(body).toMatch(/2\. /);
     expect(body).toMatch(/3\. /);
+  });
+
+  it('renders the 3rd-person owner-forms as a markdown-lite LIST (• bullet, not -)', () => {
+    const bundle = buildContent();
+    const card = bundle.referenceCards.find((c) => c.contentId === 'ref-possessive');
+    expect(card).toBeDefined();
+    const body = card?.body ?? '';
+    // The owner-forms must use the `•` bullet the renderer recognizes — NOT a
+    // hyphen, which markdownLite parses as a flowing paragraph (regression guard).
+    expect(body).not.toMatch(/^- ele → dele/m);
+    expect(body).toMatch(/^• ele → dele/m);
+    // Parse with the real renderer and assert a `list` block carries the forms.
+    const blocks = parseMarkdownLite(body);
+    const ownerList = blocks.find(
+      (b): b is Extract<MarkdownBlock, { type: 'list' }> =>
+        b.type === 'list' &&
+        b.items.some((item) => item.map((s) => s.text).join('') === 'ele → dele'),
+    );
+    expect(ownerList).toBeDefined();
+    const itemTexts = ownerList?.items.map((item) => item.map((s) => s.text).join('')) ?? [];
+    expect(itemTexts).toEqual(
+      expect.arrayContaining(['ele → dele', 'ela → dela', 'eles → deles', 'elas → delas']),
+    );
+  });
+
+  it('frames the 3rd person per the canon: você→seu/sua, ele→dele (no ele→seu lump)', () => {
+    const bundle = buildContent();
+    const card = bundle.referenceCards.find((c) => c.contentId === 'ref-possessive');
+    expect(card).toBeDefined();
+    const body = card?.body ?? '';
+    // `seu/sua` belong to a `você` agreement row (canon: você → seu/sua), shown
+    // in a table row that carries seu (m.sg) and sua (f.sg).
+    const voceRow = body.split('\n').find((l) => /^\|\s*você\s*\|/.test(l));
+    expect(voceRow).toBeDefined();
+    expect(voceRow).toContain('seu');
+    expect(voceRow).toContain('sua');
+    // The invariable 3rd-person owner-forms are spelled out: ele→dele, ela→dela.
+    expect(body).toContain('ele → dele');
+    expect(body).toContain('ela → dela');
+    expect(body).toContain('eles → deles');
+    expect(body).toContain('elas → delas');
+    // The OLD `ele·ela·você → seu` lump is gone — no agreement row labelled with
+    // a 3rd-person owner, and no `ele → seu` / `ele·ela·você` framing.
+    expect(body).not.toContain('ele·ela·você');
+    expect(body).not.toContain('ele · ela · você');
+    expect(body).not.toContain('ele → seu');
+    expect(body).not.toMatch(/^\|\s*ele\b/m);
   });
 
   it('AC3: labels the `vos` paradigm row `vocês` (not `vós`) and notes vós is archaic', () => {

@@ -20,7 +20,7 @@
 // appear). Each item:
 //
 //  - carries a structured `cue` (AC3): for a `determiner` item the grammatical
-//    PERSON (`eu` / `tu` / `ele·ela·você` / `nós` / `vocês` / `eles·elas`); for a
+//    PERSON (`eu` / `tu` / `você` / `nós` / `vocês`); for a
 //    `dele` item the OWNER (`ele`/`ela`/`eles`/`elas`) derived from the answer.
 //    The cue is what makes the production answer well-determined.
 //  - prefixes that cue into the visible `drill.prompt`, e.g.
@@ -191,7 +191,7 @@ function buildContextItem(
 
 /**
  * The human-facing LABEL for a grammatical person (AC3): the same cue token the
- * prompt shows (`ele·ela·você`, `nós`, `vocês`, …), so feedback never leaks the
+ * prompt shows (`você`, `nós`, `vocês`, …), so feedback never leaks the
  * raw `person` KEY (`vos`, `ele_ela_voce`). Falls back to the key with `_`→`·`
  * for any unmapped value (defensive — all closed-class persons are in the map).
  */
