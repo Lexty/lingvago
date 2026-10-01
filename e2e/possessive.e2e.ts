@@ -146,9 +146,7 @@ test('E-Possessive: plays a deterministic L1–L3 session with production + MC a
 
   const prompt = page.getByTestId('possessive-drill-prompt');
   await expect(prompt).toHaveText(entries[0].prompt);
-  await expect(page.getByTestId('possessive-drill-level')).toHaveText(
-    `Level ${entries[0].level}`,
-  );
+  await expect(page.getByTestId('possessive-drill-level')).toHaveAttribute('data-level', entries[0].level);
 
   // Play to the first PRODUCTION item; answer it correctly + open its rule card.
   await advanceBy(page, entries, prodIdx);
@@ -198,7 +196,7 @@ test('E-Possessive: plays a deterministic L1–L3 session with production + MC a
   await expect(prompt).toHaveText(entries[0].prompt);
   await advanceBy(page, entries, ctxIdx);
   const ctx = entries[ctxIdx];
-  await expect(page.getByTestId('possessive-drill-level')).toHaveText('Level L3');
+  await expect(page.getByTestId('possessive-drill-level')).toHaveAttribute('data-level', 'L3');
   // Both dialogue turns render (the multi-line `\n` dialogue is shown in full).
   for (const turn of ctx.prompt.split('\n')) {
     await expect(prompt).toContainText(turn);
@@ -248,7 +246,7 @@ test('E-Possessive-c: no horizontal overflow on the drill at a 390px phone width
   // Walk to the HARD L3 CONTEXT tier — the multi-line dialogue prompt — which is
   // the longest, most overflow-prone content the drill renders.
   await advanceBy(page, entries, ctxIdx);
-  await expect(page.getByTestId('possessive-drill-level')).toHaveText('Level L3');
+  await expect(page.getByTestId('possessive-drill-level')).toHaveAttribute('data-level', 'L3');
   await assertNoHorizontalScroll();
 
   // Stress the worst case directly: force the prompt to hold a pathologically

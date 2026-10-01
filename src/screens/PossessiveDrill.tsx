@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
+import FocusPicker, { useDrillFocus } from '../components/FocusPicker.tsx';
 import GrammarDrill, {
   type GrammarDrillEntry,
 } from '../components/GrammarDrill.tsx';
@@ -34,6 +35,18 @@ function freshSeed(): string {
 }
 
 /**
+ * What to practise: the default mix, the form from a person hint, or the owner
+ * inferred from a short dialogue.
+ */
+export const POSSESSIVE_FOCUS = ['all', 'cue', 'context'] as const;
+export type PossessiveFocus = (typeof POSSESSIVE_FOCUS)[number];
+
+const FOCUS_LEVELS: Readonly<Record<Exclude<PossessiveFocus, 'all'>, readonly PossLevel[]>> = {
+  cue: ['L1', 'L2'],
+  context: ['L3'],
+};
+
+/**
  * Build the deterministic L1→L2→L3 session for `seed`: `PER_LEVEL` items at each
  * §4.8 level, concatenated in level order so a single playthrough exercises the
  * whole curve. Pure for a given `seed` + `records`.
@@ -42,12 +55,22 @@ export function buildPossessiveEntries(
   seed: string,
   records: Parameters<typeof generateSession>[1],
   context: readonly PossessiveContextRecord[] = [],
+  focus: PossessiveFocus = 'all',
 ): GrammarDrillEntry<PossessiveItem>[] {
   const entries: GrammarDrillEntry<PossessiveItem>[] = [];
-  for (const level of POSS_LEVELS) {
+  // "From a dialogue" was asked for explicitly: with no dialogues there is
+  // nothing to show. (The generator would otherwise fall back to hint items —
+  // right for the mix, wrong for an explicit choice.)
+  if (focus === 'context' && context.length === 0) {
+    return entries;
+  }
+  // A chosen sub-topic keeps its levels, at the length of the whole mixed session.
+  const levels: readonly PossLevel[] = focus === 'all' ? POSS_LEVELS : FOCUS_LEVELS[focus];
+  const count = (PER_LEVEL * POSS_LEVELS.length) / levels.length;
+  for (const level of levels) {
     const items = generateSession(`${seed}-${level}`, records, {
-      count: PER_LEVEL,
-      level: level as PossLevel,
+      count,
+      level,
       // The HARD L3 CONTEXT pool (AC5): consulted ONLY at L3 by the generator;
       // an empty pool (or L1/L2) falls back to the cue-based path unchanged.
       context,
@@ -57,6 +80,7 @@ export function buildPossessiveEntries(
         item,
         drill: item.drill,
         level: item.level,
+        labelKey: `possessive.kind.${item.isContext ? 'context' : 'cue'}`,
         referenceId: referenceIdFor(item),
       });
     }
@@ -96,9 +120,18 @@ export default function PossessiveDrill({ seed }: PossessiveDrillProps) {
   const context = useLiveQuery(() => db.possessiveContext.toArray(), []);
 
   const [sessionId, setSessionId] = useState<string>(() => seed ?? freshSeed());
+  const [focus, setFocus] = useDrillFocus<PossessiveFocus>(
+    'possessive',
+    POSSESSIVE_FOCUS,
+    'all',
+    seed !== undefined,
+  );
   const entries = useMemo<GrammarDrillEntry<PossessiveItem>[]>(
-    () => (records ? buildPossessiveEntries(sessionId, records, context ?? []) : []),
-    [sessionId, records, context],
+    // Wait for BOTH stores: building from the hints alone and then swapping the
+    // session when the dialogues arrive would replace an item mid-answer.
+    () =>
+      records && context ? buildPossessiveEntries(sessionId, records, context, focus) : [],
+    [sessionId, records, context, focus],
   );
 
   return (
@@ -114,7 +147,18 @@ export default function PossessiveDrill({ seed }: PossessiveDrillProps) {
 
       <p className={styles.intro}>{t('possessive.intro')}</p>
 
+      <FocusPicker<PossessiveFocus>
+        testIdBase="possessive-drill"
+        value={focus}
+        onChange={setFocus}
+        options={POSSESSIVE_FOCUS.map((value) => ({
+          value,
+          label: value === 'all' ? t('focus.all') : t(`possessive.kind.${value}`),
+        }))}
+      />
+
       <GrammarDrill<PossessiveItem>
+        key={focus}
         i18nKey="possessive"
         testIdBase="possessive-drill"
         styles={styles}

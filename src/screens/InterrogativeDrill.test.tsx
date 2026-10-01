@@ -131,9 +131,7 @@ describe('InterrogativeDrill screen', () => {
         first.drill.prompt,
       );
     });
-    expect(screen.getByTestId('interrogative-drill-level')).toHaveTextContent(
-      `Level ${first.level}`,
-    );
+    expect(screen.getByTestId('interrogative-drill-level')).toHaveAttribute('data-level', first.level);
   });
 
   it('grades a correct PRODUCTION answer, logs an attempt + mastery, and deep-links to ref-interrogative', async () => {

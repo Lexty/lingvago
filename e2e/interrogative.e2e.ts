@@ -131,9 +131,7 @@ test('E-Interrogative: plays a deterministic L1–L3 session with production + M
 
   const prompt = page.getByTestId('interrogative-drill-prompt');
   await expect(prompt).toHaveText(entries[0].prompt);
-  await expect(page.getByTestId('interrogative-drill-level')).toHaveText(
-    `Level ${entries[0].level}`,
-  );
+  await expect(page.getByTestId('interrogative-drill-level')).toHaveAttribute('data-level', entries[0].level);
 
   // Play to the first PRODUCTION item; answer it correctly + open its rule card.
   await advanceBy(page, entries, prodIdx);

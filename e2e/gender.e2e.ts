@@ -106,7 +106,7 @@ test('E-Gender: plays a deterministic L1–L3 session with production + MC and d
   await expect(prompt).toHaveText(entries[0].prompt);
 
   // The level indicator reflects the first item's §4.8 level.
-  await expect(page.getByTestId('gender-drill-level')).toHaveText(`Level ${entries[0].level}`);
+  await expect(page.getByTestId('gender-drill-level')).toHaveAttribute('data-level', entries[0].level);
 
   // Play up to the first MC item, answering each correctly.
   await advanceBy(page, entries, mcIdx);

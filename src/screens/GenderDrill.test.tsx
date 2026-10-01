@@ -87,7 +87,7 @@ describe('GenderDrill screen', () => {
     await waitFor(() => {
       expect(screen.getByTestId('gender-drill-prompt')).toHaveTextContent(first.drill.prompt);
     });
-    expect(screen.getByTestId('gender-drill-level')).toHaveTextContent(`Level ${first.level}`);
+    expect(screen.getByTestId('gender-drill-level')).toHaveAttribute('data-level', first.level);
   });
 
   it('offers the rule BEFORE answering, and closing it keeps the same unanswered item', async () => {

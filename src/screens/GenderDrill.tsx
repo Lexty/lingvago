@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
+import FocusPicker, { useDrillFocus } from '../components/FocusPicker.tsx';
 import GrammarDrill, {
   type GrammarDrillEntry,
 } from '../components/GrammarDrill.tsx';
@@ -30,6 +31,25 @@ function freshSeed(): string {
 }
 
 /**
+ * What to practise: the default mix, or one article mechanic. The option labels
+ * are the Portuguese forms themselves, so they need no translation.
+ */
+export const GENDER_FOCUS = ['all', 'definite', 'both', 'contraction'] as const;
+export type GenderFocus = (typeof GENDER_FOCUS)[number];
+
+const FOCUS_LEVEL: Readonly<Record<Exclude<GenderFocus, 'all'>, GenderLevel>> = {
+  definite: 'L1',
+  both: 'L2',
+  contraction: 'L3',
+};
+
+const FOCUS_FORMS: Readonly<Record<Exclude<GenderFocus, 'all'>, string>> = {
+  definite: 'o / a',
+  both: 'o / a + um / uma',
+  contraction: 'do / na / ao',
+};
+
+/**
  * Build the deterministic L1→L2→L3 session for `seed`: `PER_LEVEL` items at each
  * §4.8 level, concatenated in level order so a single playthrough exercises the
  * whole curve. Pure for a given `seed` + `nouns`.
@@ -37,18 +57,23 @@ function freshSeed(): string {
 export function buildGenderEntries(
   seed: string,
   nouns: Parameters<typeof generateSession>[1],
+  focus: GenderFocus = 'all',
 ): GrammarDrillEntry<GenderItem>[] {
   const entries: GrammarDrillEntry<GenderItem>[] = [];
-  for (const level of GENDER_LEVELS) {
+  // A chosen sub-topic is one level, at the length of the whole mixed session.
+  const levels: readonly GenderLevel[] = focus === 'all' ? GENDER_LEVELS : [FOCUS_LEVEL[focus]];
+  const count = focus === 'all' ? PER_LEVEL : PER_LEVEL * GENDER_LEVELS.length;
+  for (const level of levels) {
     const items = generateSession(`${seed}-${level}`, nouns, {
-      count: PER_LEVEL,
-      level: level as GenderLevel,
+      count,
+      level,
     });
     for (const item of items) {
       entries.push({
         item,
         drill: item.drill,
         level: item.level,
+        labelKey: `gender.kind.${item.kind}`,
         referenceId: referenceIdFor(),
       });
     }
@@ -81,9 +106,15 @@ export default function GenderDrill({ seed }: GenderDrillProps) {
   const nouns = useLiveQuery(() => loadNounsFromDb(), []);
 
   const [sessionId, setSessionId] = useState<string>(() => seed ?? freshSeed());
+  const [focus, setFocus] = useDrillFocus<GenderFocus>(
+    'gender',
+    GENDER_FOCUS,
+    'all',
+    seed !== undefined,
+  );
   const entries = useMemo<GrammarDrillEntry<GenderItem>[]>(
-    () => (nouns ? buildGenderEntries(sessionId, nouns) : []),
-    [sessionId, nouns],
+    () => (nouns ? buildGenderEntries(sessionId, nouns, focus) : []),
+    [sessionId, nouns, focus],
   );
 
   return (
@@ -99,7 +130,18 @@ export default function GenderDrill({ seed }: GenderDrillProps) {
 
       <p className={styles.intro}>{t('gender.intro')}</p>
 
+      <FocusPicker<GenderFocus>
+        testIdBase="gender-drill"
+        value={focus}
+        onChange={setFocus}
+        options={GENDER_FOCUS.map((value) => ({
+          value,
+          label: value === 'all' ? t('focus.all') : FOCUS_FORMS[value],
+        }))}
+      />
+
       <GrammarDrill<GenderItem>
+        key={focus}
         i18nKey="gender"
         testIdBase="gender-drill"
         styles={styles}

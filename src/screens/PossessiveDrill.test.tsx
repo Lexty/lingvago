@@ -157,9 +157,7 @@ describe('PossessiveDrill screen', () => {
         first.drill.prompt,
       );
     });
-    expect(screen.getByTestId('possessive-drill-level')).toHaveTextContent(
-      `Level ${first.level}`,
-    );
+    expect(screen.getByTestId('possessive-drill-level')).toHaveAttribute('data-level', first.level);
   });
 
   it('grades a correct PRODUCTION answer, logs an attempt + mastery, and deep-links to ref-possessive', async () => {
@@ -291,7 +289,7 @@ describe('PossessiveDrill screen', () => {
     const [turnA, turnB] = ctxEntry.drill.prompt.split('\n');
     expect(promptEl.textContent).toContain(turnA);
     expect(promptEl.textContent).toContain(turnB);
-    expect(screen.getByTestId('possessive-drill-level')).toHaveTextContent('Level L3');
+    expect(screen.getByTestId('possessive-drill-level')).toHaveAttribute('data-level', 'L3');
 
     fireEvent.change(screen.getByTestId('possessive-drill-answer'), {
       target: { value: ctxEntry.drill.answer },

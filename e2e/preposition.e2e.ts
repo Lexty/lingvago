@@ -101,9 +101,7 @@ test('E-Preposition: plays a deterministic L1–L3 session with production + MC 
 
   const prompt = page.getByTestId('preposition-drill-prompt');
   await expect(prompt).toHaveText(entries[0].prompt);
-  await expect(page.getByTestId('preposition-drill-level')).toHaveText(
-    `Level ${entries[0].level}`,
-  );
+  await expect(page.getByTestId('preposition-drill-level')).toHaveAttribute('data-level', entries[0].level);
 
   // Play to the first PRODUCTION item; answer it correctly + follow its deep-link.
   await advanceBy(page, entries, prodIdx);

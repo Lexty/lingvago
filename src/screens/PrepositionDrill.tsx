@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
+import FocusPicker, { useDrillFocus } from '../components/FocusPicker.tsx';
 import GrammarDrill, {
   type GrammarDrillEntry,
 } from '../components/GrammarDrill.tsx';
@@ -29,6 +30,10 @@ function freshSeed(): string {
   ).toString(36)}`;
 }
 
+/** What to practise: the default mix, or one category of prepositions. */
+export const PREPOSITION_FOCUS = ['all', 'tempo', 'lugar', 'movimento'] as const;
+export type PrepositionFocus = (typeof PREPOSITION_FOCUS)[number];
+
 /**
  * Build the deterministic L1→L2→L3 session for `seed`: `PER_LEVEL` items at each
  * §4.8 level, concatenated in level order so a single playthrough exercises the
@@ -37,10 +42,13 @@ function freshSeed(): string {
 export function buildPrepositionEntries(
   seed: string,
   records: Parameters<typeof generateSession>[1],
+  focus: PrepositionFocus = 'all',
 ): GrammarDrillEntry<PrepositionItem>[] {
   const entries: GrammarDrillEntry<PrepositionItem>[] = [];
+  // A chosen sub-topic keeps only that category's records.
+  const pool = focus === 'all' ? records : records.filter((r) => r.category === focus);
   for (const level of PREP_LEVELS) {
-    const items = generateSession(`${seed}-${level}`, records, {
+    const items = generateSession(`${seed}-${level}`, pool, {
       count: PER_LEVEL,
       level: level as PrepLevel,
     });
@@ -49,6 +57,7 @@ export function buildPrepositionEntries(
         item,
         drill: item.drill,
         level: item.level,
+        labelKey: `preposition.category.${item.category}`,
         referenceId: referenceIdFor(item),
       });
     }
@@ -83,9 +92,15 @@ export default function PrepositionDrill({ seed }: PrepositionDrillProps) {
   const records = useLiveQuery(() => loadPrepositionsFromDb(), []);
 
   const [sessionId, setSessionId] = useState<string>(() => seed ?? freshSeed());
+  const [focus, setFocus] = useDrillFocus<PrepositionFocus>(
+    'preposition',
+    PREPOSITION_FOCUS,
+    'all',
+    seed !== undefined,
+  );
   const entries = useMemo<GrammarDrillEntry<PrepositionItem>[]>(
-    () => (records ? buildPrepositionEntries(sessionId, records) : []),
-    [sessionId, records],
+    () => (records ? buildPrepositionEntries(sessionId, records, focus) : []),
+    [sessionId, records, focus],
   );
 
   return (
@@ -101,7 +116,18 @@ export default function PrepositionDrill({ seed }: PrepositionDrillProps) {
 
       <p className={styles.intro}>{t('preposition.intro')}</p>
 
+      <FocusPicker<PrepositionFocus>
+        testIdBase="preposition-drill"
+        value={focus}
+        onChange={setFocus}
+        options={PREPOSITION_FOCUS.map((value) => ({
+          value,
+          label: value === 'all' ? t('focus.all') : t(`preposition.category.${value}`),
+        }))}
+      />
+
       <GrammarDrill<PrepositionItem>
+        key={focus}
         i18nKey="preposition"
         testIdBase="preposition-drill"
         styles={styles}

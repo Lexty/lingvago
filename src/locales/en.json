@@ -88,6 +88,10 @@
     "missing": "Couldn't load the rule.",
     "retry": "Try again"
   },
+  "focus": {
+    "label": "What to practise",
+    "all": "All types"
+  },
   "numbers": {
     "title": "Numbers",
     "nav": {
@@ -137,13 +141,17 @@
     },
     "intro": "Choose or write the article: definite, indefinite, or contracted with a preposition (do, da, no, na, ao, à).",
     "empty": "No items in this session.",
-    "level": "Level {{level}}",
     "answerLabel": "Your answer",
     "check": "Check",
     "next": "Next",
     "feedback": {
       "correct": "Correct",
       "wrong": "Not quite — answer: {{answer}}"
+    },
+    "kind": {
+      "definite": "Definite article",
+      "indefinite": "Indefinite article",
+      "contraction": "Contraction with a preposition"
     }
   },
   "preposition": {
@@ -153,13 +161,17 @@
     },
     "intro": "Fill the blank with the right preposition: time, place or movement.",
     "empty": "No items in this session.",
-    "level": "Level {{level}}",
     "answerLabel": "Your answer",
     "check": "Check",
     "next": "Next",
     "feedback": {
       "correct": "Correct",
       "wrong": "Not quite — answer: {{answer}}"
+    },
+    "category": {
+      "tempo": "Time",
+      "lugar": "Place",
+      "movimento": "Movement"
     }
   },
   "possessive": {
@@ -169,13 +181,16 @@
     },
     "intro": "See whose thing it is and write the possessive in the right form: meu / minha, teu / tua, dele / dela.",
     "empty": "No items in this session.",
-    "level": "Level {{level}}",
     "answerLabel": "Your answer",
     "check": "Check",
     "next": "Next",
     "feedback": {
       "correct": "Correct",
       "wrong": "Not quite — answer: {{answer}}"
+    },
+    "kind": {
+      "cue": "From a hint",
+      "context": "From a dialogue"
     }
   },
   "interrogative": {
@@ -185,13 +200,16 @@
     },
     "intro": "Use the hint to write the question word: quem, onde, como, quando, porquê.",
     "empty": "No items in this session.",
-    "level": "Level {{level}}",
     "answerLabel": "Your answer",
     "check": "Check",
     "next": "Next",
     "feedback": {
       "correct": "Correct",
       "wrong": "Not quite — answer: {{answer}}"
+    },
+    "task": {
+      "write": "Write the word",
+      "choose": "Choose the word"
     }
   }
 }

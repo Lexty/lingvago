@@ -67,6 +67,7 @@ export function buildInterrogativeEntries(
         item,
         drill: item.drill,
         level: item.level,
+        labelKey: `interrogative.task.${item.drill.mode === 'mc' ? 'choose' : 'write'}`,
         referenceId: referenceIdFor(item),
       });
     }

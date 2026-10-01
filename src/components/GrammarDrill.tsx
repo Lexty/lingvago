@@ -7,7 +7,7 @@ import RuleLink from './RuleLink.tsx';
 /**
  * Shared production-first grammar-drill screen body (WP-C Task 4), used by BOTH
  * GenderDrill and PrepositionDrill so the production/MC rendering, the
- * correct/wrong + reference-reveal feedback, the L1–L3 level indicator, and the
+ * correct/wrong + reference-reveal feedback, the mechanic label, and the
  * always-available rule button live in ONE place and cannot drift between the
  * drills.
  *
@@ -26,8 +26,10 @@ export interface GrammarDrillEntry<TItem> {
   item: TItem;
   /** The shared discriminated drill item (production vs. mc). */
   drill: DrillItem;
-  /** The §4.8 level label (`L1` | `L2` | `L3`) shown in the indicator. */
+  /** The internal §4.8 generation level (`L1` | `L2` | `L3`); never shown. */
   level: string;
+  /** i18n key naming the mechanic this item trains — shown on the card. */
+  labelKey: string;
   /** The EXISTING WP-B reference card id this item deep-links to (§AC6). */
   referenceId: string;
 }
@@ -176,9 +178,10 @@ export default function GrammarDrill<TItem>({
             <p
               className={styles.level}
               data-testid={`${testIdBase}-level`}
+              data-level={entry.level}
               id={`${testIdBase}-task-label`}
             >
-              {t(`${i18nKey}.level`, { level: entry.level })}
+              {t(entry.labelKey)}
             </p>
             {/* Keyed by item so an open rule never carries over to the next one. */}
             <RuleLink
