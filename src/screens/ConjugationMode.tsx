@@ -11,6 +11,7 @@ import {
   type ConjugationItem,
   type Person,
 } from '../modes/conjugation/index.ts';
+import RuleLink from '../components/RuleLink.tsx';
 import styles from './ConjugationMode.module.css';
 
 /** Items generated per session (a session re-rolls when exhausted). */
@@ -170,13 +171,21 @@ export default function ConjugationMode({ seed }: ConjugationModeProps) {
         </section>
       ) : (
         <section className={styles.card} aria-labelledby="conjugation-task-label">
-          <p id="conjugation-task-label" className={styles.label}>
-            {t(
-              current.type === 'assemble-table'
-                ? 'conjugation.task.assembleTable'
-                : 'conjugation.task.fillForm',
-            )}
-          </p>
+          <div className={styles.cardTop}>
+            <p id="conjugation-task-label" className={styles.label}>
+              {t(
+                current.type === 'assemble-table'
+                  ? 'conjugation.task.assembleTable'
+                  : 'conjugation.task.fillForm',
+              )}
+            </p>
+            {/* Keyed by item so an open rule never carries over to the next one. */}
+            <RuleLink
+              key={index}
+              referenceId="ref-verbos-presente"
+              testIdBase="conjugation"
+            />
+          </div>
 
           <p className={styles.prompt} data-testid="conjugation-prompt">
             {current.prompt}

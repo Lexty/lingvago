@@ -96,10 +96,10 @@ test('E8: plays a deterministic ConjugationMode session with production input', 
   }
 });
 
-test('E8b: the survival-kit nav links to the conjugation drill', async ({ page }) => {
+test('E8b: the home screen links to the conjugation drill', async ({ page }) => {
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { level: 1, name: 'Exam Survival Kit' }),
+    page.getByRole('heading', { level: 1, name: 'What shall we practise?' }),
   ).toBeVisible();
   await page.getByRole('link', { name: 'Conjugation' }).click();
   await expect(

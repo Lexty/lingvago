@@ -147,10 +147,10 @@ test('E-Gender: plays a deterministic L1–L3 session with production + MC and d
   ).toBeVisible();
 });
 
-test('E-Gender-b: the survival-kit nav links to the gender drill', async ({ page }) => {
+test('E-Gender-b: the home screen links to the gender drill', async ({ page }) => {
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { level: 1, name: 'Exam Survival Kit' }),
+    page.getByRole('heading', { level: 1, name: 'What shall we practise?' }),
   ).toBeVisible();
   await page.getByRole('link', { name: 'Gender & articles' }).click();
   await expect(

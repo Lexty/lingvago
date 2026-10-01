@@ -53,10 +53,10 @@ test('E7: plays a deterministic NumbersMode session with production input', asyn
   await expect(feedback).toContainText(items[3].expected);
 });
 
-test('E7b: the survival-kit nav links to the numbers drill', async ({ page }) => {
+test('E7b: the home screen links to the numbers drill', async ({ page }) => {
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { level: 1, name: 'Exam Survival Kit' }),
+    page.getByRole('heading', { level: 1, name: 'What shall we practise?' }),
   ).toBeVisible();
   await page.getByRole('link', { name: 'Numbers' }).click();
   await expect(

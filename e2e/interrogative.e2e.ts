@@ -176,12 +176,12 @@ test('E-Interrogative: plays a deterministic L1–L3 session with production + M
   ).toBeVisible();
 });
 
-test('E-Interrogative-b: the survival-kit nav links to the interrogative drill', async ({
+test('E-Interrogative-b: the home screen links to the interrogative drill', async ({
   page,
 }) => {
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { level: 1, name: 'Exam Survival Kit' }),
+    page.getByRole('heading', { level: 1, name: 'What shall we practise?' }),
   ).toBeVisible();
   await page.getByRole('link', { name: 'Question words' }).click();
   await expect(

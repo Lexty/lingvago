@@ -6,6 +6,22 @@ import { type ReferenceCard, getReferenceCard } from '../reference/selectors.ts'
 import MarkdownLite from '../reference/MarkdownLite.tsx';
 import styles from './Reference.module.css';
 
+/**
+ * The drill that trains each reference card, so a rule read in the reference
+ * leads straight to practising it. A card with no drill of its own (ser/estar)
+ * simply has no link.
+ */
+const DRILL_FOR_CARD: Readonly<Record<string, string>> = {
+  'ref-genero-artigo': '/drill/gender',
+  'ref-prep-de-em': '/drill/preposition',
+  'ref-prep-a-para': '/drill/preposition',
+  'ref-prep-tempo': '/drill/preposition',
+  'ref-prep-lugar': '/drill/preposition',
+  'ref-verbos-presente': '/drill/conjugation',
+  'ref-possessive': '/drill/possessive',
+  'ref-interrogative': '/drill/interrogative',
+};
+
 type LoadState =
   | { status: 'loading' }
   | { status: 'found'; card: ReferenceCard }
@@ -60,6 +76,15 @@ export default function ReferenceCardView() {
         <article className={styles.cardBody} data-content-id={load.card.contentId}>
           <MarkdownLite body={load.card.body} />
         </article>
+        {DRILL_FOR_CARD[load.card.contentId] !== undefined && (
+          <Link
+            to={DRILL_FOR_CARD[load.card.contentId]}
+            className={styles.practiceLink}
+            data-testid="reference-practice"
+          >
+            {t('reference.practice')}
+          </Link>
+        )}
       </main>
     );
   }

@@ -4,7 +4,9 @@
    Use ONLY semantic/component tokens in components, never raw --c-*.
    Theme: :root = light. Dark via [data-theme="dark"]. "Auto" = follow
    system (the @media block) until JS sets an explicit data-theme.
-   Fonts: Fraunces (display, used italic for headings) + Hanken Grotesk (body).
+   Fonts: system stacks only (serif display, used italic for headings + sans
+   body). The app is offline-first and ships no font files, so the tokens name
+   only faces that are already on the device.
 
    NOTE: AA-corrected values vs designs/tokens.css (which holds OLD values):
      --on-cta   = #0e1a13  (dark ink in BOTH themes; white gave only 3.02:1)
@@ -74,24 +76,28 @@
   --shadow-lg: 0 30px 70px -34px rgba(120, 90, 120, 0.45);
 
   /* ---------- typography ---------- */
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
-  --font-body: "Hanken Grotesk", system-ui, -apple-system, sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --fw-reg: 400;
   --fw-med: 500;
   --fw-semi: 600;
   --fw-bold: 700;
   --fw-x: 800;
   /* sizes (mobile-first) */
-  --t-display: 33px; /* drill prompt (Fraunces) */
-  --t-title: 25px; /* screen title (Fraunces italic) */
-  --t-h2: 18px; /* section heading (Fraunces italic) */
-  --t-lg: 17px;
-  --t-body: 15px;
-  --t-sm: 13px;
-  --t-cap: 11.5px;
+  --t-display: 26px; /* drill prompt (body face, upright) */
+  --t-title: 26px; /* screen title (display italic) */
+  --t-h2: 19px; /* section heading (display italic) */
+  --t-lg: 18px;
+  --t-body: 16px;
+  --t-sm: 14px;
+  --t-cap: 12.5px;
   --lh-tight: 1.1;
+  --lh-prompt: 1.3;
   --lh-body: 1.55;
-  --ls-cap: 0.14em; /* uppercase label tracking */
+  --ls-cap: 0.08em; /* uppercase label tracking */
+
+  /* ---------- layout ---------- */
+  --screen-max: 42rem; /* reading column of every screen */
 
   /* ---------- radii ---------- */
   --r-phone: 44px;

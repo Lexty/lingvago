@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router';
 import DataSection from '../components/DataSection.tsx';
 import LanguageToggle from '../components/LanguageToggle.tsx';
 import { type ThemePref, useTheme } from '../styles/useTheme.ts';
@@ -12,7 +13,14 @@ export default function Settings() {
 
   return (
     <main className={styles.screen}>
-      <h1 className={styles.title}>{t('settings.title')}</h1>
+      <header className={styles.header}>
+        <h1 className={styles.title}>{t('settings.title')}</h1>
+        <nav className={styles.nav}>
+          <Link to="/" className={styles.navLink}>
+            {t('settings.nav.back')}
+          </Link>
+        </nav>
+      </header>
 
       <section className={styles.section} aria-labelledby="theme-label">
         <p id="theme-label" className={styles.label}>

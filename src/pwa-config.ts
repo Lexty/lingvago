@@ -43,7 +43,7 @@ export const pwaOptions: PwaOptionsWithManifest = {
   manifest: {
     name: 'Lingvago',
     short_name: 'Lingvago',
-    description: 'Lingvago — Portuguese A1 exam practice (offline).',
+    description: 'Lingvago — practise the mechanics of Portuguese (offline).',
     scope: PWA_SCOPE,
     start_url: PWA_START_URL,
     display: 'standalone',

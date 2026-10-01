@@ -268,12 +268,12 @@ test('E-Possessive-c: no horizontal overflow on the drill at a 390px phone width
   expect(promptOverflow).toBeLessThanOrEqual(0);
 });
 
-test('E-Possessive-b: the survival-kit nav links to the possessive drill', async ({
+test('E-Possessive-b: the home screen links to the possessive drill', async ({
   page,
 }) => {
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { level: 1, name: 'Exam Survival Kit' }),
+    page.getByRole('heading', { level: 1, name: 'What shall we practise?' }),
   ).toBeVisible();
   await page.getByRole('link', { name: 'Possessives' }).click();
   await expect(

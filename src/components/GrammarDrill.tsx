@@ -2,15 +2,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { checkAnswer } from '../modes/shared/index.ts';
 import type { DrillItem } from '../modes/shared/index.ts';
-import { db } from '../db/index.ts';
-import { getReferenceCard, type ReferenceCard } from '../reference/selectors.ts';
-import MarkdownLite from '../reference/MarkdownLite.tsx';
+import RuleLink from './RuleLink.tsx';
 
 /**
  * Shared production-first grammar-drill screen body (WP-C Task 4), used by BOTH
  * GenderDrill and PrepositionDrill so the production/MC rendering, the
  * correct/wrong + reference-reveal feedback, the L1–L3 level indicator, and the
- * feedback→reference deep-link live in ONE place and cannot drift between the two
+ * always-available rule button live in ONE place and cannot drift between the
  * drills.
  *
  * The screen is mode-agnostic: it renders whatever the seeded generator produced
@@ -18,7 +16,8 @@ import MarkdownLite from '../reference/MarkdownLite.tsx';
  * parity MC option buttons (each with its explanation) when `mode === 'mc'`. The
  * channel (`production` | `recognition`) is therefore DATA-DRIVEN, never a flag.
  *
- * NOT gamified — no points / streaks / leagues; an exam-honest production drill.
+ * NOT gamified — no points / streaks / leagues; the answer is checked, the
+ * learner is not graded.
  */
 
 /** The per-screen shape each concrete drill supplies for its generated items. */
@@ -40,9 +39,9 @@ export interface GrammarDrillEntry<TItem> {
  * shared `drill.module.css` — so the styling stays token-only and the shared
  * block lives in ONE place. Typed as the CSS-Modules index signature
  * so a screen's generated `styles` object assigns directly; the keys this body
- * relies on are: card, body, level, prompt, form, inputLabel, input,
+ * relies on are: card, cardTop, body, level, prompt, form, inputLabel, input,
  * primaryButton, options, option, optionCorrect, optionWrong, optionExplanation,
- * feedback, correct, wrong, refLink.
+ * feedback, correct, wrong.
  */
 export type GrammarDrillStyles = Readonly<Record<string, string>>;
 
@@ -76,17 +75,6 @@ type Feedback =
   | { kind: 'correct' }
   | { kind: 'wrong'; expected: string };
 
-/**
- * The reference card is shown as an in-drill OVERLAY (not a route navigation), so
- * reading the rule never unmounts the drill or loses the seeded-session position —
- * closing the overlay returns the user to exactly the item they were on.
- */
-type RuleOverlay =
-  | { open: false }
-  | { open: true; status: 'loading' }
-  | { open: true; status: 'found'; card: ReferenceCard }
-  | { open: true; status: 'missing' };
-
 export default function GrammarDrill<TItem>({
   i18nKey,
   testIdBase,
@@ -101,24 +89,7 @@ export default function GrammarDrill<TItem>({
   const [answer, setAnswer] = useState('');
   const [picked, setPicked] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<Feedback>({ kind: 'none' });
-  const [rule, setRule] = useState<RuleOverlay>({ open: false });
   const startRef = useRef<number>(Date.now());
-
-  const openRule = useCallback((referenceId: string) => {
-    setRule({ open: true, status: 'loading' });
-    void getReferenceCard(db, referenceId)
-      .then((card) => {
-        setRule(card ? { open: true, status: 'found', card } : { open: true, status: 'missing' });
-      })
-      .catch((err: unknown) => {
-        console.error('reference card load failed', err);
-        setRule({ open: true, status: 'missing' });
-      });
-  }, []);
-
-  const closeRule = useCallback(() => {
-    setRule({ open: false });
-  }, []);
 
   // Reset the per-item clock whenever a new item is shown.
   useEffect(() => {
@@ -169,7 +140,6 @@ export default function GrammarDrill<TItem>({
 
   const next = useCallback(() => {
     setFeedback({ kind: 'none' });
-    setRule({ open: false });
     setAnswer('');
     setPicked(null);
     if (index + 1 < entries.length) {
@@ -202,13 +172,21 @@ export default function GrammarDrill<TItem>({
         </section>
       ) : (
         <section className={styles.card} aria-labelledby={`${testIdBase}-task-label`}>
-          <p
-            className={styles.level}
-            data-testid={`${testIdBase}-level`}
-            id={`${testIdBase}-task-label`}
-          >
-            {t(`${i18nKey}.level`, { level: entry.level })}
-          </p>
+          <div className={styles.cardTop}>
+            <p
+              className={styles.level}
+              data-testid={`${testIdBase}-level`}
+              id={`${testIdBase}-task-label`}
+            >
+              {t(`${i18nKey}.level`, { level: entry.level })}
+            </p>
+            {/* Keyed by item so an open rule never carries over to the next one. */}
+            <RuleLink
+              key={index}
+              referenceId={entry.referenceId}
+              testIdBase={testIdBase}
+            />
+          </div>
 
           <p className={styles.prompt} data-testid={`${testIdBase}-prompt`}>
             {drill.prompt}
@@ -314,56 +292,9 @@ export default function GrammarDrill<TItem>({
             </p>
           )}
 
-          {feedback.kind !== 'none' && (
-            <button
-              type="button"
-              className={styles.refLink}
-              data-testid={`${testIdBase}-ref-link`}
-              onClick={() => {
-                openRule(entry.referenceId);
-              }}
-            >
-              {t(`${i18nKey}.reference`)}
-            </button>
-          )}
         </section>
       )}
 
-      {rule.open && (
-        <div
-          className={styles.ruleOverlay}
-          role="dialog"
-          aria-modal="true"
-          aria-label={t(`${i18nKey}.reference`)}
-          data-testid={`${testIdBase}-rule-overlay`}
-          onClick={(event) => {
-            // Click on the backdrop (not the dialog) closes the overlay.
-            if (event.target === event.currentTarget) closeRule();
-          }}
-        >
-          <div className={styles.ruleDialog}>
-            <button
-              type="button"
-              className={styles.ruleClose}
-              onClick={closeRule}
-              autoFocus
-              data-testid={`${testIdBase}-rule-close`}
-            >
-              {t(`${i18nKey}.closeReference`)}
-            </button>
-            {rule.status === 'loading' && <p className={styles.body}>…</p>}
-            {rule.status === 'missing' && (
-              <p className={styles.body}>{t(`${i18nKey}.reference`)}</p>
-            )}
-            {rule.status === 'found' && (
-              <article data-content-id={rule.card.contentId}>
-                <h2 className={styles.ruleTitle}>{rule.card.title}</h2>
-                <MarkdownLite body={rule.card.body} />
-              </article>
-            )}
-          </div>
-        </div>
-      )}
     </>
   );
 }

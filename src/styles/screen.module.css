@@ -1,12 +1,17 @@
 /**
  * Shared screen chrome (the page frame + display title + header/nav row) used by
- * every top-level screen (Settings, SurvivalKit, NumbersMode, …). Consumed via
+ * every top-level screen (Home, Settings, NumbersMode, …). Consumed via
  * CSS Modules `composes ... from` so the screen shell lives in ONE place and
  * cannot drift between screens.
  */
 
 .screen {
   min-height: 100vh;
+  /* A centred reading column: forms and cards must not stretch across a
+     desktop window. On a phone the column is simply the full width. */
+  inline-size: 100%;
+  max-inline-size: var(--screen-max);
+  margin-inline: auto;
   padding: var(--s-7) var(--s-5);
   display: flex;
   flex-direction: column;

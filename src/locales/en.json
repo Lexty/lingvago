@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "lingvago2",
+    "title": "Lingvago",
     "nav": {
       "settings": "Settings"
     }
@@ -29,13 +29,16 @@
       "confirm": "Overwrite and restore",
       "cancel": "Cancel",
       "imported": "Progress restored.",
-      "importInvalid": "That file isn't a valid lingvago2 progress backup. Your current progress is unchanged.",
+      "importInvalid": "That file isn't a valid Lingvago progress backup. Your current progress is unchanged.",
       "importError": "Couldn't import that file. Your current progress is unchanged."
+    },
+    "nav": {
+      "back": "Back"
     }
   },
   "reference": {
     "title": "Reference",
-    "intro": "Quick grammar cards to re-read before a mock — articles & gender, prepositions, ser/estar, and verb endings.",
+    "intro": "Short rule cards: gender and articles, prepositions, ser and estar, verb endings, possessives and question words.",
     "nav": {
       "back": "Back",
       "list": "All cards"
@@ -43,81 +46,54 @@
     "loading": "Loading cards…",
     "empty": "No reference cards are available yet. They load with the app content.",
     "notFound": "That reference card was not found.",
-    "error": "Couldn't load reference cards. Please try again."
+    "error": "Couldn't load reference cards. Please try again.",
+    "practice": "Open the drill"
   },
-  "survivalKit": {
-    "title": "Exam Survival Kit",
+  "home": {
+    "title": "What shall we practise?",
     "nav": {
-      "numbers": "Numbers",
-      "conjugation": "Conjugation",
-      "gender": "Gender & articles",
-      "preposition": "Prepositions",
-      "possessive": "Possessives",
-      "interrogative": "Question words",
-      "mock": "Mock",
       "reference": "Reference",
       "settings": "Settings"
     },
-    "today": {
-      "label": "Focus on today",
-      "body": "One calm step at a time. Listen to live European Portuguese, write a short text, drill your weak groups, and run a mock when you're ready. No countdowns — just today's work."
-    },
-    "checklist": {
-      "label": "Exam groups checklist",
-      "hint": "Tick a group once you've prepared it.",
-      "group": {
-        "I": "Grupo I — Listening",
-        "II": "Grupo II — Reading",
-        "III": "Grupo III — Grammar",
-        "IV": "Grupo IV — Writing"
+    "topics": {
+      "numbers": {
+        "title": "Numbers",
+        "hint": "Numbers in words and in digits, cardinal and ordinal."
+      },
+      "conjugation": {
+        "title": "Conjugation",
+        "hint": "Present-tense verb forms: one person or the whole table."
+      },
+      "gender": {
+        "title": "Gender & articles",
+        "hint": "o / a, um / uma and contractions with a preposition: do, na, ao."
+      },
+      "preposition": {
+        "title": "Prepositions",
+        "hint": "Time, place and movement: de, em, a, para."
+      },
+      "possessive": {
+        "title": "Possessives",
+        "hint": "Whose thing it is: meu / minha, teu / tua, dele / dela."
+      },
+      "interrogative": {
+        "title": "Question words",
+        "hint": "Who, where, how, when, why."
       }
-    },
-    "materials": {
-      "label": "Materials",
-      "items": {
-        "matrix": "Exam matrix (teacher_matriz)",
-        "livro": "Course book & notebook",
-        "dailyPlan": "Daily study protocol"
-      }
-    },
-    "mock": {
-      "label": "Mock results by group",
-      "hint": "Enter each group's score out of 50 after a paper mock run.",
-      "groupColumn": "Group",
-      "scoreColumn": "Score (0–50)",
-      "scoreAria": "Score for {{group}} out of 50",
-      "total": "Total",
-      "totalOf": "{{score}} of {{max}}",
-      "clear": "Clear scores"
-    },
-    "threshold": {
-      "label": "Pass thresholds",
-      "hint": "Optional — ask your teacher. Leave blank to keep scores informational only.",
-      "totalLabel": "Total to pass (of 200)",
-      "totalAria": "Total points required to pass, out of 200",
-      "minGroupLabel": "Minimum per group (of 50)",
-      "minGroupAria": "Minimum points required per group, out of 50",
-      "unset": "unknown"
-    },
-    "verdict": {
-      "label": "Verdict",
-      "pass": "On track to pass",
-      "passDetail": "Every set threshold is met.",
-      "risk": "At risk",
-      "riskDetail": "At least one set threshold is not met yet.",
-      "none": "No verdict yet",
-      "noneDetail": "Set at least one pass threshold to see a verdict. Until then, here are your raw scores by group."
-    },
-    "warning": {
-      "zeroGroup": "Don't zero a group — a group at 0 needs attention even if your total looks fine."
     }
+  },
+  "rule": {
+    "open": "Rule",
+    "close": "Close",
+    "missing": "Couldn't load the rule.",
+    "retry": "Try again"
   },
   "numbers": {
     "title": "Numbers",
     "nav": {
       "home": "Back"
     },
-    "intro": "Type the answer — both directions, cardinals and ordinals. A generative production drill (no multiple choice). Not gamified.",
+    "intro": "Write the number in words or in digits. Both cardinal and ordinal numbers come up.",
     "empty": "No items in this session.",
     "task": {
       "digitToWord": "Write the number in Portuguese",
@@ -140,7 +116,7 @@
     "nav": {
       "home": "Back"
     },
-    "intro": "Type the present-tense form — a single person, or assemble the whole table. A generative production drill (no multiple choice) over verified verbs only. Not gamified.",
+    "intro": "Write the present-tense verb form: for one person, or the whole table.",
     "empty": "No items in this session.",
     "task": {
       "fillForm": "Write the present-tense form",
@@ -159,119 +135,63 @@
     "nav": {
       "home": "Back"
     },
-    "intro": "Pick or type the article — definite, indefinite, and contractions (do/da/no/na/ao/à). Production-first over verified nouns only. Not gamified.",
+    "intro": "Choose or write the article: definite, indefinite, or contracted with a preposition (do, da, no, na, ao, à).",
     "empty": "No items in this session.",
     "level": "Level {{level}}",
     "answerLabel": "Your answer",
     "check": "Check",
     "next": "Next",
-    "reference": "Open the reference card",
     "feedback": {
       "correct": "Correct",
       "wrong": "Not quite — answer: {{answer}}"
-    },
-    "closeReference": "Close"
+    }
   },
   "preposition": {
     "title": "Prepositions",
     "nav": {
       "home": "Back"
     },
-    "intro": "Fill the blank with the right preposition — time, place, and movement. Production-first cloze over verified examples only. Not gamified.",
+    "intro": "Fill the blank with the right preposition: time, place or movement.",
     "empty": "No items in this session.",
     "level": "Level {{level}}",
     "answerLabel": "Your answer",
     "check": "Check",
     "next": "Next",
-    "reference": "Open the reference card",
     "feedback": {
       "correct": "Correct",
       "wrong": "Not quite — answer: {{answer}}"
-    },
-    "closeReference": "Close"
+    }
   },
   "possessive": {
     "title": "Possessives",
     "nav": {
       "home": "Back"
     },
-    "intro": "Read the person cue, then type the agreeing possessive — meu/minha, teu/tua, dele/dela. Production-first cloze over verified examples only. Not gamified.",
+    "intro": "See whose thing it is and write the possessive in the right form: meu / minha, teu / tua, dele / dela.",
     "empty": "No items in this session.",
     "level": "Level {{level}}",
     "answerLabel": "Your answer",
     "check": "Check",
     "next": "Next",
-    "reference": "Open the reference card",
     "feedback": {
       "correct": "Correct",
       "wrong": "Not quite — answer: {{answer}}"
-    },
-    "closeReference": "Close"
+    }
   },
   "interrogative": {
     "title": "Question words",
     "nav": {
       "home": "Back"
     },
-    "intro": "Read the meaning cue, then type the matching European-Portuguese question word — quem, onde, como, quando, porquê. Production-first cloze over verified examples only. Not gamified.",
+    "intro": "Use the hint to write the question word: quem, onde, como, quando, porquê.",
     "empty": "No items in this session.",
     "level": "Level {{level}}",
     "answerLabel": "Your answer",
     "check": "Check",
     "next": "Next",
-    "reference": "Open the reference card",
     "feedback": {
       "correct": "Correct",
       "wrong": "Not quite — answer: {{answer}}"
-    },
-    "closeReference": "Close"
-  },
-  "mock": {
-    "title": "Mock run",
-    "nav": {
-      "home": "Back"
-    },
-    "group": {
-      "I": "Group I — Listening",
-      "II": "Group II — Reading",
-      "III": "Group III — Grammar",
-      "IV": "Group IV — Writing"
-    },
-    "setup": {
-      "label": "Paper simulation · 90 minutes",
-      "body": "This is a 90-minute timed exam simulation. No hints and no instant grading: solve the real exam on paper or against the matrix while the clock runs. When you finish, manually enter your per-group score.",
-      "hint": "The app never grades the exam and never hints during the run.",
-      "start": "Start mock"
-    },
-    "running": {
-      "label": "Run in progress",
-      "remainingAria": "Time remaining",
-      "pause": "Pause",
-      "resume": "Resume",
-      "finish": "Finish"
-    },
-    "entry": {
-      "label": "Enter your per-group score",
-      "hint": "Out of 50 per group — from your paper run.",
-      "groupColumn": "Group",
-      "scoreColumn": "Score (0–50)",
-      "scoreAria": "Score for {{group}} out of 50",
-      "total": "Total",
-      "totalOf": "{{score}} of {{max}}",
-      "review": "To review"
-    },
-    "review": {
-      "label": "Review",
-      "unset": "—",
-      "zeroWarning": "Don't zero a group — a group at 0 needs attention even if the total looks fine.",
-      "verdictLabel": "Verdict",
-      "verdict": {
-        "pass": "On track to pass",
-        "risk": "At risk",
-        "none": "No verdict yet"
-      },
-      "save": "Save result",
-      "saved": "Result saved to your exam survival kit."
     }
   }
 }

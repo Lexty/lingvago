@@ -41,11 +41,12 @@
 
 .prompt {
   margin: 0;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: var(--fw-med);
+  /* The phrase being learned is set upright in the body face: it is reading
+     material (sometimes a two-line dialogue), not a decorative heading. */
+  font-family: var(--font-body);
+  font-weight: var(--fw-semi);
   font-size: var(--t-display);
-  line-height: var(--lh-tight);
+  line-height: var(--lh-prompt);
   color: var(--text);
   /* Long unbreakable tokens at the large display size — the `____` cloze blank,
      long Portuguese words, the multi-line L3 dialogue — must wrap instead of
@@ -129,7 +130,6 @@
 
 /* Shared L1–L3 level indicator pill (GenderDrill / PrepositionDrill). */
 .level {
-  align-self: flex-start;
   margin: 0;
   padding: var(--s-1) var(--s-3);
   border-radius: var(--r-card);
@@ -199,10 +199,11 @@
   color: var(--text-muted);
 }
 
-/* The reference deep-link rendered with feedback. */
-.refLink {
-  align-self: flex-start;
-  color: var(--accent);
-  font-size: var(--t-sm);
-  font-weight: var(--fw-semi);
+/* Card top row: what this item trains (left) + the always-available rule (right). */
+.cardTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-3);
 }

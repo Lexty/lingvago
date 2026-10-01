@@ -102,6 +102,29 @@ describe('ConjugationMode screen', () => {
     });
   });
 
+  it('offers the present-tense endings rule before answering', async () => {
+    await db.referenceCards.put({
+      contentId: 'ref-verbos-presente',
+      topic: 'verbs',
+      title: 'Present endings',
+      body: 'The rule.',
+    });
+    renderMode();
+    const [first] = expectedItems();
+    await waitFor(() => {
+      expect(screen.getByTestId('conjugation-prompt')).toHaveTextContent(first.prompt);
+    });
+    fireEvent.click(screen.getByTestId('conjugation-ref-link'));
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('conjugation-rule-overlay').querySelector('[data-content-id]'),
+      ).toHaveAttribute('data-content-id', 'ref-verbos-presente');
+    });
+    fireEvent.click(screen.getByTestId('conjugation-rule-close'));
+    expect(screen.getByTestId('conjugation-prompt')).toHaveTextContent(first.prompt);
+    expect(screen.queryByTestId('conjugation-feedback')).not.toBeInTheDocument();
+  });
+
   it('accepts a correct answer, shows positive feedback, and logs an attempt', async () => {
     renderMode();
     const [first] = expectedItems();

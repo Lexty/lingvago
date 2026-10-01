@@ -90,6 +90,36 @@ describe('GenderDrill screen', () => {
     expect(screen.getByTestId('gender-drill-level')).toHaveTextContent(`Level ${first.level}`);
   });
 
+  it('offers the rule BEFORE answering, and closing it keeps the same unanswered item', async () => {
+    await db.referenceCards.put({
+      contentId: 'ref-genero-artigo',
+      topic: 'gender',
+      title: 'Gender rule',
+      body: 'The rule.',
+    });
+    renderMode();
+    const [first] = entries();
+    await waitFor(() => {
+      expect(screen.getByTestId('gender-drill-prompt')).toHaveTextContent(first.drill.prompt);
+    });
+    // Nothing has been answered yet — the rule is already available.
+    expect(screen.queryByTestId('gender-drill-feedback')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByTestId('gender-drill-ref-link'));
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('gender-drill-rule-overlay').querySelector('[data-content-id]'),
+      ).toHaveAttribute('data-content-id', 'ref-genero-artigo');
+    });
+    fireEvent.click(screen.getByTestId('gender-drill-rule-close'));
+    await waitFor(() => {
+      expect(screen.queryByTestId('gender-drill-rule-overlay')).not.toBeInTheDocument();
+    });
+    // Reading the rule graded nothing and did not move the session.
+    expect(screen.getByTestId('gender-drill-prompt')).toHaveTextContent(first.drill.prompt);
+    expect(screen.queryByTestId('gender-drill-feedback')).not.toBeInTheDocument();
+    expect(await db.attempts.count()).toBe(0);
+  });
+
   it('grades a correct PRODUCTION answer, logs an attempt + mastery, and shows the deep-link', async () => {
     const idx = indexOfMode('production');
     const prod = entries()[idx];

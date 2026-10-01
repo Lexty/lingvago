@@ -1,15 +1,14 @@
 import { createBrowserRouter, RouterProvider, useSearchParams } from 'react-router';
 import ConjugationMode from './screens/ConjugationMode.tsx';
 import GenderDrill from './screens/GenderDrill.tsx';
+import Home from './screens/Home.tsx';
 import InterrogativeDrill from './screens/InterrogativeDrill.tsx';
-import MockExam from './screens/MockExam.tsx';
 import NumbersMode from './screens/NumbersMode.tsx';
 import PossessiveDrill from './screens/PossessiveDrill.tsx';
 import PrepositionDrill from './screens/PrepositionDrill.tsx';
 import Reference from './screens/Reference.tsx';
 import ReferenceCardView from './screens/ReferenceCardView.tsx';
 import Settings from './screens/Settings.tsx';
-import SurvivalKit from './screens/SurvivalKit.tsx';
 
 /**
  * Route element for the numbers drill. A `?seed=` query param pins a
@@ -77,25 +76,10 @@ function InterrogativeRoute() {
   return <InterrogativeDrill seed={seed} />;
 }
 
-/**
- * Route element for the timed mock (PaperSimulation). A `?duration=` query param
- * (milliseconds) injects a SHORT run length so the deterministic e2e reaches the
- * entry phase without a real 90-minute wait; without it the real 90-min length
- * is used. A non-numeric/non-positive value is ignored (falls back to default).
- */
-function MockRoute() {
-  const [params] = useSearchParams();
-  const raw = params.get('duration');
-  const parsed = raw === null ? NaN : Number(raw);
-  const durationMs =
-    Number.isFinite(parsed) && parsed > 0 ? parsed : undefined;
-  return <MockExam durationMs={durationMs} />;
-}
-
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <SurvivalKit />,
+    element: <Home />,
   },
   {
     path: '/settings',
@@ -132,10 +116,6 @@ const router = createBrowserRouter([
   {
     path: '/drill/interrogative',
     element: <InterrogativeRoute />,
-  },
-  {
-    path: '/mock',
-    element: <MockRoute />,
   },
 ]);
 

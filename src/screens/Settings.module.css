@@ -2,8 +2,20 @@
   composes: screen from '../styles/screen.module.css';
 }
 
+.header {
+  composes: header from '../styles/screen.module.css';
+}
+
 .title {
   composes: title from '../styles/screen.module.css';
+}
+
+.nav {
+  composes: nav from '../styles/screen.module.css';
+}
+
+.navLink {
+  composes: navLink from '../styles/screen.module.css';
 }
 
 /* Segmented-control visuals are shared with LanguageToggle (composed, not duplicated). */

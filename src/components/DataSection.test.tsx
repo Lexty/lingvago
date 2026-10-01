@@ -189,7 +189,7 @@ describe('DataSection — import', () => {
 
     expect(
       await screen.findByText(
-        "That file isn't a valid lingvago2 progress backup. Your current progress is unchanged.",
+        "That file isn't a valid Lingvago progress backup. Your current progress is unchanged.",
       ),
     ).toBeInTheDocument();
     // No confirmation offered, progress untouched.

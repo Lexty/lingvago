@@ -1,4 +1,5 @@
 import { act, render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import i18n from '../i18n/config.ts';
 import Settings from './Settings.tsx';
@@ -14,9 +15,22 @@ afterEach(() => {
   document.documentElement.removeAttribute('data-theme');
 });
 
+function renderSettings() {
+  render(
+    <MemoryRouter>
+      <Settings />
+    </MemoryRouter>,
+  );
+}
+
 describe('Settings', () => {
+  it('offers a way back to the home screen', () => {
+    renderSettings();
+    expect(screen.getByRole('link', { name: 'Back' })).toHaveAttribute('href', '/');
+  });
+
   it('renders localized titles and labels (EN)', () => {
-    render(<Settings />);
+    renderSettings();
     expect(
       screen.getByRole('heading', { name: 'Settings' }),
     ).toBeInTheDocument();
@@ -26,7 +40,7 @@ describe('Settings', () => {
   });
 
   it('re-renders the whole screen in RU after switching language', async () => {
-    render(<Settings />);
+    renderSettings();
 
     await act(async () => {
       await i18n.changeLanguage('ru');

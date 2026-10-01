@@ -86,3 +86,7 @@
   font-style: italic;
   color: var(--text-muted);
 }
+
+.cardTop {
+  composes: cardTop from '../styles/drill.module.css';
+}

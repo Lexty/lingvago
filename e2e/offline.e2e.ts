@@ -8,14 +8,14 @@ import { waitForServiceWorkerActive } from './helpers';
  * visit while the network is offline must still serve the app-shell (HTML + JS +
  * rendered UI) from the SW cache.
  *
- * SCOPE (WP-A): E4 now asserts the app-shell AND the survival-kit PAGE offline
+ * SCOPE: E4 asserts the app-shell AND the home PAGE (the list of mechanics) offline
  * (route `/` content rendered from the SW cache), not just a bare shell.
  *
  * Anti-flake (plan note 1): we await the ACTIVATED/controlling SW via
  * `serviceWorker.ready` + controller (helpers), not `networkidle`.
  */
 
-test('serves the app-shell + survival-kit page offline after first load (SW precache)', async ({ page, context }) => {
+test('serves the app-shell + home page offline after first load (SW precache)', async ({ page, context }) => {
   // First (online) load — let the SW install, activate, and take control.
   await page.goto('/settings');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
@@ -28,17 +28,17 @@ test('serves the app-shell + survival-kit page offline after first load (SW prec
   await page.reload();
   // App-shell rendered: the heading comes from the precached JS bundle booting.
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  expect(await page.title()).toBe('lingvago2');
+  expect(await page.title()).toBe('Lingvago');
 
   // A clean navigation (not just reload) to the landing route while offline must
-  // serve the actual survival-kit PAGE (WP-A) from the SW cache — not only the
-  // shell. Assert the survival-kit content (heading + mock-results table).
+  // serve the actual home PAGE from the SW cache — not only the shell. Assert
+  // the home content (heading + the topic cards).
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { level: 1, name: 'Exam Survival Kit' }),
+    page.getByRole('heading', { level: 1, name: 'What shall we practise?' }),
   ).toBeVisible();
-  await expect(page.getByRole('table')).toBeVisible();
-  await expect(page.getByLabel('Score for I out of 50')).toBeVisible();
+  await expect(page.getByTestId('home-topic-numbers')).toBeVisible();
+  await expect(page.getByTestId('home-topic-interrogative')).toBeVisible();
 
   await context.setOffline(false);
 });

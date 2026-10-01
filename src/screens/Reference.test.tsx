@@ -82,6 +82,25 @@ describe('Reference card view (deep-link /reference/:id)', () => {
     expect(screen.getByRole('note')).toHaveTextContent('Учить отдельно');
   });
 
+  it('links a card to the drill that trains it, and omits the link when there is none', async () => {
+    await db.referenceCards.bulkPut([
+      SAMPLE,
+      { contentId: 'ref-prep-tempo', topic: 'Предлоги', title: 'Tempo', body: 'a / de / em' },
+    ]);
+
+    const first = renderAt('/reference/ref-prep-tempo');
+    expect(await screen.findByTestId('reference-practice')).toHaveAttribute(
+      'href',
+      '/drill/preposition',
+    );
+    first.unmount();
+
+    // ser/estar has no drill of its own → no practice link.
+    renderAt('/reference/ref-ser-estar');
+    await screen.findByRole('heading', { name: 'SER vs ESTAR' });
+    expect(screen.queryByTestId('reference-practice')).not.toBeInTheDocument();
+  });
+
   it('shows a not-found state (not a crash) for an unknown id', async () => {
     await db.referenceCards.bulkPut([SAMPLE]);
     renderAt('/reference/does-not-exist');

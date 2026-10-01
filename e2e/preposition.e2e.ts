@@ -146,12 +146,12 @@ test('E-Preposition: plays a deterministic L1–L3 session with production + MC 
   ).toBeVisible();
 });
 
-test('E-Preposition-b: the survival-kit nav links to the preposition drill', async ({
+test('E-Preposition-b: the home screen links to the preposition drill', async ({
   page,
 }) => {
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { level: 1, name: 'Exam Survival Kit' }),
+    page.getByRole('heading', { level: 1, name: 'What shall we practise?' }),
   ).toBeVisible();
   await page.getByRole('link', { name: 'Prepositions' }).click();
   await expect(
