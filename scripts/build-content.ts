@@ -1,7 +1,7 @@
 // Build the app content bundle (SPEC §7.3 pipeline) from
 // extraction/normalized/*.json + authored reference cards.
 //
-// Output: public/content.v<CONTENT_VERSION>.json (currently content.v7.json) —
+// Output: public/content.v<CONTENT_VERSION>.json (currently content.v8.json) —
 // a versioned, READ-ONLY artifact loaded into IndexedDB content stores
 // (SPEC §7.1) at first run / on contentVersion change.
 //
@@ -50,7 +50,12 @@ import { dirname, join } from 'node:path';
 // `você`), and a separate 3rd-person block lists the invariable owner-forms
 // `ele→dele / ela→dela / eles→deles / elas→delas`. The old `ele·ela·você → seu`
 // lump is gone. Body-only edit, so installed PWAs reload the card on the bump.
-export const CONTENT_VERSION = 7;
+// v8 ADDS authored noun plurals (`NounRecord.plural`) for the plural-agreement
+// items of the gender drill (`vários / várias` + plural noun), adds the nouns
+// of that list that the extracted vocabulary lacks (ilha, loja, lago, flor, …),
+// and extends the `ref-genero-artigo` card with the `-or` hint, the `a flor`
+// exceptions and a section on words that agree in gender in the plural.
+export const CONTENT_VERSION = 8;
 
 /** Output artifact name — `content.v<CONTENT_VERSION>.json` (SPEC §10.3). */
 export const CONTENT_FILENAME = `content.v${CONTENT_VERSION}.json`;
@@ -131,6 +136,8 @@ export interface NounRecord {
   gender: 'm' | 'f';
   article: 'o' | 'a';
   en: string | null;
+  /** Authored plural form; only on nouns listed in AUTHORED_PLURALS. */
+  plural?: string;
 }
 
 export interface PrepositionRecord {
@@ -264,6 +271,98 @@ function cleanLemma(s: string): string {
     .trim();
 }
 
+/**
+ * AUTHORED noun plurals: `[lemma, gender, plural]`.
+ * Every gender and plural form was checked word by word against the Priberam
+ * dictionary (https://dicionario.priberam.org/<word>) when the list was reviewed. Plurals are written out,
+ * never derived by rule (flor → flores, hotel → hotéis, pão → pães, homem →
+ * homens). A lemma already present in the extracted vocabulary only GAINS its
+ * plural — and the build fails if the authored gender disagrees with the
+ * extracted one; a lemma the vocabulary lacks is added as a new noun.
+ */
+const AUTHORED_PLURALS: ReadonlyArray<readonly [string, 'm' | 'f', string]> = [
+  ['praia', 'f', 'praias'],
+  ['viagem', 'f', 'viagens'],
+  ['ilha', 'f', 'ilhas'],
+  ['loja', 'f', 'lojas'],
+  ['lago', 'm', 'lagos'],
+  ['flor', 'f', 'flores'],
+  ['livro', 'm', 'livros'],
+  ['casa', 'f', 'casas'],
+  ['carro', 'm', 'carros'],
+  ['mesa', 'f', 'mesas'],
+  ['cidade', 'f', 'cidades'],
+  ['dia', 'm', 'dias'],
+  ['mão', 'f', 'mãos'],
+  ['problema', 'm', 'problemas'],
+  ['mapa', 'm', 'mapas'],
+  ['professor', 'm', 'professores'],
+  ['cor', 'f', 'cores'],
+  ['mulher', 'f', 'mulheres'],
+  ['homem', 'm', 'homens'],
+  ['hotel', 'm', 'hotéis'],
+  ['jornal', 'm', 'jornais'],
+  ['país', 'm', 'países'],
+  ['mês', 'm', 'meses'],
+  ['rua', 'f', 'ruas'],
+  ['amigo', 'm', 'amigos'],
+  ['amiga', 'f', 'amigas'],
+  ['estação', 'f', 'estações'],
+  ['lição', 'f', 'lições'],
+  ['irmão', 'm', 'irmãos'],
+  ['irmã', 'f', 'irmãs'],
+  ['pão', 'm', 'pães'],
+  ['cão', 'm', 'cães'],
+  ['rapaz', 'm', 'rapazes'],
+  ['luz', 'f', 'luzes'],
+  ['vez', 'f', 'vezes'],
+  ['língua', 'f', 'línguas'],
+  ['pessoa', 'f', 'pessoas'],
+  ['restaurante', 'm', 'restaurantes'],
+  ['noite', 'f', 'noites'],
+  ['ponte', 'f', 'pontes'],
+  ['filho', 'm', 'filhos'],
+  ['garagem', 'f', 'garagens'],
+  ['mensagem', 'f', 'mensagens'],
+  ['universidade', 'f', 'universidades'],
+  ['computador', 'm', 'computadores'],
+  ['telemóvel', 'm', 'telemóveis'],
+  ['animal', 'm', 'animais'],
+  ['papel', 'm', 'papéis'],
+  ['jardim', 'm', 'jardins'],
+  ['museu', 'm', 'museus'],
+  ['avião', 'm', 'aviões'],
+  ['canção', 'f', 'canções'],
+  ['nome', 'm', 'nomes'],
+  ['parque', 'm', 'parques'],
+  ['árvore', 'f', 'árvores'],
+];
+
+/** Merge {@link AUTHORED_PLURALS} into the extracted nouns (see its doc). */
+function withAuthoredPlurals(seen: Map<string, NounRecord>): void {
+  for (const [lemma, gender, plural] of AUTHORED_PLURALS) {
+    const key = lemma.toLowerCase();
+    const existing = seen.get(key);
+    if (existing) {
+      if (existing.gender !== gender) {
+        throw new Error(
+          `authored plural for «${lemma}» says gender ${gender}, extracted vocabulary says ${existing.gender}`,
+        );
+      }
+      existing.plural = plural;
+    } else {
+      seen.set(key, {
+        contentId: `noun:${key}`,
+        lemma,
+        gender,
+        article: gender === 'm' ? 'o' : 'a',
+        en: null,
+        plural,
+      });
+    }
+  }
+}
+
 function buildNouns(): NounRecord[] {
   const vocabFull = asRecord(readNormalized('vocab_full.json'), 'vocab_full.json');
   const entries = asArray(vocabFull.vocabulary, 'vocab_full.json', 'vocabulary');
@@ -298,6 +397,7 @@ function buildNouns(): NounRecord[] {
       en,
     });
   }
+  withAuthoredPlurals(seen);
   return [...seen.values()].sort((a, b) => a.contentId.localeCompare(b.contentId, 'en'));
 }
 
@@ -645,8 +745,13 @@ const referenceCards: ReferenceCard[] = [
       '• **-ção, -são, -dade, -agem, -ície → f** (a estação, a cidade, a viagem).',
       '• **-ma (греч.) → m** (o problema, o programa, o tema).',
       '• **-ão**: чаще m (o coração), но a mão, a razão — f. Учить отдельно.',
+      '• **-or**: обычно m (o professor, o computador), но **a flor, a cor, a dor** — f.',
       '',
-      '⚠️ Исключения учим как факт: **a mão, o dia, o mapa, a tribo**.',
+      '⚠️ Исключения учим как факт: **a mão, o dia, o mapa, a tribo, a flor, a cor**.',
+      '',
+      '**Слова, которые согласуются по роду во множественном числе:** vários / várias, muitos / muitas, poucos / poucas, alguns / algumas.',
+      '• Род берём у существительного, число уже множественное: **várias** viagens (a viagem), **vários** lagos (o lago), **muitas** flores (a flor).',
+      '• Чтобы узнать род слова во множественном числе, верните его в единственное и вспомните вместе с артиклем: lojas → a loja, hotéis → o hotel, mãos → a mão.',
       '',
       '**С именами/странами** артикль ставится при *ser*/как подлежащее (Sou **o** Paulo), но НЕ при *chamar-se* (Chamo-me Paulo).',
     ].join('\n'),
@@ -713,6 +818,31 @@ const referenceCards: ReferenceCard[] = [
       '• **em frente de / a** (напротив)',
       '• **atrás de** (за) · **dentro de** (внутри) · **perto de** (близко) · **longe de** (далеко)',
       '• **entre** (между) — без de.',
+    ].join('\n'),
+  },
+  {
+    contentId: 'ref-comparacao',
+    topic: 'Сравнения',
+    title: 'Сравнения: mais / menos / tão и «самый»',
+    body: [
+      '**Больше:** mais + прилагательное + **do que** — A Ana é **mais** alta **do que** o Rui.',
+      '**Меньше:** menos + прилагательное + **do que** — Este hotel é **menos** caro **do que** aquele.',
+      '**Одинаково:** **tão** + прилагательное + **como** — O Rui é **tão** simpático **como** a Ana.',
+      '• После mais / menos можно и просто **que**: mais alta que o Rui. Обе формы верны.',
+      '• После tão можно и **quanto**: tão simpático quanto a Ana. Обе формы верны; чаще — como.',
+      '• Прилагательное согласуется с тем, о ком речь: a Ana é alt**a**, o Rui é alt**o**.',
+      '',
+      '**Самый:** артикль + (существительное) + **mais** + прилагательное + **de** — o rio **mais** longo **do** país.',
+      '• Среди чего — через **de**, оно сливается с артиклем: do país, da turma, da ilha, de todos.',
+      '• Артикль обязателен: A Ana é **a** melhor aluna da turma.',
+      '',
+      '**Особые формы (без mais):**',
+      '• bom / bem → **melhor** → o melhor',
+      '• mau / mal → **pior** → o pior',
+      '• grande → **maior** → o maior',
+      '• pequeno → в Португалии обычно **mais pequeno**; **menor** тоже верно.',
+      '',
+      '⚠️ Когда сравниваем два предмета, не говорят: mais bom, mais mau, mais grande. И никогда — mais melhor.',
     ].join('\n'),
   },
   {

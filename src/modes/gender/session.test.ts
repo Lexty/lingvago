@@ -130,8 +130,8 @@ describe('§6.3 mode decision — MC where parity assembles, else production', (
 });
 
 describe('L1–L3 curve (§4.8) — deterministic by level', () => {
-  it('declares exactly L1, L2, L3', () => {
-    expect(GENDER_LEVELS).toEqual(['L1', 'L2', 'L3']);
+  it('declares exactly L1, L2, L3 and the L4 plural agreement', () => {
+    expect(GENDER_LEVELS).toEqual(['L1', 'L2', 'L3', 'L4']);
   });
 
   it('every item carries the requested level and a grounded answer', () => {

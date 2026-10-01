@@ -95,6 +95,27 @@ describe('drill focus — session builders', () => {
     expect([...both].every((k) => k === 'definite' || k === 'indefinite')).toBe(true);
   });
 
+  it('gender: "vários / várias" yields only plural-agreement items', () => {
+    const withPlurals: NounRecord[] = [
+      { ...NOUNS[0], plural: 'livros' },
+      { ...NOUNS[1], plural: 'casas' },
+    ];
+    const agreement = buildGenderEntries(SEED, withPlurals, 'agreement');
+    expect(agreement).toHaveLength(12);
+    expect(agreement.every((e) => e.item.kind === 'agreement')).toBe(true);
+    expect(agreement.every((e) => e.labelKey === 'gender.kind.agreement')).toBe(true);
+    // The mix now ends with the agreement items.
+    const all = buildGenderEntries(SEED, withPlurals);
+    expect(all.map((e) => e.level)).toEqual([
+      ...Array<string>(4).fill('L1'),
+      ...Array<string>(4).fill('L2'),
+      ...Array<string>(4).fill('L3'),
+      ...Array<string>(4).fill('L4'),
+    ]);
+    // Without authored plurals there is nothing to agree with.
+    expect(buildGenderEntries(SEED, NOUNS, 'agreement')).toEqual([]);
+  });
+
   it('possessives: hint and dialogue are separate sub-topics', () => {
     const all = buildPossessiveEntries(SEED, POSS, CONTEXT);
     const cue = buildPossessiveEntries(SEED, POSS, CONTEXT, 'cue');

@@ -14,7 +14,12 @@ export {
   type DefiniteArticle,
   type Gender,
 } from './contractions.ts';
-export { filterGenderEligible, isGenderEligible } from './eligibility.ts';
+export {
+  filterAgreementEligible,
+  filterGenderEligible,
+  isAgreementEligible,
+  isGenderEligible,
+} from './eligibility.ts';
 export {
   canonicalize,
   checkAnswer,

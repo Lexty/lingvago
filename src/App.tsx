@@ -4,6 +4,8 @@ import GenderDrill from './screens/GenderDrill.tsx';
 import Home from './screens/Home.tsx';
 import InterrogativeDrill from './screens/InterrogativeDrill.tsx';
 import NumbersMode from './screens/NumbersMode.tsx';
+import Pack from './screens/Pack.tsx';
+import PackDrill from './screens/PackDrill.tsx';
 import PossessiveDrill from './screens/PossessiveDrill.tsx';
 import PrepositionDrill from './screens/PrepositionDrill.tsx';
 import Reference from './screens/Reference.tsx';
@@ -92,6 +94,14 @@ const router = createBrowserRouter([
   {
     path: '/reference/:id',
     element: <ReferenceCardView />,
+  },
+  {
+    path: '/pack/:packId',
+    element: <Pack />,
+  },
+  {
+    path: '/pack/:packId/:groupId',
+    element: <PackDrill />,
   },
   {
     path: '/drill/numbers',

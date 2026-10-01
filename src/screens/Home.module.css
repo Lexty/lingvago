@@ -67,3 +67,42 @@
   line-height: var(--lh-body);
   color: var(--text-muted);
 }
+
+/* The "by lesson / by mechanic" switch. */
+.segmented {
+  composes: segmented from '../styles/segmented.module.css';
+}
+
+.segment {
+  composes: segment from '../styles/segmented.module.css';
+}
+
+.segmentActive {
+  composes: segmentActive from '../styles/segmented.module.css';
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.sectionTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--fw-med);
+  font-size: var(--t-h2);
+  color: var(--text);
+}
+
+/* Which course unit a card belongs to. */
+.tag {
+  align-self: flex-start;
+  padding: var(--s-1) var(--s-3);
+  border-radius: var(--r-pill);
+  background: var(--tag-bg);
+  color: var(--tag-fg);
+  font-size: var(--t-cap);
+  font-weight: var(--fw-semi);
+}

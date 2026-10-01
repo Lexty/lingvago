@@ -17,8 +17,11 @@ import {
 } from '../modes/gender/index.ts';
 import styles from '../styles/grammarDrillScreen.module.css';
 
-/** Items generated per §4.8 level (the session walks L1→L2→L3, then re-rolls). */
+/** Items generated per level (the mixed session walks L1→L4, then re-rolls). */
 const PER_LEVEL = 4;
+
+/** Items in a session of ONE chosen sub-topic. */
+const FOCUS_COUNT = 12;
 
 /** A fresh, unique-enough seed for a NEW interactive session. */
 function freshSeed(): string {
@@ -34,19 +37,21 @@ function freshSeed(): string {
  * What to practise: the default mix, or one article mechanic. The option labels
  * are the Portuguese forms themselves, so they need no translation.
  */
-export const GENDER_FOCUS = ['all', 'definite', 'both', 'contraction'] as const;
+export const GENDER_FOCUS = ['all', 'definite', 'both', 'contraction', 'agreement'] as const;
 export type GenderFocus = (typeof GENDER_FOCUS)[number];
 
 const FOCUS_LEVEL: Readonly<Record<Exclude<GenderFocus, 'all'>, GenderLevel>> = {
   definite: 'L1',
   both: 'L2',
   contraction: 'L3',
+  agreement: 'L4',
 };
 
 const FOCUS_FORMS: Readonly<Record<Exclude<GenderFocus, 'all'>, string>> = {
   definite: 'o / a',
   both: 'o / a + um / uma',
   contraction: 'do / na / ao',
+  agreement: 'vários / muitos / alguns',
 };
 
 /**
@@ -60,9 +65,9 @@ export function buildGenderEntries(
   focus: GenderFocus = 'all',
 ): GrammarDrillEntry<GenderItem>[] {
   const entries: GrammarDrillEntry<GenderItem>[] = [];
-  // A chosen sub-topic is one level, at the length of the whole mixed session.
+  // A chosen sub-topic is one level, FOCUS_COUNT items long.
   const levels: readonly GenderLevel[] = focus === 'all' ? GENDER_LEVELS : [FOCUS_LEVEL[focus]];
-  const count = focus === 'all' ? PER_LEVEL : PER_LEVEL * GENDER_LEVELS.length;
+  const count = focus === 'all' ? PER_LEVEL : FOCUS_COUNT;
   for (const level of levels) {
     const items = generateSession(`${seed}-${level}`, nouns, {
       count,

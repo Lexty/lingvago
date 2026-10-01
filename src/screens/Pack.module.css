@@ -1,0 +1,53 @@
+.screen {
+  composes: screen from '../styles/screen.module.css';
+}
+
+.header {
+  composes: header from '../styles/screen.module.css';
+}
+
+.title {
+  composes: title from '../styles/screen.module.css';
+}
+
+.nav {
+  composes: nav from '../styles/screen.module.css';
+}
+
+.navLink {
+  composes: navLink from '../styles/screen.module.css';
+}
+
+.intro {
+  composes: intro from '../styles/drill.module.css';
+}
+
+.topics {
+  composes: topics from './Home.module.css';
+}
+
+.topicItem {
+  composes: topicItem from './Home.module.css';
+}
+
+.topic {
+  composes: topic from './Home.module.css';
+}
+
+.topicTitle {
+  composes: topicTitle from './Home.module.css';
+}
+
+.topicExample {
+  composes: topicExample from './Home.module.css';
+}
+
+.topicHint {
+  composes: topicHint from './Home.module.css';
+}
+
+/* The mixed session stands apart from the single mechanics. */
+.topicMix {
+  background: var(--accent-soft);
+  box-shadow: none;
+}

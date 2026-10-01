@@ -164,7 +164,7 @@ describe('GenderDrill screen', () => {
     expect(row.correct).toBe(true);
     expect(row.skill).toBe('gender-article');
     expect(row.channel).toBe('production');
-    expect(['L1', 'L2', 'L3']).toContain(row.level);
+    expect(['L1', 'L2', 'L3', 'L4']).toContain(row.level);
     expect(await db.skillMastery.count()).toBeGreaterThanOrEqual(1);
   });
 

@@ -20,6 +20,10 @@
 //        competitive trap. do/da, no/na, ao are parity-equal ⇒ MC; `à` (folds
 //        to length-1) has no length-1 contraction peer ⇒ production. The hardest
 //        level, exactly as §4.8 prescribes (first combinatorics + traps).
+//   L4 — PLURAL AGREEMENT: a determiner that agrees in gender with a plural noun
+//        (`vários / várias`, `muitos / muitas`, …). Always typed PRODUCTION: the
+//        task is to write the agreeing form, as in a textbook fill-in. Drawn only
+//        from nouns with an authored plural; with none, the level yields `[]`.
 //
 // The deterministic path uses ONLY the seeded PRNG — never `Math.random()`.
 
@@ -39,16 +43,16 @@ import {
   type Contractable,
   type DefiniteArticle,
 } from './contractions.ts';
-import { filterGenderEligible } from './eligibility.ts';
+import { filterAgreementEligible, filterGenderEligible } from './eligibility.ts';
 
-/** The §4.8 difficulty levels this skill declares (L1–L3, contract Task 2). */
-export const GENDER_LEVELS = ['L1', 'L2', 'L3'] as const;
+/** The levels this skill declares: L1–L3 (§4.8) + L4 plural agreement. */
+export const GENDER_LEVELS = ['L1', 'L2', 'L3', 'L4'] as const;
 
 /** A graded difficulty level of the GenderArticle curve (§4.8). */
 export type GenderLevel = (typeof GENDER_LEVELS)[number];
 
 /** Which article task a generated item drills (also the mastery sub-axis). */
-export type GenderTaskKind = 'definite' | 'indefinite' | 'contraction';
+export type GenderTaskKind = 'definite' | 'indefinite' | 'contraction' | 'agreement';
 
 /** The three EP prepositions L3 contracts with, in canonical order. */
 const PREPS: readonly Contractable[] = ['de', 'em', 'a'];
@@ -68,6 +72,8 @@ export interface GenderItem {
   lemma: string;
   /** The preposition, for `kind === 'contraction'` items only. */
   prep?: Contractable;
+  /** The determiner's masculine form, for `kind === 'agreement'` items only. */
+  determiner?: string;
   /** The shared drill item (production-first; MC only when parity assembled). */
   drill: DrillItem;
 }
@@ -187,6 +193,48 @@ function buildContraction(
 }
 
 /**
+ * Plural determiners that agree in gender with their noun: `[masculine,
+ * feminine]`. The masculine plural is the cue shown in the prompt.
+ */
+export const AGREEING_DETERMINERS: ReadonlyArray<readonly [string, string]> = [
+  ['vários', 'várias'],
+  ['muitos', 'muitas'],
+  ['poucos', 'poucas'],
+  ['alguns', 'algumas'],
+];
+
+/**
+ * Build a PLURAL-AGREEMENT item (L4): the determiner is given as its masculine
+ * plural cue and the learner writes the form that agrees with the plural
+ * noun — `(vários) ___ viagens` → `várias`. No distractor pool is offered, so
+ * the item is always typed PRODUCTION.
+ */
+function buildAgreement(
+  seed: string,
+  noun: NounRecord,
+  plural: string,
+  forms: readonly [string, string],
+): GenderItem {
+  const answer = noun.gender === 'm' ? forms[0] : forms[1];
+  return {
+    id: seed,
+    level: 'L4',
+    kind: 'agreement',
+    lemma: noun.lemma,
+    determiner: forms[0],
+    drill: assembleMcOrProduction({
+      seed,
+      prompt: `(${forms[0]}) ___ ${plural}`,
+      answer,
+      answerExplanation: `«${noun.lemma}» is ${noun.gender === 'm' ? 'masculine' : 'feminine'} → «${answer}»`,
+      parityClass: 'determiner-agreement',
+      candidates: [],
+      sourceRef: sourceOf(noun),
+    }),
+  };
+}
+
+/**
  * Generate a deterministic GenderArticle session for `seed` over the
  * verified-eligible subset of `nouns`, at the requested §4.8 level.
  *
@@ -202,7 +250,10 @@ export function generateSession(
 ): GenderItem[] {
   const cfg: GenderSessionConfig = { ...DEFAULT_GENDER_SESSION_CONFIG, ...config };
   const count = Math.max(1, Math.floor(cfg.count));
-  const eligible = filterGenderEligible([...nouns]).sort((a, b) =>
+  // L4 draws only from nouns with an authored plural; L1–L3 from every
+  // gender-eligible noun (unchanged).
+  const pool = cfg.level === 'L4' ? filterAgreementEligible([...nouns]) : filterGenderEligible([...nouns]);
+  const eligible = pool.sort((a, b) =>
     a.contentId < b.contentId ? -1 : a.contentId > b.contentId ? 1 : 0,
   );
   if (eligible.length === 0) {
@@ -217,7 +268,10 @@ export function generateSession(
     const article = noun.article;
     const itemSeed = `${String(seed)}-${i}`;
 
-    if (cfg.level === 'L1') {
+    if (cfg.level === 'L4') {
+      const forms = AGREEING_DETERMINERS[prng.intBetween(0, AGREEING_DETERMINERS.length - 1)];
+      items.push(buildAgreement(itemSeed, noun, noun.plural ?? '', forms));
+    } else if (cfg.level === 'L1') {
       items.push(buildDefinite(itemSeed, noun, article, 'L1'));
     } else if (cfg.level === 'L2') {
       // Mix definite (parity ⇒ MC) and indefinite (no parity ⇒ production),

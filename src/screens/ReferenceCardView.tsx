@@ -18,6 +18,7 @@ const DRILL_FOR_CARD: Readonly<Record<string, string>> = {
   'ref-prep-tempo': '/drill/preposition',
   'ref-prep-lugar': '/drill/preposition',
   'ref-verbos-presente': '/drill/conjugation',
+  'ref-comparacao': '/pack/unit-18/comparisons',
   'ref-possessive': '/drill/possessive',
   'ref-interrogative': '/drill/interrogative',
 };

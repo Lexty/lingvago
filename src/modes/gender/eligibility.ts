@@ -39,3 +39,20 @@ export function isGenderEligible(noun: Partial<NounRecord> | null | undefined): 
 export function filterGenderEligible(nouns: readonly NounRecord[]): NounRecord[] {
   return nouns.filter((n) => isGenderEligible(n));
 }
+
+/**
+ * Is `noun` eligible for the PLURAL-AGREEMENT items (`vários / várias` + plural
+ * noun)? Eligible ⇔ gender-eligible AND it carries an authored, non-empty
+ * `plural`. The plural is never derived by rule (`flor` → `flores`, `hotel` →
+ * `hotéis`, `pão` → `pães`): a noun without an authored plural is excluded.
+ */
+export function isAgreementEligible(noun: Partial<NounRecord> | null | undefined): boolean {
+  return (
+    isGenderEligible(noun) && typeof noun?.plural === 'string' && noun.plural.trim() !== ''
+  );
+}
+
+/** Keep only the nouns eligible for the plural-agreement items. */
+export function filterAgreementEligible(nouns: readonly NounRecord[]): NounRecord[] {
+  return nouns.filter((n) => isAgreementEligible(n));
+}

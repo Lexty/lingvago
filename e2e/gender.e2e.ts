@@ -40,7 +40,7 @@ interface Entry {
 
 /** Recompute the exact L1→L3 session the app generates from the shipped bundle. */
 function expectedEntries(): Entry[] {
-  const bundlePath = resolve(here, '../public/content.v7.json');
+  const bundlePath = resolve(here, '../public/content.v8.json');
   const bundle = JSON.parse(readFileSync(bundlePath, 'utf8')) as ContentBundle;
   const entries: Entry[] = [];
   for (const level of GENDER_LEVELS) {
@@ -91,7 +91,7 @@ test('E-Gender: plays a deterministic L1–L3 session with production + MC and d
   // Coverage guard: the pinned seed MUST exercise BOTH modes and all 3 levels.
   expect(entries.map((e) => e.mode)).toContain('production');
   expect(entries.map((e) => e.mode)).toContain('mc');
-  expect(new Set(entries.map((e) => e.level))).toEqual(new Set(['L1', 'L2', 'L3']));
+  expect(new Set(entries.map((e) => e.level))).toEqual(new Set(['L1', 'L2', 'L3', 'L4']));
 
   const prodIdx = entries.findIndex((e) => e.mode === 'production');
   const mcIdx = entries.findIndex((e) => e.mode === 'mc');

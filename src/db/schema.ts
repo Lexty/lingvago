@@ -223,6 +223,11 @@ export interface NounRecord {
   gender: 'm' | 'f';
   article: 'o' | 'a';
   en: string | null;
+  /**
+   * Verified plural form (`viagem` → `viagens`). Present only on nouns whose
+   * plural was authored; only those feed the plural-agreement drill.
+   */
+  plural?: string;
 }
 
 /** Preposition usage entry (from prepositions_teacher). */

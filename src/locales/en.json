@@ -66,7 +66,7 @@
       },
       "gender": {
         "title": "Gender & articles",
-        "hint": "o / a, um / uma and contractions with a preposition: do, na, ao."
+        "hint": "o / a, um / uma, contractions with a preposition (do, na, ao) and agreement: vários / várias."
       },
       "preposition": {
         "title": "Prepositions",
@@ -80,6 +80,14 @@
         "title": "Question words",
         "hint": "Who, where, how, when, why."
       }
+    },
+    "unit": "Unit {{unit}}",
+    "lessons": "Lessons",
+    "library": "All mechanics",
+    "view": {
+      "label": "How to show",
+      "lessons": "By lesson",
+      "mechanics": "By mechanic"
     }
   },
   "rule": {
@@ -91,6 +99,27 @@
   "focus": {
     "label": "What to practise",
     "all": "All types"
+  },
+  "pack": {
+    "nav": {
+      "home": "Back",
+      "back": "To the lesson"
+    },
+    "notFound": "No such lesson",
+    "empty": "No exercises in this set.",
+    "answerLabel": "Your answer",
+    "check": "Check",
+    "next": "Next",
+    "mix": {
+      "title": "Everything mixed",
+      "hint": "Every exercise of the lesson in random order — for when each topic is already familiar."
+    },
+    "feedback": {
+      "correct": "Correct",
+      "accent": "Right words — check the spelling",
+      "wrong": "Not quite. The answer:",
+      "alsoCorrect": "Also correct:"
+    }
   },
   "numbers": {
     "title": "Numbers",
@@ -139,7 +168,7 @@
     "nav": {
       "home": "Back"
     },
-    "intro": "Choose or write the article: definite, indefinite, or contracted with a preposition (do, da, no, na, ao, à).",
+    "intro": "Choose or write the article: definite, indefinite, or contracted with a preposition (do, da, no, na, ao, à). When a word is given in brackets, write it in the gender the noun requires: (vários) ___ viagens → várias.",
     "empty": "No items in this session.",
     "answerLabel": "Your answer",
     "check": "Check",
@@ -151,7 +180,8 @@
     "kind": {
       "definite": "Definite article",
       "indefinite": "Indefinite article",
-      "contraction": "Contraction with a preposition"
+      "contraction": "Contraction with a preposition",
+      "agreement": "Gender agreement"
     }
   },
   "preposition": {
