@@ -50,13 +50,25 @@ function opposite(
   };
 }
 
+/** `saber / conhecer`: the verb is chosen by what follows the gap. */
+function sc(id: string, prompt: string, answer: string, ru: string, en: string): PackExercise {
+  const verb = answer.startsWith('s') ? 'saber' : 'conhecer';
+  return {
+    id,
+    prompt,
+    cue: { ru: 'saber / conhecer', en: 'saber / conhecer' },
+    answer,
+    why: { ru: `${verb}: ${ru}.`, en: `${verb}: ${en}.` },
+  };
+}
+
 export const UNIT_18: Pack = {
   id: 'unit-18',
   unit: 18,
   title: { ru: 'Сравнения и поездки', en: 'Comparisons and trips' },
   summary: {
-    ru: 'География, слова-противоположности, «больше / меньше / такой же», «самый».',
-    en: 'Geography, opposites, "more / less / as … as", "the most".',
+    ru: 'География, слова-противоположности, «больше / меньше / такой же», «самый», saber и conhecer.',
+    en: 'Geography, opposites, "more / less / as … as", "the most", saber and conhecer.',
   },
   groups: [
     {
@@ -256,6 +268,42 @@ export const UNIT_18: Pack = {
             en: 'The group is introduced by de: de + o grupo = do grupo.',
           },
         },
+      ],
+    },
+    {
+      id: 'saber-conhecer',
+      kind: 'cloze',
+      title: { ru: 'Saber или conhecer', en: 'Saber or conhecer' },
+      instruction: {
+        ru: 'Выберите saber или conhecer и напишите его в нужной форме настоящего времени.',
+        en: 'Choose saber or conhecer and write it in the right present-tense form.',
+      },
+      example: 'Sabes onde fica? · Conheces a Teresa?',
+      ruleId: 'ref-saber-conhecer',
+      reviewedOn: '2026-10-01',
+      sources: [
+        `${PRIBERAM}conjugar/saber`,
+        `${PRIBERAM}conjugar/conhecer`,
+        `${PRIBERAM}conhecer`,
+        'https://ciberduvidas.iscte-iul.pt/consultorio/perguntas/porque-por-que-e-porque/243',
+      ],
+      exercises: [
+        sc('u18-sc-01', 'Tu ___ a mãe do Pedro?', 'conheces', 'человек', 'a person'),
+        sc('u18-sc-02', 'Eu não ___ onde fica a estação.', 'sei', 'дальше идёт onde …', 'onde … follows'),
+        sc('u18-sc-03', 'Nós ___ bem esta cidade.', 'conhecemos', 'место', 'a place'),
+        sc('u18-sc-04', 'Eles ___ falar inglês.', 'sabem', 'дальше инфинитив: умеют', 'an infinitive follows: can'),
+        sc('u18-sc-05', 'Ela ___ que o museu fecha à segunda-feira.', 'sabe', 'дальше идёт que …', 'que … follows'),
+        sc('u18-sc-06', 'Vocês ___ o novo professor?', 'conhecem', 'человек', 'a person'),
+        sc('u18-sc-07', 'Eu ___ muito bem a tua irmã.', 'conheço', 'человек', 'a person'),
+        sc('u18-sc-08', 'Tu ___ quem é aquele senhor?', 'sabes', 'дальше идёт quem é …', 'quem é … follows'),
+        sc('u18-sc-09', 'Ele não ___ nadar.', 'sabe', 'дальше инфинитив: умеет', 'an infinitive follows: can'),
+        sc(
+          'u18-sc-10',
+          'Nós não ___ porque o comboio está atrasado.',
+          'sabemos',
+          'дальше идёт porque …',
+          'porque … follows',
+        ),
       ],
     },
     {

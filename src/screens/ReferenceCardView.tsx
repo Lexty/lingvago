@@ -19,6 +19,8 @@ const DRILL_FOR_CARD: Readonly<Record<string, string>> = {
   'ref-prep-lugar': '/drill/preposition',
   'ref-verbos-presente': '/drill/conjugation',
   'ref-comparacao': '/pack/unit-18/comparisons',
+  'ref-saber-conhecer': '/pack/unit-18/saber-conhecer',
+  'ref-ter-de-precisar-de': '/pack/unit-19/ter-de',
   'ref-possessive': '/drill/possessive',
   'ref-interrogative': '/drill/interrogative',
 };

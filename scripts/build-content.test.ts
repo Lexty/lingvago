@@ -143,22 +143,20 @@ describe('build-content — verified conjugation tables + needsTableReview (T8 T
     });
   });
 
-  it('carries the needsTableReview flag on every verb; the 9 flagged verbs are marked', () => {
+  it('carries the needsTableReview flag on every verb; the still-unverified verbs are marked', () => {
     const bundle = buildContent();
     // Flag is present (boolean) on every verb record.
     for (const verb of bundle.verbs) {
       expect(typeof verb.needsTableReview).toBe('boolean');
     }
-    // The 9 caverdyne/stem-shift verbs from verbs_inventory are flagged true.
+    // Of the 9 verbs the inventory flags, four (-cer verbs) have since had their
+    // present forms verified against a dictionary (verbs_regular_verified.json)
+    // and are released; the rest stay flagged.
     const flagged = bundle.verbs.filter((v) => v.needsTableReview).map((v) => v.infinitive).sort();
     expect(flagged).toEqual(
       [
         'acontecer',
-        'agradecer',
-        'conhecer',
-        'desaparecer',
         'haver',
-        'oferecer',
         'sentir-se',
         'valer',
         'vestir',

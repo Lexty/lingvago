@@ -1,7 +1,7 @@
 // Build the app content bundle (SPEC §7.3 pipeline) from
 // extraction/normalized/*.json + authored reference cards.
 //
-// Output: public/content.v<CONTENT_VERSION>.json (currently content.v8.json) —
+// Output: public/content.v<CONTENT_VERSION>.json (currently content.v9.json) —
 // a versioned, READ-ONLY artifact loaded into IndexedDB content stores
 // (SPEC §7.1) at first run / on contentVersion change.
 //
@@ -55,7 +55,11 @@ import { dirname, join } from 'node:path';
 // of that list that the extracted vocabulary lacks (ilha, loja, lago, flor, …),
 // and extends the `ref-genero-artigo` card with the `-or` hint, the `a flor`
 // exceptions and a section on words that agree in gender in the plural.
-export const CONTENT_VERSION = 8;
+// v9 opens the conjugation drill to 70 verbs whose present forms were verified
+// as regular (`verbs_regular_verified.json`; adds precisar, gastar, poupar),
+// and adds the rule cards `ref-saber-conhecer` and `ref-ter-de-precisar-de`
+// used by the Unidade 18 / 19 lesson packs.
+export const CONTENT_VERSION = 9;
 
 /** Output artifact name — `content.v<CONTENT_VERSION>.json` (SPEC §10.3). */
 export const CONTENT_FILENAME = `content.v${CONTENT_VERSION}.json`;
@@ -423,7 +427,49 @@ function buildVerbs(): VerbRecord[] {
       needsTableReview: v.needsTableReview === true,
     });
   }
+  withVerifiedRegulars(seen);
   return [...seen.values()].sort((a, b) => a.contentId.localeCompare(b.contentId, 'en'));
+}
+
+/** The verbs of `verbs_regular_verified.json`, with their 5 checked forms. */
+export function readVerifiedRegulars(): Record<string, Record<string, string>> {
+  const data = asRecord(
+    readNormalized('verbs_regular_verified.json'),
+    'verbs_regular_verified.json',
+  );
+  return asRecord(data.verbs, 'verbs_regular_verified.json') as Record<
+    string,
+    Record<string, string>
+  >;
+}
+
+/**
+ * Mark as regular the verbs whose present forms were checked, one by one,
+ * against a dictionary (`verbs_regular_verified.json`). The inventory leaves
+ * `regular` unset for most verbs; unset is NOT "irregular", but it is not
+ * "regular" either — `dormir`, `vestir`, `passear` look regular and are not —
+ * so a verb is opened only when its forms were actually verified. A listed verb
+ * the inventory lacks is added.
+ */
+function withVerifiedRegulars(seen: Map<string, VerbRecord>): void {
+  for (const infinitive of Object.keys(readVerifiedRegulars())) {
+    const key = infinitive.toLowerCase();
+    const existing = seen.get(key);
+    if (existing) {
+      existing.regular = true;
+      existing.needsTableReview = false;
+    } else {
+      seen.set(key, {
+        contentId: `verb:${key}`,
+        infinitive,
+        group: `-${infinitive.slice(-2)}`,
+        reflexive: false,
+        regular: true,
+        hasTable: false,
+        needsTableReview: false,
+      });
+    }
+  }
 }
 
 // ---- verified present-tense conjugation tables (from verbs_teacher) ----------
@@ -843,6 +889,44 @@ const referenceCards: ReferenceCard[] = [
       '• pequeno → в Португалии обычно **mais pequeno**; **menor** тоже верно.',
       '',
       '⚠️ Когда сравниваем два предмета, не говорят: mais bom, mais mau, mais grande. И никогда — mais melhor.',
+    ].join('\n'),
+  },
+  {
+    contentId: 'ref-saber-conhecer',
+    topic: 'Глаголы',
+    title: 'SABER и CONHECER: оба «знать»',
+    body: [
+      '**SABER** — знать информацию или уметь. После него обычно идёт целая часть фразы или инфинитив:',
+      '• **que / onde / quem / porque / como…** — Sei **onde** fica a estação. Sabes **quem** é aquele senhor?',
+      '• **инфинитив** = уметь — Ele **sabe nadar**. Sei falar português.',
+      '',
+      '**CONHECER** — быть знакомым. После него обычно идёт существительное: человек, место, вещь:',
+      '• Conheces **a Teresa**? Conhecemos bem **esta cidade**. Conheço muito bem **a tua irmã**.',
+      '',
+      '**Быстрая проверка:** посмотрите, что стоит после глагола. Целая часть фразы или инфинитив → saber. Человек или место → conhecer.',
+      '⚠️ Это рабочее правило для начала, а не закон: значения этих глаголов местами пересекаются.',
+      '',
+      '**Формы:** sei · sabes · sabe · sabemos · sabem',
+      '**Формы:** conheço · conheces · conhece · conhecemos · conhecem (в форме eu — **ç**).',
+    ].join('\n'),
+  },
+  {
+    contentId: 'ref-ter-de-precisar-de',
+    topic: 'Глаголы',
+    title: 'TER DE и PRECISAR DE: нужно, должен',
+    body: [
+      '**TER DE + инфинитив** — нужно, обязан: **Tenho de** trabalhar. Você **tem de** pagar aqui.',
+      '• Формы: tenho · tens · tem · temos · **têm** (eles / vocês — с крышечкой).',
+      '• Отрицание — não перед глаголом: **Não tenho de** trabalhar ao domingo (не обязан).',
+      '• В этих заданиях тренируем **ter de** — в Португалии это обычная форма. Встречается и ter que с тем же значением.',
+      '',
+      '**PRECISAR DE** — нуждаться, нужно:',
+      '• **+ инфинитив:** **Preciso de** descansar. Ela **precisa de** estudar.',
+      '• **+ существительное:** Esta planta **precisa de** água. Precisamos **de** um táxi.',
+      '• Формы: preciso · precisas · precisa · precisamos · precisam.',
+      '• В Португалии **de** перед инфинитивом не опускают: preciso **de** comer.',
+      '',
+      'Оба оборота часто годятся в одной и той же фразе: ter de ближе к «обязан, должен», precisar de — к «нуждаюсь, мне нужно».',
     ].join('\n'),
   },
   {

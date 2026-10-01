@@ -1,0 +1,509 @@
+{
+ "_meta": {
+  "what": "Verbs whose Presente do Indicativo follows the regular -ar/-er/-ir rule (with the regular spelling change of the eu form: -cer → -ço).",
+  "source": "https://dicionario.priberam.org/conjugar/<verbo> — every form below was read from that page and compared with the rule output",
+  "checkedOn": "2026-10-01",
+  "excluded": {
+   "dormir": "durmo",
+   "vestir": "visto",
+   "passear": "passeio",
+   "valer": "valho",
+   "haver": "not verified: its page did not parse (defective / multiple forms) — unknown, not \"irregular by check\"",
+   "acontecer": "left out of the drill by choice (mostly used in the 3rd person); the forms themselves are regular",
+   "custar": "left out of the drill by choice (mostly used in the 3rd person); the forms themselves are regular",
+   "durar": "left out of the drill by choice (mostly used in the 3rd person); the forms themselves are regular"
+  }
+ },
+ "verbs": {
+  "acabar": {
+   "eu": "acabo",
+   "tu": "acabas",
+   "voce_ele_ela": "acaba",
+   "nos": "acabamos",
+   "voces_eles_elas": "acabam"
+  },
+  "achar": {
+   "eu": "acho",
+   "tu": "achas",
+   "voce_ele_ela": "acha",
+   "nos": "achamos",
+   "voces_eles_elas": "acham"
+  },
+  "adorar": {
+   "eu": "adoro",
+   "tu": "adoras",
+   "voce_ele_ela": "adora",
+   "nos": "adoramos",
+   "voces_eles_elas": "adoram"
+  },
+  "agradecer": {
+   "eu": "agradeço",
+   "tu": "agradeces",
+   "voce_ele_ela": "agradece",
+   "nos": "agradecemos",
+   "voces_eles_elas": "agradecem"
+  },
+  "alugar": {
+   "eu": "alugo",
+   "tu": "alugas",
+   "voce_ele_ela": "aluga",
+   "nos": "alugamos",
+   "voces_eles_elas": "alugam"
+  },
+  "apanhar": {
+   "eu": "apanho",
+   "tu": "apanhas",
+   "voce_ele_ela": "apanha",
+   "nos": "apanhamos",
+   "voces_eles_elas": "apanham"
+  },
+  "arranhar": {
+   "eu": "arranho",
+   "tu": "arranhas",
+   "voce_ele_ela": "arranha",
+   "nos": "arranhamos",
+   "voces_eles_elas": "arranham"
+  },
+  "arrumar": {
+   "eu": "arrumo",
+   "tu": "arrumas",
+   "voce_ele_ela": "arruma",
+   "nos": "arrumamos",
+   "voces_eles_elas": "arrumam"
+  },
+  "beber": {
+   "eu": "bebo",
+   "tu": "bebes",
+   "voce_ele_ela": "bebe",
+   "nos": "bebemos",
+   "voces_eles_elas": "bebem"
+  },
+  "cantar": {
+   "eu": "canto",
+   "tu": "cantas",
+   "voce_ele_ela": "canta",
+   "nos": "cantamos",
+   "voces_eles_elas": "cantam"
+  },
+  "casar": {
+   "eu": "caso",
+   "tu": "casas",
+   "voce_ele_ela": "casa",
+   "nos": "casamos",
+   "voces_eles_elas": "casam"
+  },
+  "chegar": {
+   "eu": "chego",
+   "tu": "chegas",
+   "voce_ele_ela": "chega",
+   "nos": "chegamos",
+   "voces_eles_elas": "chegam"
+  },
+  "colocar": {
+   "eu": "coloco",
+   "tu": "colocas",
+   "voce_ele_ela": "coloca",
+   "nos": "colocamos",
+   "voces_eles_elas": "colocam"
+  },
+  "comer": {
+   "eu": "como",
+   "tu": "comes",
+   "voce_ele_ela": "come",
+   "nos": "comemos",
+   "voces_eles_elas": "comem"
+  },
+  "começar": {
+   "eu": "começo",
+   "tu": "começas",
+   "voce_ele_ela": "começa",
+   "nos": "começamos",
+   "voces_eles_elas": "começam"
+  },
+  "comprar": {
+   "eu": "compro",
+   "tu": "compras",
+   "voce_ele_ela": "compra",
+   "nos": "compramos",
+   "voces_eles_elas": "compram"
+  },
+  "conhecer": {
+   "eu": "conheço",
+   "tu": "conheces",
+   "voce_ele_ela": "conhece",
+   "nos": "conhecemos",
+   "voces_eles_elas": "conhecem"
+  },
+  "conversar": {
+   "eu": "converso",
+   "tu": "conversas",
+   "voce_ele_ela": "conversa",
+   "nos": "conversamos",
+   "voces_eles_elas": "conversam"
+  },
+  "convidar": {
+   "eu": "convido",
+   "tu": "convidas",
+   "voce_ele_ela": "convida",
+   "nos": "convidamos",
+   "voces_eles_elas": "convidam"
+  },
+  "correr": {
+   "eu": "corro",
+   "tu": "corres",
+   "voce_ele_ela": "corre",
+   "nos": "corremos",
+   "voces_eles_elas": "correm"
+  },
+  "costumar": {
+   "eu": "costumo",
+   "tu": "costumas",
+   "voce_ele_ela": "costuma",
+   "nos": "costumamos",
+   "voces_eles_elas": "costumam"
+  },
+  "cozinhar": {
+   "eu": "cozinho",
+   "tu": "cozinhas",
+   "voce_ele_ela": "cozinha",
+   "nos": "cozinhamos",
+   "voces_eles_elas": "cozinham"
+  },
+  "dançar": {
+   "eu": "danço",
+   "tu": "danças",
+   "voce_ele_ela": "dança",
+   "nos": "dançamos",
+   "voces_eles_elas": "dançam"
+  },
+  "decidir": {
+   "eu": "decido",
+   "tu": "decides",
+   "voce_ele_ela": "decide",
+   "nos": "decidimos",
+   "voces_eles_elas": "decidem"
+  },
+  "demorar": {
+   "eu": "demoro",
+   "tu": "demoras",
+   "voce_ele_ela": "demora",
+   "nos": "demoramos",
+   "voces_eles_elas": "demoram"
+  },
+  "desaparecer": {
+   "eu": "desapareço",
+   "tu": "desapareces",
+   "voce_ele_ela": "desaparece",
+   "nos": "desaparecemos",
+   "voces_eles_elas": "desaparecem"
+  },
+  "descansar": {
+   "eu": "descanso",
+   "tu": "descansas",
+   "voce_ele_ela": "descansa",
+   "nos": "descansamos",
+   "voces_eles_elas": "descansam"
+  },
+  "desligar": {
+   "eu": "desligo",
+   "tu": "desligas",
+   "voce_ele_ela": "desliga",
+   "nos": "desligamos",
+   "voces_eles_elas": "desligam"
+  },
+  "detestar": {
+   "eu": "detesto",
+   "tu": "detestas",
+   "voce_ele_ela": "detesta",
+   "nos": "detestamos",
+   "voces_eles_elas": "detestam"
+  },
+  "dividir": {
+   "eu": "divido",
+   "tu": "divides",
+   "voce_ele_ela": "divide",
+   "nos": "dividimos",
+   "voces_eles_elas": "dividem"
+  },
+  "encontrar": {
+   "eu": "encontro",
+   "tu": "encontras",
+   "voce_ele_ela": "encontra",
+   "nos": "encontramos",
+   "voces_eles_elas": "encontram"
+  },
+  "entender": {
+   "eu": "entendo",
+   "tu": "entendes",
+   "voce_ele_ela": "entende",
+   "nos": "entendemos",
+   "voces_eles_elas": "entendem"
+  },
+  "escrever": {
+   "eu": "escrevo",
+   "tu": "escreves",
+   "voce_ele_ela": "escreve",
+   "nos": "escrevemos",
+   "voces_eles_elas": "escrevem"
+  },
+  "estacionar": {
+   "eu": "estaciono",
+   "tu": "estacionas",
+   "voce_ele_ela": "estaciona",
+   "nos": "estacionamos",
+   "voces_eles_elas": "estacionam"
+  },
+  "estudar": {
+   "eu": "estudo",
+   "tu": "estudas",
+   "voce_ele_ela": "estuda",
+   "nos": "estudamos",
+   "voces_eles_elas": "estudam"
+  },
+  "faltar": {
+   "eu": "falto",
+   "tu": "faltas",
+   "voce_ele_ela": "falta",
+   "nos": "faltamos",
+   "voces_eles_elas": "faltam"
+  },
+  "festejar": {
+   "eu": "festejo",
+   "tu": "festejas",
+   "voce_ele_ela": "festeja",
+   "nos": "festejamos",
+   "voces_eles_elas": "festejam"
+  },
+  "ficar": {
+   "eu": "fico",
+   "tu": "ficas",
+   "voce_ele_ela": "fica",
+   "nos": "ficamos",
+   "voces_eles_elas": "ficam"
+  },
+  "fumar": {
+   "eu": "fumo",
+   "tu": "fumas",
+   "voce_ele_ela": "fuma",
+   "nos": "fumamos",
+   "voces_eles_elas": "fumam"
+  },
+  "ganhar": {
+   "eu": "ganho",
+   "tu": "ganhas",
+   "voce_ele_ela": "ganha",
+   "nos": "ganhamos",
+   "voces_eles_elas": "ganham"
+  },
+  "gastar": {
+   "eu": "gasto",
+   "tu": "gastas",
+   "voce_ele_ela": "gasta",
+   "nos": "gastamos",
+   "voces_eles_elas": "gastam"
+  },
+  "gostar": {
+   "eu": "gosto",
+   "tu": "gostas",
+   "voce_ele_ela": "gosta",
+   "nos": "gostamos",
+   "voces_eles_elas": "gostam"
+  },
+  "jogar": {
+   "eu": "jogo",
+   "tu": "jogas",
+   "voce_ele_ela": "joga",
+   "nos": "jogamos",
+   "voces_eles_elas": "jogam"
+  },
+  "lavar": {
+   "eu": "lavo",
+   "tu": "lavas",
+   "voce_ele_ela": "lava",
+   "nos": "lavamos",
+   "voces_eles_elas": "lavam"
+  },
+  "levar": {
+   "eu": "levo",
+   "tu": "levas",
+   "voce_ele_ela": "leva",
+   "nos": "levamos",
+   "voces_eles_elas": "levam"
+  },
+  "ligar": {
+   "eu": "ligo",
+   "tu": "ligas",
+   "voce_ele_ela": "liga",
+   "nos": "ligamos",
+   "voces_eles_elas": "ligam"
+  },
+  "limpar": {
+   "eu": "limpo",
+   "tu": "limpas",
+   "voce_ele_ela": "limpa",
+   "nos": "limpamos",
+   "voces_eles_elas": "limpam"
+  },
+  "mudar": {
+   "eu": "mudo",
+   "tu": "mudas",
+   "voce_ele_ela": "muda",
+   "nos": "mudamos",
+   "voces_eles_elas": "mudam"
+  },
+  "observar": {
+   "eu": "observo",
+   "tu": "observas",
+   "voce_ele_ela": "observa",
+   "nos": "observamos",
+   "voces_eles_elas": "observam"
+  },
+  "oferecer": {
+   "eu": "ofereço",
+   "tu": "ofereces",
+   "voce_ele_ela": "oferece",
+   "nos": "oferecemos",
+   "voces_eles_elas": "oferecem"
+  },
+  "pagar": {
+   "eu": "pago",
+   "tu": "pagas",
+   "voce_ele_ela": "paga",
+   "nos": "pagamos",
+   "voces_eles_elas": "pagam"
+  },
+  "poupar": {
+   "eu": "poupo",
+   "tu": "poupas",
+   "voce_ele_ela": "poupa",
+   "nos": "poupamos",
+   "voces_eles_elas": "poupam"
+  },
+  "praticar": {
+   "eu": "pratico",
+   "tu": "praticas",
+   "voce_ele_ela": "pratica",
+   "nos": "praticamos",
+   "voces_eles_elas": "praticam"
+  },
+  "precisar": {
+   "eu": "preciso",
+   "tu": "precisas",
+   "voce_ele_ela": "precisa",
+   "nos": "precisamos",
+   "voces_eles_elas": "precisam"
+  },
+  "preparar": {
+   "eu": "preparo",
+   "tu": "preparas",
+   "voce_ele_ela": "prepara",
+   "nos": "preparamos",
+   "voces_eles_elas": "preparam"
+  },
+  "procurar": {
+   "eu": "procuro",
+   "tu": "procuras",
+   "voce_ele_ela": "procura",
+   "nos": "procuramos",
+   "voces_eles_elas": "procuram"
+  },
+  "prometer": {
+   "eu": "prometo",
+   "tu": "prometes",
+   "voce_ele_ela": "promete",
+   "nos": "prometemos",
+   "voces_eles_elas": "prometem"
+  },
+  "rasgar": {
+   "eu": "rasgo",
+   "tu": "rasgas",
+   "voce_ele_ela": "rasga",
+   "nos": "rasgamos",
+   "voces_eles_elas": "rasgam"
+  },
+  "recomendar": {
+   "eu": "recomendo",
+   "tu": "recomendas",
+   "voce_ele_ela": "recomenda",
+   "nos": "recomendamos",
+   "voces_eles_elas": "recomendam"
+  },
+  "regressar": {
+   "eu": "regresso",
+   "tu": "regressas",
+   "voce_ele_ela": "regressa",
+   "nos": "regressamos",
+   "voces_eles_elas": "regressam"
+  },
+  "saltar": {
+   "eu": "salto",
+   "tu": "saltas",
+   "voce_ele_ela": "salta",
+   "nos": "saltamos",
+   "voces_eles_elas": "saltam"
+  },
+  "tentar": {
+   "eu": "tento",
+   "tu": "tentas",
+   "voce_ele_ela": "tenta",
+   "nos": "tentamos",
+   "voces_eles_elas": "tentam"
+  },
+  "tirar": {
+   "eu": "tiro",
+   "tu": "tiras",
+   "voce_ele_ela": "tira",
+   "nos": "tiramos",
+   "voces_eles_elas": "tiram"
+  },
+  "trabalhar": {
+   "eu": "trabalho",
+   "tu": "trabalhas",
+   "voce_ele_ela": "trabalha",
+   "nos": "trabalhamos",
+   "voces_eles_elas": "trabalham"
+  },
+  "treinar": {
+   "eu": "treino",
+   "tu": "treinas",
+   "voce_ele_ela": "treina",
+   "nos": "treinamos",
+   "voces_eles_elas": "treinam"
+  },
+  "trocar": {
+   "eu": "troco",
+   "tu": "trocas",
+   "voce_ele_ela": "troca",
+   "nos": "trocamos",
+   "voces_eles_elas": "trocam"
+  },
+  "viajar": {
+   "eu": "viajo",
+   "tu": "viajas",
+   "voce_ele_ela": "viaja",
+   "nos": "viajamos",
+   "voces_eles_elas": "viajam"
+  },
+  "visitar": {
+   "eu": "visito",
+   "tu": "visitas",
+   "voce_ele_ela": "visita",
+   "nos": "visitamos",
+   "voces_eles_elas": "visitam"
+  },
+  "viver": {
+   "eu": "vivo",
+   "tu": "vives",
+   "voce_ele_ela": "vive",
+   "nos": "vivemos",
+   "voces_eles_elas": "vivem"
+  },
+  "voltar": {
+   "eu": "volto",
+   "tu": "voltas",
+   "voce_ele_ela": "volta",
+   "nos": "voltamos",
+   "voces_eles_elas": "voltam"
+  }
+ }
+}

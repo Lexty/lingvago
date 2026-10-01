@@ -1,13 +1,14 @@
 import { createPrng } from '../modes/numbers/prng.ts';
 import type { Localized, Pack, PackExercise, PackGroup } from './types.ts';
 import { UNIT_18 } from './unit18.ts';
+import { UNIT_19 } from './unit19.ts';
 
 export type { CheckOutcome } from './check.ts';
 export { acceptedAnswers, checkExercise, normalizeAnswer } from './check.ts';
 export type { ExerciseKind, Localized, Pack, PackDrillLink, PackExercise, PackGroup } from './types.ts';
 
 /** Every shipped pack, newest unit last. */
-export const PACKS: readonly Pack[] = [UNIT_18];
+export const PACKS: readonly Pack[] = [UNIT_18, UNIT_19];
 
 /** The id of the "everything in this pack, mixed" session. */
 export const MIX_GROUP_ID = 'mix';

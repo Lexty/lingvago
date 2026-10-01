@@ -122,11 +122,12 @@ describe('shipped packs — data integrity', () => {
   it('a build answer keeps the order of its cue words', () => {
     for (const { group, e } of exercises) {
       if (group.kind !== 'build') continue;
-      // Each cue survives as a word start (ser → é is the one verb to change).
+      // Each cue survives in order; the verbs to conjugate are the exception.
+      const conjugated = new Set(['ser', 'ter de', 'precisar de', 'querer', 'custar']);
       const answer = normalizeAnswer(e.answer);
       let from = 0;
       for (const cue of (e.prompt ?? '').split(' / ')) {
-        if (cue === 'ser') continue;
+        if (conjugated.has(cue)) continue;
         const at = answer.indexOf(cue.toLowerCase(), from);
         expect(at, `${e.id}: «${cue}» out of order in «${e.answer}»`).toBeGreaterThanOrEqual(from);
         from = at + cue.length;
