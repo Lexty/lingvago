@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import i18n from '../i18n/config.ts';
 import { db } from '../db/index.ts';
@@ -51,6 +51,43 @@ describe('Pack overview', () => {
       'href',
       '/drill/gender',
     );
+  });
+
+  it('downloads the prebuilt Anki package in the interface language', async () => {
+    const files: File[] = [];
+    const original = URL.createObjectURL;
+    URL.createObjectURL = vi.fn((file: Blob) => {
+      files.push(file as File);
+      return 'blob:anki';
+    });
+    const click = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {});
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(new Uint8Array([80, 75, 3, 4])));
+    try {
+      renderAt('/pack/unit-18');
+      expect(screen.getByText(`Words: ${pack.vocab!.cards.length}`)).toBeInTheDocument();
+      fireEvent.click(screen.getByTestId('pack-anki-download'));
+      await waitFor(() =>
+        expect(screen.getByTestId('pack-anki-status')).toHaveTextContent('File saved: lingvago-unidade-18.en.apkg'),
+      );
+      expect(fetchMock).toHaveBeenCalledWith('/anki/lingvago-unidade-18.en.apkg');
+      expect(click).toHaveBeenCalledOnce();
+      expect(files[0].name).toBe('lingvago-unidade-18.en.apkg');
+    } finally {
+      URL.createObjectURL = original;
+      click.mockRestore();
+      fetchMock.mockRestore();
+    }
+  });
+
+  it('says so when the package cannot be fetched', async () => {
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('', { status: 404 }));
+    try {
+      renderAt('/pack/unit-18');
+      fireEvent.click(screen.getByTestId('pack-anki-download'));
+      await waitFor(() => expect(screen.getByTestId('pack-anki-status')).toHaveTextContent('Could not save the file.'));
+    } finally {
+      fetchMock.mockRestore();
+    }
   });
 
   it('shows a not-found state for an unknown pack', () => {

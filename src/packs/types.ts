@@ -76,6 +76,35 @@ export interface PackDrillLink {
   example: string;
 }
 
+/**
+ * One word card of a unit's vocabulary, exported to Anki. The Portuguese side
+ * carries the article (`o lago`) so the gender is learned with the word.
+ */
+export interface VocabCard {
+  /**
+   * Stable id, unique inside the pack (`agencia-de-viagens`). It makes the
+   * Anki note's GUID, so it is NEVER changed or reused: fixing the Portuguese
+   * (an accent, the article) must update the learner's note, not create a new
+   * one beside it. Written once from the first spelling and then left alone.
+   */
+  id: string;
+  pt: string;
+  ru: string;
+  en: string;
+  /** A short remark shown under the Portuguese word (false friend, other sense). */
+  note?: Localized;
+  /** Tag slug (`geografia`); every card is also tagged `lingvago unidade-NN`. */
+  topic: string;
+}
+
+export interface PackVocab {
+  /** Where meanings, spelling and gender were checked (specific pages). */
+  sources: readonly string[];
+  /** When the list was last checked against `sources` (ISO date). */
+  reviewedOn: string;
+  cards: readonly VocabCard[];
+}
+
 export interface Pack {
   /** Stable id (`unit-18`). */
   id: string;
@@ -86,4 +115,6 @@ export interface Pack {
   groups: readonly PackGroup[];
   /** Existing drills that also belong to this unit. */
   drills?: readonly PackDrillLink[];
+  /** The unit's words, exportable as Anki cards. */
+  vocab?: PackVocab;
 }

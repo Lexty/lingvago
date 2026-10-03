@@ -1,4 +1,5 @@
 import type { Pack, PackExercise } from './types.ts';
+import { UNIT_18_VOCAB } from './unit18.vocab.ts';
 
 // Unidade 18 — comparing things, geography, trips.
 //
@@ -414,4 +415,5 @@ export const UNIT_18: Pack = {
       example: '(vários) ___ viagens → várias',
     },
   ],
+  vocab: UNIT_18_VOCAB,
 };

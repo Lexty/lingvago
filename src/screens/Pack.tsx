@@ -1,6 +1,10 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router';
+import { ANKI_DIR, ankiDeckName, ankiFilename, ankiLang } from '../packs/anki.ts';
 import { MIX_GROUP_ID, findPack, localized } from '../packs/index.ts';
+import type { Pack as PackData } from '../packs/types.ts';
+import { shareOrDownloadFile, type ShareOutcome } from '../telemetry/share.ts';
 import styles from './Pack.module.css';
 
 /**
@@ -78,6 +82,68 @@ export default function Pack() {
           </Link>
         </li>
       </ul>
+
+      {pack.vocab && pack.vocab.cards.length > 0 && <AnkiSection pack={pack} lang={lang} />}
     </main>
+  );
+}
+
+type AnkiStatus = { kind: 'idle' } | { kind: ShareOutcome; file: string } | { kind: 'failed' };
+
+/** The prebuilt package (scripts/build-anki.ts), precached for offline use. */
+async function fetchAnkiPackage(name: string): Promise<File> {
+  const response = await fetch(`${import.meta.env.BASE_URL}${ANKI_DIR}/${name}`);
+  if (!response.ok) throw new Error(`anki package ${name}: HTTP ${response.status}`);
+  return new File([await response.blob()], name, { type: 'application/octet-stream' });
+}
+
+/** The unit's words as an Anki package, plus the list the package contains. */
+function AnkiSection({ pack, lang }: { pack: PackData; lang: string }) {
+  const { t } = useTranslation();
+  const [status, setStatus] = useState<AnkiStatus>({ kind: 'idle' });
+  const cards = pack.vocab?.cards ?? [];
+
+  async function exportCards() {
+    const name = ankiFilename(pack, ankiLang(lang));
+    try {
+      setStatus({ kind: await shareOrDownloadFile(await fetchAnkiPackage(name)), file: name });
+    } catch (err) {
+      // Closing the share sheet is the learner's choice, not a failure.
+      if (err instanceof DOMException && err.name === 'AbortError') return;
+      setStatus({ kind: 'failed' });
+    }
+  }
+
+  return (
+    <section className={styles.section} aria-labelledby="pack-anki-title">
+      <h2 id="pack-anki-title" className={styles.sectionTitle}>
+        {t('pack.anki.title')}
+      </h2>
+      <div className={styles.ankiCard}>
+        <p className={styles.ankiStatus}>{t('pack.anki.count', { count: cards.length })}</p>
+        <button type="button" className={styles.ankiButton} onClick={exportCards} data-testid="pack-anki-download">
+          {t('pack.anki.download')}
+        </button>
+        <p className={styles.ankiHint}>{t('pack.anki.hint', { deck: ankiDeckName(pack) })}</p>
+        <p className={styles.ankiStatus} role="status" data-testid="pack-anki-status">
+          {status.kind === 'downloaded' && t('pack.anki.downloaded', { file: status.file })}
+          {status.kind === 'shared' && t('pack.anki.shared')}
+          {status.kind === 'failed' && t('pack.anki.failed')}
+        </p>
+        <details className={styles.wordList}>
+          <summary>{t('pack.anki.show')}</summary>
+          <ul className={styles.words}>
+            {cards.map((card) => (
+              <li key={card.pt}>
+                <span className={styles.wordPt} lang="pt-PT">
+                  {card.pt}
+                </span>{' '}
+                — {localized({ ru: card.ru, en: card.en }, lang)}
+              </li>
+            ))}
+          </ul>
+        </details>
+      </div>
+    </section>
   );
 }

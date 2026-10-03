@@ -89,7 +89,18 @@ export async function shareOrDownloadBundle(
   exportedAt: string,
   nav: Navigator = navigator,
 ): Promise<ShareOutcome> {
-  const file = bundleFile(json, exportedAt);
+  return shareOrDownloadFile(bundleFile(json, exportedAt), nav);
+}
+
+/**
+ * Deliver any file the same way: share when supported (on a phone this opens
+ * the share sheet, e.g. straight into AnkiMobile / AnkiDroid), otherwise
+ * download. Cancelling the share sheet rejects with the `AbortError`.
+ */
+export async function shareOrDownloadFile(
+  file: File,
+  nav: Navigator = navigator,
+): Promise<ShareOutcome> {
   if (canShareFile(file, nav)) {
     try {
       await (nav as ShareCapableNavigator).share?.({

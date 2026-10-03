@@ -37,4 +37,6 @@ extraction/tessdata
 extraction/_tmp
 # Derived content bundle (built by scripts/build-content.ts; SPEC §10.3)
 public/content.v*.json
+# Derived Anki packages (built by scripts/build-anki.ts)
+public/anki/
 .local/resources/*.pdf

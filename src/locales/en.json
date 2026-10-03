@@ -119,6 +119,16 @@
       "accent": "Right words — check the spelling",
       "wrong": "Not quite. The answer:",
       "alsoCorrect": "Also correct:"
+    },
+    "anki": {
+      "title": "Lesson words for Anki",
+      "count": "Words: {{count}}",
+      "download": "Download cards",
+      "hint": "Open the file in Anki (on a computer: double-click or File → Import; on a phone: Share → Anki). You get the deck “{{deck}}”: one card each way, with the tip shown alongside the answer. A newer file updates the words without resetting your reviews.",
+      "downloaded": "File saved: {{file}}",
+      "shared": "File shared.",
+      "failed": "Could not save the file.",
+      "show": "Show the words"
     }
   },
   "numbers": {

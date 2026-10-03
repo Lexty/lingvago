@@ -1,4 +1,6 @@
+import { readFile } from 'node:fs/promises';
 import { expect, test } from '@playwright/test';
+import { unzipSync } from 'fflate';
 import { waitForServiceWorkerActive } from './helpers';
 
 /**
@@ -39,6 +41,24 @@ test('serves the app-shell + home page offline after first load (SW precache)', 
   ).toBeVisible();
   await expect(page.getByTestId('home-topic-numbers')).toBeVisible();
   await expect(page.getByTestId('home-topic-interrogative')).toBeVisible();
+
+  await context.setOffline(false);
+});
+
+test('downloads a lesson Anki package offline (precached)', async ({ page, context }) => {
+  await page.goto('/pack/unit-19');
+  await expect(page.getByTestId('pack-anki-download')).toBeVisible();
+  await waitForServiceWorkerActive(page);
+
+  await context.setOffline(true);
+  await page.reload();
+  const download = page.waitForEvent('download');
+  await page.getByTestId('pack-anki-download').click();
+  const file = await download;
+  expect(file.suggestedFilename()).toBe('lingvago-unidade-19.en.apkg');
+  const files = unzipSync(new Uint8Array(await readFile((await file.path())!)));
+  expect(Object.keys(files).sort()).toEqual(['collection.anki2', 'media']);
+  await expect(page.getByTestId('pack-anki-status')).toContainText('lingvago-unidade-19.en.apkg');
 
   await context.setOffline(false);
 });

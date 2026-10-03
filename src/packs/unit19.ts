@@ -1,4 +1,5 @@
 import type { Pack, PackExercise } from './types.ts';
+import { UNIT_19_VOCAB } from './unit19.vocab.ts';
 
 // Unidade 19 — money, obligations, needs.
 //
@@ -334,4 +335,5 @@ export const UNIT_19: Pack = {
       example: 'eu pago · tu gastas · nós poupamos',
     },
   ],
+  vocab: UNIT_19_VOCAB,
 };

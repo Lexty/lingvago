@@ -64,7 +64,7 @@ export const pwaOptions: PwaOptionsWithManifest = {
     // App-shell + versioned content bundle — NO audio-pack (§10.2). The
     // `content.v*.json` glob precaches the content artifact while keeping the
     // broad `**/*.json` (which would pull audio sidecars/manifests) out.
-    globPatterns: ['**/*.{js,css,html,svg,png,woff2}', '**/content.v*.json'],
+    globPatterns: ['**/*.{js,css,html,svg,png,woff2}', '**/content.v*.json', 'anki/*.apkg'],
     navigateFallback: '/index.html',
     skipWaiting: true,
     clientsClaim: true,
