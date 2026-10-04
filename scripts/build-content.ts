@@ -59,7 +59,11 @@ import { dirname, join } from 'node:path';
 // as regular (`verbs_regular_verified.json`; adds precisar, gastar, poupar),
 // and adds the rule cards `ref-saber-conhecer` and `ref-ter-de-precisar-de`
 // used by the Unidade 18 / 19 lesson packs.
-export const CONTENT_VERSION = 9;
+// v10 adds the rule cards `ref-indefinidos` (alguém / ninguém / algo / nada /
+// todos / tudo, todo + noun, where não goes) and `ref-poder-saber` (pode / não
+// pode / tem de / não tem de, saber vs poder), and makes `ref-ter-de-precisar-de`
+// say what a rule-like obligation and a need are, and what não tem de means.
+export const CONTENT_VERSION = 10;
 
 /** Output artifact name — `content.v<CONTENT_VERSION>.json` (SPEC §10.3). */
 export const CONTENT_FILENAME = `content.v${CONTENT_VERSION}.json`;
@@ -915,10 +919,12 @@ const referenceCards: ReferenceCard[] = [
     topic: 'Глаголы',
     title: 'TER DE и PRECISAR DE: нужно, должен',
     body: [
-      '**TER DE + инфинитив** — нужно, обязан: **Tenho de** trabalhar. Você **tem de** pagar aqui.',
+      '**TER DE + инфинитив** — должен, нужно; в том числе правило или требование извне: **Tenho de** trabalhar. Você **tem de** pagar aqui.',
       '• Формы: tenho · tens · tem · temos · **têm** (eles / vocês — с крышечкой).',
-      '• Отрицание — não перед глаголом: **Não tenho de** trabalhar ao domingo (не обязан).',
-      '• В этих заданиях тренируем **ter de** — в Португалии это обычная форма. Встречается и ter que с тем же значением.',
+      '• **Não tenho de** trabalhar ao domingo — **не обязан**. Это не запрет: «нельзя» — **não posso / não pode**.',
+      '• В заданиях тренируем **ter de** — в Португалии это обычная форма. **Ter que** значит то же и тоже верно.',
+      '',
+      '**TER** без de — **иметь**: **Tenho** um carro. **Têm** a conta? Сравните: Tenho **de** lavar o carro.',
       '',
       '**PRECISAR DE** — нуждаться, нужно:',
       '• **+ инфинитив:** **Preciso de** descansar. Ela **precisa de** estudar.',
@@ -926,7 +932,52 @@ const referenceCards: ReferenceCard[] = [
       '• Формы: preciso · precisas · precisa · precisamos · precisam.',
       '• В Португалии **de** перед инфинитивом не опускают: preciso **de** comer.',
       '',
-      'Оба оборота часто годятся в одной и той же фразе: ter de ближе к «обязан, должен», precisar de — к «нуждаюсь, мне нужно».',
+      'Когда речь о своей нужде, годятся оба: Tenho de / Preciso de dormir mais. Для прямого правила или требования («здесь платят», «пристегните ремень») обычно говорят **ter de**; precisar de подчёркивает нужду.',
+    ].join('\n'),
+  },
+  {
+    contentId: 'ref-poder-saber',
+    topic: 'Глаголы',
+    title: 'PODE, NÃO PODE, TEM DE; SABER или PODER',
+    body: [
+      '**Можно / нельзя / нужно / не обязательно:**',
+      '• **pode** + инфинитив — можно: Aqui **pode** pagar com cartão.',
+      '• **não pode** — нельзя: Aqui **não pode** fumar.',
+      '• **tem de** — нужно, обязан: **Tem de** pôr o cinto.',
+      '• **não tem de** — не обязан (это не запрет): A entrada é grátis, **não tem de** pagar.',
+      '• Формы poder: posso · podes · pode · podemos · podem.',
+      '',
+      '**SABER + инфинитив** — уметь (выученный навык): **Sei** nadar. **Sabes** jogar xadrez?',
+      '**PODER + инфинитив** — можно, есть возможность: Hoje não **posso** nadar.',
+      '• Sei conduzir, mas hoje não posso conduzir — умею, но сейчас не могу.',
+      '• В заданиях различаем так: нет навыка («не учился») → **não sabe**; мешают обстоятельства (болен, занят, запрещено) → **não pode**. (Poder может значить и способность вообще, но для «умею» обычно говорят saber.)',
+      '• Формы saber: **sei** · sabes · sabe · sabemos · sabem.',
+      '• Насколько умею: sei … **muito bem** · **bem** · **um pouco** · **não sei**.',
+    ].join('\n'),
+  },
+  {
+    contentId: 'ref-indefinidos',
+    topic: 'Местоимения',
+    title: 'ALGUÉM, NINGUÉM, ALGO, NADA, TODOS, TUDO',
+    body: [
+      '| | люди | вещи |',
+      '|---|---|---|',
+      '| кто-то / что-то | **alguém** | **algo** (= alguma coisa) |',
+      '| никто / ничего | **ninguém** | **nada** |',
+      '| все / всё | **todos** / **todas** | **tudo** |',
+      '',
+      '**alguém, ninguém, algo, nada, tudo** не меняются: Está **alguém** à porta. Tenho **algo** para ti. O cão come **tudo**.',
+      '**todo** меняется по роду и числу — и перед существительным, и без него: **Todos** gostam de sol. As amigas? **Todas** vêm. Os livros? Li **todos**.',
+      '',
+      '**Где ставить não** (в этих обычных конструкциях):',
+      '• ninguém / nada **после** глагола → нужен **não**: **Não** vejo **ninguém**. **Não** quero **nada**.',
+      '• ninguém / nada **перед** глаголом → **без não**: **Ninguém** quer café. **Nada** é barato aqui.',
+      '• Прилагательное к tudo / nada — м. р. ед. ч.: Tudo é **caro**. Nada é **barato**.',
+      '',
+      '**TODO + существительное** согласуется с ним; в Португалии — с артиклем:',
+      '• **todo** o leite · **toda** a cidade · **todos** os dias · **todas** as pessoas.',
+      '• **todo o dia** — весь день; **todos os dias** — каждый день.',
+      '• **tudo** стоит без существительного: Gosto de **tudo**. **Tudo** o que está aqui é meu.',
     ].join('\n'),
   },
   {

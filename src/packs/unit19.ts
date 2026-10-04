@@ -1,4 +1,5 @@
 import type { Pack, PackExercise } from './types.ts';
+import { ACTION_GROUPS, INDEFINITE_GROUPS, MODAL_GROUPS } from './unit19.more.ts';
 import { UNIT_19_VOCAB } from './unit19.vocab.ts';
 
 // Unidade 19 — money, obligations, needs.
@@ -55,8 +56,8 @@ export const UNIT_19: Pack = {
   unit: 19,
   title: { ru: 'Деньги, обязанности и нужды', en: 'Money, obligations and needs' },
   summary: {
-    ru: 'Глаголы про деньги, личная форма или инфинитив, ter de и precisar de.',
-    en: 'Money verbs, personal form or infinitive, ter de and precisar de.',
+    ru: 'Деньги; ter de и precisar de; можно, нельзя, умею; кто-то, никто, всё; действия целиком.',
+    en: 'Money; ter de and precisar de; may, must not, can; someone, no one, everything; whole actions.',
   },
   groups: [
     {
@@ -326,6 +327,36 @@ export const UNIT_19: Pack = {
           },
         },
       ],
+    },
+    ...MODAL_GROUPS,
+    ...INDEFINITE_GROUPS,
+    ...ACTION_GROUPS,
+  ],
+  blocks: [
+    {
+      id: 'dinheiro',
+      title: { ru: 'Деньги', en: 'Money' },
+      groupIds: ['money-words', 'money-forms', 'money-choice'],
+    },
+    {
+      id: 'ter-poder-saber',
+      title: { ru: 'Есть, должен, нужно, можно, умею', en: 'Have, must, need, may, can' },
+      groupIds: ['ter-ou-ter-de', 'ter-de', 'precisar-de', 'sentido', 'pode-tem-de', 'saber-poder'],
+    },
+    {
+      id: 'indefinidos',
+      title: { ru: 'Кто-то, никто, что-то, ничего, всё', en: 'Someone, no one, something, nothing, everything' },
+      groupIds: ['indefinidos', 'todo-tudo', 'frase-inteira'],
+    },
+    {
+      id: 'acoes',
+      title: { ru: 'Действия и умения', en: 'Actions and skills' },
+      groupIds: ['acoes', 'saber-fazer', 'opostos-acoes'],
+    },
+    {
+      id: 'frases',
+      title: { ru: 'Фразы целиком', en: 'Whole sentences' },
+      groupIds: ['sentences'],
     },
   ],
   drills: [

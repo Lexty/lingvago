@@ -21,6 +21,8 @@ const DRILL_FOR_CARD: Readonly<Record<string, string>> = {
   'ref-comparacao': '/pack/unit-18/comparisons',
   'ref-saber-conhecer': '/pack/unit-18/saber-conhecer',
   'ref-ter-de-precisar-de': '/pack/unit-19/ter-de',
+  'ref-poder-saber': '/pack/unit-19/pode-tem-de',
+  'ref-indefinidos': '/pack/unit-19/indefinidos',
   'ref-possessive': '/drill/possessive',
   'ref-interrogative': '/drill/interrogative',
 };

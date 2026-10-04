@@ -1,11 +1,11 @@
 import { createPrng } from '../modes/numbers/prng.ts';
-import type { Localized, Pack, PackExercise, PackGroup } from './types.ts';
+import type { Localized, Pack, PackBlock, PackExercise, PackGroup } from './types.ts';
 import { UNIT_18 } from './unit18.ts';
 import { UNIT_19 } from './unit19.ts';
 
 export type { CheckOutcome } from './check.ts';
 export { acceptedAnswers, checkExercise, normalizeAnswer } from './check.ts';
-export type { ExerciseKind, Localized, Pack, PackDrillLink, PackExercise, PackGroup } from './types.ts';
+export type { ChoiceOption, ExerciseKind, Localized, Pack, PackBlock, PackDrillLink, PackExercise, PackGroup } from './types.ts';
 
 /** Every shipped pack, newest unit last. */
 export const PACKS: readonly Pack[] = [UNIT_18, UNIT_19];
@@ -44,16 +44,39 @@ function shuffled<T>(items: readonly T[], seed: string): T[] {
 }
 
 /**
- * The session for one group, or for the whole pack when `groupId` is
- * {@link MIX_GROUP_ID}. A single group is practised as a block; the mix really
- * interleaves the mechanics (every exercise of the pack in one shuffled
- * sequence), which is what a learner who already met each of them needs.
+ * The session for one group, for the whole pack when `groupId` is
+ * {@link MIX_GROUP_ID}, or for one block when it is `mix-<blockId>`. A single
+ * group is practised on its own; a mix really interleaves the mechanics (a
+ * shuffled round of at most {@link MIX_SESSION_LENGTH} exercises drawn from
+ * all of them), which is what a learner who already met each of them needs.
  * Returns `[]` for an unknown group.
  */
 export function buildSession(pack: Pack, groupId: string, seed: string): SessionEntry[] {
-  const groups = groupId === MIX_GROUP_ID ? pack.groups : pack.groups.filter((g) => g.id === groupId);
+  const block = findBlock(pack, groupId);
+  const groups =
+    groupId === MIX_GROUP_ID
+      ? pack.groups
+      : block
+        ? pack.groups.filter((g) => block.groupIds.includes(g.id))
+        : pack.groups.filter((g) => g.id === groupId);
   const entries = groups.flatMap((group) =>
     group.exercises.map((exercise) => ({ group, exercise })),
   );
-  return shuffled(entries, `${pack.id}:${groupId}:${seed}`);
+  const order = shuffled(entries, `${pack.id}:${groupId}:${seed}`);
+  // A mixed session is a short round, not a marathon over the whole lesson; the
+  // next round (a new shuffle) starts when it runs out.
+  return groupId === MIX_GROUP_ID || block ? order.slice(0, MIX_SESSION_LENGTH) : order;
+}
+
+/** How many exercises one mixed round holds. */
+export const MIX_SESSION_LENGTH = 20;
+
+/** The route segment of a block's own mix: `mix-<blockId>`. */
+export function blockMixId(block: PackBlock): string {
+  return `${MIX_GROUP_ID}-${block.id}`;
+}
+
+/** The block whose mix `groupId` names, if it does. */
+export function findBlock(pack: Pack, groupId: string | undefined): PackBlock | undefined {
+  return (pack.blocks ?? []).find((block) => blockMixId(block) === groupId);
 }

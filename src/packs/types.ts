@@ -19,9 +19,20 @@ export interface Localized {
  * What the learner does with an exercise:
  *  - `recall` — remember a word or collocation from its meaning;
  *  - `cloze`  — fill the gap(s) in a sentence;
- *  - `build`  — write the whole sentence from ordered cue words.
+ *  - `build`  — write the whole sentence from ordered cue words;
+ *  - `transform` — write a whole sentence from another one: rewrite it as the
+ *    instruction says, or answer a question from a hint in brackets;
+ *  - `choose` — read a Portuguese sentence and pick what it means. The only
+ *    kind that is not typed: it trains reading a construction (não tem de vs
+ *    não pode), and is followed by typed practice in new situations.
  */
-export type ExerciseKind = 'recall' | 'cloze' | 'build';
+export type ExerciseKind = 'recall' | 'cloze' | 'build' | 'transform' | 'choose';
+
+/** One option of a `choose` exercise. Its `id` is the exercise's `answer`. */
+export interface ChoiceOption {
+  id: string;
+  text: Localized;
+}
 
 export interface PackExercise {
   /** Stable id (`u18-comp-03`). Never reused; survives wording edits. */
@@ -33,8 +44,10 @@ export interface PackExercise {
   prompt?: string;
   /** Meaning / condition cue shown with the prompt (e.g. the gloss, `(+)`). */
   cue?: Localized;
-  /** The model answer shown after checking. */
+  /** The model answer shown after checking (for `choose`: the right option's id). */
   answer: string;
+  /** The options of a `choose` exercise, in display order. */
+  options?: readonly ChoiceOption[];
   /**
    * Other answers that are also correct Portuguese (a valid variant of the
    * norm — `do que` / `que`, `mais pequeno` / `menor`). Kept apart from the
@@ -105,6 +118,15 @@ export interface PackVocab {
   cards: readonly VocabCard[];
 }
 
+/** A heading on the lesson screen that gathers related groups. */
+export interface PackBlock {
+  /** Stable id; `mix-<id>` is the route of the block's own mixed session. */
+  id: string;
+  title: Localized;
+  /** Group ids, in display order. Every group of the pack is in exactly one block. */
+  groupIds: readonly string[];
+}
+
 export interface Pack {
   /** Stable id (`unit-18`). */
   id: string;
@@ -113,6 +135,11 @@ export interface Pack {
   title: Localized;
   summary: Localized;
   groups: readonly PackGroup[];
+  /**
+   * Optional sections of the lesson screen. Without them the groups are one
+   * flat list. They change only the layout: the mix still takes every group.
+   */
+  blocks?: readonly PackBlock[];
   /** Existing drills that also belong to this unit. */
   drills?: readonly PackDrillLink[];
   /** The unit's words, exportable as Anki cards. */

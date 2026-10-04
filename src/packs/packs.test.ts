@@ -2,10 +2,13 @@ import { describe, expect, it } from 'vitest';
 import { buildContent } from '../../scripts/build-content.ts';
 import {
   MIX_GROUP_ID,
+  MIX_SESSION_LENGTH,
   PACKS,
   acceptedAnswers,
+  blockMixId,
   buildSession,
   checkExercise,
+  findBlock,
   findGroup,
   findPack,
   localized,
@@ -116,6 +119,19 @@ describe('shipped packs — data integrity', () => {
       if (group.kind === 'build') {
         expect(e.prompt).toContain(' / ');
       }
+      if (group.kind === 'choose') {
+        const ids = (e.options ?? []).map((o) => o.id);
+        expect(ids.length, e.id).toBeGreaterThanOrEqual(2);
+        expect(new Set(ids).size, e.id).toBe(ids.length);
+        expect(ids, e.id).toContain(e.answer);
+        expect(e.accept, e.id).toBeUndefined();
+      } else {
+        expect(e.options, e.id).toBeUndefined();
+      }
+      if (group.kind === 'transform') {
+        expect(e.prompt ?? '').not.toBe('');
+        expect(e.answer).toMatch(/[.?!]$/);
+      }
     }
   });
 
@@ -150,14 +166,37 @@ describe('sessions', () => {
     );
   });
 
-  it('the mix holds every exercise of the pack and really interleaves the groups', () => {
+  it('the mix is a short round drawn from the whole pack, and really interleaves the groups', () => {
     const mix = buildSession(pack, MIX_GROUP_ID, 's1');
-    const total = pack.groups.reduce((n, g) => n + g.exercises.length, 0);
-    expect(mix).toHaveLength(total);
-    expect(new Set(mix.map((x) => x.exercise.id)).size).toBe(total);
-    // Not group after group: the group changes far more often than (groups − 1) times.
+    expect(mix).toHaveLength(MIX_SESSION_LENGTH);
+    expect(new Set(mix.map((x) => x.exercise.id)).size).toBe(MIX_SESSION_LENGTH);
+    // Not group after group: most neighbours come from different groups.
     const switches = mix.filter((x, i) => i > 0 && x.group.id !== mix[i - 1].group.id).length;
-    expect(switches).toBeGreaterThan(pack.groups.length * 2);
+    expect(switches).toBeGreaterThan(MIX_SESSION_LENGTH / 2);
+    // Different rounds draw different exercises, so the whole pack gets covered.
+    const seen = new Set(['s1', 's2', 's3', 's4', 's5', 's6'].flatMap((seed) => buildSession(pack, MIX_GROUP_ID, seed).map((x) => x.exercise.id)));
+    const total = pack.groups.reduce((n, g) => n + g.exercises.length, 0);
+    expect(seen.size).toBeGreaterThan(Math.min(total, MIX_SESSION_LENGTH * 2));
+  });
+
+  it('a block mix draws only from that block, in a short round', () => {
+    const unit19 = findPack('unit-19')!;
+    for (const block of unit19.blocks ?? []) {
+      const round = buildSession(unit19, blockMixId(block), 's1');
+      const size = unit19.groups.filter((g) => block.groupIds.includes(g.id)).reduce((n, g) => n + g.exercises.length, 0);
+      expect(round).toHaveLength(Math.min(size, MIX_SESSION_LENGTH));
+      expect(round.every((x) => block.groupIds.includes(x.group.id)), block.id).toBe(true);
+      expect(findBlock(unit19, blockMixId(block))).toBe(block);
+    }
+  });
+
+  it('every group of a pack with blocks sits in exactly one block', () => {
+    for (const p of PACKS) {
+      if (!p.blocks) continue;
+      const placed = p.blocks.flatMap((b) => b.groupIds);
+      expect(new Set(placed).size, p.id).toBe(placed.length);
+      expect([...placed].sort(), p.id).toEqual(p.groups.map((g) => g.id).sort());
+    }
   });
 
   it('an unknown group or pack is empty, not a crash', () => {

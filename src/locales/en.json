@@ -112,13 +112,14 @@
     "next": "Next",
     "mix": {
       "title": "Everything mixed",
-      "hint": "Every exercise of the lesson in random order — for when each topic is already familiar."
+      "hint": "A short round of exercises from the whole lesson in random order — for when each topic is already familiar."
     },
     "feedback": {
       "correct": "Correct",
       "accent": "Right words — check the spelling",
       "wrong": "Not quite. The answer:",
-      "alsoCorrect": "Also correct:"
+      "alsoCorrect": "Also correct:",
+      "moreVariants": "Other correct answers ({{count}})"
     },
     "anki": {
       "title": "Lesson words for Anki",
@@ -129,7 +130,10 @@
       "shared": "File shared.",
       "failed": "Could not save the file.",
       "show": "Show the words"
-    }
+    },
+    "chooseLabel": "What the sentence means",
+    "blockMix": "Mix this block",
+    "blockMixTitle": "Mixed: {{block}}"
   },
   "numbers": {
     "title": "Numbers",

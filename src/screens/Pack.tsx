@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router';
 import { ANKI_DIR, ankiDeckName, ankiFilename, ankiLang } from '../packs/anki.ts';
-import { MIX_GROUP_ID, findPack, localized } from '../packs/index.ts';
-import type { Pack as PackData } from '../packs/types.ts';
+import { MIX_GROUP_ID, blockMixId, findPack, localized } from '../packs/index.ts';
+import type { Localized, Pack as PackData, PackGroup } from '../packs/types.ts';
 import { shareOrDownloadFile, type ShareOutcome } from '../telemetry/share.ts';
 import styles from './Pack.module.css';
 
@@ -46,21 +46,49 @@ export default function Pack() {
         {t('home.unit', { unit: pack.unit })} · {localized(pack.summary, lang)}
       </p>
 
+      {packSections(pack).map((section) => (
+        <section
+          key={section.id}
+          className={styles.section}
+          aria-labelledby={section.title ? `pack-block-${section.id}` : undefined}
+          data-testid={`pack-block-${section.id}`}
+        >
+          {section.title && (
+            <h2 id={`pack-block-${section.id}`} className={styles.sectionTitle}>
+              {localized(section.title, lang)}
+            </h2>
+          )}
+          <ul className={styles.topics}>
+            {section.groups.map((group) => (
+              <li key={group.id} className={styles.topicItem}>
+                <Link
+                  to={`/pack/${pack.id}/${group.id}`}
+                  className={styles.topic}
+                  data-testid={`pack-group-${group.id}`}
+                >
+                  <span className={styles.topicTitle}>{localized(group.title, lang)}</span>
+                  <span className={styles.topicExample} lang="pt-PT">
+                    {group.example}
+                  </span>
+                </Link>
+              </li>
+            ))}
+            {section.mixId !== undefined && (
+              <li className={styles.topicItem}>
+                <Link
+                  to={`/pack/${pack.id}/${section.mixId}`}
+                  className={`${styles.topic} ${styles.topicMix}`}
+                  data-testid={`pack-group-${section.mixId}`}
+                >
+                  <span className={styles.topicTitle}>{t('pack.blockMix')}</span>
+                </Link>
+              </li>
+            )}
+          </ul>
+        </section>
+      ))}
+
       <ul className={styles.topics}>
-        {pack.groups.map((group) => (
-          <li key={group.id} className={styles.topicItem}>
-            <Link
-              to={`/pack/${pack.id}/${group.id}`}
-              className={styles.topic}
-              data-testid={`pack-group-${group.id}`}
-            >
-              <span className={styles.topicTitle}>{localized(group.title, lang)}</span>
-              <span className={styles.topicExample} lang="pt-PT">
-                {group.example}
-              </span>
-            </Link>
-          </li>
-        ))}
         {(pack.drills ?? []).map((drill) => (
           <li key={drill.to} className={styles.topicItem}>
             <Link to={drill.to} className={styles.topic}>
@@ -86,6 +114,33 @@ export default function Pack() {
       {pack.vocab && pack.vocab.cards.length > 0 && <AnkiSection pack={pack} lang={lang} />}
     </main>
   );
+}
+
+interface PackSection {
+  id: string;
+  title?: Localized;
+  groups: PackGroup[];
+  /** The route segment of the block's own mix, when it has two groups or more. */
+  mixId?: string;
+}
+
+/**
+ * The lesson screen's sections: the pack's blocks in order, then any group no
+ * block names (so a group can never disappear from the screen). A pack without
+ * blocks is one untitled section.
+ */
+function packSections(pack: PackData): PackSection[] {
+  const byId = new Map(pack.groups.map((group) => [group.id, group]));
+  const sections: PackSection[] = (pack.blocks ?? []).map((block) => ({
+    id: block.id,
+    title: block.title,
+    groups: block.groupIds.flatMap((id) => byId.get(id) ?? []),
+    mixId: block.groupIds.length > 1 ? blockMixId(block) : undefined,
+  }));
+  const placed = new Set((pack.blocks ?? []).flatMap((block) => block.groupIds));
+  const rest = pack.groups.filter((group) => !placed.has(group.id));
+  if (rest.length > 0) sections.push({ id: 'other', groups: rest });
+  return sections;
 }
 
 type AnkiStatus = { kind: 'idle' } | { kind: ShareOutcome; file: string } | { kind: 'failed' };

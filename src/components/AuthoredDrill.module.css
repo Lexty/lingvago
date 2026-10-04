@@ -96,3 +96,49 @@
   resize: none;
   line-height: var(--lh-body);
 }
+
+/* `choose`: the meanings to pick from, one per line, easy to tap. */
+.options {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.option {
+  appearance: none;
+  cursor: pointer;
+  text-align: start;
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--input-border);
+  border-radius: var(--r-btn);
+  background: var(--card-bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+}
+
+.option:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.option:disabled {
+  cursor: default;
+}
+
+.optionRight {
+  border-color: transparent;
+  background: var(--primary-soft);
+  color: var(--primary-ink);
+  font-weight: var(--fw-semi);
+}
+
+.optionWrong {
+  border-color: transparent;
+  background: var(--fb-error-bg);
+  color: var(--fb-error-fg);
+}
+
+.variantList {
+  margin: var(--s-2) 0 0;
+  padding-inline-start: var(--s-4);
+}

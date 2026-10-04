@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams, useSearchParams } from 'react-router';
 import AuthoredDrill from '../components/AuthoredDrill.tsx';
-import { MIX_GROUP_ID, buildSession, findGroup, findPack, localized } from '../packs/index.ts';
+import { MIX_GROUP_ID, buildSession, findBlock, findGroup, findPack, localized } from '../packs/index.ts';
 import { recordPackAttempt } from '../packs/progress.ts';
 import styles from './Pack.module.css';
 
@@ -12,8 +12,8 @@ function freshSeed(): string {
 }
 
 /**
- * One mechanic of a pack, or the whole pack mixed (route
- * `/pack/:packId/:groupId`, `groupId` = a group id or `mix`). A `?seed=` query
+ * One mechanic of a pack, one block mixed, or the whole pack mixed (route
+ * `/pack/:packId/:groupId`, `groupId` = a group id, `mix-<blockId>` or `mix`). A `?seed=` query
  * param pins the order (deterministic tests); without it each visit is shuffled
  * anew.
  */
@@ -26,6 +26,7 @@ export default function PackDrill() {
 
   const pack = findPack(packId);
   const isMix = groupId === MIX_GROUP_ID;
+  const block = pack ? findBlock(pack, groupId) : undefined;
   const group = pack && !isMix ? findGroup(pack, groupId) : undefined;
 
   const [sessionId, setSessionId] = useState<string>(() => pinnedSeed ?? freshSeed());
@@ -38,7 +39,9 @@ export default function PackDrill() {
     ? t('pack.notFound')
     : isMix
       ? t('pack.mix.title')
-      : group
+      : block
+        ? t('pack.blockMixTitle', { block: localized(block.title, lang) })
+        : group
         ? localized(group.title, lang)
         : t('pack.notFound');
 

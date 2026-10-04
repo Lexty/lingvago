@@ -195,3 +195,69 @@ describe('PackDrill', () => {
     expect(screen.getByTestId('pack-drill-empty')).toBeInTheDocument();
   });
 });
+
+describe('choose exercises', () => {
+  it('a tap checks the meaning, marks the options and explains', async () => {
+    const unit19 = findPack('unit-19')!;
+    const [first] = buildSession(unit19, 'sentido', SEED);
+    renderAt(`/pack/unit-19/sentido?seed=${SEED}`);
+    expect(screen.getByTestId('pack-drill-prompt')).toHaveTextContent(first.exercise.prompt!);
+    expect(screen.queryByTestId('pack-drill-answer')).toBeNull();
+    const wrong = first.exercise.options!.find((o) => o.id !== first.exercise.answer)!;
+    fireEvent.click(screen.getByTestId(`pack-drill-option-${wrong.id}`));
+    const feedback = await screen.findByTestId('pack-drill-feedback');
+    expect(feedback).toHaveAttribute('data-outcome', 'wrong');
+    const right = first.exercise.options!.find((o) => o.id === first.exercise.answer)!;
+    expect(screen.getByTestId('pack-drill-expected')).toHaveTextContent(right.text.en);
+    expect(screen.getByTestId(`pack-drill-option-${right.id}`)).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    await waitFor(() => expect(screen.queryByTestId('pack-drill-feedback')).toBeNull());
+  });
+
+  it('the lesson screen offers a mix for each block', () => {
+    renderAt('/pack/unit-19');
+    expect(screen.getByTestId('pack-group-mix-indefinidos')).toHaveAttribute('href', '/pack/unit-19/mix-indefinidos');
+    expect(screen.queryByTestId('pack-group-mix-frases')).toBeNull();
+  });
+
+  it('after Next, the keyboard lands on the first option of the next choose exercise', async () => {
+    const unit19 = findPack('unit-19')!;
+    const [first, second] = buildSession(unit19, 'sentido', SEED);
+    renderAt(`/pack/unit-19/sentido?seed=${SEED}`);
+    fireEvent.click(screen.getByTestId(`pack-drill-option-${first.exercise.answer}`));
+    fireEvent.click(await screen.findByRole('button', { name: 'Next' }));
+    await waitFor(() => expect(screen.getByTestId('pack-drill-prompt')).toHaveTextContent(second.exercise.prompt!));
+    expect(document.activeElement).toBe(screen.getByTestId(`pack-drill-option-${second.exercise.options![0].id}`));
+  });
+
+  it('from a typed exercise to a choose one, focus moves to the first option', async () => {
+    const unit19 = findPack('unit-19')!;
+    const block = unit19.blocks!.find((b) => b.groupIds.includes('sentido'))!;
+    // Find a seed whose round has a typed exercise right before a choose one.
+    const seed = Array.from({ length: 200 }, (_, i) => `f${i}`).find((candidate) => {
+      const [a, b] = buildSession(unit19, `mix-${block.id}`, candidate);
+      return a.group.kind !== 'choose' && b.group.kind === 'choose';
+    })!;
+    const [, next] = buildSession(unit19, `mix-${block.id}`, seed);
+    renderAt(`/pack/unit-19/mix-${block.id}?seed=${seed}`);
+    fireEvent.change(screen.getByTestId('pack-drill-answer'), { target: { value: 'x' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Check' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'Next' }));
+    await waitFor(() => expect(screen.getByTestId('pack-drill-prompt')).toHaveTextContent(next.exercise.prompt!));
+    expect(document.activeElement).toBe(screen.getByTestId(`pack-drill-option-${next.exercise.options![0].id}`));
+  });
+
+  it('many accepted answers wait behind a toggle; one or two stay inline', async () => {
+    renderAt('/pack/unit-19/saber-fazer?seed=variants');
+    fireEvent.change(screen.getByTestId('pack-drill-answer'), { target: { value: 'x' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Check' }));
+    await screen.findByTestId('pack-drill-feedback');
+    const exercise = buildSession(findPack('unit-19')!, 'saber-fazer', 'variants')[0].exercise;
+    const count = (exercise.accept ?? []).length;
+    if (count > 2) {
+      expect(screen.getByTestId('pack-drill-variants')).toHaveTextContent(`Other correct answers (${count})`);
+    } else {
+      expect(screen.queryByTestId('pack-drill-variants')).toBeNull();
+    }
+  });
+});

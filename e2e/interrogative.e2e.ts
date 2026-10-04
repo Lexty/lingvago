@@ -44,7 +44,7 @@ interface Entry {
 
 /** Recompute the exact L1→L3 session the app generates from the shipped bundle. */
 function expectedEntries(): Entry[] {
-  const bundlePath = resolve(here, '../public/content.v9.json');
+  const bundlePath = resolve(here, '../public/content.v10.json');
   const bundle = JSON.parse(readFileSync(bundlePath, 'utf8')) as ContentBundle;
   const entries: Entry[] = [];
   for (const level of INT_LEVELS) {
