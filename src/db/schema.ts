@@ -100,6 +100,15 @@ export interface AttemptRecord {
   /** Mastery score after this attempt. */
   masteryAfter?: number;
   ambiguityFlag?: boolean;
+  /**
+   * Help the learner used BEFORE answering (authored pack exercises): `gloss`
+   * — meanings of the prompt's key words; `answerShown` — the model answer and
+   * translation were revealed, so the item was viewed, not answered. Either way
+   * the attempt is kept out of `skillMastery`.
+   */
+  support?: 'gloss' | 'answerShown';
+  /** The learner's own note after a wrong answer: they did not understand the sentence. */
+  selfReport?: 'didNotUnderstand';
 }
 
 /** Per-session summary telemetry (SPEC §13.1). */

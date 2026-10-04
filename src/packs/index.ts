@@ -1,14 +1,20 @@
 import { createPrng } from '../modes/numbers/prng.ts';
 import type { Localized, Pack, PackBlock, PackExercise, PackGroup } from './types.ts';
+import { withHelp } from './help.ts';
 import { UNIT_18 } from './unit18.ts';
+import { UNIT_18_HELP } from './unit18.help.ts';
 import { UNIT_19 } from './unit19.ts';
+import { UNIT_19_HELP } from './unit19.help.ts';
 
 export type { CheckOutcome } from './check.ts';
 export { acceptedAnswers, checkExercise, normalizeAnswer } from './check.ts';
-export type { ChoiceOption, ExerciseKind, Localized, Pack, PackBlock, PackDrillLink, PackExercise, PackGroup } from './types.ts';
+export type { ChoiceOption, ExerciseKind, Gloss, Localized, Pack, PackBlock, PackDrillLink, PackExercise, PackGroup } from './types.ts';
 
-/** Every shipped pack, newest unit last. */
-export const PACKS: readonly Pack[] = [UNIT_18, UNIT_19];
+/** Every shipped pack, newest unit last, with its "I don't understand" help attached. */
+export const PACKS: readonly Pack[] = [
+  { ...UNIT_18, groups: withHelp(UNIT_18.groups, UNIT_18_HELP) },
+  { ...UNIT_19, groups: withHelp(UNIT_19.groups, UNIT_19_HELP) },
+];
 
 /** The id of the "everything in this pack, mixed" session. */
 export const MIX_GROUP_ID = 'mix';

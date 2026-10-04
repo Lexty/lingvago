@@ -34,6 +34,14 @@ export interface ChoiceOption {
   text: Localized;
 }
 
+/** A key word or chunk of a prompt with its meaning (see help.ts). */
+export interface Gloss {
+  /** Exactly as it appears in the prompt (case aside). */
+  pt: string;
+  ru: string;
+  en: string;
+}
+
 export interface PackExercise {
   /** Stable id (`u18-comp-03`). Never reused; survives wording edits. */
   id: string;
@@ -56,6 +64,10 @@ export interface PackExercise {
   accept?: readonly string[];
   /** One short line on why the answer has this form. */
   why: Localized;
+  /** Meanings of key words of the prompt, shown on request before answering. */
+  gloss?: readonly Gloss[];
+  /** The completed sentence translated, shown after checking. */
+  meaning?: Localized;
 }
 
 export interface PackGroup {

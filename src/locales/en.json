@@ -119,7 +119,8 @@
       "accent": "Right words — check the spelling",
       "wrong": "Not quite. The answer:",
       "alsoCorrect": "Also correct:",
-      "moreVariants": "Other correct answers ({{count}})"
+      "moreVariants": "Other correct answers ({{count}})",
+      "revealed": "The answer:"
     },
     "anki": {
       "title": "Lesson words for Anki",
@@ -133,7 +134,15 @@
     },
     "chooseLabel": "What the sentence means",
     "blockMix": "Mix this block",
-    "blockMixTitle": "Mixed: {{block}}"
+    "blockMixTitle": "Mixed: {{block}}",
+    "help": {
+      "open": "I don’t understand",
+      "title": "Words in the sentence",
+      "reveal": "Show the answer",
+      "meaning": "What it means",
+      "selfReport": "I didn’t understand the sentence",
+      "selfReported": "Noted: the sentence was unclear. The word meanings are above."
+    }
   },
   "numbers": {
     "title": "Numbers",

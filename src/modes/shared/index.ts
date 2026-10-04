@@ -21,4 +21,4 @@ export {
   type AssembleInput,
   type DistractorCandidate,
 } from './parity.ts';
-export { recordDrillAttempt, type MasteryKey } from './recordAttempt.ts';
+export { foldIntoMastery, recordDrillAttempt, type MasteryKey } from './recordAttempt.ts';

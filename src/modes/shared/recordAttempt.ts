@@ -36,28 +36,34 @@ export async function recordDrillAttempt(
   attempt: AttemptRecord,
   masteryKey: MasteryKey,
 ): Promise<number> {
-  const { skillId, subskillId } = masteryKey;
-  const masteryId = `${skillId}:${subskillId}`;
-
   return db.transaction('rw', db.attempts, db.skillMastery, async () => {
     await db.attempts.add(attempt);
-
-    const prev = await db.skillMastery.get(masteryId);
-    const prevAttempts = prev?.attempts ?? 0;
-    const prevCorrect = Math.round((prev?.mastery ?? 0) * prevAttempts);
-    const nextAttempts = prevAttempts + 1;
-    const nextCorrect = prevCorrect + (attempt.correct ? 1 : 0);
-    const nextMastery = nextCorrect / nextAttempts;
-
-    await db.skillMastery.put({
-      id: masteryId,
-      skillId,
-      subskillId,
-      mastery: nextMastery,
-      attempts: nextAttempts,
-      updatedAt: attempt.ts,
-    });
-
-    return nextMastery;
+    return foldIntoMastery(attempt, masteryKey);
   });
+}
+
+/**
+ * Fold one attempt into the running `skillMastery` row (call inside a
+ * transaction over `attempts` + `skillMastery`). Returns the new mastery.
+ */
+export async function foldIntoMastery(attempt: AttemptRecord, masteryKey: MasteryKey): Promise<number> {
+  const { skillId, subskillId } = masteryKey;
+  const masteryId = `${skillId}:${subskillId}`;
+  const prev = await db.skillMastery.get(masteryId);
+  const prevAttempts = prev?.attempts ?? 0;
+  const prevCorrect = Math.round((prev?.mastery ?? 0) * prevAttempts);
+  const nextAttempts = prevAttempts + 1;
+  const nextCorrect = prevCorrect + (attempt.correct ? 1 : 0);
+  const nextMastery = nextCorrect / nextAttempts;
+
+  await db.skillMastery.put({
+    id: masteryId,
+    skillId,
+    subskillId,
+    mastery: nextMastery,
+    attempts: nextAttempts,
+    updatedAt: attempt.ts,
+  });
+
+  return nextMastery;
 }

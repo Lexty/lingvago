@@ -210,3 +210,44 @@ describe('sessions', () => {
     expect(localized({ ru: 'р', en: 'e' }, undefined)).toBe('e');
   });
 });
+
+describe('"I don\'t understand" help', () => {
+  const all = PACKS.flatMap((p) => p.groups.flatMap((g) => g.exercises.map((e) => ({ pack: p, group: g, e }))));
+  const fold = (text: string) => normalizeAnswer(text).replace(/[«»"“”]/g, '');
+  const words = (text: string) => fold(text).split(/[^\p{L}-]+/u).filter(Boolean);
+
+  it('every exercise with a Portuguese prompt has glosses and a meaning', () => {
+    for (const { group, e } of all) {
+      if (!e.prompt || group.id === 'opposites') continue;
+      expect(e.gloss?.length, e.id).toBeGreaterThan(0);
+      expect(e.meaning?.ru, e.id).toBeTruthy();
+      expect(e.meaning?.en, e.id).toBeTruthy();
+    }
+  });
+
+  it('every glossed chunk is really in its prompt', () => {
+    for (const { e } of all) {
+      for (const g of e.gloss ?? []) {
+        expect(fold(e.prompt ?? ''), `${e.id}: «${g.pt}»`).toContain(fold(g.pt));
+      }
+    }
+  });
+
+  it('a gloss never names the answer to type or the construction to read', () => {
+    for (const { group, e } of all) {
+      for (const g of e.gloss ?? []) {
+        if (group.kind === 'choose') {
+          expect(words(g.pt), `${e.id}: «${g.pt}»`).not.toEqual(
+            expect.arrayContaining([expect.stringMatching(/^(tem|têm|pode|podem|precisa|preciso)$/)]),
+          );
+          continue;
+        }
+        if (group.kind !== 'cloze') continue;
+        for (const answer of [e.answer, ...(e.accept ?? [])]) {
+          expect(` ${words(g.pt).join(' ')} `, `${e.id}: «${g.pt}» gives «${answer}»`).not.toContain(` ${words(answer).join(' ')} `);
+        }
+      }
+    }
+  });
+});
+

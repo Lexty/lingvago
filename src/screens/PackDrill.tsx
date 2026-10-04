@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams, useSearchParams } from 'react-router';
 import AuthoredDrill from '../components/AuthoredDrill.tsx';
 import { MIX_GROUP_ID, buildSession, findBlock, findGroup, findPack, localized } from '../packs/index.ts';
-import { recordPackAttempt } from '../packs/progress.ts';
+import { recordPackAttempt, recordPackSelfReport } from '../packs/progress.ts';
 import styles from './Pack.module.css';
 
 /** A fresh, unique-enough seed for a NEW interactive session. */
@@ -68,7 +68,7 @@ export default function PackDrill() {
         onExhausted={() => {
           setSessionId(pinnedSeed ?? freshSeed());
         }}
-        onRecord={({ entry, userAnswer, outcome, responseMs }) =>
+        onRecord={({ entry, userAnswer, outcome, support, responseMs }) =>
           pack
             ? recordPackAttempt({
                 sessionId,
@@ -77,10 +77,12 @@ export default function PackDrill() {
                 exercise: entry.exercise,
                 userAnswer,
                 outcome,
+                support,
                 responseMs,
               })
             : Promise.resolve()
         }
+        onSelfReport={recordPackSelfReport}
       />
     </main>
   );

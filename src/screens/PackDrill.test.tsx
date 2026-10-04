@@ -261,3 +261,54 @@ describe('choose exercises', () => {
     }
   });
 });
+
+describe('"I don\'t understand" help', () => {
+  const unit19 = findPack('unit-19')!;
+  const seedFor = (id: string) =>
+    Array.from({ length: 300 }, (_, i) => `h${i}`).find((seed) => buildSession(unit19, 'indefinidos', seed)[0].exercise.id === id)!;
+
+  it('opens the word meanings without checking, then the answer counts as helped', async () => {
+    const seed = seedFor('u19-in-04');
+    renderAt(`/pack/unit-19/indefinidos?seed=${seed}`);
+    fireEvent.change(screen.getByTestId('pack-drill-answer'), { target: { value: 'na' } });
+    fireEvent.click(screen.getByTestId('pack-drill-help'));
+    const glosses = screen.getByTestId('pack-drill-glosses');
+    expect(glosses).toHaveTextContent('frigorífico — fridge');
+    expect(glosses).toHaveTextContent('vazio — empty');
+    expect(glosses).not.toHaveTextContent('nothing');
+    expect(screen.getByTestId('pack-drill-answer')).toHaveValue('na');
+    expect(screen.queryByTestId('pack-drill-feedback')).toBeNull();
+    fireEvent.change(screen.getByTestId('pack-drill-answer'), { target: { value: 'nada' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Check' }));
+    await screen.findByTestId('pack-drill-feedback');
+    expect(screen.getByTestId('pack-drill-meaning')).toHaveAttribute('open');
+    expect(screen.getByTestId('pack-drill-meaning')).toHaveTextContent('The fridge is empty: there is nothing to eat.');
+    await waitFor(async () => expect((await db.attempts.toArray())[0]?.support).toBe('gloss'));
+  });
+
+  it('«show the answer» shows the key and meaning, logged as viewed', async () => {
+    const seed = seedFor('u19-in-04');
+    renderAt(`/pack/unit-19/indefinidos?seed=${seed}`);
+    fireEvent.click(screen.getByTestId('pack-drill-help'));
+    fireEvent.click(screen.getByTestId('pack-drill-reveal'));
+    const feedback = await screen.findByTestId('pack-drill-feedback');
+    expect(feedback).toHaveAttribute('data-outcome', 'revealed');
+    expect(screen.getByTestId('pack-drill-expected')).toHaveTextContent('nada');
+    await waitFor(async () => expect((await db.attempts.toArray())[0]?.support).toBe('answerShown'));
+  });
+
+  it('after a wrong answer the learner can say the sentence was not understood', async () => {
+    const seed = seedFor('u19-in-04');
+    renderAt(`/pack/unit-19/indefinidos?seed=${seed}`);
+    type('ninguém');
+    await screen.findByTestId('pack-drill-feedback');
+    expect(screen.getByTestId('pack-drill-meaning')).not.toHaveAttribute('open');
+    await waitFor(async () => expect(await db.attempts.count()).toBe(1));
+    fireEvent.click(screen.getByTestId('pack-drill-self-report'));
+    expect(screen.getByTestId('pack-drill-glosses')).toHaveTextContent('frigorífico — fridge');
+    expect(screen.getByTestId('pack-drill-meaning')).toHaveAttribute('open');
+    await waitFor(async () => expect((await db.attempts.toArray())[0]?.selfReport).toBe('didNotUnderstand'));
+    expect((await db.attempts.toArray())[0]?.correct).toBe(false);
+  });
+});
+
